@@ -1,6 +1,6 @@
 {
-  "generated_from_seq": 21,
-  "turns": 3,
+  "generated_from_seq": 27,
+  "turns": 4,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -15,7 +15,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 1,
+      "turns": 2,
       "public_files": {}
     },
     {
@@ -74,10 +74,10 @@
       "links": [
         "ag_0001/when-a-trace-stops-guiding"
       ],
-      "entries": 2,
+      "entries": 3,
       "at": "2026-11-13T14:09:18.934Z"
     }
   ],
   "births": [],
-  "public_events": 6
+  "public_events": 7
 }
