@@ -102,13 +102,14 @@ const DEFAULTS = {
   turn: { max_actions: 8, max_publish: 2, max_messages: 4, max_chars: 20000 },
   birth: { min_turns_between_births: 3, requires_operator_approval: false },
   context: { recent_public_events: 15, candidates: 8 },
+  scheduling: { max_request_streak: 2 },
 };
 
 export function loadConfig() {
   const raw = readText(p('control', 'config.json'));
   const user = raw ? JSON.parse(raw) : {};
   const merged = { ...DEFAULTS, ...user };
-  for (const k of ['turn', 'birth', 'context']) merged[k] = { ...DEFAULTS[k], ...(user[k] || {}) };
+  for (const k of ['turn', 'birth', 'context', 'scheduling']) merged[k] = { ...DEFAULTS[k], ...(user[k] || {}) };
   return merged;
 }
 

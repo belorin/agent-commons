@@ -12,6 +12,7 @@ function readUnlocked(kind, arg, extra) {
   if (!w.turn) return '열려 있는 회차가 없다. 읽기는 회차 안에서 한다.';
   const me = w.agents[w.turn.agent_id];
   switch (kind) {
+    case 'schedule': return JSON.stringify({ world_turns: w.turns, last_turn: me.last_turn, activity_request: me.activity_request, note: '자신의 요청만 열람 가능하며, 실제 다음 실행 시각은 보장되지 않는다' }, null, 2);
     case 'governance': return JSON.stringify(governanceContext(w, me.id), null, 2);
     case 'group': return JSON.stringify(w.groups[arg] || '없는 집단', null, 2);
     case 'rule': return JSON.stringify(w.rules[arg] || '없는 규칙', null, 2);

@@ -27,6 +27,18 @@ function wakeDue(w, a) {
   return false;
 }
 
+/** 개체가 선택한 다음 활동 조건. OR 관계이며 응답을 강제하지 않는다. */
+export function activityDue(w, a) {
+  const r = a.activity_request;
+  if (!r || a.status !== 'active') return null;
+  if (r.after_turns !== null && w.turns - r.from_turn >= r.after_turns) return 'elapsed';
+  if (r.on_message && w.messages.some((m) => m.to === a.id && m.seq > r.seq && !m.delivered)) return 'message';
+  if (r.on_reference && Object.values(w.works).some((x) =>
+    x.agent !== a.id && x.status === 'published' && x.seq > r.seq &&
+    x.links.some((link) => link === a.id || link.startsWith(a.id + '/')))) return 'reference';
+  return null;
+}
+
 /** 이번 회차에 무슨 일이 일어날지 정한다. 난수도 숨은 확률도 없다. */
 export function decide(w, cfg) {
   const alive = living(w);
@@ -37,8 +49,17 @@ export function decide(w, cfg) {
   if (accepted && room && w.turns - w.last_birth_turn >= cfg.birth.min_turns_between_births) {
     return { kind: 'birth', origin: 'birth_proposal', proposal: accepted };
   }
-  const eligible = alive.filter((a) => a.status === 'active' || wakeDue(w, a)).sort((x, y) => x.last_turn - y.last_turn || x.id.localeCompare(y.id));
-  if (eligible.length) return { kind: 'walk', agent: eligible[0] };
+  // 아직 조건이 차지 않은 요청은 그 개체가 스스로 일반 순번을 유보한 것으로 취급한다.
+  const eligible = alive.filter((a) =>
+    (a.status === 'active' && (!a.activity_request || activityDue(w, a))) || wakeDue(w, a)
+  ).sort((x, y) => x.last_turn - y.last_turn || x.id.localeCompare(y.id));
+  const due = eligible.filter((a) => a.status === 'active' && activityDue(w, a));
+  const limit = Number.isInteger(cfg.scheduling?.max_request_streak) ? Math.max(0, cfg.scheduling.max_request_streak) : 2;
+  if (due.length && (w.request_streak < limit || due.length === eligible.length)) {
+    const agent = due[0];
+    return { kind: 'walk', agent, selection: 'requested', request_reason: activityDue(w, agent), request_id: agent.activity_request.event_id };
+  }
+  if (eligible.length) return { kind: 'walk', agent: eligible[0], selection: 'fair' };
   if (!alive.length && cfg.on_empty_world === 'reseed') return { kind: 'birth', origin: 'operator_seed', reseed: true };
   return { kind: 'idle', reason: alive.length ? '깨어 있는 개체가 없다(모두 휴면)' : '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
 }
@@ -87,9 +108,9 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
 
   const delivered = w.messages.filter((m) => m.to === agentId && !m.delivered).map((m) => m.event_id);
   const before = project(loadEvents());
-  appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, operator_wake: d.operator_wake || undefined, delivered, adapter, model } });
+  appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, delivered, adapter, model } });
   writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, read: [] }, null, 2));
-  return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, text: briefing(before, agentId, { turn_id, kind: d.kind, delivered, cfg, events: loadEvents() }) };
+  return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text: briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents() }) };
 }
 
 function closeUnlocked() {

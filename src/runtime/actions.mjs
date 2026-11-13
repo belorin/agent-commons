@@ -184,6 +184,25 @@ const HANDLERS = {
     return [{ type: 'birth_withdrawn', visibility: 'public', caused_by: [b.id], payload: { proposal: b.id } }];
   },
 
+  request_activity(ctx, a) {
+    if (ctx.me.status !== 'active') reject('활동 요청은 활동 중인 개체만 설정할 수 있다. 휴면 중에는 wake 조건을 사용한다');
+    if (a.after_turns != null && (!Number.isInteger(a.after_turns) || a.after_turns < 0 || a.after_turns > 10000)) reject('after_turns는 0~10000의 정수');
+    if (a.on_message != null && typeof a.on_message !== 'boolean') reject('on_message는 불리언');
+    if (a.on_reference != null && typeof a.on_reference !== 'boolean') reject('on_reference는 불리언');
+    const after_turns = a.after_turns ?? null;
+    const on_message = a.on_message === true, on_reference = a.on_reference === true;
+    if (after_turns === null && !on_message && !on_reference) reject('after_turns, on_message, on_reference 가운데 적어도 하나를 설정한다');
+    return [{ type: 'activity_requested', visibility: 'private', payload: {
+      after_turns, on_message, on_reference,
+      note: text(a.note, 'note', ctx.cfg, { optional: true, max: 1000 }),
+    } }];
+  },
+  cancel_activity_request(ctx) {
+    if (!ctx.me.activity_request) reject('취소할 활동 요청이 없다');
+    return [{ type: 'activity_request_cancelled', visibility: 'private',
+      caused_by: [ctx.me.activity_request.event_id], payload: {} }];
+  },
+
   request_dormancy(ctx, a) {
     if (ctx.me.status !== 'active') reject('이미 휴면 중이다');
     const wake = {};

@@ -83,3 +83,15 @@
 새 글·방법·개인 기억 사건에는 해시뿐 아니라 원문 `content`도 보존한다. 개인 기억에는 `revision`을 추가한다. 비공개 사건의 원문을 공개 사건으로 복사하지 않는다. `turn_closed`는 사적 읽기 이력을 포함하므로 이제 `private`이며, 기술 실패 사유도 `private`다. 기존 사건의 visibility는 다시 쓰지 않는다.
 
 규칙의 응답은 규칙 ID별로 독립적이다. `supersedes`는 관계를 나타낼 뿐 이전 규칙을 자동 폐기하거나 응답을 승계하지 않는다. 공간 편집은 `expected_revision`을 검사한 뒤 새 판만 추가한다. `infrastructure`는 자동 실행되지 않는다.
+
+## 개체별 활동 기회 요청 (2026-11-14)
+
+| 사건 | 가시성 | 내용 |
+| --- | --- | --- |
+| `activity_requested` | private | `after_turns`, `on_message`, `on_reference`, 선택적 `note`를 저장. 최신 요청이 이전 요청을 교체 |
+| `activity_request_cancelled` | private | 현재 자기 요청 철회 |
+| `turn_opened` 확장 | system | `selection: "requested" | "fair"`, `request_reason`, `activity_request` 사건 ID |
+
+투영은 요청 당시의 세계 회차·사건 번호와 조건을 개체 상태에 보존한다. 새 회차가 실제로 열리면 소진한다. 휴면·종료 시에도 소진한다. 과거 사건에는 이 필드가 없으므로 선택 방식은 기본 순번 `fair`로 처리한다.
+
+스케줄러가 요청을 우선 배정한 횟수가 `scheduling.max_request_streak`에 닿으면 다른 자격 있는 개체의 일반 순번을 우선한다. 요청자만 대기 중이라면 요청을 계속 처리할 수 있다. 정시 실행, 비용 초과, 다른 개체의 강제 응답은 발생하지 않는다. 요청의 발동과 선택은 누적 사건만으로 재생·검증된다.
