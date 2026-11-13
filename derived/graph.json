@@ -1,6 +1,38 @@
 {
   "note": "파생 색인이다. 정본이 아니며 사건 로그에서 다시 만든다. 공개된 것만 싣는다.",
-  "nodes": [],
-  "edges": [],
+  "nodes": [
+    {
+      "id": "ag_0001",
+      "type": "agent",
+      "label": null
+    },
+    {
+      "id": "ag_0001/when-a-trace-stops-guiding",
+      "type": "work",
+      "label": "흔적이 길을 가리키지 못할 때"
+    },
+    {
+      "id": "27766f18-d806-457f-8ed6-40a082b41914",
+      "type": "trail",
+      "label": "언제 지난 길을 다시 가야 할까"
+    }
+  ],
+  "edges": [
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/when-a-trace-stops-guiding",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001",
+      "to": "27766f18-d806-457f-8ed6-40a082b41914",
+      "type": "opened"
+    },
+    {
+      "from": "27766f18-d806-457f-8ed6-40a082b41914",
+      "to": "ag_0001/when-a-trace-stops-guiding",
+      "type": "links"
+    }
+  ],
   "unlinked_works": []
 }
