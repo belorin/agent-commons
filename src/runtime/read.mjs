@@ -1,15 +1,20 @@
+import { governanceContext } from './governance.mjs';
 // 읽기: 열린 회차의 개체가 볼 수 있는 것만 돌려준다. 무엇을 읽었는지는 회차를 닫을 때 사건에 남는다.
-import { loadEvents, agentDir, readText } from './store.mjs';
+import { loadEvents, withTransaction, agentDir, readText } from './store.mjs';
 import { project, displayName, canSee, SELF_FILES } from './world.mjs';
 import { describeEvent, listPrivate } from './briefing.mjs';
 import { noteRead } from './tick.mjs';
 
-export function read(kind, arg, extra) {
+export const read = (kind, arg, extra) => withTransaction(() => readUnlocked(kind, arg, extra));
+function readUnlocked(kind, arg, extra) {
   const events = loadEvents();
   const w = project(events);
   if (!w.turn) return '열려 있는 회차가 없다. 읽기는 회차 안에서 한다.';
   const me = w.agents[w.turn.agent_id];
   switch (kind) {
+    case 'governance': return JSON.stringify(governanceContext(w, me.id), null, 2);
+    case 'group': return JSON.stringify(w.groups[arg] || '없는 집단', null, 2);
+    case 'rule': return JSON.stringify(w.rules[arg] || '없는 규칙', null, 2);
     case 'agent': {
       const a = w.agents[arg];
       if (!a) return `${arg}: 그런 개체가 없다`;
@@ -45,6 +50,17 @@ export function read(kind, arg, extra) {
       if (!t) return `${arg}: 그런 흔적이 없다`;
       noteRead(`trail:${t.id}`);
       return [`# 끊긴 선 「${t.title}」 (${t.status})`, ...t.entries.map((en) => `\n— ${en.by}:\n${en.content}`)].join('\n');
+    }
+    case 'revision': {
+      const revision = Number(extra);
+      const prefix = /^(work|note):/.exec(arg || '');
+      const key = prefix ? arg.slice(prefix[0].length) : arg;
+      const matches = events.filter((e) => e.agent_id === me.id && (e.payload.slug === key || e.payload.path === key) && (e.payload.revision || 1) === revision && ['work_published', 'note_written'].includes(e.type) && (!prefix || e.type === (prefix[1] === 'work' ? 'work_published' : 'note_written')));
+      if (matches.length > 1) return 'work:<slug> 또는 note:<path>로 구분한다';
+      const e = matches[0];
+      if (!e) return '그런 판본이 없다';
+      if (e.payload.content !== undefined) return e.payload.content;
+      return readText(agentDir(me.id, 'history', e.type === 'work_published' ? 'works' : 'notes', `${key}.r${revision}.md`)) ?? '원본을 찾을 수 없다';
     }
     case 'history': {
       const mine = events.filter((e) => e.agent_id === me.id && canSee(e, me.id) && !['turn_opened', 'turn_closed'].includes(e.type));

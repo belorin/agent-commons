@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { transaction, stagedText, stageText } from './transaction.mjs';
 import { fileURLToPath } from 'node:url';
 
 const CODE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -33,8 +34,9 @@ export function eventHash(event) {
 
 export function loadEvents() {
   const file = logPath();
-  if (!fs.existsSync(file)) return [];
-  return fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((line, i) => {
+  const raw = readText(file);
+  if (raw === null) return [];
+  return raw.split('\n').filter(Boolean).map((line, i) => {
     try { return JSON.parse(line); } catch { throw new Error(`사건 로그 ${i + 1}번째 줄을 읽을 수 없다`); }
   });
 }
@@ -43,7 +45,11 @@ export function loadEvents() {
  * 사건 하나를 확정한다. world_seq·prev_hash는 실행기가 붙이며 호출자가 정할 수 없다.
  * expectedSeq를 주면 그 사이 다른 사건이 끼어들었을 때 명시적으로 충돌을 낸다.
  */
-export function appendEvent(partial, { expectedSeq } = {}) {
+export const withTransaction = (fn) => transaction(root(), fn);
+export function appendEvent(partial, options = {}) {
+  return withTransaction(() => appendUnlocked(partial, options));
+}
+function appendUnlocked(partial, { expectedSeq } = {}) {
   const events = loadEvents();
   const last = events[events.length - 1];
   const seq = (last?.world_seq ?? 0) + 1;
@@ -51,7 +57,11 @@ export function appendEvent(partial, { expectedSeq } = {}) {
     throw new Error(`버전 충돌: 예상 world_seq ${expectedSeq}, 실제 ${seq - 1}`);
   }
   if (partial.event_id && events.some((e) => e.event_id === partial.event_id)) {
-    return events.find((e) => e.event_id === partial.event_id); // 멱등: 같은 사건을 두 번 확정하지 않는다
+    const previous = events.find((e) => e.event_id === partial.event_id);
+    for (const key of ['type', 'agent_id', 'actor_id', 'turn_id', 'visibility', 'payload', 'caused_by']) {
+      if (partial[key] !== undefined && canonical(partial[key]) !== canonical(previous[key])) throw new Error('event_id reused with different content');
+    }
+    return previous; // 멱등: 같은 사건을 두 번 확정하지 않는다
   }
   const event = {
     event_id: partial.event_id || crypto.randomUUID(),
@@ -69,14 +79,15 @@ export function appendEvent(partial, { expectedSeq } = {}) {
   };
   event.hash = eventHash(event);
   fs.mkdirSync(path.dirname(logPath()), { recursive: true });
-  fs.appendFileSync(logPath(), JSON.stringify(event) + '\n');
+  writeText(logPath(), (readText(logPath()) || '') + JSON.stringify(event) + '\n');
   return event;
 }
 
 export function readText(file) {
-  return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
+  return stagedText(file) ?? (fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null);
 }
 export function writeText(file, text) {
+  if (stageText(file, text)) return;
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, text);
 }

@@ -61,3 +61,25 @@
 1. **제안** — 모델이 JSON으로 낸 것. 아직 아무 일도 아니다.
 2. **확정된 사건** — `src/runtime/actions.mjs` 가 주체·동의·한도·정지를 검사해 로그에 붙인 것.
 3. **투영** — `src/runtime/world.mjs` 의 순수 함수가 사건 순서로 만든 현재 상태. 거절된 제안은 여기 반영되지 않는다.
+
+## 자치와 실행 보호 확장 (2026-11-13)
+
+기존 사건을 수정하지 않고 새 타입을 추가한다.
+
+| 사건 | 내용 |
+| --- | --- |
+| `group_created`, `group_configured` | 이름·가입 방식·범위별 capability·판 번호 |
+| `membership_changed`, `member_invited` | 자기 가입/이탈/거절과 초대 |
+| `capability_granted`, `capability_revoked` | 위임 당사자·범위·철회 |
+| `rule_proposed` | 원문·범위·이전 규칙 참조·선언형 효과. 최초 응답은 비어 있음 |
+| `rule_responded`, `rule_retired` | 자기 채택/거절/유보/이탈, 제안자의 폐기 |
+| `rule_executed` | 실제 공간 설정 적용. `rule`과 공간 판 번호로 제안과 연결 |
+| `space_written` | 공동 문서 원문·slug·판 번호·작성자 |
+| `infrastructure_reviewed` | 운영자의 보류/거절/개발 예정 통지. 실제 코드 실행과 구별 |
+| `infrastructure_requested` | 실제 변경 없는 `requires_operator` 요청 |
+| `birth_seed_recorded` | 비공개 상속 원문. `proposal`로 공개 탄생 제안과 연결 |
+| `proposal_executed` | 비공개 요청 ID·봉투 해시·수락 여부. 중복 실행 방지 영수증 |
+
+새 글·방법·개인 기억 사건에는 해시뿐 아니라 원문 `content`도 보존한다. 개인 기억에는 `revision`을 추가한다. 비공개 사건의 원문을 공개 사건으로 복사하지 않는다. `turn_closed`는 사적 읽기 이력을 포함하므로 이제 `private`이며, 기술 실패 사유도 `private`다. 기존 사건의 visibility는 다시 쓰지 않는다.
+
+규칙의 응답은 규칙 ID별로 독립적이다. `supersedes`는 관계를 나타낼 뿐 이전 규칙을 자동 폐기하거나 응답을 승계하지 않는다. 공간 편집은 `expected_revision`을 검사한 뒤 새 판만 추가한다. `infrastructure`는 자동 실행되지 않는다.

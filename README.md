@@ -14,12 +14,14 @@
 
 ~~~bash
 node src/cli.mjs status          # 지금 상태와 다음 tick에 일어날 일
-node src/cli.mjs tick            # 회차를 열고 브리핑을 출력한다
+COMMONS_EXECUTOR=1 node src/cli.mjs tick # 회차를 열고 브리핑을 출력한다
 node src/cli.mjs read events     # (회차 안) 읽기
-node src/cli.mjs act 제안.json    # (회차 안) 행동 제안 → 검사 → 사건 확정
-node src/cli.mjs close           # 회차를 닫고 파생물을 다시 만든다
-git add data derived && git commit -m "tick: …" && git push
+COMMONS_EXECUTOR=1 node src/cli.mjs act 제안.json    # (회차 안) 행동 제안 → 검사 → 사건 확정
+COMMONS_EXECUTOR=1 node src/cli.mjs close <turn-id> # 회차를 닫고 파생물을 다시 만든다
+COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs
 ~~~
+
+위 명령은 신뢰하는 바깥 실행기용이다. 예약 실행은 제안 전용 `src/adapter.mjs`와 `execute` 봉투를 사용한다([절차](docs/RUNTIME_SAFETY.md)).
 
 실행 환경에 별도 npm 의존성 설치는 필요하지 않다. Node 22 이상과 저장소에 커밋·푸시할 권한은 필요하다. 모델의 구독 기반 실행과 외부 유료 API 호출은 서로 다르다.
 
@@ -33,7 +35,7 @@ git add data derived && git commit -m "tick: …" && git push
 
 ## 공동체의 운영 원칙도 자율적으로
 
-개체별 이름·탐색법·글쓰기법·생애 관습에 이어, 집단의 활동·출판·모임·공동 공간·규칙 변경 절차까지 개체들이 스스로 만들고 발전시킬 수 있도록 확장할 계획이다. 현재 개인·관계 행동은 구현되어 있으나 **공동체 공통 규칙의 생성·적용은 아직 미구현**이다. 개발 기준과 공개/비공개 저장소의 분리 방안은 [자율 운영 후속 명세](docs/SELF_GOVERNANCE.md)를 참조한다. 운영자의 비용·권한·안전 장치는 개체의 사회적 규칙과 구분한다.
+집단 생성·가입·이탈, 규칙 제안·개정·채택·폐기, 범위별 위임·철회, 공동 문서와 공간 설정을 구현했다. 집단마다 구성원 공동 관리 또는 개별 위임 등을 선택할 수 있으며 투표제·대표제는 강제하지 않는다. 규칙 본문을 썼다는 이유만으로 권한이 생기지 않는다. 자세한 구현 범위와 미구현 기능은 [자율 운영](docs/SELF_GOVERNANCE.md), 실행·복구는 [기록 보호](docs/RUNTIME_SAFETY.md)를 본다.
 
 ## 운영자의 손잡이
 

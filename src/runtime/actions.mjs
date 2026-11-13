@@ -1,7 +1,9 @@
 // 행동 제안 → 권한·동의·예산 검사 → 사건 확정 → 파일 반영.
 // 개체(모델)가 쓴 문장은 그 자체로 상태를 바꾸지 못한다. 여기서 수락된 것만 현실이 된다.
 // 주의: 이 파일에는 control/ 을 건드리는 행동이 없다. 정지·예산·인구 상한은 개체가 지울 수 없다.
-import { appendEvent, loadEvents, loadConfig, isPaused, agentDir, writeText, sha256 } from './store.mjs';
+import { verify } from './verify.mjs';
+import { governanceHandlers } from './governance.mjs';
+import { appendEvent, withTransaction, canonical, loadEvents, loadConfig, isPaused, agentDir, writeText, sha256 } from './store.mjs';
 import { project, living, SELF_FILES } from './world.mjs';
 
 const SLUG = /^[\p{L}\p{N}][\p{L}\p{N}_-]{0,63}$/u;
@@ -33,12 +35,15 @@ function notePath(value) {
 }
 
 const HANDLERS = {
+  ...governanceHandlers({ reject, text }),
   write_private(ctx, a) {
     const path = notePath(a.path);
     const content = text(a.content, 'content', ctx.cfg);
     const title = text(a.title, 'title', ctx.cfg, { optional: true, max: 200 });
+    const revision = (ctx.w.notes[`${ctx.me.id}/${path}`]?.revision || 0) + 1;
     writeText(agentDir(ctx.me.id, 'private', path + '.md'), content);
-    return [{ type: 'note_written', visibility: 'private', payload: { path, title, hash: sha256(content) } }];
+    writeText(agentDir(ctx.me.id, 'history', 'notes', `${path}.r${revision}.md`), content);
+    return [{ type: 'note_written', visibility: 'private', payload: { path, title, revision, content, hash: sha256(content) } }];
   },
 
   publish(ctx, a) {
@@ -56,7 +61,7 @@ const HANDLERS = {
     const revision = (prev?.revision || 0) + 1;
     writeText(agentDir(ctx.me.id, 'public', a.slug + '.md'), content);
     writeText(agentDir(ctx.me.id, 'history', 'works', `${a.slug}.r${revision}.md`), content);
-    return [{ type: 'work_published', visibility: 'public', payload: { slug: a.slug, title, revision, hash: sha256(content), provenance: a.provenance || null, links: [...links], sources } }];
+    return [{ type: 'work_published', visibility: 'public', payload: { slug: a.slug, title, revision, content, hash: sha256(content), provenance: a.provenance || null, links: [...links], sources } }];
   },
 
   withdraw(ctx, a) {
@@ -87,7 +92,7 @@ const HANDLERS = {
     const prev = me.files[a.target];
     const to = (prev?.revision || 0) + 1;
     const visibility = visibilityOf(a.visibility, prev?.visibility || DEFAULT_VISIBILITY[a.target]);
-    const payload = { target: a.target, from_revision: prev?.revision || 0, to_revision: to, hash: sha256(content), visibility, reason: text(a.reason, 'reason', cfg, { optional: true, max: 2000 }) };
+    const payload = { content, target: a.target, from_revision: prev?.revision || 0, to_revision: to, hash: sha256(content), visibility, reason: text(a.reason, 'reason', cfg, { optional: true, max: 2000 }) };
     if (a.lineage) {
       const { kind, from } = a.lineage;
       if (!['cite', 'fork', 'mix', 'reject'].includes(kind)) reject('lineage.kind는 cite | fork | mix | reject');
@@ -131,7 +136,7 @@ const HANDLERS = {
     if (!r || r.to !== ctx.me.id || r.status !== 'proposed') reject('proposal: 네게 온, 아직 답하지 않은 관계 제안이 아니다');
     if (!['accept', 'decline'].includes(a.decision)) reject('decision은 accept | decline');
     // 수락된 관계만 공개 그래프에 실린다. 거절은 두 당사자만 안다.
-    return [{ type: 'relation_acknowledged', visibility: a.decision === 'accept' ? 'public' : 'direct', caused_by: [r.id], payload: { proposal: r.id, to: r.from, decision: a.decision, note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }) } }];
+    return [{ type: 'relation_acknowledged', visibility: a.decision === 'accept' ? 'public' : 'direct', caused_by: [r.id], payload: { proposal: r.id, to: r.from, decision: a.decision, public_kind: text(a.public_kind, 'public_kind', ctx.cfg, { optional: true, max: 80 }), note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }) } }];
   },
 
   dissolve_relation(ctx, a) {
@@ -159,12 +164,13 @@ const HANDLERS = {
     if (Object.values(w.births).some((b) => b.by === me.id && ['proposed', 'accepted'].includes(b.status))) reject('아직 열려 있는 네 탄생 제안이 있다');
     const contributors = [...new Set([me.id, ...(a.contributors || [])])];
     for (const id of contributors) if (!living(w).some((x) => x.id === id)) reject(`contributors: ${id} 은(는) 살아 있는 개체가 아니다`);
+    const seed = text(a.seed_note, 'seed_note', cfg, { optional: true });
     return [{ type: 'birth_proposed', visibility: 'public', payload: {
       reason: text(a.reason, 'reason', cfg, { max: 4000 }), contributors,
-      seed_note: text(a.seed_note, 'seed_note', cfg, { optional: true }), // 새 개체에게 건네는 기록. 읽을 의무도 따를 의무도 없다
+      seed_note: null, // 새 개체에게 건네는 기록. 읽을 의무도 따를 의무도 없다
       requires_approval: !!cfg.birth.requires_operator_approval,
       cost: { turns: '새 개체는 이후 회차 기회를 나눠 갖는다', population_cap: cfg.max_population },
-    } }];
+    } }, ...(seed === null ? [] : [{ type: 'birth_seed_recorded', visibility: 'private', payload: { content: seed } }])];
   },
   consent_birth(ctx, a) {
     const b = ctx.w.births[a.proposal];
@@ -210,6 +216,11 @@ export const ACTIONS = Object.keys(HANDLERS);
 
 /** 열려 있는 회차의 개체 이름으로만 실행된다. 제안이 다른 행위자를 지정할 길은 없다. */
 export function applyAction(proposal) {
+  return withTransaction(() => applyUnlocked(proposal));
+}
+function applyUnlocked(proposal) {
+  const v = verify();
+  if (!v.ok) throw new Error(v.problems.join('\n'));
   if (isPaused()) return { ok: false, paused: true, reason: '운영자가 정지했다(control/PAUSE). 새 행위를 수락하지 않는다' };
   const cfg = loadConfig();
   const w = project(loadEvents());
@@ -218,15 +229,41 @@ export function applyAction(proposal) {
   const base = { agent_id: me.id, actor_id: me.id, turn_id: w.turn.turn_id };
   const name = proposal && typeof proposal === 'object' ? proposal.action : undefined;
   try {
-    if (!HANDLERS[name]) reject(`알 수 없는 행동: ${name}. 가능한 행동: ${ACTIONS.join(', ')}`);
+    if (!['active', 'dormant'].includes(me.status)) reject('실행이 허용되지 않은 개체');
+    if (!Object.hasOwn(HANDLERS, name)) reject(`알 수 없는 행동: ${name}. 가능한 행동: ${ACTIONS.join(', ')}`);
     const used = Object.values(w.turn.counts).reduce((s, n) => s + n, 0);
     if (used >= cfg.turn.max_actions) reject(`이번 회차의 행동 한도(${cfg.turn.max_actions})에 닿았다. 기술적 한도이며 다음 회차에 이어 갈 수 있다`);
+    if (canonical(proposal).length > cfg.turn.max_chars * 3) reject('제안 전체 크기 한도');
     const drafts = HANDLERS[name]({ w, me, cfg }, proposal);
-    const events = drafts.map((d) => appendEvent({ ...base, ...d }));
+    const events = [];
+    for (const d of drafts) {
+      if (d.type === 'birth_seed_recorded') d.payload.proposal = events[0].event_id;
+      events.push(appendEvent({ ...base, ...d }));
+    }
     return { ok: true, events };
   } catch (err) {
     if (!(err instanceof Reject)) throw err;
     const event = appendEvent({ ...base, type: 'action_rejected', visibility: 'private', payload: { action: String(name), reason: err.message } });
     return { ok: false, reason: err.message, events: [event] };
   }
+}
+
+/** Trusted executor entry. The model supplies data, never execution credentials. */
+export function executeProposal(envelope) {
+  return withTransaction(() => {
+    if (!envelope || typeof envelope.request_id !== 'string' || !/^[a-zA-Z0-9_-]{8,100}$/.test(envelope.request_id)) throw new Error('request_id required');
+    const events = loadEvents();
+    const receipt = events.find((e) => e.type === 'proposal_executed' && e.payload.request_id === envelope.request_id);
+    const hash = sha256(canonical(envelope));
+    if (receipt) {
+      if (receipt.payload.hash !== hash) throw new Error('request_id reused with different proposal');
+      return { ok: receipt.payload.ok, duplicate: true, events: [] };
+    }
+    const w = project(events);
+    if (!w.turn || w.turn.turn_id !== envelope.turn_id || w.seq !== envelope.expected_seq) throw new Error('Stale proposal: turn/sequence conflict');
+    const result = applyAction(envelope.proposal);
+    if (result.paused) return result;
+    appendEvent({ type: 'proposal_executed', visibility: 'private', agent_id: w.turn.agent_id, turn_id: w.turn.turn_id, payload: { request_id: envelope.request_id, hash, ok: result.ok } });
+    return result;
+  });
 }

@@ -1,8 +1,9 @@
 // 회차: 실행 기회를 한 개체에게 건네고, 닫을 때 확정한다.
 // 실행기는 기회를 줄 뿐이다. 무엇을 읽고 쓸지, 아무것도 하지 않을지는 개체가 정한다.
 import fs from 'node:fs';
+import { verify } from './verify.mjs';
 import crypto from 'node:crypto';
-import { appendEvent, loadEvents, loadConfig, isPaused, p, agentDir, writeText, readText, sha256 } from './store.mjs';
+import { appendEvent, withTransaction, loadEvents, loadConfig, isPaused, p, agentDir, writeText, readText, sha256 } from './store.mjs';
 import { project, living } from './world.mjs';
 import { briefing } from './briefing.mjs';
 import { regenerate } from './derive.mjs';
@@ -42,14 +43,13 @@ export function decide(w, cfg) {
   return { kind: 'idle', reason: alive.length ? '깨어 있는 개체가 없다(모두 휴면)' : '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
 }
 
-export function openTurn({ adapter = process.env.COMMONS_ADAPTER || 'manual', model = process.env.COMMONS_MODEL || null, wake = null } = {}) {
+function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model = process.env.COMMONS_MODEL || null, wake = null } = {}) {
   if (isPaused()) return { status: 'paused', text: '정지 중이다(control/PAUSE). 회차를 열지 않는다. 아무것도 커밋하지 않고 끝낸다.' };
+  const verification = verify();
+  if (!verification.ok) throw new Error(verification.problems.join('\n'));
   const cfg = loadConfig();
   let w = project(loadEvents());
-  if (w.turn) {
-    appendEvent({ type: 'run_failed', agent_id: w.turn.agent_id, turn_id: w.turn.turn_id, payload: { turn_id: w.turn.turn_id, reason: '닫히지 않은 채 남은 회차. 기술적 중단이며 개체의 선택이 아니다' } });
-    w = project(loadEvents());
-  }
+  if (w.turn) return { status: 'busy', text: `열린 회차 ${w.turn.turn_id}가 있다. 새 회차를 열지 않는다. resume-turn으로 복구하거나 fail로 명시적으로 중단한다.` };
   const today = new Date().toISOString().slice(0, 10);
   if ((w.turns_by_day[today] || 0) >= cfg.max_turns_per_day) {
     appendEvent({ type: 'run_budget_exhausted', payload: { reason: `하루 회차 한도 ${cfg.max_turns_per_day}`, day: today } });
@@ -80,7 +80,8 @@ export function openTurn({ adapter = process.env.COMMONS_ADAPTER || 'manual', mo
     if (d.proposal?.seed_note) {
       const path = `inherited/${d.proposal.id.slice(0, 8)}`;
       writeText(agentDir(agentId, 'private', path + '.md'), d.proposal.seed_note);
-      appendEvent({ type: 'note_written', agent_id: agentId, actor_id: 'runtime', turn_id, visibility: 'private', caused_by: [created.event_id], payload: { path, title: `${d.proposal.by} 이(가) 건넨 기록`, hash: sha256(d.proposal.seed_note), origin: 'inherited' } });
+      writeText(agentDir(agentId, 'history', 'notes', path + '.r1.md'), d.proposal.seed_note);
+      appendEvent({ type: 'note_written', agent_id: agentId, actor_id: 'runtime', turn_id, visibility: 'private', caused_by: [created.event_id], payload: { path, revision: 1, content: d.proposal.seed_note, title: `${d.proposal.by} 이(가) 건넨 기록`, hash: sha256(d.proposal.seed_note), origin: 'inherited' } });
     }
   } else agentId = d.agent.id;
 
@@ -91,29 +92,46 @@ export function openTurn({ adapter = process.env.COMMONS_ADAPTER || 'manual', mo
   return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, text: briefing(before, agentId, { turn_id, kind: d.kind, delivered, cfg, events: loadEvents() }) };
 }
 
-export function closeTurn() {
+function closeUnlocked() {
   const w = project(loadEvents());
   if (!w.turn) return { ok: false, text: '열려 있는 회차가 없다.' };
   const { turn_id, agent_id } = w.turn;
   const me = w.agents[agent_id];
   const base = { agent_id, turn_id };
-  if (me.pending_end) {
+  if (me.pending_end && !isPaused() && me.status !== 'suspended') {
     // 요청(개체의 주장)과 실행(실행기의 집행)은 서로 다른 사건이다.
     appendEvent({ ...base, type: 'agent_ended', actor_id: agent_id, visibility: 'public', caused_by: [me.pending_end], payload: { by: 'self', request: me.pending_end } });
   }
   const actions = Object.values(w.turn.counts).reduce((s, n) => s + n, 0);
   const local = loadTurnFile();
   const read = local?.turn_id === turn_id ? local.read : [];
-  appendEvent({ ...base, type: 'turn_closed', visibility: 'system', payload: { turn_id, actions, counts: w.turn.counts, read, silent: actions === 0, paused_at_close: isPaused() || undefined } });
+  appendEvent({ ...base, type: 'turn_closed', visibility: 'private', payload: { turn_id, actions, counts: w.turn.counts, read, silent: actions === 0, paused_at_close: isPaused() || undefined } });
   fs.rmSync(turnFile(), { force: true });
   const report = regenerate();
   return { ok: true, turn_id, agent_id, actions, text: `회차 ${turn_id} (${agent_id}) 를 닫았다. 수락된 행동 ${actions}개${actions === 0 ? ' — 침묵한 회차이며 정상이다' : ''}.\n${report}` };
 }
 
-export function failTurn(reason) {
+function failUnlocked(reason) {
   const w = project(loadEvents());
-  appendEvent({ type: 'run_failed', agent_id: w.turn?.agent_id ?? null, turn_id: w.turn?.turn_id ?? null, payload: { turn_id: w.turn?.turn_id ?? null, reason: reason || '사유 없음' } });
+  appendEvent({ type: 'run_failed', visibility: 'private', agent_id: w.turn?.agent_id ?? null, turn_id: w.turn?.turn_id ?? null, payload: { turn_id: w.turn?.turn_id ?? null, reason: reason || '사유 없음' } });
   fs.rmSync(turnFile(), { force: true });
   regenerate();
   return { ok: true, text: '기술적 실패로 기록했다(run_failed). 개체의 종료나 선택으로 기록되지 않는다.' };
+}
+
+export const openTurn = (options) => withTransaction(() => openUnlocked(options));
+export const closeTurn = () => withTransaction(closeUnlocked);
+export const failTurn = (reason) => withTransaction(() => failUnlocked(reason));
+export function resumeTurn(turnId) {
+  return withTransaction(() => {
+    if (isPaused()) return { status: 'paused', text: '정지 중이다' };
+    const v = verify();
+    if (!v.ok) throw new Error(v.problems.join('\n'));
+    const events = loadEvents(), w = project(events);
+    if (!w.turn || w.turn.turn_id !== turnId) throw new Error('회차 ID가 맞지 않는다');
+    if (w.agents[w.turn.agent_id].status === 'suspended') throw new Error('운영 정지된 개체');
+    const local = loadTurnFile();
+    if (local?.turn_id !== turnId) writeText(turnFile(), JSON.stringify({ turn_id: turnId, agent_id: w.turn.agent_id, read: [] }));
+    return { status: 'open', text: briefing(w, w.turn.agent_id, { ...w.turn, delivered: w.messages.filter((m) => m.to === w.turn.agent_id && m.delivered).map((m) => m.event_id), cfg: loadConfig(), events }) };
+  });
 }

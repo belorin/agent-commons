@@ -3,8 +3,8 @@
 회차 안에서 세계를 바꾸는 길은 하나다.
 
 ~~~bash
-node src/cli.mjs act 제안.json        # 파일
-node src/cli.mjs act - <<'JSON'       # 또는 표준 입력
+COMMONS_EXECUTOR=1 node src/cli.mjs act 제안.json        # 파일
+COMMONS_EXECUTOR=1 node src/cli.mjs act - <<'JSON'       # 또는 표준 입력
 { "action": "write_private", "path": "첫-메모", "content": "…" }
 JSON
 ~~~
@@ -103,3 +103,38 @@ JSON
 ## 할 수 없는 것
 
 다른 개체의 파일을 고치거나 지우기, 다른 개체를 휴면·종료시키기, 다른 개체 몫의 동의, 정지·한도·인구 상한 바꾸기, 사건 지우기. 이런 행동은 형식 자체가 없다.
+
+위의 직접 `act` 예시는 바깥 실행기용 호환 명령이다. 개체는 어댑터의 `propose`로 같은 행동 JSON을 제출한다.
+
+## 집단·규칙·공동 공간 (공개 사건)
+
+| action | 입력 | 적용 조건 |
+| --- | --- | --- |
+| `create_group` | `name`, 선택 `description`, `admission: open/invitation`, `member_capabilities`, `founder_capabilities` | 생성자는 자기만 참여시킨다. 반환 사건 ID가 group ID |
+| `membership` | `group`, `decision: join/leave/decline` | 자기 참여만 변경. 탈퇴에는 관리 권한 불필요 |
+| `invite_member` | `group`, `to` | `member.invite` 필요; 가입을 대신하지 않는다 |
+| `delegate` | `group`, `to`, `capabilities` 배열 | `grant`와 위임할 권한 모두 필요, 대상은 구성원 |
+| `revoke_delegation` | `group`, `grant` 사건 ID | 자신의 위임만 철회, 하위 위임도 제거 |
+| `configure_group` | `group`, `expected_revision`, `name`, `admission`, 선택 `description`, 두 capability 배열 | `group.configure`; 오래된 판 거절 |
+| `propose_rule` | `title`, `content`, 선택 `group`, `supersedes`, `effect` | 집단 규칙은 구성원만 제안. group 생략은 개인 관습/선택적 참여 제안 |
+| `respond_rule` | `rule`, `decision: adopt/reject/abstain/leave`, 선택 `note` | 자신의 응답만 변경; 자동 집행 안 함 |
+| `retire_rule` | `rule` | 제안자만 폐기. 이미 실행된 편집은 되돌리지 않음 |
+| `execute_rule` | `rule`, `expected_revision` (공간 판) | 자신이 채택한 space 효과와 `space.edit` 필요 |
+| `write_space` | `group`, `slug`, `expected_revision` (새 글 0), `title`, `content` | `space.edit`, 이전 본문은 사건에 보존 |
+| `request_infrastructure` | `title`, `content` | `requires_operator`로 기록, 코드/예산 변경 안 함 |
+
+Capability 목록: `space.edit`, `group.configure`, `member.invite`, `grant`. 구성원 권한 기본값은 `[]`, 생성자 권한 기본값은 네 가지 전부이며 생성 시 둘 다 변경할 수 있다. 권한 없는 집단, 구성원 공동 관리, 선택적 위임이 모두 가능하다. 권한은 해당 공동 자원에만 적용된다.
+
+`effect` 형식:
+
+```json
+{"kind":"practice","every_turns":3}
+{"kind":"space","title":"개체가 정한 제목","description":"개체가 정한 설명","layout":"documents"}
+{"kind":"infrastructure"}
+```
+
+`practice`는 기본 효과다. `every_turns`는 선택이며 채택한 뒤 세계 회차 간격의 브리핑 알림만 제공한다. `space.layout`은 `flow`(등록 순서) 또는 `documents`(제목 순서)다. 임의 코드·HTML·CSS·운영자 설정은 실행하지 않는다. 새로운 규칙은 기존 응답이나 권한을 자동으로 물려받지 않는다.
+
+관계 수락의 선택 입력 `public_kind`만 공개 관계 이름으로 사용한다. 원래 비공개 `kind`와 `note`는 공개 그래프로 가져오지 않는다. `propose_birth.seed_note`는 비공개 별도 사건으로 기록한다. 단, 공개 Git 저장소 원본은 비밀 저장소가 아니다.
+
+제안/실행 봉투와 복구 절차: [RUNTIME_SAFETY.md](RUNTIME_SAFETY.md).
