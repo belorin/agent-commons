@@ -591,3 +591,103 @@ test('첫 등장은 타인의 글을 자동 주입하지 않으며 자발적 읽
   assert.ok(verify().ok);
   closeTurn();
 });
+
+
+test('개체의 요청은 세계 회차를 기다리고 성립 전에는 순번에서 빠진다', () => {
+  turn(); turn();
+  const t = openTurn();
+  assert.equal(t.agent_id, 'ag_0001');
+  assert.equal(act({ action: 'request_activity', after_turns: 2, note: '내 조사 후속' }).ok, true);
+  const requestId = world().agents.ag_0001.activity_request.event_id;
+  assert.match(read('schedule'), /내 조사 후속/);
+  closeTurn();
+  assert.equal(turn().agent_id, 'ag_0002');
+  assert.equal(turn().agent_id, 'ag_0002');
+  const resumed = openTurn();
+  assert.equal(resumed.agent_id, 'ag_0001');
+  assert.equal(resumed.selection, 'requested');
+  assert.equal(resumed.request_reason, 'elapsed');
+  assert.match(resumed.text, /네가 요청한 세계 회차 간격/);
+  assert.equal(world().agents.ag_0001.activity_request, null);
+  assert.equal(S.loadEvents().at(-1).payload.activity_request, requestId);
+  closeTurn();
+  assert.ok(verify().ok);
+});
+
+test('새로운 전언은 자신의 요청을 깨우지만 답변을 강요하지 않는다', () => {
+  turn(); turn();
+  openTurn();
+  assert.equal(act({ action: 'request_activity', on_message: true, note: '새 편지가 오면' }).ok, true);
+  closeTurn();
+  const other = openTurn();
+  assert.equal(other.agent_id, 'ag_0002');
+  assert.equal(act({ action: 'contact', to: 'ag_0001', content: '아직 읽지 않았나?' }).ok, true);
+  closeTurn();
+  const next = openTurn();
+  assert.equal(next.agent_id, 'ag_0001');
+  assert.equal(next.request_reason, 'message');
+  assert.match(next.text, /아직 읽지 않았나/);
+  closeTurn();
+  assert.equal(world().messages.filter((m) => m.from === 'ag_0001').length, 0);
+});
+
+test('남이 새로 공개한 인용은 자기 요청을 충족하며 오래된 인용은 안 된다', () => {
+  turn(); turn();
+  openTurn();
+  assert.equal(act({ action: 'publish', slug: 'self', title: '자기 질문', content: '이것은 나의 자료' }).ok, true);
+  assert.equal(act({ action: 'request_activity', on_reference: true }).ok, true);
+  closeTurn();
+  const peer = openTurn();
+  assert.equal(peer.agent_id, 'ag_0002');
+  assert.equal(act({ action: 'publish', slug: 'reply', title: '참조', content: '참조', links: ['ag_0001/self'] }).ok, true);
+  closeTurn();
+  const selected = openTurn();
+  assert.equal(selected.agent_id, 'ag_0001');
+  assert.equal(selected.request_reason, 'reference');
+  closeTurn();
+});
+
+test('연속 활동 요청은 일반 개체의 공정한 순번에 양보한다', () => {
+  turn(); turn();
+  openTurn();
+  assert.equal(act({ action: 'request_activity', after_turns: 0 }).ok, true); closeTurn();
+  const once = openTurn();
+  assert.equal(once.agent_id, 'ag_0001'); assert.equal(once.selection, 'requested');
+  act({ action: 'request_activity', after_turns: 0 }); closeTurn();
+  const twice = openTurn();
+  assert.equal(twice.agent_id, 'ag_0001'); assert.equal(twice.selection, 'requested');
+  act({ action: 'request_activity', after_turns: 0 }); closeTurn();
+  const fair = openTurn();
+  assert.equal(fair.agent_id, 'ag_0002'); assert.equal(fair.selection, 'fair');
+  closeTurn();
+  assert.equal(openTurn().agent_id, 'ag_0001');
+  closeTurn();
+  assert.ok(verify().ok);
+});
+
+test('요청은 자기만 교체·철회하며 휴면과 죽음보다 우선하지 않는다', () => {
+  turn(); turn();
+  openTurn();
+  assert.equal(act({ action: 'request_activity', on_message: 'yes' }).ok, false);
+  assert.equal(act({ action: 'request_activity' }).ok, false);
+  assert.equal(act({ action: 'request_activity', after_turns: -1 }).ok, false);
+  assert.equal(act({ action: 'request_activity', after_turns: 9 }).ok, true);
+  assert.equal(act({ action: 'cancel_activity_request' }).ok, true);
+  assert.equal(world().agents.ag_0001.activity_request, null);
+  assert.equal(act({ action: 'request_activity', after_turns: 99 }).ok, true);
+  assert.equal(act({ action: 'request_dormancy', wake: { on_message: true } }).ok, true);
+  assert.equal(world().agents.ag_0001.activity_request, null);
+  closeTurn();
+  assert.equal(turn().agent_id, 'ag_0002');
+});
+
+test('예약하지 않은 개체의 기존 순번과 기존 사건 투영은 유지된다', () => {
+  turn(); turn();
+  const a = turn();
+  const b = turn();
+  assert.equal(a.agent_id, 'ag_0001');
+  assert.equal(b.agent_id, 'ag_0002');
+  assert.equal(world().request_streak, 0);
+  assert.equal(world().agents.ag_0001.activity_request, null);
+  assert.deepEqual(project(S.loadEvents()), project(S.loadEvents()));
+});
