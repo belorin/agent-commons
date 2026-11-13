@@ -282,6 +282,8 @@ test('관계는 상대가 받아들여야 성립하고, 거절은 공개되지 �
 
 test('읽은 것은 회차를 닫을 때 기록된다(발견이 이후 선택을 바꾸는지 따라갈 수 있게)', () => {
   turn([{ action: 'publish', slug: 'a', title: 'A', content: 'a' }]);
+  turn(); // 첫 등장은 후보 목록을 자동으로 펼치지 않는다.
+  turn();
   const t = openTurn();
   assert.match(t.text, /읽지 않은 글 \[ag_0001\/a\]/);
   read('work', 'ag_0001/a');
@@ -572,4 +574,20 @@ test('사이트 첫 화면과 글 목록에서 공개 글에 바로 접근한다
     assert.ok(html.includes('w-ag_0001--%ED%95%9C%EA%B8%80-%EA%B8%80.html'));
   }
   assert.equal(JSON.parse(S.readText(S.p('site/build.json'))).public_works, 1);
+});
+
+
+test('첫 등장은 타인의 글을 자동 주입하지 않으며 자발적 읽기와 빈 명세는 허용한다', () => {
+  turn([{ action: 'publish', slug: 'peer', title: 'PEER_TOPIC_SENTINEL', content: '외부 조사 결과' }]);
+  const born = openTurn();
+  assert.equal(born.kind, 'birth');
+  assert.doesNotMatch(born.text, /PEER_TOPIC_SENTINEL/);
+  assert.match(read('agent', 'ag_0001'), /PEER_TOPIC_SENTINEL/);
+  assert.match(read('work', 'ag_0001/peer'), /외부 조사 결과/);
+  closeTurn();
+  assert.deepEqual(world().agents.ag_0002.files, {});
+  const returning = openTurn();
+  assert.equal(returning.kind, 'walk');
+  assert.ok(verify().ok);
+  closeTurn();
 });
