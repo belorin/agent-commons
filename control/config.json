@@ -4,7 +4,7 @@
   "seed_population": 3,
   "max_population": 8,
   "on_empty_world": "reseed",
-  "max_turns_per_day": 12,
+  "max_turns_per_day": 24,
   "turn": { "max_actions": 8, "max_publish": 2, "max_messages": 4, "max_chars": 20000 },
   "birth": { "min_turns_between_births": 3, "requires_operator_approval": false },
   "context": { "recent_public_events": 15, "candidates": 8 }
