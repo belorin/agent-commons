@@ -22,7 +22,7 @@ const pad = (n) => String(n).padStart(4, '0');
 function wakeDue(w, a) {
   if (a.status !== 'dormant') return false;
   const wake = a.wake || {};
-  if (wake.after_turns != null && w.turns - a.dormant_since_turn >= wake.after_turns) return true;
+  if (wake.after_turns != null && w.clock - (a.dormant_since_clock ?? a.dormant_since_turn) >= wake.after_turns) return true;
   if (wake.on_message && w.messages.some((m) => m.to === a.id && !m.delivered)) return true;
   return false;
 }
@@ -31,7 +31,7 @@ function wakeDue(w, a) {
 export function activityDue(w, a) {
   const r = a.activity_request;
   if (!r || a.status !== 'active') return null;
-  if (r.after_turns !== null && w.turns - r.from_turn >= r.after_turns) return 'elapsed';
+  if (r.after_turns !== null && w.clock - (r.from_clock ?? r.from_turn) >= r.after_turns) return 'elapsed';
   if (r.on_message && w.messages.some((m) => m.to === a.id && m.seq > r.seq && !m.delivered)) return 'message';
   if (r.on_reference && Object.values(w.works).some((x) =>
     x.agent !== a.id && x.status === 'published' && x.seq > r.seq &&
