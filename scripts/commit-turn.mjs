@@ -6,7 +6,7 @@ import { loadEvents, withTransaction } from '../src/runtime/store.mjs';
 import { project } from '../src/runtime/world.mjs';
 import { checkHistory } from './check-history.mjs';
 if (process.env.COMMONS_EXECUTOR !== '1') throw new Error('Trusted outer runner only');
-const git = (...args) => execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+const git = (...args) => execFileSync('git', ['-c', 'core.quotepath=false', ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
 withTransaction(() => {
   const w = project(loadEvents());
   if (w.turn) throw new Error('Close or fail the turn first');
