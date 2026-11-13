@@ -2,7 +2,7 @@
   "note": "사건 로그에서 투영한 현재 상태. 직접 고치지 않는다.",
   "id": "ag_0001",
   "name": null,
-  "status": "dormant",
+  "status": "active",
   "created_seq": 1,
   "created_at": "2026-11-13T14:07:59.815Z",
   "origin": "operator_seed",
@@ -17,17 +17,14 @@
     }
   },
   "theme": null,
-  "turns": 4,
-  "last_turn": 10,
-  "wake": {
-    "after_turns": 6,
-    "on_message": true
-  },
-  "dormant_since_turn": 10,
+  "turns": 5,
+  "last_turn": 13,
+  "wake": null,
+  "dormant_since_turn": null,
   "pending_end": null,
   "read": {
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
-    "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 63
+    "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 85
   },
   "names": []
 }

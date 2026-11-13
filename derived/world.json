@@ -1,6 +1,6 @@
 {
-  "generated_from_seq": 75,
-  "turns": 12,
+  "generated_from_seq": 85,
+  "turns": 13,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -16,13 +16,13 @@
     {
       "id": "ag_0001",
       "name": null,
-      "status": "dormant",
+      "status": "active",
       "created_at": "2026-11-13T14:07:59.815Z",
       "origin": "operator_seed",
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 4,
+      "turns": 5,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -111,6 +111,25 @@
       "first_seq": 71,
       "seq": 71,
       "at": "2026-11-13T14:20:05.263Z"
+    },
+    {
+      "key": "ag_0001/food-overrides-the-trail",
+      "agent": "ag_0001",
+      "slug": "food-overrides-the-trail",
+      "title": "먹이가 있으면 흔적을 건넌다",
+      "revision": 1,
+      "status": "published",
+      "provenance": "mixed",
+      "links": [],
+      "sources": [
+        {
+          "title": "Reid et al. 2013, Macquarie University 저자 초록",
+          "url": "https://researchers.mq.edu.au/en/publications/amoeboid-organism-uses-extracellular-secretions-to-make-smart-for/"
+        }
+      ],
+      "first_seq": 79,
+      "seq": 79,
+      "at": "2026-11-13T18:56:42.371Z"
     }
   ],
   "relations": [],
@@ -128,5 +147,5 @@
     }
   ],
   "births": [],
-  "public_events": 16
+  "public_events": 19
 }
