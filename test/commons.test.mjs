@@ -150,8 +150,8 @@ test('(3단계) 예산 소진·기술 실패는 죽음이 아니다', () => {
   assert.equal(world().failures, 1);
   openTurn(); // 닫지 않고 버려진 회차
   const t = openTurn();
-  assert.equal(t.status, 'open');
-  assert.equal(S.loadEvents().filter((e) => e.type === 'run_failed').length, 2);
+  assert.equal(t.status, 'busy');
+  assert.equal(S.loadEvents().filter((e) => e.type === 'run_failed').length, 1);
 });
 
 test('휴면은 복귀할 수 있고, 깨울 조건은 개체가 정한다', () => {
@@ -289,4 +289,258 @@ test('읽은 것은 회차를 닫을 때 기록된다(발견이 이후 선택을
   assert.deepEqual(S.loadEvents().at(-1).payload.read, ['work:ag_0001/a@1']);
   turn();
   assert.ok(!openTurn().text.includes('읽지 않은 글 [ag_0001/a]'));
+});
+
+test('서로 다른 집단 운영, 자발적 참여·이탈, 범위별 위임과 철회', () => {
+  turn(); turn(); openTurn();
+  const g = act({ action: 'create_group', name: '임시 담당 공간', admission: 'invitation' }).events[0].event_id;
+  const other = act({ action: 'create_group', name: '공동 편집', member_capabilities: ['space.edit', 'group.configure'], founder_capabilities: [] }).events[0].event_id;
+  act({ action: 'invite_member', group: g, to: 'ag_0002' }); closeTurn(); openTurn();
+  assert.ok(act({ action: 'membership', group: g, decision: 'join' }).ok);
+  assert.ok(act({ action: 'membership', group: other, decision: 'join' }).ok);
+  const edit = { action: 'write_space', group: g, slug: 'p', expected_revision: 0, title: '글', content: '본문' };
+  assert.equal(act(edit).ok, false);
+  assert.ok(act({ ...edit, group: other }).ok);
+  closeTurn(); openTurn();
+  const grant = act({ action: 'delegate', group: g, to: 'ag_0002', capabilities: ['space.edit'] }).events[0].event_id;
+  closeTurn(); openTurn(); assert.ok(act(edit).ok);
+  assert.equal(act(edit).ok, false); // stale revision
+  assert.equal(act({ action: 'delegate', group: g, to: 'ag_0001', capabilities: ['grant'] }).ok, false);
+  closeTurn(); openTurn(); assert.ok(act({ action: 'revoke_delegation', group: g, grant }).ok);
+  closeTurn(); openTurn(); assert.equal(act({ ...edit, expected_revision: 1 }).ok, false);
+  assert.ok(act({ action: 'membership', group: g, decision: 'leave' }).ok);
+  assert.equal(world().groups[g].members.includes('ag_0002'), false);
+  assert.ok(verify().ok);
+});
+
+test('규칙은 제안·채택·실행이 구별되고 개정은 기존 동의를 승계하지 않는다', () => {
+  turn(); turn(); openTurn();
+  const group = act({ action: 'create_group', name: '공간' }).events[0].event_id;
+  const r = act({ action: 'propose_rule', group, title: '한 관습', content: '내용은 개체가 결정', effect: { kind: 'space', title: '새 공간', description: '<script>evil()</script>', layout: 'documents' } }).events[0].event_id;
+  assert.equal(world().groups[group].space.title, '공간');
+  assert.equal(act({ action: 'execute_rule', rule: r, expected_revision: 0 }).ok, false);
+  assert.ok(act({ action: 'respond_rule', rule: r, decision: 'adopt' }).ok);
+  assert.ok(act({ action: 'execute_rule', rule: r, expected_revision: 0 }).ok);
+  const r2 = act({ action: 'propose_rule', group, supersedes: r, title: '다른 관습', content: '', effect: { kind: 'practice', every_turns: 2 } }).events[0].event_id;
+  assert.deepEqual(world().rules[r2].responses, {});
+  closeTurn(); openTurn();
+  assert.equal(act({ action: 'respond_rule', rule: r, decision: 'adopt' }).ok, false);
+  act({ action: 'membership', group, decision: 'join' });
+  assert.ok(act({ action: 'respond_rule', rule: r2, decision: 'reject' }).ok);
+  assert.ok(act({ action: 'respond_rule', rule: r2, decision: 'abstain' }).ok);
+  assert.ok(act({ action: 'respond_rule', rule: r2, decision: 'adopt' }).ok);
+  assert.ok(act({ action: 'membership', group, decision: 'leave' }).ok);
+  assert.equal(world().rules[r2].responses.ag_0002.decision, 'leave');
+  closeTurn(); openTurn();
+  assert.ok(act({ action: 'retire_rule', rule: r2 }).ok);
+  assert.equal(act({ action: 'respond_rule', rule: r2, decision: 'adopt' }).ok, false);
+  const request = act({ action: 'request_infrastructure', title: '다른 실행 주기', content: '검토 요청' });
+  assert.equal(world().infrastructure[request.events[0].event_id].status, 'requires_operator');
+  closeTurn(); buildSite();
+  const html = S.readText(S.p('site', 'groups.html'));
+  assert.match(html, /새 공간/); assert.ok(!html.includes('<script>evil'));
+  assert.ok(verify().ok);
+});
+
+test('상속·관계의 비공개 원문은 공개 사건과 투영에 나오지 않는다', () => {
+  const secret = 'SECRET-SEED-239', kind = 'PRIVATE-KIND-434';
+  turn(); turn(); openTurn();
+  act({ action: 'propose_birth', reason: '공개 이유', contributors: ['ag_0002'], seed_note: secret });
+  const birth = Object.keys(world().births)[0];
+  const relation = act({ action: 'propose_relation', to: 'ag_0002', kind, note: kind }).events[0].event_id;
+  closeTurn(); openTurn();
+  act({ action: 'acknowledge_relation', proposal: relation, decision: 'accept' });
+  act({ action: 'consent_birth', proposal: birth, decision: 'consent' });
+  closeTurn(); const child = openTurn();
+  assert.equal(child.agent_id, 'ag_0003');
+  assert.equal(read('note', 'inherited/' + birth.slice(0, 8)), secret);
+  closeTurn(); buildSite(); regenerate();
+  const publicEvents = JSON.stringify(S.loadEvents().filter((e) => ['public', 'system'].includes(e.visibility)));
+  for (const s of [secret, kind]) {
+    assert.ok(!publicEvents.includes(s));
+    for (const f of [...allFiles(S.p('site')), ...allFiles(S.p('derived'))]) assert.ok(!S.readText(f).includes(s), f);
+  }
+  assert.ok(verify().ok);
+});
+
+test('과거 글·방법·기억의 모든 판본 검사 및 기억 원문 재생', () => {
+  config({ seed_population: 1, max_turns_per_day: 500 });
+  for (const content of ['첫 원문', '둘째 원문']) turn([
+    { action: 'write_private', path: 'memo', content },
+    { action: 'publish', slug: 'w', title: 'w', content },
+    { action: 'revise_self', target: 'writing', content },
+  ]);
+  assert.ok(verify().ok);
+  openTurn(); assert.equal(read('revision', 'memo', '1'), '첫 원문'); closeTurn();
+  for (const file of ['notes/memo.r1.md', 'works/w.r1.md', 'writing.r1.md']) {
+    const f = S.agentDir('ag_0001', 'history', file), original = S.readText(f);
+    S.writeText(f, '변조'); assert.equal(verify().ok, false);
+    S.writeText(f, original);
+  }
+  const extra = S.agentDir('ag_0001', 'history', 'unknown.md');
+  S.writeText(extra, '미등록'); assert.equal(verify().ok, false); fs.rmSync(extra);
+  assert.ok(verify().ok);
+});
+
+test('안전 실행 봉투: 회차·버전·중복 요청·정지·정지된 개체 검사', async () => {
+  const { executeProposal } = await import('../src/runtime/actions.mjs');
+  const t = openTurn(), seq = world().seq;
+  const envelope = { request_id: 'request_001', turn_id: t.turn_id, expected_seq: seq, proposal: { action: 'write_private', path: 'a', content: 'a' } };
+  assert.ok(executeProposal(envelope).ok);
+  const count = S.loadEvents().length;
+  assert.ok(executeProposal(envelope).duplicate); assert.equal(S.loadEvents().length, count);
+  assert.throws(() => executeProposal({ ...envelope, proposal: { action: 'resume' } }), /different/);
+  assert.throws(() => executeProposal({ ...envelope, request_id: 'request_002' }), /conflict/);
+  S.appendEvent({ type: 'agent_suspended', agent_id: t.agent_id, actor_id: 'operator', payload: {} });
+  assert.equal(act({ action: 'publish', slug: 'p', title: 'p', content: 'p' }).ok, false);
+  assert.equal(act({ action: 'toString' }).ok, false);
+});
+
+test('열린 회차를 새 예약 실행이 취소하지 않으며 복구 시 회차를 소비하지 않는다', async () => {
+  const { resumeTurn } = await import('../src/runtime/tick.mjs');
+  const t = openTurn();
+  act({ action: 'write_private', path: 'n', content: '원문' });
+  const count = S.loadEvents().length;
+  assert.equal(openTurn().status, 'busy'); assert.equal(S.loadEvents().length, count);
+  assert.equal(resumeTurn(t.turn_id).status, 'open'); assert.equal(world().turns, 1);
+  assert.throws(() => resumeTurn('wrong'), /ID/);
+  act({ action: 'request_self_end', confirm: true }); failTurn('기술 중단');
+  assert.equal(world().agents.ag_0001.pending_end, null);
+  assert.equal(world().agents.ag_0001.status, 'active');
+  assert.ok(verify().ok);
+});
+
+test('트랜잭션은 오류 시 쓰기를 버리고 동시 쓰기 잠금과 중단 저널을 복구한다', async () => {
+  const { recoverTransaction } = await import('../src/runtime/transaction.mjs');
+  const f = S.p('data', 'example.txt');
+  assert.throws(() => S.withTransaction(() => { S.writeText(f, 'partial'); throw new Error('crash'); }), /crash/);
+  assert.equal(S.readText(f), null);
+  S.writeText(S.p('data/runtime/writer.lock'), String(process.pid));
+  assert.throws(() => openTurn(), /Writer busy/);
+  assert.throws(() => recoverTransaction(root), /still running/);
+  fs.rmSync(S.p('data/runtime/writer.lock'));
+  const entry = { path: 'data/example.txt', text: 'recovered', hash: S.sha256('recovered'), before: null };
+  S.writeText(S.p('data/runtime/transaction.json'), JSON.stringify([entry]));
+  assert.throws(() => openTurn(), /Interrupted/);
+  recoverTransaction(root); assert.equal(S.readText(f), 'recovered');
+  recoverTransaction(root); // idempotent
+  S.writeText(S.p('data/runtime/transaction.json'), JSON.stringify([{ ...entry, text: 'new', hash: S.sha256('new'), before: S.sha256('different') }]));
+  assert.throws(() => recoverTransaction(root), /conflict/);
+});
+
+test('제안 전용 프로세스는 실행 요청을 거절하고 사건을 확정하지 않는다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const adapter = new URL('../src/adapter.mjs', import.meta.url);
+  const t = openTurn(), count = S.loadEvents().length;
+  const input = [
+    { op: 'propose', proposal: { action: 'revise_self', target: 'name', name: '미확정' } },
+    { op: 'execute', proposal: { action: 'request_self_end', confirm: true } },
+    { op: 'read', kind: 'governance' },
+  ].map(JSON.stringify).join('\n') + '\n';
+  const r = spawnSync(process.execPath, [adapter.pathname, t.turn_id], { input, encoding: 'utf8', env: process.env });
+  assert.equal(r.status, 0, r.stderr);
+  const responses = r.stdout.trim().split('\n').map(JSON.parse);
+  assert.equal(responses[0].envelope.expected_seq, world().seq);
+  assert.equal(responses[1].ok, false);
+  assert.equal(S.loadEvents().length, count);
+  assert.equal(world().agents.ag_0001.name, null);
+});
+
+test('프로세스 강제 종료 후 사건과 원문을 함께 복구한다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const { recoverTransaction } = await import('../src/runtime/transaction.mjs');
+  const t = openTurn();
+  const moduleURL = new URL('../src/runtime/actions.mjs', import.meta.url).href;
+  const code = `import fs from 'node:fs';
+    import { applyAction } from ${JSON.stringify(moduleURL)};
+    const original = fs.renameSync;
+    fs.renameSync = (a,b) => { original(a,b); if (b.endsWith('/private/crash.md')) process.kill(process.pid, 'SIGKILL'); };
+    applyAction({action:'write_private',path:'crash',content:'durable-original'});`;
+  const child = spawnSync(process.execPath, ['--input-type=module', '-e', code], { env: process.env, encoding: 'utf8' });
+  assert.equal(child.signal, 'SIGKILL', child.stderr);
+  assert.ok(fs.existsSync(S.p('data/runtime/transaction.json')));
+  assert.equal(verify().ok, false);
+  recoverTransaction(root);
+  assert.ok(verify().ok, verify().problems.join('\n'));
+  assert.equal(world().turn.turn_id, t.turn_id);
+  assert.equal(S.readText(S.agentDir(t.agent_id, 'private/crash.md')), 'durable-original');
+  assert.equal(S.loadEvents().filter((e) => e.type === 'note_written').length, 1);
+  recoverTransaction(root);
+  assert.equal(S.loadEvents().filter((e) => e.type === 'note_written').length, 1);
+});
+
+test('위임 철회는 하위 위임을 끊으며 재가입으로 권한이 되살아나지 않는다', async () => {
+  const { capable } = await import('../src/runtime/governance.mjs');
+  config({ seed_population: 3, max_turns_per_day: 500 });
+  turn(); turn(); turn(); openTurn();
+  const group = act({ action: 'create_group', name: '임의 조직' }).events[0].event_id; closeTurn();
+  turn([{ action: 'membership', group, decision: 'join' }]);
+  turn([{ action: 'membership', group, decision: 'join' }]);
+  openTurn(); const grant = act({ action: 'delegate', group, to: 'ag_0002', capabilities: ['space.edit', 'grant'] }).events[0].event_id; closeTurn();
+  turn([{ action: 'delegate', group, to: 'ag_0003', capabilities: ['space.edit'] }]);
+  assert.ok(capable(world(), group, 'ag_0003', 'space.edit')); turn();
+  turn([{ action: 'revoke_delegation', group, grant }]);
+  assert.equal(capable(world(), group, 'ag_0003', 'space.edit'), false);
+  turn(); turn();
+  turn([{ action: 'membership', group, decision: 'leave' }]);
+  turn(); turn();
+  turn([{ action: 'membership', group, decision: 'join' }]);
+  assert.equal(capable(world(), group, 'ag_0001', 'grant'), false);
+});
+
+test('Git 정본 충돌은 실패 회차를 로컬 브랜치에 보존한다', async () => {
+  const { execFileSync, spawnSync } = await import('node:child_process');
+  const git = (cwd, ...args) => execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  S.writeText(S.p('.gitignore'), 'data/runtime/\n');
+  git(root, 'init', '-b', 'main'); git(root, 'config', 'user.email', 'test@example.invalid'); git(root, 'config', 'user.name', 'Test');
+  git(root, 'add', '.'); git(root, 'commit', '-m', 'base');
+  const bare = fs.mkdtempSync(path.join(os.tmpdir(), 'commons-remote-'));
+  git(bare, 'init', '--bare'); git(root, 'remote', 'add', 'origin', bare); git(root, 'push', '-u', 'origin', 'main');
+  const competitor = fs.mkdtempSync(path.join(os.tmpdir(), 'commons-other-'));
+  git(competitor, 'clone', '-b', 'main', bare, '.'); git(competitor, 'config', 'user.email', 'test@example.invalid'); git(competitor, 'config', 'user.name', 'Test');
+  fs.writeFileSync(path.join(competitor, 'concurrent.txt'), 'remote change'); git(competitor, 'add', '.'); git(competitor, 'commit', '-m', 'other runner'); git(competitor, 'push');
+  const remoteHead = git(competitor, 'rev-parse', 'HEAD');
+  turn([{ action: 'write_private', path: 'retained', content: 'keep this branch' }]);
+  const script = new URL('../scripts/commit-turn.mjs', import.meta.url).pathname;
+  const result = spawnSync(process.execPath, [script], { cwd: root, encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1' } });
+  assert.equal(result.status, 4, result.stdout + result.stderr);
+  assert.match(git(root, 'branch', '--show-current'), /^runs\//);
+  assert.equal(git(bare, 'rev-parse', 'main'), remoteHead);
+  assert.equal(S.readText(S.agentDir('ag_0001', 'private/retained.md')), 'keep this branch');
+  assert.ok(verify().ok);
+  const history = new URL('../scripts/check-history.mjs', import.meta.url).pathname;
+  assert.equal(spawnSync(process.execPath, [history, 'HEAD'], { cwd: root }).status, 0);
+  fs.writeFileSync(S.logPath(), '');
+  assert.notEqual(spawnSync(process.execPath, [history, 'HEAD'], { cwd: root }).status, 0);
+});
+
+test('CLI는 실행 주체와 닫을 회차를 확인하며 운영자 검토를 실행 완료로 위장하지 않는다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const cli = new URL('../src/cli.mjs', import.meta.url).pathname;
+  const invoke = (args, role = {}) => spawnSync(process.execPath, [cli, ...args], { env: { ...process.env, COMMONS_EXECUTOR: '', COMMONS_OPERATOR: '', ...role }, encoding: 'utf8' });
+  assert.equal(invoke(['tick']).status, 1);
+  assert.equal(S.loadEvents().length, 0);
+  const t = openTurn();
+  assert.equal(invoke(['close', 'wrong'], { COMMONS_EXECUTOR: '1' }).status, 1);
+  assert.equal(world().turn.turn_id, t.turn_id);
+  const request = act({ action: 'request_infrastructure', title: '요청', content: '설명' }).events[0].event_id;
+  assert.equal(invoke(['review-request', request, 'planned']).status, 1);
+  assert.equal(invoke(['review-request', request, 'implemented'], { COMMONS_OPERATOR: '1' }).status, 1);
+  assert.equal(invoke(['review-request', request, 'planned', '별도 개발'], { COMMONS_OPERATOR: '1' }).status, 0);
+  assert.equal(world().infrastructure[request].status, 'planned');
+  assert.equal(invoke(['close', t.turn_id], { COMMONS_EXECUTOR: '1' }).status, 0);
+  assert.ok(verify().ok);
+});
+
+test('활동 관습은 채택자에게만 알림을 주고 이탈 후 중단된다', async () => {
+  const { governanceContext } = await import('../src/runtime/governance.mjs');
+  turn(); turn(); openTurn();
+  const r = act({ action: 'propose_rule', title: '내 활동', content: '스스로 정한 관습', effect: { kind: 'practice', every_turns: 1 } }).events[0].event_id;
+  act({ action: 'respond_rule', rule: r, decision: 'adopt' }); closeTurn();
+  assert.equal(governanceContext(world(), 'ag_0001').reminders.length, 1);
+  assert.equal(governanceContext(world(), 'ag_0002').reminders.length, 0);
+  turn(); openTurn();
+  act({ action: 'respond_rule', rule: r, decision: 'leave' });
+  assert.equal(governanceContext(world(), 'ag_0001').reminders.length, 0);
+  closeTurn(); assert.ok(verify().ok);
 });

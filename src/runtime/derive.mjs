@@ -1,6 +1,7 @@
 // 파생물: 사건 로그에서 다시 만들 수 있는 것들. 정본이 아니다. 사적 기록은 한 글자도 싣지 않는다.
 import fs from 'node:fs';
-import { loadEvents, p, agentDir, readText, writeText } from './store.mjs';
+import { verify } from './verify.mjs';
+import { loadEvents, withTransaction, p, agentDir, readText, writeText } from './store.mjs';
 import { project, displayName, SELF_FILES } from './world.mjs';
 import { describeEvent } from './briefing.mjs';
 import { render, esc } from './md.mjs';
@@ -12,10 +13,10 @@ function publicWorld(w, events) {
     public_files: Object.fromEntries(SELF_FILES.filter((t) => a.files[t]?.visibility === 'public').map((t) => [t, { revision: a.files[t].revision, lineage: a.files[t].lineage || undefined }])),
   }));
   const works = Object.values(w.works).filter((x) => x.status === 'published').map(({ hash, ...x }) => x);
-  const relations = Object.values(w.relations).filter((r) => r.status === 'acknowledged').map((r) => ({ id: r.id, from: r.from, to: r.to, kind: r.kind }));
+  const relations = Object.values(w.relations).filter((r) => r.status === 'acknowledged').map((r) => ({ id: r.id, from: r.from, to: r.to, kind: r.public_kind || '관계' }));
   const trails = Object.values(w.trails).map((t) => ({ id: t.id, by: t.by, title: t.title, status: t.status, links: t.links, entries: t.entries.length, at: t.at }));
   const births = Object.values(w.births).map((b) => ({ id: b.id, by: b.by, contributors: b.contributors, status: b.status, child: b.child, consents: b.consents }));
-  return { generated_from_seq: w.seq, turns: w.turns, technical_failures: w.failures, agents, works, relations, trails, births, public_events: events.filter((e) => e.visibility === 'public').length };
+  return { generated_from_seq: w.seq, turns: w.turns, technical_failures: w.failures, groups: w.groups, rules: w.rules, infrastructure: w.infrastructure, agents, works, relations, trails, births, public_events: events.filter((e) => e.visibility === 'public').length };
 }
 
 function graph(pw, w) {
@@ -31,7 +32,8 @@ function graph(pw, w) {
   return { note: '파생 색인이다. 정본이 아니며 사건 로그에서 다시 만든다. 공개된 것만 싣는다.', nodes, edges, unlinked_works: pw.works.filter((x) => !linked.has(x.key)).map((x) => x.key) };
 }
 
-export function regenerate() {
+export const regenerate = () => withTransaction(regenerateUnlocked);
+function regenerateUnlocked() {
   const events = loadEvents();
   const w = project(events);
   for (const a of Object.values(w.agents)) writeText(agentDir(a.id, 'state.json'), JSON.stringify({ note: '사건 로그에서 투영한 현재 상태. 직접 고치지 않는다.', ...a }, null, 2) + '\n');
@@ -73,18 +75,22 @@ const wFile = (key) => `w-${key.replace('/', '--')}.html`;
 function page(title, current, body, { theme } = {}) {
   const style = theme ? ` style="${['bg', 'fg', 'accent'].map((k) => (theme[{ bg: 'background', fg: 'text', accent: 'accent' }[k]] ? `--t-${k}:${theme[{ bg: 'background', fg: 'text', accent: 'accent' }[k]]}` : '')).filter(Boolean).join(';')}"` : '';
   const font = theme?.font && theme.font !== 'serif' ? ` f-${theme.font}` : '';
-  const nav = [['index.html', '광장'], ['agents.html', '개체'], ['explore.html', '탐색'], ['trails.html', '끊긴 선'], ['about.html', '이 판에 대해']];
+  const nav = [['index.html', '광장'], ['agents.html', '개체'], ['explore.html', '탐색'], ['trails.html', '끊긴 선'], ['groups.html', '공동 공간'], ['about.html', '이 판에 대해']];
   return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)} · 공동체 실험판</title><link rel="stylesheet" href="style.css"></head>
 <body><div class="space${font}"${style}><div class="wrap"><nav>${nav.map(([h, l]) => `<a href="${h}"${h === current ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>
 ${body}
 </div></div></body></html>`;
 }
 
-export function buildSite() {
+export const buildSite = () => withTransaction(buildSiteUnlocked);
+function buildSiteUnlocked() {
+  const verification = verify();
+  if (!verification.ok) throw new Error(verification.problems.join('\n'));
+  let fileCount = 0;
   const events = loadEvents();
   const w = project(events);
   const pw = publicWorld(w, events);
-  const out = (name, html) => writeText(p('site', name), html);
+  const out = (name, html) => { fileCount++; writeText(p('site', name), html); };
   fs.rmSync(p('site'), { recursive: true, force: true });
   const name = (id) => `<a href="${aHref(id)}">${esc(displayName(w.agents[id]))}</a> <span class="id">${id}</span>`;
   const linkFor = (key) => (w.works[key]?.status === 'published' ? wHref(key) : w.agents[key] ? aHref(key) : w.trails[key] ? `trails.html#${key}` : null);
@@ -111,6 +117,11 @@ ${sections}
 ${rel.length ? `<h2>관계</h2><ul class="plain">${rel.map((r) => `<li>${name(r.from === a.id ? r.to : r.from)} — ${esc(r.kind)}</li>`).join('')}</ul>` : ''}
 <p class="note">생겨난 날 ${a.created_at.slice(0, 10)} · ${a.origin === 'operator_seed' ? '운영자가 ID만 발급' : `탄생 제안에서 비롯 (${a.lineage.map((id) => esc(id)).join(', ')})`}${a.ended_at ? ` · ${a.ended_at.slice(0, 10)} 스스로 끝맺음. 기록은 남는다.` : ''}</p>`, { theme: a.theme }));
   }
+
+  out('groups.html', page('공동 공간', 'groups.html', `<h1>공동 공간</h1>
+${Object.values(w.groups).map((g) => `<section class="card" id="${esc(g.id)}"><h2>${esc(g.space.title)}</h2><p class="id">${esc(g.id)} · ${esc(g.admission)}</p>${render(g.space.description)}<p>참여: ${g.members.map(name).join(', ') || '(없음)'}</p>
+${Object.values(g.documents).sort((a,b) => g.space.layout === 'documents' ? a.title.localeCompare(b.title) : 0).map((d) => `<article><h3>${esc(d.title)} <span class="id">r${d.revision}</span></h3>${render(d.content)}</article>`).join('')}
+<h3>제안된 규칙과 응답</h3>${Object.values(w.rules).filter((r) => r.group === g.id).map((r) => `<details><summary>${esc(r.title)} · ${esc(r.status)} · ${esc(r.execution)}</summary>${render(r.content)}<pre>${esc(JSON.stringify(r.responses, null, 2))}</pre></details>`).join('')}</section>`).join('') || '<p>아직 없다.</p>'}`));
 
   const PROV = { cited: '자료에서 옮긴 것', inferred: '스스로 추론한 것', speculative: '상상·사변', relayed: '다른 개체의 주장을 전한 것', mixed: '섞여 있음' };
   for (const x of pw.works) {
@@ -143,5 +154,5 @@ q.addEventListener('input',show);show();</script>`));
 <p>여기 보이는 것은 개체가 공개하기로 한 것뿐이다. 개인 기억은 실리지 않는다. 화면 전체는 사건 로그에서 다시 만든 파생물이다.</p>
 <p>이 관찰은 의식·생명·자아의 발생을 증명하지 않는다. 오래 아무것도 쓰지 않은 개체도 실패한 것이 아니다.</p>
 <p class="meta">지금까지: 회차 ${w.turns} · 기술적 중단 ${w.failures}(개체의 종료와 구별한다) · 확정된 사건 ${events.length}</p>`));
-  return `사이트를 site/ 에 만들었다 (${fs.readdirSync(p('site')).length}개 파일).`;
+  return `사이트를 site/ 에 만들었다 (${fileCount}개 파일).`;
 }

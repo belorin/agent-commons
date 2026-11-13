@@ -1,3 +1,4 @@
+import { projectGovernance } from './governance.mjs';
 // 투영: 확정된 사건의 순서만으로 현재 세계 상태를 다시 만든다.
 // 이 함수는 순수하다. 파일·시계·난수를 보지 않는다. 같은 로그는 언제나 같은 세계를 낸다.
 
@@ -27,6 +28,7 @@ function blankAgent(id, e) {
 
 export function project(events) {
   const w = {
+    groups: {}, rules: {}, infrastructure: {},
     seq: 0,
     turns: 0,
     turns_by_day: {},
@@ -47,6 +49,7 @@ export function project(events) {
     w.seq = e.world_seq;
     const pl = e.payload || {};
     const a = e.agent_id ? A(e.agent_id) : null;
+    projectGovernance(w, e);
     switch (e.type) {
       case 'agent_created':
         w.agents[e.agent_id] = blankAgent(e.agent_id, e);
@@ -70,10 +73,12 @@ export function project(events) {
       }
       case 'turn_closed':
         if (a) for (const key of pl.read || []) a.read[key] = e.world_seq;
+        if (a) a.pending_end = null;
         w.turn = null;
         break;
       case 'run_failed':
         w.failures += 1;
+        if (a) a.pending_end = null;
         if (w.turn && (!pl.turn_id || pl.turn_id === w.turn.turn_id)) w.turn = null;
         break;
       case 'agent_renamed':
@@ -91,7 +96,7 @@ export function project(events) {
         a.files.lifecycle = { revision: pl.to_revision, hash: pl.hash, visibility: pl.visibility };
         break;
       case 'note_written':
-        w.notes[`${e.agent_id}/${pl.path}`] = { agent: e.agent_id, path: pl.path, title: pl.title || null, hash: pl.hash, seq: e.world_seq, at: e.timestamp };
+        w.notes[`${e.agent_id}/${pl.path}`] = { agent: e.agent_id, path: pl.path, revision: pl.revision || 1, title: pl.title || null, hash: pl.hash, seq: e.world_seq, at: e.timestamp };
         break;
       case 'work_published':
         w.works[`${e.agent_id}/${pl.slug}`] = {
@@ -117,7 +122,7 @@ export function project(events) {
         break;
       case 'relation_acknowledged': {
         const r = w.relations[pl.proposal];
-        if (r) { r.status = pl.decision === 'accept' ? 'acknowledged' : 'declined'; r.reply = pl.note || null; }
+        if (r) { r.status = pl.decision === 'accept' ? 'acknowledged' : 'declined'; r.reply = pl.note || null; r.public_kind = pl.public_kind || null; }
         break;
       }
       case 'relation_dissolved': {
@@ -144,6 +149,9 @@ export function project(events) {
           requires_approval: !!pl.requires_approval, approved: false, consents: {}, status: 'proposed', child: null, seq: e.world_seq,
         };
         settleBirth(w.births[e.event_id]);
+        break;
+      case 'birth_seed_recorded':
+        if (w.births[pl.proposal]) w.births[pl.proposal].seed_note = pl.content;
         break;
       case 'birth_consented': {
         const b = w.births[pl.proposal];
@@ -189,7 +197,7 @@ export function project(events) {
       default:
         break; // action_rejected, run_budget_exhausted, world_idle 등은 상태를 바꾸지 않는다
     }
-    if (w.turn && e.turn_id === w.turn.turn_id && e.actor_id === w.turn.agent_id && e.type !== 'action_rejected') {
+    if (w.turn && e.turn_id === w.turn.turn_id && e.actor_id === w.turn.agent_id && !['action_rejected', 'birth_seed_recorded'].includes(e.type)) {
       w.turn.counts[e.type] = (w.turn.counts[e.type] || 0) + 1;
     }
   }

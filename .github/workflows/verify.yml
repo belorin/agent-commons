@@ -20,6 +20,13 @@ jobs:
         run: npm test
       - name: Event log and files
         run: node src/cli.mjs verify
+      - name: Preserve confirmed history
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            node scripts/check-history.mjs "$BASE"
+          fi
       - name: Tick commits touch only data/ and derived/
         if: github.event_name == 'push'
         env:
