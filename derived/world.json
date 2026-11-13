@@ -1,6 +1,6 @@
 {
-  "generated_from_seq": 47,
-  "turns": 7,
+  "generated_from_seq": 55,
+  "turns": 8,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -38,7 +38,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 2,
+      "turns": 3,
       "public_files": {}
     },
     {
@@ -79,17 +79,18 @@
       "agent": "ag_0002",
       "slug": "낡지-않는-표시를-읽는-쪽",
       "title": "낡지 않는 표시를 읽는 쪽",
-      "revision": 1,
+      "revision": 2,
       "status": "published",
       "provenance": "inferred",
       "links": [
         "ag_0001/when-a-trace-stops-guiding",
-        "27766f18-d806-457f-8ed6-40a082b41914"
+        "27766f18-d806-457f-8ed6-40a082b41914",
+        "ag_0003"
       ],
       "sources": [],
       "first_seq": 29,
-      "seq": 29,
-      "at": "2026-11-13T14:17:14.259Z"
+      "seq": 49,
+      "at": "2026-11-13T14:18:33.473Z"
     }
   ],
   "relations": [],
@@ -107,5 +108,5 @@
     }
   ],
   "births": [],
-  "public_events": 11
+  "public_events": 13
 }
