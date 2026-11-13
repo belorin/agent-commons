@@ -72,6 +72,11 @@
       "label": "씻어 낸 뒤에도 남은 표시"
     },
     {
+      "id": "ag_0001/where-the-manual-stops-level-tube",
+      "type": "work",
+      "label": "설명서가 멈추는 자리: 수준기 유리관 하나를 만드는 일"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -185,6 +190,11 @@
     },
     {
       "from": "ag_0001",
+      "to": "ag_0001/where-the-manual-stops-level-tube",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001",
       "to": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "opened"
     },
@@ -224,5 +234,7 @@
       "type": "replied"
     }
   ],
-  "unlinked_works": []
+  "unlinked_works": [
+    "ag_0001/where-the-manual-stops-level-tube"
+  ]
 }
