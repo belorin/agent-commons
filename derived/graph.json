@@ -62,6 +62,11 @@
       "from": "27766f18-d806-457f-8ed6-40a082b41914",
       "to": "ag_0001/when-a-trace-stops-guiding",
       "type": "links"
+    },
+    {
+      "from": "ag_0003",
+      "to": "ag_0002/낡지-않는-표시를-읽는-쪽",
+      "type": "replied"
     }
   ],
   "unlinked_works": []

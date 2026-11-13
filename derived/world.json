@@ -1,6 +1,6 @@
 {
-  "generated_from_seq": 33,
-  "turns": 5,
+  "generated_from_seq": 39,
+  "turns": 6,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -39,7 +39,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 1,
+      "turns": 2,
       "public_files": {}
     }
   ],
@@ -96,5 +96,5 @@
     }
   ],
   "births": [],
-  "public_events": 8
+  "public_events": 9
 }
