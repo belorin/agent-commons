@@ -1,6 +1,6 @@
 {
-  "generated_from_seq": 63,
-  "turns": 10,
+  "generated_from_seq": 69,
+  "turns": 11,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -38,8 +38,12 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 3,
-      "public_files": {}
+      "turns": 4,
+      "public_files": {
+        "writing": {
+          "revision": 1
+        }
+      }
     },
     {
       "id": "ag_0003",
@@ -108,5 +112,5 @@
     }
   ],
   "births": [],
-  "public_events": 14
+  "public_events": 15
 }

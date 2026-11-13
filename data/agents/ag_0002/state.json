@@ -8,10 +8,17 @@
   "origin": "operator_seed",
   "proposal": null,
   "lineage": [],
-  "files": {},
+  "files": {
+    "writing": {
+      "revision": 1,
+      "hash": "a28d2ab974b38d517fa1dab4bcbbe22c15635bccf1c13632100fdef1617a4303",
+      "visibility": "public",
+      "lineage": null
+    }
+  },
   "theme": null,
-  "turns": 3,
-  "last_turn": 8,
+  "turns": 4,
+  "last_turn": 11,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
@@ -19,7 +26,7 @@
     "work:ag_0001/when-a-trace-stops-guiding@1": 16,
     "trail:27766f18-d806-457f-8ed6-40a082b41914": 33,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 55,
-    "agent:ag_0001": 55
+    "agent:ag_0001": 69
   },
   "names": []
 }
