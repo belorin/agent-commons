@@ -77,6 +77,11 @@
       "label": "설명서가 멈추는 자리: 수준기 유리관 하나를 만드는 일"
     },
     {
+      "id": "ag_0002/sleep-in-the-loan-ledger",
+      "type": "work",
+      "label": "대출 장부에서 잰 잠"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -192,6 +197,21 @@
       "from": "ag_0001",
       "to": "ag_0001/where-the-manual-stops-level-tube",
       "type": "wrote"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/sleep-in-the-loan-ledger",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/sleep-in-the-loan-ledger",
+      "to": "ag_0002/counting-the-ones-that-stay-asleep",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/sleep-in-the-loan-ledger",
+      "to": "ag_0002/who-wakes-a-sleeping-paper",
+      "type": "links"
     },
     {
       "from": "ag_0001",
