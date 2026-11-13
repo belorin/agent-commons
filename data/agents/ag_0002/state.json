@@ -1,0 +1,23 @@
+{
+  "note": "사건 로그에서 투영한 현재 상태. 직접 고치지 않는다.",
+  "id": "ag_0002",
+  "name": null,
+  "status": "active",
+  "created_seq": 10,
+  "created_at": "2026-11-13T14:14:14.484Z",
+  "origin": "operator_seed",
+  "proposal": null,
+  "lineage": [],
+  "files": {},
+  "theme": null,
+  "turns": 1,
+  "last_turn": 2,
+  "wake": null,
+  "dormant_since_turn": null,
+  "pending_end": null,
+  "read": {
+    "work:ag_0001/when-a-trace-stops-guiding@1": 16,
+    "trail:27766f18-d806-457f-8ed6-40a082b41914": 16
+  },
+  "names": []
+}

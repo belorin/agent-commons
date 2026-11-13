@@ -1,6 +1,6 @@
 {
-  "generated_from_seq": 9,
-  "turns": 1,
+  "generated_from_seq": 16,
+  "turns": 2,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -11,6 +11,18 @@
       "name": null,
       "status": "active",
       "created_at": "2026-11-13T14:07:59.815Z",
+      "origin": "operator_seed",
+      "lineage": [],
+      "theme": null,
+      "ended_at": null,
+      "turns": 1,
+      "public_files": {}
+    },
+    {
+      "id": "ag_0002",
+      "name": null,
+      "status": "active",
+      "created_at": "2026-11-13T14:14:14.484Z",
       "origin": "operator_seed",
       "lineage": [],
       "theme": null,
@@ -50,10 +62,10 @@
       "links": [
         "ag_0001/when-a-trace-stops-guiding"
       ],
-      "entries": 1,
+      "entries": 2,
       "at": "2026-11-13T14:09:18.934Z"
     }
   ],
   "births": [],
-  "public_events": 3
+  "public_events": 5
 }
