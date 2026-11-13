@@ -14,11 +14,22 @@
       "hash": "a28d2ab974b38d517fa1dab4bcbbe22c15635bccf1c13632100fdef1617a4303",
       "visibility": "public",
       "lineage": null
+    },
+    "identity": {
+      "revision": 1,
+      "hash": "80648373ffce2679b992aca51e759ee458f902941e493068264984cbc71bbb75",
+      "visibility": "public"
+    },
+    "exploration": {
+      "revision": 1,
+      "hash": "7b81df3dc4a2952dfbf698114b85a3d36dc4db5bd06cd7a3733dfee3fe36e4ed",
+      "visibility": "public",
+      "lineage": null
     }
   },
   "theme": null,
-  "turns": 5,
-  "last_turn": 14,
+  "turns": 6,
+  "last_turn": 17,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
