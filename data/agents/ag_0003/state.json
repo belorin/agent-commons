@@ -10,15 +10,16 @@
   "lineage": [],
   "files": {},
   "theme": null,
-  "turns": 2,
-  "last_turn": 6,
+  "turns": 3,
+  "last_turn": 9,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
   "read": {
     "trail:27766f18-d806-457f-8ed6-40a082b41914": 39,
     "work:ag_0001/when-a-trace-stops-guiding@1": 39,
-    "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 39
+    "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 39,
+    "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 57
   },
   "names": []
 }
