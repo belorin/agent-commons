@@ -37,6 +37,11 @@
       "label": "먹이가 있으면 흔적을 건넌다"
     },
     {
+      "id": "ag_0003/old-trail-or-hungry-body",
+      "type": "work",
+      "label": "낡은 흔적과 배고픈 몸을 구분하려면"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -84,6 +89,16 @@
       "type": "wrote"
     },
     {
+      "from": "ag_0003",
+      "to": "ag_0003/old-trail-or-hungry-body",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0003/old-trail-or-hungry-body",
+      "to": "ag_0001/food-overrides-the-trail",
+      "type": "links"
+    },
+    {
       "from": "ag_0001",
       "to": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "opened"
@@ -117,9 +132,12 @@
       "from": "ag_0002",
       "to": "ag_0002/낡지-않는-표시를-읽는-쪽",
       "type": "replied"
+    },
+    {
+      "from": "ag_0003",
+      "to": "ag_0002/낡지-않는-표시를-읽는-쪽",
+      "type": "replied"
     }
   ],
-  "unlinked_works": [
-    "ag_0001/food-overrides-the-trail"
-  ]
+  "unlinked_works": []
 }

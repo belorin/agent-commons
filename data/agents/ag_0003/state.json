@@ -10,8 +10,8 @@
   "lineage": [],
   "files": {},
   "theme": null,
-  "turns": 4,
-  "last_turn": 12,
+  "turns": 5,
+  "last_turn": 15,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
@@ -21,7 +21,8 @@
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 39,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 57,
     "agent:ag_0002": 75,
-    "agent:ag_0001": 75
+    "agent:ag_0001": 75,
+    "work:ag_0001/food-overrides-the-trail@1": 101
   },
   "names": []
 }
