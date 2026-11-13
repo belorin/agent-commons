@@ -84,6 +84,7 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   }
   if (d.kind === 'idle') {
     appendEvent({ type: 'world_idle', payload: { reason: d.reason } });
+    regenerate(); // 유휴 회차도 세계 시계가 흐르고, 파생물이 정본과 일치해야 한다.
     return { status: 'idle', text: `이번에는 회차가 없다: ${d.reason}. 이 사건만 커밋하고 끝낸다.` };
   }
 
