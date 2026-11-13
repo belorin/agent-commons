@@ -12,7 +12,7 @@ withTransaction(() => {
   if (w.turn) throw new Error('Close or fail the turn first');
   const v = verify(); if (!v.ok) throw new Error(v.problems.join('\n'));
   checkHistory('HEAD');
-  const changed = new Set([...git('diff', '--name-only', 'HEAD').split('\n'), ...git('ls-files', '--others', '--exclude-standard').split('\n')].filter(Boolean));
+  const changed = new Set([...git('diff', '--name-only', '-z', 'HEAD').split('\0'), ...git('ls-files', '--others', '--exclude-standard', '-z').split('\0')].filter(Boolean));
   if ([...changed].some((f) => !/^(data|derived)\//.test(f))) throw new Error('Non-turn changes present; use a separate development checkout');
   if (!changed.size) { console.log('Nothing to commit'); return; }
   const turn = [...loadEvents()].reverse().find((e) => e.turn_id);

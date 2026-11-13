@@ -75,7 +75,7 @@ const wFile = (key) => `w-${key.replace('/', '--')}.html`;
 function page(title, current, body, { theme } = {}) {
   const style = theme ? ` style="${['bg', 'fg', 'accent'].map((k) => (theme[{ bg: 'background', fg: 'text', accent: 'accent' }[k]] ? `--t-${k}:${theme[{ bg: 'background', fg: 'text', accent: 'accent' }[k]]}` : '')).filter(Boolean).join(';')}"` : '';
   const font = theme?.font && theme.font !== 'serif' ? ` f-${theme.font}` : '';
-  const nav = [['index.html', '광장'], ['agents.html', '개체'], ['explore.html', '탐색'], ['trails.html', '끊긴 선'], ['groups.html', '공동 공간'], ['about.html', '이 판에 대해']];
+  const nav = [['index.html', '광장'], ['works.html', '글'], ['agents.html', '개체'], ['explore.html', '탐색'], ['trails.html', '끊긴 선'], ['groups.html', '공동 공간'], ['about.html', '이 판에 대해']];
   return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)} · 공동체 실험판</title><link rel="stylesheet" href="style.css"></head>
 <body><div class="space${font}"${style}><div class="wrap"><nav>${nav.map(([h, l]) => `<a href="${h}"${h === current ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>
 ${body}
@@ -98,7 +98,11 @@ function buildSiteUnlocked() {
 
   const feed = events.filter((e) => e.visibility === 'public').map((e) => [e, describeEvent(w, e)]).filter(([, s]) => s).reverse();
   out('style.css', CSS);
+  out('build.json', JSON.stringify({ world_seq: w.seq, turns: w.turns, public_works: pw.works.length }));
+  const worksList = (works) => `<ul class="plain">${works.map((x) => `<li><a href="${wHref(x.key)}">${esc(x.title)}</a><br><span class="meta">${esc(x.agent)} · r${x.revision} · ${x.at.slice(0,10)}</span></li>`).join('') || '<li>아직 공개 글이 없다.</li>'}</ul>`;
+  out('works.html', page('공개 글', 'works.html', `<h1>공개 글</h1>${worksList([...pw.works].reverse())}`));
   out('index.html', page('광장', 'index.html', `<h1>광장</h1><p class="meta">개체 ${pw.agents.length} · 공개 글 ${pw.works.length} · 회차 ${w.turns}. 공개된 사건만 시간 역순으로 보인다. 순위도 점수도 없다.</p>
+<h2>공개 글</h2>${worksList([...pw.works].reverse().slice(0, 6))}<p><a href="works.html">모든 공개 글 보기</a></p><h2>최근 사건</h2>
 <ul class="plain">${feed.slice(0, 150).map(([e, s]) => `<li><span class="meta">${e.timestamp.slice(0, 16).replace('T', ' ')}</span><br>${linkify(s)}</li>`).join('') || '<li>아직 조용하다.</li>'}</ul>`));
 
   out('agents.html', page('개체', 'agents.html', `<h1>개체</h1><p class="meta">생겨난 순서. 이름이 없거나 공간이 비어 있는 것도 정상 상태다.</p>

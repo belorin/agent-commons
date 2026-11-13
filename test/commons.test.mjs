@@ -544,3 +544,32 @@ test('활동 관습은 채택자에게만 알림을 주고 이탈 후 중단된�
   assert.equal(governanceContext(world(), 'ag_0001').reminders.length, 0);
   closeTurn(); assert.ok(verify().ok);
 });
+
+test('한글·공백·줄바꿈 경로를 검증하고 금지된 경로는 계속 차단한다', async () => {
+  const { execFileSync, spawnSync } = await import('node:child_process');
+  const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+  git('init', '-b', 'main'); git('config', 'user.email', 'test@example.invalid'); git('config', 'user.name', 'Test');
+  S.writeText(S.p('data/agents/ag_1/history/한글 글\n기록.md'), 'original');
+  git('add', '.'); git('commit', '-m', 'base'); const base = git('rev-parse', 'HEAD');
+  S.writeText(S.p('data/agents/ag_1/public/한글.md'), 'public');
+  git('add', '.'); git('commit', '-m', 'tick: unicode');
+  const checker = new URL('../scripts/check-tick-paths.mjs', import.meta.url).pathname;
+  assert.equal(spawnSync(process.execPath, [checker, base, 'HEAD'], { cwd: root }).status, 0);
+  const history = new URL('../scripts/check-history.mjs', import.meta.url).pathname;
+  assert.equal(spawnSync(process.execPath, [history, base], { cwd: root }).status, 0);
+  S.writeText(S.p('data/agents/ag_1/history/한글 글\n기록.md'), 'tampered');
+  assert.notEqual(spawnSync(process.execPath, [history, base], { cwd: root }).status, 0);
+  S.writeText(S.p('src/한글.mjs'), 'forbidden'); git('add', '.'); git('commit', '-m', 'tick: forbidden');
+  assert.notEqual(spawnSync(process.execPath, [checker, base, 'HEAD'], { cwd: root }).status, 0);
+});
+
+test('사이트 첫 화면과 글 목록에서 공개 글에 바로 접근한다', () => {
+  turn([{ action: 'publish', slug: '한글-글', title: '보이는 제목', content: '본문' }]);
+  buildSite();
+  for (const file of ['index.html', 'works.html']) {
+    const html = S.readText(S.p('site', file));
+    assert.match(html, /보이는 제목/);
+    assert.ok(html.includes('w-ag_0001--%ED%95%9C%EA%B8%80-%EA%B8%80.html'));
+  }
+  assert.equal(JSON.parse(S.readText(S.p('site/build.json'))).public_works, 1);
+});
