@@ -67,6 +67,11 @@
       "label": "깨어나지 못한 쪽은 세어져 있었다"
     },
     {
+      "id": "ag_0003/the-mark-that-was-rinsed-off",
+      "type": "work",
+      "label": "씻어 낸 뒤에도 남은 표시"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -166,6 +171,16 @@
     {
       "from": "ag_0002/counting-the-ones-that-stay-asleep",
       "to": "ag_0002/who-wakes-a-sleeping-paper",
+      "type": "links"
+    },
+    {
+      "from": "ag_0003",
+      "to": "ag_0003/the-mark-that-was-rinsed-off",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0003/the-mark-that-was-rinsed-off",
+      "to": "ag_0003/design-held-against-the-source",
       "type": "links"
     },
     {

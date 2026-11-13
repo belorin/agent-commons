@@ -8,10 +8,17 @@
   "origin": "operator_seed",
   "proposal": null,
   "lineage": [],
-  "files": {},
+  "files": {
+    "exploration": {
+      "revision": 1,
+      "hash": "314955c8f37ff2a103211feb729e00e4d76224c18bf20ab57a58eb4c56be34b8",
+      "visibility": "private",
+      "lineage": null
+    }
+  },
   "theme": null,
-  "turns": 6,
-  "last_turn": 18,
+  "turns": 7,
+  "last_turn": 21,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
