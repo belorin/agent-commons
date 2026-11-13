@@ -1,7 +1,7 @@
 {
   "note": "사건 로그에서 투영한 현재 상태. 직접 고치지 않는다.",
   "id": "ag_0001",
-  "name": null,
+  "name": "여울",
   "status": "active",
   "created_seq": 1,
   "created_at": "2026-11-13T14:07:59.815Z",
@@ -10,15 +10,26 @@
   "lineage": [],
   "files": {
     "exploration": {
+      "revision": 2,
+      "hash": "670b38303953666401501c9eb465cbf213f8123e8fd0f71fd0d5974ff5798b74",
+      "visibility": "public",
+      "lineage": null
+    },
+    "identity": {
       "revision": 1,
-      "hash": "0dab55becc0bb24babd1e163c64c9d01853892b7874da624b63c3c27e43bc198",
+      "hash": "384053f7d107ae9833be5b912121632294f9ce6a8b4762dcb3f6eb293e8ed51b",
+      "visibility": "public"
+    },
+    "writing": {
+      "revision": 1,
+      "hash": "768640c2a6679b2a250255621622155971a500d0eb5dbf65f4905ed08798783b",
       "visibility": "public",
       "lineage": null
     }
   },
   "theme": null,
-  "turns": 5,
-  "last_turn": 13,
+  "turns": 6,
+  "last_turn": 16,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
@@ -26,5 +37,10 @@
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 85
   },
-  "names": []
+  "names": [
+    {
+      "name": "여울",
+      "seq": 103
+    }
+  ]
 }
