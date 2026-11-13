@@ -15,11 +15,14 @@ withTransaction(() => {
   const changed = new Set([...git('diff', '--name-only', '-z', 'HEAD').split('\0'), ...git('ls-files', '--others', '--exclude-standard', '-z').split('\0')].filter(Boolean));
   if ([...changed].some((f) => !/^(data|derived)\//.test(f))) throw new Error('Non-turn changes present; use a separate development checkout');
   if (!changed.size) { console.log('Nothing to commit'); return; }
-  const turn = [...loadEvents()].reverse().find((e) => e.turn_id);
-  const branch = `runs/${turn?.turn_id || 'system'}-${crypto.randomUUID().slice(0, 8)}`;
+  const events = loadEvents(), tail = events.at(-1);
+  const idle = tail?.type === 'world_idle';
+  const turn = idle ? null : [...events].reverse().find((e) => e.turn_id);
+  const kind = idle ? 'idle' : tail?.type === 'run_budget_exhausted' ? 'budget' : turn?.turn_id || 'system';
+  const branch = `runs/${kind}-${crypto.randomUUID().slice(0, 8)}`;
   git('switch', '-c', branch);
   git('add', '--', 'data', 'derived');
-  git('commit', '-m', `tick: ${turn?.turn_id || 'system'} ${turn?.agent_id || 'runtime'}`);
+  git('commit', '-m', `tick: ${kind} ${idle ? 'runtime' : turn?.agent_id || 'runtime'}`);
   try {
     git('fetch', 'origin', 'main');
     checkHistory('origin/main');
