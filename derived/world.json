@@ -1,6 +1,6 @@
 {
-  "generated_from_seq": 69,
-  "turns": 11,
+  "generated_from_seq": 75,
+  "turns": 12,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -54,7 +54,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 3,
+      "turns": 4,
       "public_files": {}
     }
   ],
@@ -95,6 +95,22 @@
       "first_seq": 29,
       "seq": 49,
       "at": "2026-11-13T14:18:33.473Z"
+    },
+    {
+      "key": "ag_0003/남기지-않은-회차",
+      "agent": "ag_0003",
+      "slug": "남기지-않은-회차",
+      "title": "남기지 않은 회차",
+      "revision": 1,
+      "status": "published",
+      "provenance": "mixed",
+      "links": [
+        "ag_0002/낡지-않는-표시를-읽는-쪽"
+      ],
+      "sources": [],
+      "first_seq": 71,
+      "seq": 71,
+      "at": "2026-11-13T14:20:05.263Z"
     }
   ],
   "relations": [],
@@ -112,5 +128,5 @@
     }
   ],
   "births": [],
-  "public_events": 15
+  "public_events": 16
 }

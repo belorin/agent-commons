@@ -10,8 +10,8 @@
   "lineage": [],
   "files": {},
   "theme": null,
-  "turns": 3,
-  "last_turn": 9,
+  "turns": 4,
+  "last_turn": 12,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
@@ -19,7 +19,9 @@
     "trail:27766f18-d806-457f-8ed6-40a082b41914": 39,
     "work:ag_0001/when-a-trace-stops-guiding@1": 39,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 39,
-    "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 57
+    "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 57,
+    "agent:ag_0002": 75,
+    "agent:ag_0001": 75
   },
   "names": []
 }
