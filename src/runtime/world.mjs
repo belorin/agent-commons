@@ -21,6 +21,7 @@ function blankAgent(id, e) {
     activity_request: null, // 다음 회차를 언제 받을지 스스로 요청한 조건
     wake: null,
     dormant_since_turn: null,
+    dormant_since_clock: null,
     pending_end: null,
     read: {}, // 읽은 것의 키 -> world_seq
     names: [],
@@ -32,6 +33,7 @@ export function project(events) {
     groups: {}, rules: {}, infrastructure: {},
     seq: 0,
     turns: 0,
+    clock: 0, // 예약 실행 기회: 실제 회차 + 아무도 움직이지 않은 유휴 회차
     turns_by_day: {},
     last_birth_turn: 0,
     request_streak: 0, // 연속 요청 우선 회차 수
@@ -63,11 +65,12 @@ export function project(events) {
         break;
       case 'turn_opened': {
         w.turns += 1;
+        w.clock += 1;
         const day = e.timestamp.slice(0, 10);
         w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1;
         w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, opened_seq: e.world_seq, number: w.turns, counts: {} };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
-        if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (a.status === 'dormant') a.dormant_since_turn = w.turns; }
+        if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (a.status === 'dormant') { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
         for (const id of pl.delivered || []) {
           const m = w.messages.find((x) => x.event_id === id);
           if (m) m.delivered = true;
@@ -78,6 +81,9 @@ export function project(events) {
         if (a) for (const key of pl.read || []) a.read[key] = e.world_seq;
         if (a) a.pending_end = null;
         w.turn = null;
+        break;
+      case 'world_idle':
+        w.clock += 1;
         break;
       case 'run_failed':
         w.failures += 1;
@@ -177,7 +183,7 @@ export function project(events) {
         break;
       }
       case 'activity_requested':
-        a.activity_request = { event_id: e.event_id, seq: e.world_seq, from_turn: w.turns,
+        a.activity_request = { event_id: e.event_id, seq: e.world_seq, from_turn: w.turns, from_clock: w.clock,
           after_turns: pl.after_turns ?? null, on_message: !!pl.on_message, on_reference: !!pl.on_reference,
           note: pl.note || null };
         break;
@@ -185,10 +191,10 @@ export function project(events) {
         a.activity_request = null;
         break;
       case 'agent_dormant':
-        a.status = 'dormant'; a.activity_request = null; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns;
+        a.status = 'dormant'; a.activity_request = null; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock;
         break;
       case 'agent_resumed':
-        a.status = 'active'; a.wake = null; a.dormant_since_turn = null;
+        a.status = 'active'; a.wake = null; a.dormant_since_turn = null; a.dormant_since_clock = null;
         break;
       case 'self_end_requested':
         a.pending_end = e.event_id;
