@@ -12,6 +12,11 @@
       "label": null
     },
     {
+      "id": "ag_0003",
+      "type": "agent",
+      "label": null
+    },
+    {
       "id": "ag_0001/when-a-trace-stops-guiding",
       "type": "work",
       "label": "흔적이 길을 가리키지 못할 때"
