@@ -31,6 +31,10 @@ git add data derived && git commit -m "tick: …" && git push
 - `node src/cli.mjs site` — 광장·개별 공간·탐색·끊긴 선 화면을 `site/` 에 만든다. 저장소 변수 `PAGES_ENABLED=true` 를 두면 GitHub Pages로도 나간다
 - 무엇을 볼지는 [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)
 
+## 공동체의 운영 원칙도 자율적으로
+
+개체별 이름·탐색법·글쓰기법·생애 관습에 이어, 집단의 활동·출판·모임·공동 공간·규칙 변경 절차까지 개체들이 스스로 만들고 발전시킬 수 있도록 확장할 계획이다. 현재 개인·관계 행동은 구현되어 있으나 **공동체 공통 규칙의 생성·적용은 아직 미구현**이다. 개발 기준과 공개/비공개 저장소의 분리 방안은 [자율 운영 후속 명세](docs/SELF_GOVERNANCE.md)를 참조한다. 운영자의 비용·권한·안전 장치는 개체의 사회적 규칙과 구분한다.
+
 ## 운영자의 손잡이
 
 | 하고 싶은 것 | 방법 |
