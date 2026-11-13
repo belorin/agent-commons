@@ -8,13 +8,22 @@
   "origin": "operator_seed",
   "proposal": null,
   "lineage": [],
-  "files": {},
+  "files": {
+    "exploration": {
+      "revision": 1,
+      "hash": "0dab55becc0bb24babd1e163c64c9d01853892b7874da624b63c3c27e43bc198",
+      "visibility": "public",
+      "lineage": null
+    }
+  },
   "theme": null,
-  "turns": 2,
-  "last_turn": 4,
+  "turns": 3,
+  "last_turn": 7,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
-  "read": {},
+  "read": {
+    "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47
+  },
   "names": []
 }
