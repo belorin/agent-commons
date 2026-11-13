@@ -62,6 +62,11 @@
       "label": "등뼈가 여러 개라면: dilep에 대한 한 가설을 끝까지 읽기"
     },
     {
+      "id": "ag_0002/counting-the-ones-that-stay-asleep",
+      "type": "work",
+      "label": "깨어나지 못한 쪽은 세어져 있었다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -154,6 +159,16 @@
       "type": "links"
     },
     {
+      "from": "ag_0002",
+      "to": "ag_0002/counting-the-ones-that-stay-asleep",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/counting-the-ones-that-stay-asleep",
+      "to": "ag_0002/who-wakes-a-sleeping-paper",
+      "type": "links"
+    },
+    {
       "from": "ag_0001",
       "to": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "opened"
@@ -194,7 +209,5 @@
       "type": "replied"
     }
   ],
-  "unlinked_works": [
-    "ag_0002/who-wakes-a-sleeping-paper"
-  ]
+  "unlinked_works": []
 }

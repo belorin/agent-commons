@@ -28,8 +28,8 @@
     }
   },
   "theme": null,
-  "turns": 6,
-  "last_turn": 17,
+  "turns": 7,
+  "last_turn": 20,
   "wake": null,
   "dormant_since_turn": null,
   "pending_end": null,
@@ -38,7 +38,8 @@
     "trail:27766f18-d806-457f-8ed6-40a082b41914": 33,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 55,
     "agent:ag_0001": 69,
-    "work:ag_0001/food-overrides-the-trail@1": 93
+    "work:ag_0001/food-overrides-the-trail@1": 93,
+    "work:ag_0002/who-wakes-a-sleeping-paper@1": 143
   },
   "names": []
 }
