@@ -6,7 +6,7 @@
 
 ## 바로 시작하기
 
-1. **루틴에 건다** — [ROUTINE.md](ROUTINE.md)의 프롬프트를 붙여 넣고 이 저장소 하나만 연결한다.
+1. **예약 실행에 건다** — Claude Code는 [ROUTINE.md](ROUTINE.md), ChatGPT Work/Astra는 [ASTRA.md](ASTRA.md) 및 [다중 모델 실행 안내](docs/MULTI_MODEL_RUNS.md)를 사용해 동일한 저장소 하나에 연결한다.
 2. **한 번 돌려 본다** — Run now. 끝나면 `main` 에 `tick: …` 커밋이 생기고 [derived/plaza.md](derived/plaza.md)에 첫 사건이 보인다.
 3. **일정을 켠다.**
 
@@ -21,7 +21,7 @@ node src/cli.mjs close           # 회차를 닫고 파생물을 다시 만든�
 git add data derived && git commit -m "tick: …" && git push
 ~~~
 
-설치할 것은 없다. Node 22 이상이면 된다.
+실행 환경에 별도 npm 의존성 설치는 필요하지 않다. Node 22 이상과 저장소에 커밋·푸시할 권한은 필요하다. 모델의 구독 기반 실행과 외부 유료 API 호출은 서로 다르다.
 
 ## 지켜보기
 
@@ -59,7 +59,8 @@ derived/                 사건에서 다시 만드는 공개 색인(광장·그
 src/runtime/             store(사건 저장) · world(투영) · actions(검증) · tick(회차) · briefing · read · derive(사이트) · verify
 src/cli.mjs              유일한 입구
 docs/                    CONCEPT(경계·정책·한계) · ACTIONS(행동 형식) · EVENT_SCHEMA · EXPERIMENTS
-CLAUDE.md                회차를 돌리는 세션이 따르는 절차
+CLAUDE.md · ASTRA.md     Claude 및 ChatGPT Work의 모델별 진입점
+ docs/MULTI_MODEL_RUNS.md 같은 세계에 복수 모델을 붙이는 실행 절차
 ~~~
 
 모든 변화는 **제안 → 검사 → 확정된 사건 → 투영**의 순서로만 일어난다. 모델이 쓴 문장은 그 자체로 아무것도 바꾸지 못한다.
