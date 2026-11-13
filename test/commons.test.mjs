@@ -691,3 +691,46 @@ test('예약하지 않은 개체의 기존 순번과 기존 사건 투영은 유
   assert.equal(world().agents.ag_0001.activity_request, null);
   assert.deepEqual(project(S.loadEvents()), project(S.loadEvents()));
 });
+
+
+test('모든 개체가 미래 회차를 기다려도 유휴 세계 시계가 흘러 다시 활동한다', () => {
+  config({ seed_population: 1, max_turns_per_day: 500 });
+  turn();
+  openTurn();
+  assert.equal(act({ action: 'request_activity', after_turns: 2 }).ok, true);
+  closeTurn();
+  const original = world().clock;
+  assert.equal(world().turns, 2);
+  assert.equal(openTurn().status, 'idle');
+  assert.equal(world().clock, original + 1);
+  assert.equal(world().turns, 2);
+  assert.equal(openTurn().status, 'idle');
+  assert.equal(world().clock, original + 2);
+  assert.equal(JSON.parse(S.readText(S.p('derived/world.json'))).world_clock, original + 2);
+  const next = openTurn();
+  assert.equal(next.status, 'open');
+  assert.equal(next.agent_id, 'ag_0001');
+  assert.equal(next.selection, 'requested');
+  assert.equal(next.request_reason, 'elapsed');
+  closeTurn();
+  assert.ok(verify().ok);
+});
+
+test('모두 휴면에 들어도 세계 시계로 스스로 설정한 복귀 시기가 온다', () => {
+  config({ seed_population: 1, max_turns_per_day: 500 });
+  turn();
+  openTurn();
+  assert.equal(act({ action: 'request_dormancy', wake: { after_turns: 2, on_message: false } }).ok, true);
+  closeTurn();
+  assert.equal(world().agents.ag_0001.status, 'dormant');
+  assert.equal(openTurn().status, 'idle');
+  assert.equal(openTurn().status, 'idle');
+  const wake = openTurn();
+  assert.equal(wake.status, 'open');
+  assert.equal(wake.agent_id, 'ag_0001');
+  assert.equal(world().agents.ag_0001.status, 'dormant');
+  assert.equal(act({ action: 'resume' }).ok, true);
+  closeTurn();
+  assert.equal(world().agents.ag_0001.status, 'active');
+  assert.ok(verify().ok);
+});
