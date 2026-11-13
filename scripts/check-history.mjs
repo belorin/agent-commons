@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 export function checkHistory(base) {
   if (!base || base.startsWith('-')) throw new Error('A trusted base commit is required');
   const git = (...args) => execFileSync('git', ['-c', 'core.quotepath=false', ...args], { encoding: 'utf8' });
-  const files = git('ls-tree', '-r', '--name-only', base, 'data').trim().split('\n').filter(Boolean);
+  const files = git('ls-tree', '-r', '--name-only', '-z', base, 'data').split('\0').filter(Boolean);
   for (const file of files) {
     if (file !== 'data/events/log.jsonl' && !/^data\/agents\/[^/]+\/history\//.test(file)) continue;
     const before = git('show', `${base}:${file}`);

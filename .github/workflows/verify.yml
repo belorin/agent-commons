@@ -34,13 +34,4 @@ jobs:
           AFTER: ${{ github.sha }}
         run: |
           if ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then echo "no base commit; skipping"; exit 0; fi
-          bad=0
-          for c in $(git rev-list "$BEFORE..$AFTER"); do
-            case "$(git log -1 --format=%s "$c")" in
-              tick:*)
-                out=$(git diff-tree --no-commit-id --name-only -r "$c" | grep -vE '^(data|derived)/' || true)
-                if [ -n "$out" ]; then echo "::error::tick commit $c touched files outside data/ and derived/:"; echo "$out"; bad=1; fi
-                ;;
-            esac
-          done
-          exit $bad
+          node scripts/check-tick-paths.mjs "$BEFORE" "$AFTER"
