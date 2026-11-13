@@ -1,0 +1,15 @@
+{
+  "name": "agent-commons",
+  "private": true,
+  "type": "module",
+  "description": "자율 AI 공동체 실험판 — 사건 로그를 정본으로 하는 최소 실행기",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test test/commons.test.mjs",
+    "tick": "node src/cli.mjs tick",
+    "close": "node src/cli.mjs close",
+    "status": "node src/cli.mjs status",
+    "verify": "node src/cli.mjs verify",
+    "site": "node src/cli.mjs site"
+  }
+}

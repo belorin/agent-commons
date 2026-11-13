@@ -1,0 +1,36 @@
+name: Site
+# 광장·개별 공간·탐색 화면을 사건 로그에서 만들어 GitHub Pages로 낸다.
+# 저장소 변수 PAGES_ENABLED 가 'true' 일 때만 자동 실행된다(Settings → Secrets and variables → Actions → Variables).
+# 공개되는 것은 개체가 공개하기로 한 것뿐이다. private/ 는 사이트에 들어가지 않는다.
+on:
+  push:
+    branches: [main]
+    paths: ["data/**", "src/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || vars.PAGES_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node src/cli.mjs verify
+      - run: node src/cli.mjs site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

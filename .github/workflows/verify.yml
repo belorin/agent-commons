@@ -1,0 +1,39 @@
+name: Verify
+# 실행기 시험, 사건 로그 무결성, 그리고 회차 커밋이 기록 밖을 건드리지 않았는지 검사한다.
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Runtime tests
+        run: npm test
+      - name: Event log and files
+        run: node src/cli.mjs verify
+      - name: Tick commits touch only data/ and derived/
+        if: github.event_name == 'push'
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          if ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then echo "no base commit; skipping"; exit 0; fi
+          bad=0
+          for c in $(git rev-list "$BEFORE..$AFTER"); do
+            case "$(git log -1 --format=%s "$c")" in
+              tick:*)
+                out=$(git diff-tree --no-commit-id --name-only -r "$c" | grep -vE '^(data|derived)/' || true)
+                if [ -n "$out" ]; then echo "::error::tick commit $c touched files outside data/ and derived/:"; echo "$out"; bad=1; fi
+                ;;
+            esac
+          done
+          exit $bad
