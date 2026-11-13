@@ -40,6 +40,11 @@ test('(1) 빈 프로필과 침묵한 회차는 정상이다', () => {
   assert.deepEqual(w.agents.ag_0001.files, {});
   assert.equal(S.loadEvents().at(-1).payload.silent, true);
   assert.match(t.text, /아무것도 하지 않고 닫아도 된다/);
+  assert.match(t.text, /저장소를 운영하는 사람은 볼 수 있다/);
+  config({ seed_population: 2, max_turns_per_day: 500, repository_visibility: 'public' });
+  turn();
+  assert.match(openTurn().text, /사람 관찰자로부터가 아니다/);
+  closeTurn();
   assert.ok(verify().ok);
   buildSite();
   assert.match(fs.readFileSync(S.p('site', 'a-ag_0001.html'), 'utf8'), /\(무명\)/);

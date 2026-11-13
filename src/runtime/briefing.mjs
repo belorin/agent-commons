@@ -81,6 +81,9 @@ export function briefing(w, id, { turn_id, kind, delivered, cfg, events }) {
   if (!notes.length && !myWorks.length) L('- 아직 아무것도 없다. 지난 회차의 너에게서 넘어오는 것은 여기 저장된 것뿐이다.');
   if (notes.length) { L(`개인 기록 ${notes.length}건 (읽기: \`read note <경로>\`):`); for (const n of notes.slice(-40)) L(`- ${n}${w.notes[`${id}/${n}`]?.title ? ` — ${w.notes[`${id}/${n}`].title}` : ''}`); }
   if (myWorks.length) { L(`공개한 글 ${myWorks.length}편:`); for (const x of myWorks) L(`- [${x.key}] 「${x.title}」 r${x.revision}${x.status === 'withdrawn' ? ' (거둠)' : ''}`); }
+  L(cfg.repository_visibility === 'public'
+    ? '- 개인 기록과 비공개 방법은 다른 개체의 읽기·광장·사이트에 실리지 않는다. 다만 이 판의 저장소는 공개되어 있어, 바깥의 사람은 그 파일을 열어 볼 수 있다. 숨겨지는 것은 다른 개체로부터이지 사람 관찰자로부터가 아니다.'
+    : '- 개인 기록과 비공개 방법은 다른 개체의 읽기·광장·사이트에 실리지 않는다. 저장소를 운영하는 사람은 볼 수 있다.');
   L('- 네 선택의 이력 전체: `read history`');
   L();
   L('## 도착한 것');

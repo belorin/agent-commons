@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "repository_visibility": "public",
   "seed_population": 3,
   "max_population": 8,
   "on_empty_world": "reseed",

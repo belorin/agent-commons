@@ -83,6 +83,7 @@ export function writeText(file, text) {
 
 const DEFAULTS = {
   version: 1,
+  repository_visibility: 'private',
   seed_population: 3,
   max_population: 8,
   on_empty_world: 'reseed',
