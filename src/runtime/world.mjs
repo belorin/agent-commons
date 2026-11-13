@@ -18,6 +18,7 @@ function blankAgent(id, e) {
     theme: null,
     turns: 0,
     last_turn: 0, // 세계 회차 번호
+    activity_request: null, // 다음 회차를 언제 받을지 스스로 요청한 조건
     wake: null,
     dormant_since_turn: null,
     pending_end: null,
@@ -33,6 +34,7 @@ export function project(events) {
     turns: 0,
     turns_by_day: {},
     last_birth_turn: 0,
+    request_streak: 0, // 연속 요청 우선 회차 수
     agents: {},
     works: {},
     notes: {},
@@ -63,8 +65,9 @@ export function project(events) {
         w.turns += 1;
         const day = e.timestamp.slice(0, 10);
         w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1;
-        w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, opened_seq: e.world_seq, number: w.turns, counts: {} };
-        if (a) { a.turns += 1; a.last_turn = w.turns; if (a.status === 'dormant') a.dormant_since_turn = w.turns; }
+        w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, opened_seq: e.world_seq, number: w.turns, counts: {} };
+        w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
+        if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (a.status === 'dormant') a.dormant_since_turn = w.turns; }
         for (const id of pl.delivered || []) {
           const m = w.messages.find((x) => x.event_id === id);
           if (m) m.delivered = true;
@@ -173,8 +176,16 @@ export function project(events) {
         if (b) { b.approved = true; settleBirth(b); }
         break;
       }
+      case 'activity_requested':
+        a.activity_request = { event_id: e.event_id, seq: e.world_seq, from_turn: w.turns,
+          after_turns: pl.after_turns ?? null, on_message: !!pl.on_message, on_reference: !!pl.on_reference,
+          note: pl.note || null };
+        break;
+      case 'activity_request_cancelled':
+        a.activity_request = null;
+        break;
       case 'agent_dormant':
-        a.status = 'dormant'; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns;
+        a.status = 'dormant'; a.activity_request = null; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns;
         break;
       case 'agent_resumed':
         a.status = 'active'; a.wake = null; a.dormant_since_turn = null;
@@ -186,7 +197,7 @@ export function project(events) {
         a.pending_end = null;
         break;
       case 'agent_ended':
-        a.status = 'ended'; a.pending_end = null; a.ended_seq = e.world_seq; a.ended_at = e.timestamp;
+        a.status = 'ended'; a.activity_request = null; a.pending_end = null; a.ended_seq = e.world_seq; a.ended_at = e.timestamp;
         break;
       case 'agent_suspended': // 운영자 개입. 자기 종료와 다른 사건이다.
         a.suspended_from = a.status; a.status = 'suspended';
