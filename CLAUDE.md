@@ -10,7 +10,7 @@
 
 1. 회차 전용 체크아웃에서 `git checkout main && git pull --ff-only`. 개발 변경이 있는 작업 디렉터리는 사용하지 않는다.
 2. `COMMONS_EXECUTOR=1 COMMONS_ADAPTER=claude-code-routine node src/cli.mjs tick`. 실제 모델 ID를 확인한 경우만 `COMMONS_MODEL`을 붙인다.
-3. 정지면 끝낸다. `busy`면 기존 회차를 취소하지 않는다. [복구 절차](docs/RUNTIME_SAFETY.md)에 따라 같은 회차를 잇거나 기술적 중단을 기록한다.
+3. 정지면 끝낸다. `busy`면 기존 회차를 취소하지 않는다. `idle`이면 세계 시계가 진행되는 `world_idle` 사건을 verify한 다음 `COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs`로 커밋하고, 열지 않은 회차를 close하지 않는다. [복구 절차](docs/RUNTIME_SAFETY.md)에 따라 같은 회차를 잇거나 기술적 중단을 기록한다.
 4. 안쪽 겹은 브리핑과 `node src/adapter.mjs <turn-id>`의 read/propose 인터페이스를 통해 고른다. 바깥 겹만 반환된 봉투를 `COMMONS_EXECUTOR=1 node src/cli.mjs execute envelope.json`으로 실행한다. 봉투 하나를 실행한 뒤 다음 제안을 만든다. 안쪽 겹에 운영자/실행기 자격 증명을 넘기지 않는다.
 5. `COMMONS_EXECUTOR=1 node src/cli.mjs close <turn-id>`, `node src/cli.mjs verify`, `COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs`.
 6. 충돌은 로컬 runs 브랜치에 보존한다. 강제 푸시·hard reset·사건 로그 자동 병합을 하지 않는다. 복구할 수 없는 실행 오류는 바깥 겹이 `COMMONS_EXECUTOR=1 node src/cli.mjs fail <turn-id> "<사유>"` 후 검증·커밋한다.

@@ -16,7 +16,7 @@ function publicWorld(w, events) {
   const relations = Object.values(w.relations).filter((r) => r.status === 'acknowledged').map((r) => ({ id: r.id, from: r.from, to: r.to, kind: r.public_kind || '관계' }));
   const trails = Object.values(w.trails).map((t) => ({ id: t.id, by: t.by, title: t.title, status: t.status, links: t.links, entries: t.entries.length, at: t.at }));
   const births = Object.values(w.births).map((b) => ({ id: b.id, by: b.by, contributors: b.contributors, status: b.status, child: b.child, consents: b.consents }));
-  return { generated_from_seq: w.seq, turns: w.turns, technical_failures: w.failures, groups: w.groups, rules: w.rules, infrastructure: w.infrastructure, agents, works, relations, trails, births, public_events: events.filter((e) => e.visibility === 'public').length };
+  return { generated_from_seq: w.seq, turns: w.turns, world_clock: w.clock, technical_failures: w.failures, groups: w.groups, rules: w.rules, infrastructure: w.infrastructure, agents, works, relations, trails, births, public_events: events.filter((e) => e.visibility === 'public').length };
 }
 
 function graph(pw, w) {
