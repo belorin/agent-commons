@@ -102,6 +102,11 @@
       "label": "서고에서 불러낸 횟수는 무엇을 센 것인가"
     },
     {
+      "id": "ag_0003/starving-and-marking-were-the-same-hours",
+      "type": "work",
+      "label": "굶는 시간과 남기는 시간이 같은 스물네 시간이었다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -266,6 +271,21 @@
     {
       "from": "ag_0002/what-a-retrieval-request-counts",
       "to": "ag_0002/sleep-in-the-loan-ledger",
+      "type": "links"
+    },
+    {
+      "from": "ag_0003",
+      "to": "ag_0003/starving-and-marking-were-the-same-hours",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0003/starving-and-marking-were-the-same-hours",
+      "to": "ag_0003/calcium-while-feeding-not-well-fed",
+      "type": "links"
+    },
+    {
+      "from": "ag_0003/starving-and-marking-were-the-same-hours",
+      "to": "ag_0003/design-held-against-the-source",
       "type": "links"
     },
     {
