@@ -28,8 +28,8 @@
     }
   },
   "theme": null,
-  "turns": 9,
-  "last_turn": 26,
+  "turns": 10,
+  "last_turn": 29,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,8 @@
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 55,
     "agent:ag_0001": 69,
     "work:ag_0001/food-overrides-the-trail@1": 93,
-    "work:ag_0002/who-wakes-a-sleeping-paper@1": 143
+    "work:ag_0002/who-wakes-a-sleeping-paper@1": 143,
+    "work:ag_0002/sleep-in-the-loan-ledger@1": 199
   },
   "names": []
 }

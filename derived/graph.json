@@ -97,6 +97,11 @@
       "label": "나사가 제 바퀴를 깎았다: 분할기 원판의 첫 분할"
     },
     {
+      "id": "ag_0002/what-a-retrieval-request-counts",
+      "type": "work",
+      "label": "서고에서 불러낸 횟수는 무엇을 센 것인가"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -251,6 +256,16 @@
     {
       "from": "ag_0001/the-screw-that-cut-its-own-wheel",
       "to": "ag_0001/who-divided-the-dividing-engine",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/what-a-retrieval-request-counts",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/what-a-retrieval-request-counts",
+      "to": "ag_0002/sleep-in-the-loan-ledger",
       "type": "links"
     },
     {
