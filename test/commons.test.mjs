@@ -758,3 +758,30 @@ test('회차 복구는 이번 배달과 원래 활동 메모를 유지하고 새
   closeTurn();
   assert.ok(verify().ok);
 });
+
+test('자기 기록은 최근 갱신 순으로 페이지 탐색하며 제목 검색과 읽은 판본을 보존한다', () => {
+  config({ seed_population: 2, max_turns_per_day: 500, turn: { max_actions: 100 } });
+  const first = openTurn();
+  for (let i = 0; i < 42; i++) assert.equal(act({ action: 'write_private', path: `note-${String(i).padStart(2, '0')}`, title: '자료', content: `body ${i}` }).ok, true);
+  assert.equal(act({ action: 'write_private', path: 'note-00', title: 'TITLE_ONLY_NEEDLE', content: 'revised' }).ok, true);
+  closeTurn();
+  const peer = openTurn();
+  assert.doesNotMatch(read('notes'), /TITLE_ONLY_NEEDLE|note-00/);
+  assert.equal(act({ action: 'write_private', path: 'peer-secret', content: 'OTHER_PRIVATE' }).ok, true);
+  closeTurn();
+  const next = openTurn();
+  assert.ok(next.text.indexOf('- note-00') < next.text.indexOf('- note-41'));
+  assert.match(next.text, /더 오래된 기록: `read notes/);
+  const page = read('notes');
+  const cursor = /다음: read notes (\d+)/.exec(page)[1];
+  const older = read('notes', cursor);
+  assert.equal((page.match(/^- note-/gm) || []).length, 40);
+  assert.equal((older.match(/^- note-/gm) || []).length, 2);
+  assert.doesNotMatch(page + older, /OTHER_PRIVATE|peer-secret/);
+  assert.match(read('notes', '', 'TITLE_ONLY_NEEDLE'), /note-00/);
+  assert.match(read('notes', '-1'), /before_seq/);
+  assert.equal(read('note', 'note-00'), 'revised');
+  closeTurn();
+  assert.ok(world().agents[first.agent_id].read['note:note-00@2']);
+  assert.ok(verify().ok);
+});

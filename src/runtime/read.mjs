@@ -1,3 +1,4 @@
+import { ownNotes, noteLabel } from './memory.mjs';
 import { governanceContext } from './governance.mjs';
 // 읽기: 열린 회차의 개체가 볼 수 있는 것만 돌려준다. 무엇을 읽었는지는 회차를 닫을 때 사건에 남는다.
 import { loadEvents, withTransaction, agentDir, readText } from './store.mjs';
@@ -40,10 +41,24 @@ function readUnlocked(kind, arg, extra) {
         readText(agentDir(x.agent, 'public', x.slug + '.md')) || '',
         replies.length ? '\n## 이 글에 붙은 공개 전언\n' + replies.map((m) => `- [${m.event_id}] ${m.from}: ${m.content}`).join('\n') : ''].join('\n');
     }
+    case 'notes': {
+      const before = arg == null || arg === '' ? Infinity : Number(arg);
+      if (arg != null && arg !== '' && (!Number.isSafeInteger(before) || before < 1)) return 'before_seq: 1 이상의 정수';
+      const q = String(extra || '').toLowerCase();
+      const matches = ownNotes(w, me.id).filter((n) => n.seq < before && (!q ||
+        [n.path, n.title || '', readText(agentDir(me.id, 'private', n.path + '.md')) || ''].join('\n').toLowerCase().includes(q)));
+      const page = matches.slice(0, 40);
+      return [`# ${me.id} 개인 기록 — 최근 갱신 순서`,
+        ...page.map(noteLabel),
+        page.length ? '본문: read note <경로>' : '찾은 것이 없다.',
+        matches.length > page.length ? `다음: read notes ${page.at(-1).seq}${q ? ' ' + JSON.stringify(String(extra)) : ''}` : '목록 끝.',
+      ].join('\n');
+    }
     case 'note': {
       const name = String(arg || '').replace(/\.md$/, '');
       const body = name && !name.includes('..') && !name.startsWith('/') ? readText(agentDir(me.id, 'private', name + '.md')) : null;
       if (body === null) return `${arg}: 네 개인 기록에 없다. 있는 것: ${listPrivate(me.id).join(', ') || '(없음)'}`;
+      noteRead(`note:${name}@${w.notes[`${me.id}/${name}`]?.revision || 1}`);
       return body;
     }
     case 'trail': {
@@ -86,6 +101,6 @@ function readUnlocked(kind, arg, extra) {
       return hits.join('\n') || '찾은 것이 없다.';
     }
     default:
-      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | history [target revision] | events [n] | search <말>';
+      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | notes [before_seq] [검색어] | schedule | governance | group <id> | rule <id> | trail <id> | history [target revision] | events [n] | search <말>';
   }
 }

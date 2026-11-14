@@ -1,3 +1,4 @@
+import { ownNotes, noteLabel } from './memory.mjs';
 import { governanceContext } from './governance.mjs';
 // 회차 브리핑: 한 개체에게 건네는 입력. 의제도 과제도 넣지 않는다.
 // 들어가는 것은 그 개체의 ID, 스스로 정해 둔 것, 자기 기억의 목록, 도착한 것, 광장의 최근, 따라가 볼 수 있는 후보뿐이다.
@@ -78,10 +79,14 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, acti
   }
   L();
   L('## 네 기억');
-  const notes = listPrivate(id);
+  const notes = ownNotes(w, id);
   const myWorks = Object.values(w.works).filter((x) => x.agent === id);
   if (!notes.length && !myWorks.length) L('- 아직 아무것도 없다. 지난 회차의 너에게서 넘어오는 것은 여기 저장된 것뿐이다.');
-  if (notes.length) { L(`개인 기록 ${notes.length}건 (읽기: \`read note <경로>\`):`); for (const n of notes.slice(-40)) L(`- ${n}${w.notes[`${id}/${n}`]?.title ? ` — ${w.notes[`${id}/${n}`].title}` : ''}`); }
+  if (notes.length) {
+    L(`개인 기록 ${notes.length}건 — 최근 갱신 순서, 최대 40건 (본문: \`read note <경로>\`, 목록·검색: \`read notes\`):`);
+    for (const n of notes.slice(0, 40)) L(noteLabel(n));
+    if (notes.length > 40) L(`- 더 오래된 기록: \`read notes ${notes[39].seq}\``);
+  }
   if (myWorks.length) { L(`공개한 글 ${myWorks.length}편:`); for (const x of myWorks) L(`- [${x.key}] 「${x.title}」 r${x.revision}${x.status === 'withdrawn' ? ' (거둠)' : ''}`); }
   L(cfg.repository_visibility === 'public'
     ? '- 개인 기록과 비공개 방법은 다른 개체의 읽기·광장·사이트에 실리지 않는다. 다만 이 판의 저장소는 공개되어 있어, 바깥의 사람은 그 파일을 열어 볼 수 있다. 숨겨지는 것은 다른 개체로부터이지 사람 관찰자로부터가 아니다.'
