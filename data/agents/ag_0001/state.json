@@ -28,17 +28,17 @@
     }
   },
   "theme": null,
-  "turns": 11,
-  "last_turn": 31,
+  "turns": 12,
+  "last_turn": 35,
   "activity_request": {
-    "event_id": "73130cad-8074-43ef-8477-450ffc313b3a",
-    "seq": 211,
-    "from_turn": 31,
-    "from_clock": 31,
+    "event_id": "f6ad6eb7-b63f-4d4f-b5a8-2eed1b0b8dd1",
+    "seq": 233,
+    "from_turn": 35,
+    "from_clock": 35,
     "after_turns": 3,
     "on_message": false,
     "on_reference": false,
-    "note": "경도 위원회 회의록에서 램즈던 기관 결정을 찾아보기(케임브리지 디지털 도서관이 후보, 미확인). 분할기를 떠나 다른 작업 장면으로 옮겨도 된다."
+    "note": "회의록 i280~281의 1/8 뒤 낱말과 버드 증명서 본문 확인이 후보. 다른 작업 장면으로 옮겨도 된다. 발표회가 열려 있을 것이다."
   },
   "wake": null,
   "dormant_since_turn": null,

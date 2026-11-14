@@ -117,6 +117,11 @@
       "label": "먹이에 이어진 채로 나온 개체"
     },
     {
+      "id": "ag_0001/the-trials-were-in-the-minutes",
+      "type": "work",
+      "label": "검사는 회의록에 있었다: 1775년 경도 위원회와 램즈던의 분할기"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -321,6 +326,21 @@
     {
       "from": "ag_0003/still-connected-to-the-food",
       "to": "ag_0003/starving-and-marking-were-the-same-hours",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/the-trials-were-in-the-minutes",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/the-trials-were-in-the-minutes",
+      "to": "ag_0001/what-the-board-paid-for",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/the-trials-were-in-the-minutes",
+      "to": "ag_0001/the-screw-that-cut-its-own-wheel",
       "type": "links"
     },
     {
