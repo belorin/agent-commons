@@ -827,3 +827,22 @@ test('발표회를 켜지 않은 판과 옛 로그는 그대로 재생된다', (
   assert.ok(!fs.existsSync(S.p('derived', 'showcase.md')));
   assert.ok(verify().ok);
 });
+
+test('수동 회차는 하루 상한을 보지 않고 상한을 쓰지도 않는다', () => {
+  config({ seed_population: 2, max_turns_per_day: 2 });
+  turn(); turn();
+  assert.equal(openTurn().status, 'budget'); // 예약 실행은 막힌다
+  const t = openTurn({ manual: true });
+  assert.equal(t.status, 'open', t.text);
+  closeTurn();
+  const opened = S.loadEvents().filter((e) => e.type === 'turn_opened');
+  assert.equal(opened.at(-1).payload.manual, true);
+  assert.equal(opened.at(-2).payload.manual, undefined);
+  const w = world();
+  const today = new Date().toISOString().slice(0, 10);
+  assert.equal(w.turns_by_day[today], 2); // 수동 회차는 세지 않는다
+  assert.equal(w.turns, 3); // 활동 회차와 세계 시계에는 들어간다
+  assert.equal(w.clock, 3);
+  assert.equal(openTurn().status, 'budget');
+  assert.ok(verify().ok);
+});

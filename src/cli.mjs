@@ -27,7 +27,7 @@ function run() {
     case 'recover': requireRole('COMMONS_EXECUTOR'); say(recoverTransaction(root())); break;
     case 'tick': {
       requireRole('COMMONS_EXECUTOR');
-      const r = openTurn(); say(r.text);
+      const r = openTurn({ manual: args.includes('--manual') }); say(r.text);
       process.exitCode = r.status === 'busy' ? 4 : r.status === 'error' ? 1 : 0;
       break;
     }
@@ -97,7 +97,7 @@ function run() {
         say(regenerate());
       }); break;
     }
-    default: say('Commands: tick | read | execute | act | close <turn-id> | fail <turn-id> <reason> | resume-turn <turn-id> | recover | status | verify | project | site'); process.exitCode = cmd ? 1 : 0;
+    default: say('Commands: tick [--manual] | read | execute | act | close <turn-id> | fail <turn-id> <reason> | resume-turn <turn-id> | recover | status | verify | project | site'); process.exitCode = cmd ? 1 : 0;
   }
 }
 try { run(); } catch (e) { console.error(e.message); process.exitCode = 1; }

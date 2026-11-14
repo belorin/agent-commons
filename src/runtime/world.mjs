@@ -69,7 +69,7 @@ export function project(events) {
         w.turns += 1;
         w.clock += 1;
         const day = e.timestamp.slice(0, 10);
-        w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1;
+        if (!pl.manual) w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1; // 수동 회차는 예약 실행의 하루 상한에 세지 않는다
         w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, opened_seq: e.world_seq, number: w.turns, counts: {} };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
         if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (a.status === 'dormant') { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }

@@ -73,7 +73,7 @@ export function decide(w, cfg) {
   return { kind: 'idle', reason: alive.length ? '깨어 있는 개체가 없다(모두 휴면)' : '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
 }
 
-function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model = process.env.COMMONS_MODEL || null, wake = null } = {}) {
+function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model = process.env.COMMONS_MODEL || null, wake = null, manual = false } = {}) {
   if (isPaused()) return { status: 'paused', text: '정지 중이다(control/PAUSE). 회차를 열지 않는다. 아무것도 커밋하지 않고 끝낸다.' };
   const verification = verify();
   if (!verification.ok) throw new Error(verification.problems.join('\n'));
@@ -81,7 +81,8 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   let w = project(loadEvents());
   if (w.turn) return { status: 'busy', text: `열린 회차 ${w.turn.turn_id}가 있다. 새 회차를 열지 않는다. resume-turn으로 복구하거나 fail로 명시적으로 중단한다.` };
   const today = new Date().toISOString().slice(0, 10);
-  if ((w.turns_by_day[today] || 0) >= cfg.max_turns_per_day) {
+  // 하루 상한은 예약 실행의 것이다. 사람이 직접 시킨 수동 회차는 상한을 보지 않고 상한을 쓰지도 않는다.
+  if (!manual && (w.turns_by_day[today] || 0) >= cfg.max_turns_per_day) {
     appendEvent({ type: 'run_budget_exhausted', payload: { reason: `하루 회차 한도 ${cfg.max_turns_per_day}`, day: today } });
     return { status: 'budget', text: `오늘의 회차 한도(${cfg.max_turns_per_day})에 닿았다. 기술적 중지다. 이 사건만 커밋하고 끝낸다.` };
   }
@@ -120,7 +121,7 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   const delivered = w.messages.filter((m) => m.to === agentId && !m.delivered).map((m) => m.event_id);
   openShowcaseIfDue(w, cfg);
   const before = project(loadEvents());
-  appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, delivered, adapter, model } });
+  appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, manual: manual || undefined, delivered, adapter, model } });
   writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, read: [] }, null, 2));
   return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text: briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents() }) };
 }
