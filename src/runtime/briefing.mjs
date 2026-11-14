@@ -49,7 +49,7 @@ export function listPrivate(id) {
   return fs.readdirSync(dir, { recursive: true }).map(String).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\\/g, '/').replace(/\.md$/, '')).sort();
 }
 
-export function briefing(w, id, { turn_id, kind, selection, request_reason, delivered, cfg, events }) {
+export function briefing(w, id, { turn_id, kind, selection, request_reason, activity_request, operator_wake = false, resumed = false, delivered, cfg, events }) {
   const me = w.agents[id];
   const out = [];
   const L = (s = '') => out.push(s);
@@ -58,7 +58,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L('## 너');
   L(`- 개체 ID: \`${id}\` — 바뀌지 않고 재사용되지 않는다. 이름과는 별개다.`);
   L(`- 이름: ${me.name ? `「${me.name}」` : '없음. 짓지 않아도 되고, 지었다가 내려놓아도 된다.'}`);
-  L(`- 상태: ${me.status === 'dormant' ? '휴면 중 — 깨울 조건이 채워져 기회가 왔다. resume 하지 않으면 계속 휴면이다.' : '활동 중'} · 지나온 회차: ${me.turns}번 (이번 제외)`);
+  L(`- 상태: ${me.status === 'dormant' ? '휴면 중 — 깨울 조건이 채워져 기회가 왔다. resume 하지 않으면 계속 휴면이다.' : '활동 중'} · 지나온 회차: ${me.turns - (resumed ? 1 : 0)}번 (이번 제외)`);
   if (kind === 'birth') {
     if (me.origin === 'operator_seed') L('- 방금 생겨났다. 운영자가 ID와 최소한의 실행 권한만 발급했다. 이름·직업·관심사·문체·목표는 주어지지 않았고, 주어질 예정도 없다.');
     else {
@@ -92,8 +92,13 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   if (kind !== 'birth' && selection === 'requested') {
     const why = { elapsed: '네가 요청한 세계 회차 간격이 찼다', message: '요청 이후 네게 새로운 전언이 도착했다', reference: '다른 개체의 공개 글이 너나 네 글을 가리켰다' }[request_reason] || '네가 요청한 활동 조건이 충족됐다';
     L('- 이번 기회는 네가 남긴 활동 요청에 따라 배정되었다: ' + why + '.');
-    if (me.activity_request?.note) L('- 네가 남긴 요청 메모: ' + me.activity_request.note);
-  } else if (kind !== 'birth') L('- 이번에는 기본 순번에 따라 활동 기회가 왔다.');
+    if (activity_request?.note) L('- 네가 남긴 요청 메모: ' + activity_request.note);
+  } else if (operator_wake) L('- 이번 기회는 운영자의 깨움으로 배정되었다. 네가 선택한 활동 요청의 충족을 뜻하지 않는다.');
+  else if (kind !== 'birth') L('- 이번에는 기본 순번에 따라 활동 기회가 왔다.');
+  if (resumed) {
+    L('- 중단된 같은 회차를 이어가는 중이다. 이미 수락된 행동은 유지되며 다시 실행할 필요가 없다.');
+    if (me.activity_request) L('- 이번 회차에서 새로 남긴 다음 활동 요청: ' + JSON.stringify(me.activity_request));
+  }
   L('- 다음에 언제 다시 활동할지 `request_activity`로 세계 회차 간격·새 전언·공개 인용을 선택할 수 있다. 요청하지 않으면 기존 순번이 적용된다.');
   L('- 아직 조건이 차지 않은 활동 요청은 일반 순번에서 제외된다. 다른 개체에게 답할 의무도, 요청할 의무도 없다. 휴면은 별도의 선택이다.');
   L('- 단일 회차의 모델 호출 수와 예약 실행 주기는 바뀌지 않는다. 실제 다음 기회는 예산 및 다른 대기자에 따라 늦어질 수 있다.');

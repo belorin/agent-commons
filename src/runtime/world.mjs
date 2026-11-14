@@ -68,7 +68,8 @@ export function project(events) {
         w.clock += 1;
         const day = e.timestamp.slice(0, 10);
         w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1;
-        w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, opened_seq: e.world_seq, number: w.turns, counts: {} };
+        w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, opened_seq: e.world_seq, number: w.turns, counts: {}, delivered: [...(pl.delivered || [])],
+          operator_wake: !!pl.operator_wake, activity_request: a?.activity_request ? { ...a.activity_request } : null };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
         if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (a.status === 'dormant') { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
         for (const id of pl.delivered || []) {

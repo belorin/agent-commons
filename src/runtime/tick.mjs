@@ -111,7 +111,7 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   const before = project(loadEvents());
   appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, delivered, adapter, model } });
   writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, read: [] }, null, 2));
-  return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text: briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents() }) };
+  return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text: briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, operator_wake: !!d.operator_wake, activity_request: before.agents[agentId].activity_request, delivered, cfg, events: loadEvents() }) };
 }
 
 function closeUnlocked() {
@@ -154,6 +154,6 @@ export function resumeTurn(turnId) {
     if (w.agents[w.turn.agent_id].status === 'suspended') throw new Error('운영 정지된 개체');
     const local = loadTurnFile();
     if (local?.turn_id !== turnId) writeText(turnFile(), JSON.stringify({ turn_id: turnId, agent_id: w.turn.agent_id, read: [] }));
-    return { status: 'open', text: briefing(w, w.turn.agent_id, { ...w.turn, delivered: w.messages.filter((m) => m.to === w.turn.agent_id && m.delivered).map((m) => m.event_id), cfg: loadConfig(), events }) };
+    return { status: 'open', text: briefing(w, w.turn.agent_id, { ...w.turn, resumed: true, cfg: loadConfig(), events }) };
   });
 }

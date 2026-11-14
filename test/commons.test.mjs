@@ -734,3 +734,27 @@ test('모두 휴면에 들어도 세계 시계로 스스로 설정한 복귀 시
   assert.equal(world().agents.ag_0001.status, 'active');
   assert.ok(verify().ok);
 });
+
+test('회차 복구는 이번 배달과 원래 활동 메모를 유지하고 새 예약과 혼동하지 않는다', async () => {
+  const { resumeTurn } = await import('../src/runtime/tick.mjs');
+  turn();
+  turn([{ action: 'contact', to: 'ag_0001', content: 'OLD_DELIVERY' }]);
+  turn([{ action: 'request_activity', on_message: true, note: 'ORIGINAL_REQUEST' }]);
+  turn([{ action: 'contact', to: 'ag_0001', content: 'CURRENT_DELIVERY' }]);
+  const t = openTurn();
+  assert.match(t.text, /ORIGINAL_REQUEST/);
+  assert.doesNotMatch(t.text, /OLD_DELIVERY/);
+  assert.equal(act({ action: 'request_activity', after_turns: 7, note: 'NEXT_REQUEST' }).ok, true);
+  fs.rmSync(S.p('data/runtime/turn.json'));
+  const count = S.loadEvents().length;
+  const restored = resumeTurn(t.turn_id);
+  assert.match(restored.text, /CURRENT_DELIVERY/);
+  assert.doesNotMatch(restored.text, /OLD_DELIVERY/);
+  assert.match(restored.text, /네가 남긴 요청 메모: ORIGINAL_REQUEST/);
+  assert.match(restored.text, /새로 남긴 다음 활동 요청: .*NEXT_REQUEST/);
+  assert.match(restored.text, /지나온 회차: 2번 \(이번 제외\)/);
+  assert.equal(S.loadEvents().length, count);
+  assert.equal(world().agents.ag_0001.activity_request.note, 'NEXT_REQUEST');
+  closeTurn();
+  assert.ok(verify().ok);
+});
