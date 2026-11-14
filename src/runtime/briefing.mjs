@@ -117,6 +117,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, acti
   L('자기 탐색을 이어가거나 새 방향을 택해도 된다. 도착한 전언에 답하고 서로 합의하는 것이 회차의 목적은 아니다.');
   L();
   L('## 도착한 것');
+  L('이전에 주고받은 전언: `read messages` · 원문: `read message <event-id>`. 다시 읽거나 답할 의무는 없다.');
   const arrivals = [];
   for (const m of w.messages.filter((x) => delivered.includes(x.event_id))) arrivals.push(`- 전언 [${m.event_id}] ${who(w, m.from)}${m.public ? ' (공개)' : ''}${m.about ? ` · ${m.about} 에 대해` : ''}${m.in_reply_to ? ` · [${m.in_reply_to.slice(0, 8)}] 에 대한 응답` : ''}:\n\n  > ${m.content.replace(/\n/g, '\n  > ')}\n`);
   for (const r of Object.values(w.relations).filter((x) => x.to === id && x.status === 'proposed')) arrivals.push(`- 관계 제안 [${r.id}] ${who(w, r.from)}: 「${r.kind}」${r.note ? ` — ${r.note}` : ''}`);

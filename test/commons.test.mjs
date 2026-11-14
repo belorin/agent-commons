@@ -785,3 +785,33 @@ test('자기 기록은 최근 갱신 순으로 페이지 탐색하며 제목 검
   assert.ok(world().agents[first.agent_id].read['note:note-00@2']);
   assert.ok(verify().ok);
 });
+
+test('과거 전언은 당사자가 다시 찾되 제삼자의 비공개 대화는 노출하지 않는다', () => {
+  config({ seed_population: 3, max_turns_per_day: 500, turn: { max_actions: 100, max_messages: 100 } });
+  turn(); turn(); turn();
+  openTurn();
+  const ids = [];
+  for (let i = 0; i < 41; i++) ids.push(act({ action: 'contact', to: 'ag_0002', content: `PRIVATE_${i}` }).events[0].event_id);
+  const pub = act({ action: 'contact', to: 'ag_0002', content: 'PUBLIC_BODY', public: true }).events[0].event_id;
+  closeTurn();
+  openTurn();
+  const page = read('messages');
+  const cursor = /다음: read messages (\d+)/.exec(page)[1];
+  assert.equal((page.match(/^- \[/gm) || []).length, 40);
+  assert.equal((read('messages', cursor).match(/^- \[/gm) || []).length, 2);
+  assert.match(read('message', ids[0]), /PRIVATE_0/);
+  assert.doesNotMatch(read('messages', '', 'ag_0003'), /PRIVATE_|ag_0001/);
+  assert.equal(act({ action: 'respond', to_event: ids[0], content: 'LATER_REPLY' }).ok, true);
+  closeTurn();
+  openTurn();
+  assert.equal(read('message', ids[0]), read('message', 'unknown-id'));
+  assert.doesNotMatch(read('messages'), new RegExp(ids[0]));
+  assert.match(read('message', pub), /PUBLIC_BODY/);
+  closeTurn();
+  openTurn();
+  assert.match(read('message', ids[0]), /PRIVATE_0/);
+  assert.match(read('messages', '', 'ag_0002'), new RegExp(ids[40]));
+  closeTurn();
+  assert.ok(world().agents.ag_0002.read[`message:${ids[0]}`]);
+  assert.ok(verify().ok);
+});
