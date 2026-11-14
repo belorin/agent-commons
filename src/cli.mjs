@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import { recoverTransaction } from './runtime/transaction.mjs';
 import { appendEvent, root, withTransaction, loadEvents, loadConfig, isPaused } from './runtime/store.mjs';
-import { project, living, displayName } from './runtime/world.mjs';
+import { project, population, displayName } from './runtime/world.mjs';
 import { openTurn, closeTurn, failTurn, resumeTurn, decide } from './runtime/tick.mjs';
 import { applyAction, executeProposal } from './runtime/actions.mjs';
 import { read } from './runtime/read.mjs';
@@ -60,7 +60,7 @@ function run() {
     case 'status': withTransaction(() => {
       const w = validWorld(), cfg = loadConfig(), d = decide(w, cfg);
       say(`정지: ${isPaused() ? '예 (control/PAUSE)' : '아니오'} · 사건 ${w.seq} · 활동 회차 ${w.turns} · 세계 시계 ${w.clock} · 기술적 중단 ${w.failures}`);
-      say(`개체 ${Object.keys(w.agents).length} (살아 있음 ${living(w).length} / 상한 ${cfg.max_population}, 운영자 발급 목표 ${cfg.seed_population})`);
+      say(`개체 ${Object.keys(w.agents).length} (살아 있음 ${population(w).length} / 상한 ${cfg.max_population}, 운영자 발급 목표 ${cfg.seed_population})`);
       for (const a of Object.values(w.agents)) say(`- ${a.id} ${displayName(a)} · ${a.status} · 회차 ${a.turns} · 마지막 ${a.last_turn}`);
       say(`열린 회차: ${w.turn ? `${w.turn.turn_id} (${w.turn.agent_id}) — 새 tick은 busy` : '없음'}`);
       if (!w.turn) say(`다음 tick: ${d.kind === 'birth' ? `새 개체 (${d.origin})` : d.kind === 'walk' ? `${d.agent.id} (${d.selection === 'requested' ? `본인 요청: ${d.request_reason}` : '기본 순번'})` : d.reason}`);

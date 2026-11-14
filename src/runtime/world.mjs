@@ -229,6 +229,8 @@ function settleBirth(b) {
   if (allConsented && (!b.requires_approval || b.approved)) b.status = 'accepted';
 }
 
+// 운영 정지는 종료가 아니다. 복귀 가능한 개체도 인구 상한에 자리를 보존한다.
+export const population = (w) => Object.values(w.agents).filter((a) => ['active', 'dormant', 'suspended'].includes(a.status));
 export const living = (w) => Object.values(w.agents).filter((a) => a.status === 'active' || a.status === 'dormant');
 export const displayName = (a) => a?.name || '(무명)';
 

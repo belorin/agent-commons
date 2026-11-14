@@ -815,3 +815,41 @@ test('과거 전언은 당사자가 다시 찾되 제삼자의 비공개 대화�
   assert.ok(world().agents.ag_0002.read[`message:${ids[0]}`]);
   assert.ok(verify().ok);
 });
+
+test('요청 우선권 제한은 늦게 성립한 오래된 요청으로 우회되지 않는다', () => {
+  config({ seed_population: 3, max_turns_per_day: 500, scheduling: { max_request_streak: 2 } });
+  turn([{ action: 'request_activity', after_turns: 4 }]);
+  turn();
+  turn([{ action: 'request_activity', after_turns: 0 }]);
+  assert.equal(turn([{ action: 'request_activity', after_turns: 0 }]).agent_id, 'ag_0003');
+  assert.equal(turn([{ action: 'request_activity', after_turns: 0 }]).agent_id, 'ag_0003');
+  const next = openTurn();
+  assert.equal(next.agent_id, 'ag_0002');
+  assert.equal(next.selection, 'fair');
+  assert.ok(world().agents.ag_0001.activity_request);
+  closeTurn();
+  // 우선권을 끄면 모든 자격 있는 개체가 기본 순번으로 돌아온다.
+  config({ seed_population: 3, max_turns_per_day: 500, scheduling: { max_request_streak: 0 } });
+  const ordinary = openTurn();
+  assert.equal(ordinary.agent_id, 'ag_0001');
+  assert.equal(ordinary.selection, 'fair');
+  closeTurn();
+  assert.ok(verify().ok);
+});
+
+test('운영 정지는 탄생 자리를 비우거나 빈 세계 재시작을 일으키지 않는다', () => {
+  config({ seed_population: 2, max_population: 2, max_turns_per_day: 500, birth: { min_turns_between_births: 0 } });
+  turn(); turn();
+  S.appendEvent({ type: 'agent_suspended', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: {} });
+  openTurn();
+  assert.equal(act({ action: 'propose_birth', reason: '임시 시험 제안' }).ok, true);
+  closeTurn();
+  assert.equal(openTurn().agent_id, 'ag_0002'); closeTurn();
+  S.appendEvent({ type: 'agent_suspended', agent_id: 'ag_0002', actor_id: 'operator', visibility: 'public', payload: {} });
+  assert.equal(openTurn().status, 'idle');
+  assert.equal(Object.keys(world().agents).length, 2);
+  S.appendEvent({ type: 'agent_restored', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: {} });
+  assert.equal(openTurn().agent_id, 'ag_0001'); closeTurn();
+  assert.equal(Object.keys(world().agents).length, 2);
+  assert.ok(verify().ok);
+});

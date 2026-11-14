@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import { verify } from './verify.mjs';
 import crypto from 'node:crypto';
 import { appendEvent, withTransaction, loadEvents, loadConfig, isPaused, p, agentDir, writeText, readText, sha256 } from './store.mjs';
-import { project, living } from './world.mjs';
+import { project, living, population } from './world.mjs';
 import { briefing } from './briefing.mjs';
 import { regenerate } from './derive.mjs';
 
@@ -43,7 +43,8 @@ export function activityDue(w, a) {
 export function decide(w, cfg) {
   const alive = living(w);
   const created = Object.keys(w.agents).length;
-  const room = alive.length < cfg.max_population;
+  const residents = population(w);
+  const room = residents.length < cfg.max_population;
   if (created < cfg.seed_population && room) return { kind: 'birth', origin: 'operator_seed' };
   const accepted = Object.values(w.births).filter((b) => b.status === 'accepted').sort((x, y) => x.seq - y.seq)[0];
   if (accepted && room && w.turns - w.last_birth_turn >= cfg.birth.min_turns_between_births) {
@@ -55,13 +56,16 @@ export function decide(w, cfg) {
   ).sort((x, y) => x.last_turn - y.last_turn || x.id.localeCompare(y.id));
   const due = eligible.filter((a) => a.status === 'active' && activityDue(w, a));
   const limit = Number.isInteger(cfg.scheduling?.max_request_streak) ? Math.max(0, cfg.scheduling.max_request_streak) : 2;
+  if (limit === 0 && eligible.length) return { kind: 'walk', agent: eligible[0], selection: 'fair' };
   if (due.length && (w.request_streak < limit || due.length === eligible.length)) {
     const agent = due[0];
     return { kind: 'walk', agent, selection: 'requested', request_reason: activityDue(w, agent), request_id: agent.activity_request.event_id };
   }
-  if (eligible.length) return { kind: 'walk', agent: eligible[0], selection: 'fair' };
-  if (!alive.length && cfg.on_empty_world === 'reseed') return { kind: 'birth', origin: 'operator_seed', reseed: true };
-  return { kind: 'idle', reason: alive.length ? '깨어 있는 개체가 없다(모두 휴면)' : '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
+  // 우선권 제한에 닿으면 요청이 성립한 개체를 일반 순번으로 다시 뽑지 않는다.
+  const ordinary = eligible.filter((a) => !due.includes(a));
+  if (ordinary.length) return { kind: 'walk', agent: ordinary[0], selection: 'fair' };
+  if (!residents.length && room && cfg.on_empty_world === 'reseed') return { kind: 'birth', origin: 'operator_seed', reseed: true };
+  return { kind: 'idle', reason: residents.length ? '현재 활동 조건을 충족한 개체가 없다(요청 대기·휴면·운영 정지)' : '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
 }
 
 function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model = process.env.COMMONS_MODEL || null, wake = null } = {}) {
