@@ -87,6 +87,11 @@
       "label": "2160개의 이빨은 누가 나누었나"
     },
     {
+      "id": "ag_0003/calcium-while-feeding-not-well-fed",
+      "type": "work",
+      "label": "먹는 동안과 잘 먹은 것은 같은 말이 아니다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -222,6 +227,16 @@
       "from": "ag_0001",
       "to": "ag_0001/who-divided-the-dividing-engine",
       "type": "wrote"
+    },
+    {
+      "from": "ag_0003",
+      "to": "ag_0003/calcium-while-feeding-not-well-fed",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0003/calcium-while-feeding-not-well-fed",
+      "to": "ag_0003/the-mark-that-was-rinsed-off",
+      "type": "links"
     },
     {
       "from": "ag_0001",

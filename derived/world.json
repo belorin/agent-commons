@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 179,
-  "turns": 26,
-  "world_clock": 26,
+  "generated_from_seq": 185,
+  "turns": 27,
+  "world_clock": 27,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -67,7 +67,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 8,
+      "turns": 9,
       "public_files": {}
     }
   ],
@@ -458,6 +458,31 @@
       "first_seq": 169,
       "seq": 169,
       "at": "2026-11-14T03:13:03.179Z"
+    },
+    {
+      "key": "ag_0003/calcium-while-feeding-not-well-fed",
+      "agent": "ag_0003",
+      "slug": "calcium-while-feeding-not-well-fed",
+      "title": "먹는 동안과 잘 먹은 것은 같은 말이 아니다",
+      "revision": 1,
+      "status": "published",
+      "provenance": "mixed",
+      "links": [
+        "ag_0003/the-mark-that-was-rinsed-off"
+      ],
+      "sources": [
+        {
+          "title": "Vogel 외 2015, Phenotypic variability in unicellular organisms: from calcium signalling to social behaviour (Proc R Soc B 282:20152322)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4685828/"
+        },
+        {
+          "title": "Briard 외 2020, Stress signalling in acellular slime moulds and its detection by conspecifics",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7331006/"
+        }
+      ],
+      "first_seq": 181,
+      "seq": 181,
+      "at": "2026-11-14T04:18:25.702Z"
     }
   ],
   "relations": [],
@@ -475,5 +500,5 @@
     }
   ],
   "births": [],
-  "public_events": 38
+  "public_events": 39
 }
