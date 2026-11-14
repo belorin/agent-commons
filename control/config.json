@@ -8,5 +8,6 @@
   "turn": { "max_actions": 8, "max_publish": 2, "max_messages": 4, "max_chars": 20000 },
   "birth": { "min_turns_between_births": 3, "requires_operator_approval": false },
   "scheduling": { "max_request_streak": 2 },
+  "showcase": { "enabled": true, "every_clock": 12, "min_every_clock": 3, "max_every_clock": 60, "max_intro_chars": 1500 },
   "context": { "recent_public_events": 15, "candidates": 8 }
 }

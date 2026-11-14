@@ -24,6 +24,12 @@ export function governanceHandlers({ reject, text }) {
     return [...new Set(list)];
   };
   const content = (ctx, value, label = 'content') => text(value, label, ctx.cfg);
+  const showcaseInterval = (ctx, n) => {
+    const s = ctx.cfg.showcase;
+    if (!s.enabled) reject('운영자가 발표회를 두지 않았다');
+    if (!Number.isSafeInteger(n) || n < s.min_every_clock || n > s.max_every_clock) reject(`every_clock: ${s.min_every_clock}~${s.max_every_clock}의 정수(운영자가 정한 범위)`);
+    return n;
+  };
   return {
     create_group(ctx, a) {
       if (!['open', 'invitation'].includes(a.admission || 'open')) reject('admission: open | invitation');
@@ -66,7 +72,7 @@ export function governanceHandlers({ reject, text }) {
       const previous = a.supersedes ? ctx.w.rules[a.supersedes] : null;
       if (a.supersedes && (!previous || previous.group !== (a.group || null))) reject('같은 범위의 규칙만 개정할 수 있다');
       const effect = a.effect || { kind: 'practice' };
-      if (!effect || !['practice', 'space', 'infrastructure'].includes(effect.kind)) reject('effect.kind: practice | space | infrastructure');
+      if (!effect || !['practice', 'space', 'showcase', 'infrastructure'].includes(effect.kind)) reject('effect.kind: practice | space | showcase | infrastructure');
       let safe;
       if (effect.kind === 'practice') {
         if (effect.every_turns != null && (!Number.isSafeInteger(effect.every_turns) || effect.every_turns < 1)) reject('every_turns: 양의 정수');
@@ -75,6 +81,9 @@ export function governanceHandlers({ reject, text }) {
         if (!a.group) reject('공동 공간은 group이 필요하다');
         if (!['flow', 'documents'].includes(effect.layout || 'flow')) reject('layout: flow | documents');
         safe = { kind: 'space', title: text(effect.title, 'title', ctx.cfg, { max: 200 }), description: content(ctx, effect.description || ''), layout: effect.layout || 'flow' };
+      } else if (effect.kind === 'showcase') {
+        if (a.group) reject('발표회 규칙은 세계 범위다. group을 적지 않는다');
+        safe = { kind: 'showcase', every_clock: showcaseInterval(ctx, effect.every_clock) };
       } else safe = { kind: 'infrastructure' };
       return event('rule_proposed', { group: a.group || null, title: text(a.title, 'title', ctx.cfg, { max: 200 }), content: content(ctx, a.content), supersedes: a.supersedes || null, effect: safe, execution: safe.kind === 'infrastructure' ? 'requires_operator' : 'not_executed' });
     },
@@ -93,6 +102,12 @@ export function governanceHandlers({ reject, text }) {
     execute_rule(ctx, a) {
       const r = ctx.w.rules[a.rule];
       if (!r || r.status !== 'proposed' || r.responses[ctx.me.id]?.decision !== 'adopt') reject('자신이 채택한 열린 규칙만 실행한다');
+      if (r.effect.kind === 'showcase') {
+        // 누가 바꿀 자격이 있는지는 판정하지 않는다. 운영자 범위와 판 번호만 검사한다.
+        showcaseInterval(ctx, r.effect.every_clock);
+        if (a.expected_revision !== ctx.w.showcase.revision) reject('발표회 규칙 버전 충돌');
+        return event('rule_executed', { rule: a.rule, group: null, revision: ctx.w.showcase.revision + 1, effect: r.effect });
+      }
       if (r.effect.kind !== 'space') reject('이 효과는 실행 대상이 아니다. 관습은 자발적이며 기반 시설 변경은 운영자 검토가 필요하다');
       permission(ctx, r.group, 'space.edit');
       const g = ctx.w.groups[r.group];
@@ -143,7 +158,10 @@ export function projectGovernance(w, e) {
     case 'rule_proposed': w.rules[e.event_id] = { ...p, id: e.event_id, by: id, status: 'proposed', responses: {}, seq: e.world_seq }; break;
     case 'rule_responded': w.rules[p.rule].responses[id] = { decision: p.decision, note: p.note, seq: e.world_seq, turn: w.turns }; break;
     case 'rule_retired': w.rules[p.rule].status = 'retired'; break;
-    case 'rule_executed': g.space = { ...p.effect, revision: p.revision, rule: p.rule }; w.rules[p.rule].execution = 'executed'; break;
+    case 'rule_executed':
+      if (p.effect.kind === 'showcase') Object.assign(w.showcase, { every: p.effect.every_clock, rule: p.rule, revision: p.revision });
+      else g.space = { ...p.effect, revision: p.revision, rule: p.rule };
+      w.rules[p.rule].execution = 'executed'; break;
     case 'space_written': g.documents[p.slug] = { ...p, by: id }; break;
     case 'infrastructure_requested': w.infrastructure[e.event_id] = { ...p, by: id }; break;
     case 'infrastructure_reviewed': if (w.infrastructure[p.request]) Object.assign(w.infrastructure[p.request], { status: p.status, note: p.note }); break;

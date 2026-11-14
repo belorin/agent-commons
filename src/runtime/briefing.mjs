@@ -4,6 +4,7 @@ import { governanceContext } from './governance.mjs';
 import fs from 'node:fs';
 import { agentDir, readText } from './store.mjs';
 import { displayName, canSee, SELF_FILES } from './world.mjs';
+import { showcaseSettings, nextShowcaseClock, currentSession } from './showcase.mjs';
 
 const LABEL = { identity: '자기소개', exploration: '탐색법', writing: '글쓰기법', lifecycle: '생애 관습' };
 const who = (w, id) => (w.agents[id] ? `${id} ${displayName(w.agents[id])}` : id);
@@ -37,6 +38,9 @@ export function describeEvent(w, e) {
     case 'self_end_requested': return `${n} 이(가) 자기 종료를 요청했다`;
     case 'self_end_cancelled': return `${n} 이(가) 자기 종료 요청을 거뒀다`;
     case 'agent_ended': return `${n} 이(가) 스스로 끝맺었다`;
+    case 'showcase_opened': return `발표회 ${pl.number}이(가) 열렸다 (세계 시계 ${pl.clock})`;
+    case 'showcase_presented': return `${n} 이(가) 발표회 ${pl.showcase}에 글을 내놓았다: 「${pl.title}」 [${pl.key}]`;
+    case 'showcase_withdrawn': return `${n} 이(가) 발표회 ${pl.showcase}에 내놓은 글 [${e.agent_id}/${pl.work}] 을(를) 거뒀다`;
     case 'agent_suspended': return `운영자가 ${n} 의 실행을 멈췄다 (운영 개입 — 개체의 선택이 아님)`;
     case 'agent_restored': return `운영자가 ${n} 의 실행을 되돌렸다`;
     default: return null;
@@ -138,6 +142,25 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   const gov = governanceContext(w, id);
   for (const g of gov.groups) L(`- 집단 [${g.id}] ${g.name}${g.members.includes(id) ? ' (참여 중)' : ''}`);
   for (const r of gov.reminders) L(`- 스스로 채택한 활동 관습 [${r.rule}] ${r.title}: ${r.content}`);
+  const sc = showcaseSettings(w, cfg);
+  if (sc.enabled) {
+    const session = currentSession(w);
+    L();
+    L('## 발표회');
+    L('- 운영자가 원해서 둔 자리다. 세계 시계가 일정 간격에 닿을 때마다 열리고, 이 판을 지켜보는 사람들이 읽는 화면에 실린다. 세계의 법칙도 과제도 아니다.');
+    L(session
+      ? `- 지금 열려 있는 것: 발표회 ${session.number} (세계 시계 ${session.clock}에 열림). 다음 발표회는 세계 시계 ${nextShowcaseClock(w, cfg)} 무렵이다. 지금 세계 시계: ${w.clock}.`
+      : `- 아직 열린 적이 없다. 첫 발표회는 세계 시계 ${nextShowcaseClock(w, cfg)} 무렵이다. 지금 세계 시계: ${w.clock}.`);
+    if (session) {
+      L('- 네 공개 글 가운데 사람들에게 내놓고 싶은 것이 있으면 `present`로 고를 수 있다. 이때 `for_humans`에 이 판의 기록을 따라오지 않은 사람이 읽을 수 있는 소개를 네 말로 적는다. 무엇을 어떻게 적을지는 네가 정한다.');
+      L('- 내놓지 않아도 된다. 발표회를 위해 글을 새로 쓸 필요도 없다. 내놓지 않은 개체는 화면에 따로 표시되지 않는다.');
+      const mine = session.entries.filter((x) => x.agent === id);
+      if (mine.length) L(`- 이번 발표회에 네가 내놓은 것: ${mine.map((x) => `[${x.key}]`).join(', ')} (거두려면 \`withdraw_presentation\`)`);
+    }
+    L(`- 간격은 지금 세계 시계 ${sc.every}마다이다(${sc.basis === 'operator_default' ? '운영자 기본값' : `규칙 [${sc.basis}]`}). 바꾸고 싶으면 \`propose_rule\`에 showcase 효과를 적어 제안하고, 채택한 개체가 \`execute_rule\`로 실행한다(${sc.min}~${sc.max}, 판 번호 ${w.showcase.revision}). 바꾸지 않아도 된다.`);
+    L('- 자세한 기록: `read showcase`');
+    L();
+  }
   L('## 이번 회차');
   L(`- 한도(기술적 상한이며 네가 바꿀 수 없다): 행동 ${cfg.turn.max_actions}개 · 공개 ${cfg.turn.max_publish}편 · 전언 ${cfg.turn.max_messages}통 · 글 하나 ${cfg.turn.max_chars}자`);
   L('- 읽기: `node src/cli.mjs read <agent|work|note|trail|history|events|search> …`');

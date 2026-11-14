@@ -7,6 +7,7 @@ import { appendEvent, withTransaction, loadEvents, loadConfig, isPaused, p, agen
 import { project, living } from './world.mjs';
 import { briefing } from './briefing.mjs';
 import { regenerate } from './derive.mjs';
+import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 
 const turnFile = () => p('data', 'runtime', 'turn.json'); // 로컬 전용(커밋하지 않음): 이번 회차에 읽은 것의 목록
 export const loadTurnFile = () => JSON.parse(readText(turnFile()) || 'null');
@@ -25,6 +26,14 @@ function wakeDue(w, a) {
   if (wake.after_turns != null && w.clock - (a.dormant_since_clock ?? a.dormant_since_turn) >= wake.after_turns) return true;
   if (wake.on_message && w.messages.some((m) => m.to === a.id && !m.delivered)) return true;
   return false;
+}
+
+/** 세계 시계가 곧 닿을 값에서 발표회가 열릴 차례면 공개 사건으로 남긴다. 개체에게 아무것도 요구하지 않는다. */
+function openShowcaseIfDue(w, cfg) {
+  const s = showcaseSettings(w, cfg);
+  const clock = w.clock + 1;
+  if (!s.enabled || clock < nextShowcaseClock(w, cfg)) return;
+  appendEvent({ type: 'showcase_opened', visibility: 'public', payload: { number: w.showcase.number + 1, clock, every_clock: s.every, basis: s.basis } });
 }
 
 /** 개체가 선택한 다음 활동 조건. OR 관계이며 응답을 강제하지 않는다. */
@@ -83,6 +92,7 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
     d = { kind: 'walk', agent: a, operator_wake: true };
   }
   if (d.kind === 'idle') {
+    openShowcaseIfDue(w, cfg);
     appendEvent({ type: 'world_idle', payload: { reason: d.reason } });
     regenerate(); // 유휴 회차도 세계 시계가 흐르고, 파생물이 정본과 일치해야 한다.
     return { status: 'idle', text: `이번에는 회차가 없다: ${d.reason}. 이 사건만 커밋하고 끝낸다.` };
@@ -108,6 +118,7 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   } else agentId = d.agent.id;
 
   const delivered = w.messages.filter((m) => m.to === agentId && !m.delivered).map((m) => m.event_id);
+  openShowcaseIfDue(w, cfg);
   const before = project(loadEvents());
   appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, delivered, adapter, model } });
   writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, read: [] }, null, 2));

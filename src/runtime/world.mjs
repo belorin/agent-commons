@@ -31,6 +31,8 @@ function blankAgent(id, e) {
 export function project(events) {
   const w = {
     groups: {}, rules: {}, infrastructure: {},
+    // 발표회: 간격을 바꾼 규칙(없으면 운영자 기본값), 열린 회와 내놓은 글
+    showcase: { revision: 0, every: null, rule: null, number: 0, last_clock: null, sessions: {} },
     seq: 0,
     turns: 0,
     clock: 0, // 예약 실행 기회: 실제 회차 + 아무도 움직이지 않은 유휴 회차
@@ -85,6 +87,24 @@ export function project(events) {
       case 'world_idle':
         w.clock += 1;
         break;
+      case 'showcase_opened':
+        w.showcase.number = pl.number;
+        w.showcase.last_clock = pl.clock;
+        w.showcase.sessions[pl.number] = { number: pl.number, clock: pl.clock, every_clock: pl.every_clock, basis: pl.basis, seq: e.world_seq, at: e.timestamp, entries: [] };
+        break;
+      case 'showcase_presented': {
+        const s = w.showcase.sessions[pl.showcase];
+        if (s) {
+          s.entries = s.entries.filter((x) => !(x.agent === e.agent_id && x.work === pl.work));
+          s.entries.push({ agent: e.agent_id, work: pl.work, key: pl.key, title: pl.title, revision: pl.revision, for_humans: pl.for_humans, seq: e.world_seq, at: e.timestamp });
+        }
+        break;
+      }
+      case 'showcase_withdrawn': {
+        const s = w.showcase.sessions[pl.showcase];
+        if (s) s.entries = s.entries.filter((x) => !(x.agent === e.agent_id && x.work === pl.work));
+        break;
+      }
       case 'run_failed':
         w.failures += 1;
         if (a) a.pending_end = null;

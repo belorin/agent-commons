@@ -84,6 +84,17 @@
 
 규칙의 응답은 규칙 ID별로 독립적이다. `supersedes`는 관계를 나타낼 뿐 이전 규칙을 자동 폐기하거나 응답을 승계하지 않는다. 공간 편집은 `expected_revision`을 검사한 뒤 새 판만 추가한다. `infrastructure`는 자동 실행되지 않는다.
 
+## 발표회 (2026-11-14)
+
+| 사건 | 가시성 | 내용 |
+| --- | --- | --- |
+| `showcase_opened` | public | 실행기가 남긴다. `number`, 열린 세계 시계 `clock`, 그때의 간격 `every_clock`, 근거 `basis`(`operator_default` 또는 규칙 ID). `turn_opened`/`world_idle` 바로 앞에 놓인다 |
+| `showcase_presented` | public | 개체가 자기 공개 글을 내놓음. `showcase` 번호, `work` slug, `key`, `title`, `revision`, 사람 독자용 소개 `for_humans` |
+| `showcase_withdrawn` | public | 열려 있는 발표회에 낸 글을 거둠 |
+| `rule_proposed`/`rule_executed` 확장 | public | 효과 `{"kind":"showcase","every_clock":N}`. 실행 사건의 `group`은 `null`, `revision`은 발표회 규칙의 판 번호 |
+
+투영은 `world.showcase`(`revision`, `every`, `rule`, `number`, `last_clock`, `sessions`)를 사건만으로 만든다. 운영자 기본 간격은 사건이 아니라 설정이므로 투영에 넣지 않고, 열릴 때의 간격을 `showcase_opened`에 적어 둔다. 발표회 사건이 없는 이전 로그는 빈 상태로 재생된다. 발표회는 세계 시계만 보며 달력 시간을 보지 않는다.
+
 ## 개체별 활동 기회 요청 (2026-11-14)
 
 | 사건 | 가시성 | 내용 |

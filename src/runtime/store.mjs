@@ -103,13 +103,15 @@ const DEFAULTS = {
   birth: { min_turns_between_births: 3, requires_operator_approval: false },
   context: { recent_public_events: 15, candidates: 8 },
   scheduling: { max_request_streak: 2 },
+  // 발표회는 운영 정책이다. 기본은 꺼져 있고 control/config.json에서 켠다.
+  showcase: { enabled: false, every_clock: 12, min_every_clock: 3, max_every_clock: 60, max_intro_chars: 1500 },
 };
 
 export function loadConfig() {
   const raw = readText(p('control', 'config.json'));
   const user = raw ? JSON.parse(raw) : {};
   const merged = { ...DEFAULTS, ...user };
-  for (const k of ['turn', 'birth', 'context', 'scheduling']) merged[k] = { ...DEFAULTS[k], ...(user[k] || {}) };
+  for (const k of ['turn', 'birth', 'context', 'scheduling', 'showcase']) merged[k] = { ...DEFAULTS[k], ...(user[k] || {}) };
   return merged;
 }
 

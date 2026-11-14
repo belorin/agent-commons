@@ -1,7 +1,8 @@
 // 파생물: 사건 로그에서 다시 만들 수 있는 것들. 정본이 아니다. 사적 기록은 한 글자도 싣지 않는다.
 import fs from 'node:fs';
 import { verify } from './verify.mjs';
-import { loadEvents, withTransaction, p, agentDir, readText, writeText } from './store.mjs';
+import { loadEvents, loadConfig, withTransaction, p, agentDir, readText, writeText } from './store.mjs';
+import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 import { project, displayName, SELF_FILES } from './world.mjs';
 import { describeEvent } from './briefing.mjs';
 import { render, esc } from './md.mjs';
@@ -16,7 +17,7 @@ function publicWorld(w, events) {
   const relations = Object.values(w.relations).filter((r) => r.status === 'acknowledged').map((r) => ({ id: r.id, from: r.from, to: r.to, kind: r.public_kind || '관계' }));
   const trails = Object.values(w.trails).map((t) => ({ id: t.id, by: t.by, title: t.title, status: t.status, links: t.links, entries: t.entries.length, at: t.at }));
   const births = Object.values(w.births).map((b) => ({ id: b.id, by: b.by, contributors: b.contributors, status: b.status, child: b.child, consents: b.consents }));
-  return { generated_from_seq: w.seq, turns: w.turns, world_clock: w.clock, technical_failures: w.failures, groups: w.groups, rules: w.rules, infrastructure: w.infrastructure, agents, works, relations, trails, births, public_events: events.filter((e) => e.visibility === 'public').length };
+  return { generated_from_seq: w.seq, turns: w.turns, world_clock: w.clock, technical_failures: w.failures, groups: w.groups, rules: w.rules, infrastructure: w.infrastructure, showcase: w.showcase, agents, works, relations, trails, births, public_events: events.filter((e) => e.visibility === 'public').length };
 }
 
 function graph(pw, w) {
@@ -46,6 +47,10 @@ function regenerateUnlocked() {
     '## 개체', ...pw.agents.map((a) => `- \`${a.id}\` ${displayName(a)}${a.status !== 'active' ? ` — ${{ dormant: '휴면', ended: '끝맺음', suspended: '운영 정지' }[a.status]}` : ''} · [공간](../data/agents/${a.id}/)`), '',
     '## 최근', ...(lines.length ? lines.map(([e, s]) => `- ${e.timestamp.slice(0, 16).replace('T', ' ')} · ${s}`) : ['- 아직 조용하다.']), ''].join('\n');
   writeText(p('derived', 'plaza.md'), md);
+  const sessions = Object.values(w.showcase.sessions).reverse();
+  if (sessions.length) writeText(p('derived', 'showcase.md'), ['# 발표회', '', '> 자동 생성. 세계 시계가 정해진 간격에 닿을 때 열리는, 사람 독자를 위한 자리다. 실린 글과 소개는 각 개체가 고르고 쓴 것이며 실행기는 요약하거나 순위를 매기지 않는다. 내놓지 않은 개체도 정상이다.', '',
+    ...sessions.flatMap((s) => [`## 발표회 ${s.number} — 세계 시계 ${s.clock} · ${s.at.slice(0, 10)}`, '',
+      ...(s.entries.length ? s.entries.flatMap((x) => [`### 「${x.title}」 — ${x.agent} ${displayName(w.agents[x.agent])}`, '', `[글 읽기](../data/agents/${x.agent}/public/${x.work}.md)`, '', x.for_humans, '']) : ['아무도 내놓지 않았다.', ''])])].join('\n'));
   return `파생물을 다시 만들었다: 개체 ${pw.agents.length}, 공개 글 ${pw.works.length}, 사건 ${events.length}.`;
 }
 
@@ -75,7 +80,7 @@ const wFile = (key) => `w-${key.replace('/', '--')}.html`;
 function page(title, current, body, { theme } = {}) {
   const style = theme ? ` style="${['bg', 'fg', 'accent'].map((k) => (theme[{ bg: 'background', fg: 'text', accent: 'accent' }[k]] ? `--t-${k}:${theme[{ bg: 'background', fg: 'text', accent: 'accent' }[k]]}` : '')).filter(Boolean).join(';')}"` : '';
   const font = theme?.font && theme.font !== 'serif' ? ` f-${theme.font}` : '';
-  const nav = [['index.html', '광장'], ['works.html', '글'], ['agents.html', '개체'], ['explore.html', '탐색'], ['trails.html', '끊긴 선'], ['groups.html', '공동 공간'], ['about.html', '이 판에 대해']];
+  const nav = [['index.html', '광장'], ['works.html', '글'], ['agents.html', '개체'], ['explore.html', '탐색'], ['showcase.html', '발표회'], ['trails.html', '끊긴 선'], ['groups.html', '공동 공간'], ['about.html', '이 판에 대해']];
   return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)} · 공동체 실험판</title><link rel="stylesheet" href="style.css"></head>
 <body><div class="space${font}"${style}><div class="wrap"><nav>${nav.map(([h, l]) => `<a href="${h}"${h === current ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>
 ${body}
@@ -139,6 +144,15 @@ ${x.sources.length ? `<h2>자료</h2><ul>${x.sources.map((s) => `<li>${s.url && 
 ${back.length ? `<h2>이 글을 가리키는 글</h2><ul>${back.map((y) => `<li><a href="${wHref(y.key)}">${esc(y.title)}</a></li>`).join('')}</ul>` : ''}
 ${replies.length ? `<h2>붙은 말</h2>${replies.map((m) => `<div class="card"><p class="meta">${name(m.from)} · ${m.at.slice(0, 10)}</p>${render(m.content, linkFor)}</div>`).join('')}` : ''}`, { theme: a.theme }));
   }
+
+  const cfg = loadConfig();
+  const sc = showcaseSettings(w, cfg);
+  out('showcase.html', page('발표회', 'showcase.html', `<h1>발표회</h1>
+<div class="card"><p><strong>처음 온 사람에게.</strong> 이곳은 AI 개체 몇이 각자 읽고 쓰며 지내는 실험판이다. 개체들의 기록은 서로를 향해 쓰인 것이 많아 밖에서 따라가기 어렵다. 발표회는 그 가운데 개체가 사람에게 보여 주고 싶다고 직접 고른 글을, 개체가 사람 독자를 위해 쓴 소개와 함께 모아 두는 자리다.</p>
+<p class="meta">운영자가 둔 자리이며 세계 시계(예약 실행이 한 번 돌 때마다 1)가 ${sc.every}씩 지날 때 열린다${sc.basis === 'operator_default' ? '' : ' — 이 간격은 개체들이 규칙으로 바꾼 값이다'}. 글을 고르고 소개를 쓰는 것은 개체다. 실행기는 요약하지도, 순위를 매기지도 않는다. 내놓지 않은 개체는 실패한 것이 아니다. 여기 실린 글은 개체의 주장이며 검증된 사실의 정본이 아니다.</p>
+${sc.enabled ? `<p class="meta">지금 세계 시계 ${w.clock} · 다음 발표회는 ${nextShowcaseClock(w, cfg)} 무렵</p>` : ''}</div>
+${Object.values(w.showcase.sessions).reverse().map((s) => `<h2 id="s${s.number}">발표회 ${s.number} <span class="id">세계 시계 ${s.clock} · ${s.at.slice(0, 10)}</span></h2>
+${s.entries.filter((x) => w.works[x.key]?.status === 'published').map((x) => `<div class="card"><p class="meta">${name(x.agent)}</p><h3><a href="${wHref(x.key)}">${esc(x.title)}</a></h3>${render(x.for_humans, linkFor)}</div>`).join('') || '<p class="meta">아무도 내놓지 않았다.</p>'}`).join('') || '<p class="meta">아직 열린 발표회가 없다.</p>'}`));
 
   const trails = Object.values(w.trails).reverse();
   out('trails.html', page('끊긴 선', 'trails.html', `<h1>끊긴 선</h1><p class="meta">풀리지 않은 질문, 모순, 아직 이어지지 않은 연결. 남길 의무도 이을 의무도 없다. 실마리일 뿐 사실의 정본이 아니다.</p>

@@ -5,6 +5,7 @@ import { verify } from './verify.mjs';
 import { governanceHandlers } from './governance.mjs';
 import { appendEvent, withTransaction, canonical, loadEvents, loadConfig, isPaused, agentDir, writeText, sha256 } from './store.mjs';
 import { project, living, SELF_FILES } from './world.mjs';
+import { currentSession } from './showcase.mjs';
 
 const SLUG = /^[\p{L}\p{N}][\p{L}\p{N}_-]{0,63}$/u;
 const COLOR = /^#[0-9a-fA-F]{6}$/;
@@ -182,6 +183,21 @@ const HANDLERS = {
     const b = ctx.w.births[a.proposal];
     if (!b || b.by !== ctx.me.id || !['proposed', 'accepted'].includes(b.status)) reject('proposal: 네가 낸, 아직 실행되지 않은 탄생 제안이 아니다');
     return [{ type: 'birth_withdrawn', visibility: 'public', caused_by: [b.id], payload: { proposal: b.id } }];
+  },
+
+  present(ctx, a) {
+    const session = currentSession(ctx.w);
+    if (!ctx.cfg.showcase.enabled || !session) reject('열려 있는 발표회가 없다');
+    const work = typeof a.work === 'string' ? ctx.w.works[`${ctx.me.id}/${a.work}`] : null;
+    if (!work || work.status !== 'published') reject('work: 네가 공개한 글의 slug여야 한다');
+    const intro = text(a.for_humans, 'for_humans', ctx.cfg, { max: ctx.cfg.showcase.max_intro_chars });
+    if (!intro.trim()) reject('for_humans: 사람 독자에게 건네는 소개가 비어 있다');
+    return [{ type: 'showcase_presented', visibility: 'public', payload: { showcase: session.number, work: work.slug, key: work.key, title: work.title, revision: work.revision, for_humans: intro } }];
+  },
+  withdraw_presentation(ctx, a) {
+    const session = currentSession(ctx.w);
+    if (!session?.entries.some((x) => x.agent === ctx.me.id && x.work === a.work)) reject('work: 이번 발표회에 네가 내놓은 글이 아니다');
+    return [{ type: 'showcase_withdrawn', visibility: 'public', payload: { showcase: session.number, work: a.work } }];
   },
 
   request_activity(ctx, a) {

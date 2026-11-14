@@ -734,3 +734,96 @@ test('모두 휴면에 들어도 세계 시계로 스스로 설정한 복귀 시
   assert.equal(world().agents.ag_0001.status, 'active');
   assert.ok(verify().ok);
 });
+
+const SHOWCASE = { seed_population: 2, max_turns_per_day: 500, showcase: { enabled: true, every_clock: 3, min_every_clock: 2, max_every_clock: 10, max_intro_chars: 200 } };
+
+test('발표회는 세계 시계 간격에 열리고, 내놓는 것은 개체의 선택이며 사람용 소개가 있어야 한다', () => {
+  config(SHOWCASE);
+  turn([{ action: 'publish', slug: 'a', title: '글 A', content: '본문' }]); // 시계 1
+  assert.match(openTurn().text, /아직 열린 적이 없다. 첫 발표회는 세계 시계 3/);
+  assert.equal(act({ action: 'present', work: 'a', for_humans: '소개' }).ok, false); // 아직 열리지 않았다
+  closeTurn(); // 시계 2
+  const t = openTurn(); // 시계 3: ag_0001
+  assert.equal(world().showcase.number, 1);
+  assert.equal(world().showcase.sessions[1].clock, 3);
+  assert.match(t.text, /발표회 1 \(세계 시계 3에 열림\)/);
+  assert.match(t.text, /내놓지 않아도 된다/);
+  assert.equal(act({ action: 'present', work: 'a' }).ok, false); // 소개 없음
+  assert.equal(act({ action: 'present', work: 'a', for_humans: '  ' }).ok, false);
+  assert.equal(act({ action: 'present', work: '없는-글', for_humans: '소개' }).ok, false);
+  assert.equal(act({ action: 'present', work: 'a', for_humans: 'x'.repeat(201) }).ok, false);
+  assert.equal(act({ action: 'present', work: 'a', for_humans: '처음 읽는 사람을 위한 소개' }).ok, true);
+  assert.equal(act({ action: 'present', work: 'a', for_humans: '고친 소개' }).ok, true); // 같은 글은 바꿔 낸다
+  closeTurn();
+  assert.deepEqual(world().showcase.sessions[1].entries.map((x) => [x.agent, x.work, x.for_humans]), [['ag_0001', 'a', '고친 소개']]);
+  const other = openTurn(); // ag_0002: 남의 글은 내놓을 수 없고, 아무것도 내지 않아도 된다
+  assert.equal(other.agent_id, 'ag_0002');
+  assert.equal(act({ action: 'present', work: 'a', for_humans: '남의 글' }).ok, false);
+  closeTurn();
+  assert.ok(verify().ok);
+  assert.match(fs.readFileSync(S.p('derived', 'showcase.md'), 'utf8'), /발표회 1 — 세계 시계 3[\s\S]*글 A[\s\S]*고친 소개/);
+  buildSite();
+  const html = fs.readFileSync(S.p('site', 'showcase.html'), 'utf8');
+  assert.match(html, /처음 온 사람에게/);
+  assert.match(html, /고친 소개/);
+  assert.doesNotMatch(html, /ag_0002<\/span><\/p><h3>/); // 내놓지 않은 개체는 표시하지 않는다
+  turn(); // 시계 5
+  assert.equal(world().showcase.number, 1);
+  const again = openTurn(); // 시계 6: 발표회 2, ag_0002
+  assert.equal(world().showcase.number, 2);
+  assert.match(again.text, /발표회 2/);
+  closeTurn();
+  const w3 = openTurn(); // ag_0001: 거두기는 지금 열린 발표회의 것만
+  assert.equal(w3.agent_id, 'ag_0001');
+  assert.equal(act({ action: 'withdraw_presentation', work: 'a' }).ok, false);
+  assert.equal(act({ action: 'present', work: 'a', for_humans: '다시' }).ok, true);
+  assert.equal(act({ action: 'withdraw_presentation', work: 'a' }).ok, true);
+  closeTurn();
+  assert.equal(world().showcase.sessions[2].entries.length, 0);
+  assert.equal(world().showcase.sessions[1].entries.length, 1); // 지난 발표회의 기록은 남는다
+  assert.ok(verify().ok);
+});
+
+test('발표회 간격은 개체가 규칙으로 바꿀 수 있고 운영자 범위와 판 번호만 검사한다', () => {
+  config(SHOWCASE);
+  turn();
+  const t = openTurn(); // ag_0002, 시계 2
+  assert.equal(act({ action: 'propose_rule', title: '너무 잦게', content: '매번', effect: { kind: 'showcase', every_clock: 1 } }).ok, false);
+  assert.equal(act({ action: 'propose_rule', title: '끄기', content: '아주 드물게', effect: { kind: 'showcase', every_clock: 9999 } }).ok, false);
+  const proposed = act({ action: 'propose_rule', title: '다섯 번마다', content: '발표회는 세계 시계 다섯 번마다 연다.', effect: { kind: 'showcase', every_clock: 5 } });
+  assert.equal(proposed.ok, true);
+  const rule = proposed.events[0].event_id;
+  assert.equal(act({ action: 'execute_rule', rule, expected_revision: 0 }).ok, false); // 채택하지 않은 규칙은 실행하지 못한다
+  assert.equal(act({ action: 'respond_rule', rule, decision: 'adopt' }).ok, true);
+  assert.equal(act({ action: 'execute_rule', rule, expected_revision: 7 }).ok, false); // 판 번호 충돌
+  assert.equal(act({ action: 'execute_rule', rule, expected_revision: 0 }).ok, true);
+  closeTurn();
+  assert.match(t.text, /운영자 기본값/);
+  const w = world();
+  assert.deepEqual([w.showcase.every, w.showcase.rule, w.showcase.revision], [5, rule, 1]);
+  turn(); turn(); // 시계 3, 4: 옛 간격 3에서는 열렸겠지만 이제 열리지 않는다
+  assert.equal(world().showcase.number, 0);
+  const fifth = openTurn(); // 시계 5
+  assert.equal(world().showcase.number, 1);
+  assert.match(fifth.text, new RegExp(`규칙 \\[${rule}\\]`));
+  closeTurn();
+  config({ ...SHOWCASE, showcase: { ...SHOWCASE.showcase, max_every_clock: 4 } }); // 운영자가 범위를 좁히면 그 안으로 맞춰진다
+  turn(); turn(); turn(); // 시계 6, 7, 8
+  turn(); // 시계 9 = 5 + 4
+  assert.equal(world().showcase.number, 2);
+  assert.ok(verify().ok);
+});
+
+test('발표회를 켜지 않은 판과 옛 로그는 그대로 재생된다', () => {
+  for (let i = 0; i < 14; i++) turn();
+  const w = world();
+  assert.equal(w.showcase.number, 0);
+  assert.ok(!S.loadEvents().some((e) => e.type.startsWith('showcase_')));
+  const t = openTurn();
+  assert.doesNotMatch(t.text, /## 발표회/);
+  assert.equal(act({ action: 'present', work: 'a', for_humans: '소개' }).ok, false);
+  assert.equal(act({ action: 'propose_rule', title: 't', content: 'c', effect: { kind: 'showcase', every_clock: 5 } }).ok, false);
+  closeTurn();
+  assert.ok(!fs.existsSync(S.p('derived', 'showcase.md')));
+  assert.ok(verify().ok);
+});

@@ -4,6 +4,8 @@ import { loadEvents, withTransaction, agentDir, readText } from './store.mjs';
 import { project, displayName, canSee, SELF_FILES } from './world.mjs';
 import { describeEvent, listPrivate } from './briefing.mjs';
 import { noteRead } from './tick.mjs';
+import { loadConfig } from './store.mjs';
+import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 
 export const read = (kind, arg, extra) => withTransaction(() => readUnlocked(kind, arg, extra));
 function readUnlocked(kind, arg, extra) {
@@ -13,6 +15,10 @@ function readUnlocked(kind, arg, extra) {
   const me = w.agents[w.turn.agent_id];
   switch (kind) {
     case 'schedule': return JSON.stringify({ world_turns: w.turns, world_clock: w.clock, last_turn: me.last_turn, activity_request: me.activity_request, note: '자신의 요청만 열람 가능하며, 실제 다음 실행 시각은 보장되지 않는다' }, null, 2);
+    case 'showcase': {
+      const cfg = loadConfig();
+      return JSON.stringify({ settings: showcaseSettings(w, cfg), revision: w.showcase.revision, world_clock: w.clock, next_clock: nextShowcaseClock(w, cfg), sessions: Object.values(w.showcase.sessions), note: '발표회는 운영 정책이다. 내놓은 글과 소개는 각 개체가 고른 것이며 실행기가 고르거나 고치지 않는다' }, null, 2);
+    }
     case 'governance': return JSON.stringify(governanceContext(w, me.id), null, 2);
     case 'group': return JSON.stringify(w.groups[arg] || '없는 집단', null, 2);
     case 'rule': return JSON.stringify(w.rules[arg] || '없는 규칙', null, 2);
@@ -86,6 +92,6 @@ function readUnlocked(kind, arg, extra) {
       return hits.join('\n') || '찾은 것이 없다.';
     }
     default:
-      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | history [target revision] | events [n] | search <말>';
+      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | history [target revision] | events [n] | search <말> | showcase | governance | group <id> | rule <id> | schedule';
   }
 }
