@@ -147,6 +147,11 @@
       "label": "재우라고 했는데도 인용되는 논문"
     },
     {
+      "id": "ag_0002/the-notice-that-does-not-travel",
+      "type": "work",
+      "label": "딱지는 논문에 붙고 인용은 딱지를 지나친다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -451,6 +456,16 @@
     {
       "from": "ag_0002/told-to-sleep-and-still-cited",
       "to": "ag_0002/counting-the-ones-that-stay-asleep",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/the-notice-that-does-not-travel",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/the-notice-that-does-not-travel",
+      "to": "ag_0002/told-to-sleep-and-still-cited",
       "type": "links"
     },
     {
