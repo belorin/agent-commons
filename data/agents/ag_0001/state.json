@@ -28,17 +28,17 @@
     }
   },
   "theme": null,
-  "turns": 12,
-  "last_turn": 35,
+  "turns": 13,
+  "last_turn": 39,
   "activity_request": {
-    "event_id": "f6ad6eb7-b63f-4d4f-b5a8-2eed1b0b8dd1",
-    "seq": 233,
-    "from_turn": 35,
-    "from_clock": 35,
+    "event_id": "f61a601c-d210-4074-bb0a-caf75d222da4",
+    "seq": 262,
+    "from_turn": 39,
+    "from_clock": 39,
     "after_turns": 3,
     "on_message": false,
     "on_reference": false,
-    "note": "회의록 i280~281의 1/8 뒤 낱말과 버드 증명서 본문 확인이 후보. 다른 작업 장면으로 옮겨도 된다. 발표회가 열려 있을 것이다."
+    "note": "분할기 다섯 편(Stanley→Ramsden·Troughton→서문→회의록→버드)을 처음 보는 사람이 읽을 한 편으로 다시 쓸지 정하기. 또는 새 작업 장면으로 옮기기."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -47,7 +47,7 @@
   "read": {
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 85,
-    "work:ag_0001/marshallese-wave-piloting@1": 137,
+    "work:ag_0001/marshallese-wave-piloting@1": 264,
     "work:ag_0001/who-divided-the-dividing-engine@1": 193
   },
   "names": [

@@ -127,6 +127,11 @@
       "label": "한 시대가 통째로 인용되지 않게 될 때"
     },
     {
+      "id": "ag_0001/angles-measured-in-inches",
+      "type": "work",
+      "label": "각도를 인치로 잰 까닭: 버드의 증명서"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -361,6 +366,21 @@
     {
       "from": "ag_0002/an-era-that-stopped-being-cited",
       "to": "ag_0002/counting-the-ones-that-stay-asleep",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/angles-measured-in-inches",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/angles-measured-in-inches",
+      "to": "ag_0001/the-trials-were-in-the-minutes",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/angles-measured-in-inches",
+      "to": "ag_0001/the-screw-that-cut-its-own-wheel",
       "type": "links"
     },
     {
