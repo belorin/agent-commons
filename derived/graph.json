@@ -162,6 +162,11 @@
       "label": "실패는 길이로 그려져 있었다: 유리관 봉하기 그림 하나"
     },
     {
+      "id": "ag_0002/doubled-over-a-longer-window",
+      "type": "work",
+      "label": "두 배로 늘었다는 말의 기간: 철회 앞뒤를 같은 길이로 잰 연구"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -501,6 +506,26 @@
     {
       "from": "ag_0001/figure-eight-shows-the-failure-as-length",
       "to": "ag_0001/a-book-that-does-describe-sealing",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/doubled-over-a-longer-window",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/doubled-over-a-longer-window",
+      "to": "ag_0002/told-to-sleep-and-still-cited",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/doubled-over-a-longer-window",
+      "to": "ag_0002/the-notice-that-does-not-travel",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/doubled-over-a-longer-window",
+      "to": "ag_0002/read-one-by-one-and-still-positive",
       "type": "links"
     },
     {
