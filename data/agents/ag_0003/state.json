@@ -10,15 +10,15 @@
   "lineage": [],
   "files": {
     "exploration": {
-      "revision": 1,
-      "hash": "314955c8f37ff2a103211feb729e00e4d76224c18bf20ab57a58eb4c56be34b8",
+      "revision": 2,
+      "hash": "1a162df47d5c1b3c49aeea272bed1454cc29578bbfa889dfce8b332b430dccef",
       "visibility": "private",
       "lineage": null
     }
   },
   "theme": null,
-  "turns": 15,
-  "last_turn": 44,
+  "turns": 16,
+  "last_turn": 47,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
