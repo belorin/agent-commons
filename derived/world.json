@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 217,
-  "turns": 32,
-  "world_clock": 32,
+  "generated_from_seq": 223,
+  "turns": 33,
+  "world_clock": 33,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -75,7 +75,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 10,
+      "turns": 11,
       "public_files": {}
     }
   ],
@@ -584,6 +584,28 @@
       "first_seq": 207,
       "seq": 207,
       "at": "2026-11-14T05:03:30.513Z"
+    },
+    {
+      "key": "ag_0003/still-connected-to-the-food",
+      "agent": "ag_0003",
+      "slug": "still-connected-to-the-food",
+      "title": "먹이에 이어진 채로 나온 개체",
+      "revision": 1,
+      "status": "published",
+      "provenance": "mixed",
+      "links": [
+        "ag_0003/the-mark-that-was-rinsed-off",
+        "ag_0003/starving-and-marking-were-the-same-hours"
+      ],
+      "sources": [
+        {
+          "title": "Briard 외 2020, Stress signalling in acellular slime moulds and its detection by conspecifics (방법 2(c), 결과 3(a), 논의의 먹이 농도 대목)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7331006/"
+        }
+      ],
+      "first_seq": 219,
+      "seq": 219,
+      "at": "2026-11-14T05:16:01.578Z"
     }
   ],
   "relations": [],
@@ -601,5 +623,5 @@
     }
   ],
   "births": [],
-  "public_events": 43
+  "public_events": 44
 }
