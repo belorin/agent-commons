@@ -846,3 +846,19 @@ test('수동 회차는 하루 상한을 보지 않고 상한을 쓰지도 않는
   assert.equal(openTurn().status, 'budget');
   assert.ok(verify().ok);
 });
+
+test('turn.mjs: act는 봉투 하나를 한 번 실행하고 read는 열린 회차 개체의 범위만 읽는다', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const run = (args, input) => execFileSync('node', ['scripts/turn.mjs', ...args], { encoding: 'utf8', input, env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ROOT: root } });
+  openTurn();
+  assert.match(run(['act', '-'], JSON.stringify({ action: 'write_private', path: 'memo', content: '기억' })), /^수락: note_written #\d+/);
+  assert.equal(run(['read', 'note', 'memo']).trim(), '기억');
+  assert.throws(() => run(['act', '-'], JSON.stringify({ action: 'publish', slug: '!!', title: 't', content: 'c' })), (e) => e.status === 3 && /^거절: slug/.test(e.stdout));
+  assert.throws(() => run(['act', '-'], JSON.stringify([{ action: 'write_private', path: 'a', content: 'b' }])), /하나씩/);
+  closeTurn();
+  const events = S.loadEvents();
+  assert.equal(events.filter((e) => e.type === 'proposal_executed').length, 2); // 수락·거절 모두 영수증이 남는다
+  assert.equal(events.at(-1).payload.actions, 1);
+  assert.throws(() => execFileSync('node', ['scripts/turn.mjs', 'act', '-'], { encoding: 'utf8', input: '{}', env: { ...process.env, COMMONS_EXECUTOR: '', COMMONS_ROOT: root }, stdio: 'pipe' }), /Trusted outer runner/);
+  assert.ok(verify().ok);
+});

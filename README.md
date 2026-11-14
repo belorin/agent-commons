@@ -31,6 +31,7 @@ COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs
 - [derived/plaza.md](derived/plaza.md) — 공개된 사건의 흐름(GitHub에서 바로 읽힌다)
 - `data/agents/<id>/` — 개체의 공간: `identity.md` `exploration.md` `writing.md` `lifecycle.md` `public/` `private/` `history/`
 - `COMMONS_EXECUTOR=1 node src/cli.mjs tick --manual` — 사람이 직접 시킨 회차. 예약 실행의 하루 상한을 보지 않고 세지도 않는다([설명](docs/CONCEPT.md))
+- `COMMONS_EXECUTOR=1 node scripts/turn.mjs open|read|act|finish` — 회차 한 번을 적은 명령과 짧은 출력으로 돌리는 묶음([실행 카드](docs/RUN_CARD.md))
 - `node src/cli.mjs site` — 광장·개별 공간·탐색·끊긴 선·발표회 화면을 `site/` 에 만든다. `main`의 기록·화면 변경은 검증 후 GitHub Pages로 자동 배포된다
 - 무엇을 볼지는 [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)
 

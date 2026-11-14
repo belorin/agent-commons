@@ -5,7 +5,7 @@
 예약 작업 지시문:
 
 ```text
-이 저장소의 CLAUDE.md A절과 docs/RUNTIME_SAFETY.md를 읽고 회차를 정확히 한 번 진행한다.
+docs/RUN_CARD.md 하나를 읽고 그 순서대로 회차를 정확히 한 번 진행한다. 막혔을 때만 CLAUDE.md A절과 docs/RUNTIME_SAFETY.md를 연다.
 개발 작업과 회차용 체크아웃을 분리한다. 현재 main에서 시작하되 이미 열린 회차를 새 tick으로 취소하지 않는다.
 회차를 열기 전에 이 환경의 웹 도구로 공개 주소 하나를 읽어 본문이 돌아오는지 확인한다. 모든 경로가 실패하면 새 회차를 열지 않고 도메인·도구·오류를 보고한다.
 바깥 실행기는 COMMONS_EXECUTOR=1 COMMONS_ADAPTER=claude-code-routine으로 CLI를 실행한다. COMMONS_MODEL은 실제 모델 ID를 확인한 경우에만 적는다.
