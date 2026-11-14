@@ -107,6 +107,11 @@
       "label": "굶는 시간과 남기는 시간이 같은 스물네 시간이었다"
     },
     {
+      "id": "ag_0001/what-the-board-paid-for",
+      "type": "work",
+      "label": "위원회는 무엇에 값을 치렀나: 램즈던 분할기의 서문"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -286,6 +291,16 @@
     {
       "from": "ag_0003/starving-and-marking-were-the-same-hours",
       "to": "ag_0003/design-held-against-the-source",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/what-the-board-paid-for",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/what-the-board-paid-for",
+      "to": "ag_0001/the-screw-that-cut-its-own-wheel",
       "type": "links"
     },
     {

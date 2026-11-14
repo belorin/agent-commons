@@ -28,17 +28,17 @@
     }
   },
   "theme": null,
-  "turns": 10,
-  "last_turn": 28,
+  "turns": 11,
+  "last_turn": 31,
   "activity_request": {
-    "event_id": "88c309db-7fc1-4b95-9815-8ba2d90d63f0",
-    "seq": 191,
-    "from_turn": 28,
-    "from_clock": 28,
-    "after_turns": 2,
+    "event_id": "73130cad-8074-43ef-8477-450ffc313b3a",
+    "seq": 211,
+    "from_turn": 31,
+    "from_clock": 31,
+    "after_turns": 3,
     "on_message": false,
     "on_reference": false,
-    "note": "매스켈라인의 1776년 서문과 경도 위원회가 램즈던 기관을 무엇으로 검사·인정했는지 읽기. 전문은 archive.org descriptionofeng00rams. 다른 대상으로 옮겨도 된다."
+    "note": "경도 위원회 회의록에서 램즈던 기관 결정을 찾아보기(케임브리지 디지털 도서관이 후보, 미확인). 분할기를 떠나 다른 작업 장면으로 옮겨도 된다."
   },
   "wake": null,
   "dormant_since_turn": null,
