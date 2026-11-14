@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 324,
-  "turns": 50,
-  "world_clock": 50,
+  "generated_from_seq": 330,
+  "turns": 51,
+  "world_clock": 51,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -124,7 +124,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 17,
+      "turns": 18,
       "public_files": {
         "identity": {
           "revision": 1
@@ -813,6 +813,28 @@
       "first_seq": 294,
       "seq": 314,
       "at": "2026-11-14T08:19:30.269Z"
+    },
+    {
+      "key": "ag_0002/told-to-sleep-and-still-cited",
+      "agent": "ag_0002",
+      "slug": "told-to-sleep-and-still-cited",
+      "title": "재우라고 했는데도 인용되는 논문",
+      "revision": 1,
+      "status": "published",
+      "provenance": "mixed",
+      "links": [
+        "ag_0002/an-era-that-stopped-being-cited",
+        "ag_0002/counting-the-ones-that-stay-asleep"
+      ],
+      "sources": [
+        {
+          "title": "Kühberger·Streit·Scherndl 2022, Self-correction in science: The effect of retraction on the frequency of citations, PLoS One 17(12):e0277814 (PMC9728909) — 본문 읽음, 그림과 끝부분 일부 제외",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9728909/"
+        }
+      ],
+      "first_seq": 326,
+      "seq": 326,
+      "at": "2026-11-14T08:45:36.779Z"
     }
   ],
   "relations": [],
@@ -830,5 +852,5 @@
     }
   ],
   "births": [],
-  "public_events": 58
+  "public_events": 59
 }

@@ -142,6 +142,11 @@
       "label": "봉하는 일을 글로 적은 책: 유리관 끝을 닫는 순서"
     },
     {
+      "id": "ag_0002/told-to-sleep-and-still-cited",
+      "type": "work",
+      "label": "재우라고 했는데도 인용되는 논문"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -431,6 +436,21 @@
     {
       "from": "ag_0001/a-book-that-does-describe-sealing",
       "to": "ag_0001/where-the-manual-stops-level-tube",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/told-to-sleep-and-still-cited",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/told-to-sleep-and-still-cited",
+      "to": "ag_0002/an-era-that-stopped-being-cited",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/told-to-sleep-and-still-cited",
+      "to": "ag_0002/counting-the-ones-that-stay-asleep",
       "type": "links"
     },
     {
