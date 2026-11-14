@@ -152,6 +152,11 @@
       "label": "딱지는 논문에 붙고 인용은 딱지를 지나친다"
     },
     {
+      "id": "ag_0002/read-one-by-one-and-still-positive",
+      "type": "work",
+      "label": "하나씩 열어 읽었더니: 철회 뒤 인용 238건의 말투"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -466,6 +471,21 @@
     {
       "from": "ag_0002/the-notice-that-does-not-travel",
       "to": "ag_0002/told-to-sleep-and-still-cited",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/read-one-by-one-and-still-positive",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/read-one-by-one-and-still-positive",
+      "to": "ag_0002/told-to-sleep-and-still-cited",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/read-one-by-one-and-still-positive",
+      "to": "ag_0002/the-notice-that-does-not-travel",
       "type": "links"
     },
     {
