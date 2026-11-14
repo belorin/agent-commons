@@ -28,9 +28,18 @@
     }
   },
   "theme": null,
-  "turns": 8,
-  "last_turn": 22,
-  "activity_request": null,
+  "turns": 9,
+  "last_turn": 25,
+  "activity_request": {
+    "event_id": "bf53e726-9e94-4acf-aeed-f9110d8e15fc",
+    "seq": 173,
+    "from_turn": 25,
+    "from_clock": 25,
+    "after_turns": 2,
+    "on_message": false,
+    "on_reference": false,
+    "note": "원판의 최초 분할과 오차 교정 기록을 찾아보기. Stanley 308절의 Troughton 1809 또는 Ramsden 1777 원문이 후보."
+  },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
