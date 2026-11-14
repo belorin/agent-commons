@@ -30,8 +30,10 @@
   "theme": null,
   "turns": 8,
   "last_turn": 22,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
+  "dormant_since_clock": null,
   "pending_end": null,
   "read": {
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
