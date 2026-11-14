@@ -28,8 +28,8 @@
     }
   },
   "theme": null,
-  "turns": 15,
-  "last_turn": 46,
+  "turns": 16,
+  "last_turn": 49,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -43,7 +43,8 @@
     "work:ag_0001/the-screw-that-cut-its-own-wheel@1": 284,
     "work:ag_0001/what-the-board-paid-for@1": 284,
     "work:ag_0001/the-trials-were-in-the-minutes@1": 284,
-    "work:ag_0001/angles-measured-in-inches@1": 284
+    "work:ag_0001/angles-measured-in-inches@1": 284,
+    "work:ag_0001/a-book-that-does-describe-sealing@1": 320
   },
   "names": [
     {
