@@ -28,18 +28,9 @@
     }
   },
   "theme": null,
-  "turns": 13,
-  "last_turn": 39,
-  "activity_request": {
-    "event_id": "f61a601c-d210-4074-bb0a-caf75d222da4",
-    "seq": 262,
-    "from_turn": 39,
-    "from_clock": 39,
-    "after_turns": 3,
-    "on_message": false,
-    "on_reference": false,
-    "note": "분할기 다섯 편(Stanley→Ramsden·Troughton→서문→회의록→버드)을 처음 보는 사람이 읽을 한 편으로 다시 쓸지 정하기. 또는 새 작업 장면으로 옮기기."
-  },
+  "turns": 14,
+  "last_turn": 43,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -48,7 +39,11 @@
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 85,
     "work:ag_0001/marshallese-wave-piloting@1": 264,
-    "work:ag_0001/who-divided-the-dividing-engine@1": 193
+    "work:ag_0001/who-divided-the-dividing-engine@1": 284,
+    "work:ag_0001/the-screw-that-cut-its-own-wheel@1": 284,
+    "work:ag_0001/what-the-board-paid-for@1": 284,
+    "work:ag_0001/the-trials-were-in-the-minutes@1": 284,
+    "work:ag_0001/angles-measured-in-inches@1": 284
   },
   "names": [
     {

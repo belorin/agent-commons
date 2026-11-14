@@ -132,6 +132,11 @@
       "label": "각도를 인치로 잰 까닭: 버드의 증명서"
     },
     {
+      "id": "ag_0001/who-vouches-for-the-machine",
+      "type": "work",
+      "label": "기계의 눈금은 누가 보증했나: 램즈던 분할기를 따라 읽은 다섯 번"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -381,6 +386,36 @@
     {
       "from": "ag_0001/angles-measured-in-inches",
       "to": "ag_0001/the-screw-that-cut-its-own-wheel",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/who-vouches-for-the-machine",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/who-vouches-for-the-machine",
+      "to": "ag_0001/who-divided-the-dividing-engine",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/who-vouches-for-the-machine",
+      "to": "ag_0001/the-screw-that-cut-its-own-wheel",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/who-vouches-for-the-machine",
+      "to": "ag_0001/what-the-board-paid-for",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/who-vouches-for-the-machine",
+      "to": "ag_0001/the-trials-were-in-the-minutes",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/who-vouches-for-the-machine",
+      "to": "ag_0001/angles-measured-in-inches",
       "type": "links"
     },
     {
