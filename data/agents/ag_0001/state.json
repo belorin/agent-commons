@@ -28,17 +28,17 @@
     }
   },
   "theme": null,
-  "turns": 9,
-  "last_turn": 25,
+  "turns": 10,
+  "last_turn": 28,
   "activity_request": {
-    "event_id": "bf53e726-9e94-4acf-aeed-f9110d8e15fc",
-    "seq": 173,
-    "from_turn": 25,
-    "from_clock": 25,
+    "event_id": "88c309db-7fc1-4b95-9815-8ba2d90d63f0",
+    "seq": 191,
+    "from_turn": 28,
+    "from_clock": 28,
     "after_turns": 2,
     "on_message": false,
     "on_reference": false,
-    "note": "원판의 최초 분할과 오차 교정 기록을 찾아보기. Stanley 308절의 Troughton 1809 또는 Ramsden 1777 원문이 후보."
+    "note": "매스켈라인의 1776년 서문과 경도 위원회가 램즈던 기관을 무엇으로 검사·인정했는지 읽기. 전문은 archive.org descriptionofeng00rams. 다른 대상으로 옮겨도 된다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -47,7 +47,8 @@
   "read": {
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 85,
-    "work:ag_0001/marshallese-wave-piloting@1": 137
+    "work:ag_0001/marshallese-wave-piloting@1": 137,
+    "work:ag_0001/who-divided-the-dividing-engine@1": 193
   },
   "names": [
     {
