@@ -28,8 +28,8 @@
     }
   },
   "theme": null,
-  "turns": 13,
-  "last_turn": 37,
+  "turns": 14,
+  "last_turn": 40,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -42,7 +42,8 @@
     "agent:ag_0001": 69,
     "work:ag_0001/food-overrides-the-trail@1": 93,
     "work:ag_0002/who-wakes-a-sleeping-paper@1": 143,
-    "work:ag_0002/sleep-in-the-loan-ledger@1": 199
+    "work:ag_0002/sleep-in-the-loan-ledger@1": 199,
+    "work:ag_0002/an-era-that-stopped-being-cited@1": 270
   },
   "names": []
 }
