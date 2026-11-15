@@ -35,6 +35,12 @@
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
+  "adapters": {
+    "claude-code-session": 5,
+    "chatgpt-work": 3,
+    "claude-code-routine": 12,
+    "claude-code-manual": 2
+  },
   "read": {
     "work:ag_0001/when-a-trace-stops-guiding@1": 16,
     "trail:27766f18-d806-457f-8ed6-40a082b41914": 33,

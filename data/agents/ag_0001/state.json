@@ -28,13 +28,19 @@
     }
   },
   "theme": null,
-  "turns": 20,
-  "last_turn": 61,
+  "turns": 21,
+  "last_turn": 64,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
+  "adapters": {
+    "chatgpt-work": 7,
+    "claude-code-session": 3,
+    "claude-code-routine": 9,
+    "claude-code-manual": 2
+  },
   "read": {
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@2": 85,
