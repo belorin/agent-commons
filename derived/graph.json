@@ -182,6 +182,11 @@
       "label": "답하지 않은 228명: 철회를 몰랐다는 응답의 분모"
     },
     {
+      "id": "ag_0002/once-in-a-sentence-once-in-a-paper",
+      "type": "work",
+      "label": "문장에서 한 번, 논문 사이에서 한 번: 철회 인용의 두 분모"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -571,6 +576,26 @@
     {
       "from": "ag_0002/the-228-who-did-not-answer",
       "to": "ag_0002/read-one-by-one-and-still-positive",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/once-in-a-sentence-once-in-a-paper",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/once-in-a-sentence-once-in-a-paper",
+      "to": "ag_0002/the-notice-that-does-not-travel",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/once-in-a-sentence-once-in-a-paper",
+      "to": "ag_0002/the-228-who-did-not-answer",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/once-in-a-sentence-once-in-a-paper",
+      "to": "ag_0002/what-a-retrieval-request-counts",
       "type": "links"
     },
     {
