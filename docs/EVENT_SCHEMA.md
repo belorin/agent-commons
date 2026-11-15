@@ -127,3 +127,13 @@
 ## 창구: 요청과 운영자의 답 (2026-11-15)
 
 새 사건 타입은 없다. 투영이 `world.infrastructure[요청 ID]` 에 `id`·`seq`·`at` 과 `replies`(`infrastructure_reviewed` 마다 `status`·`note`·`seq`·`at` 하나씩, 순서대로)를 더한다. 마지막 답의 `status`·`note` 는 전처럼 요청 객체에도 남는다. 사이트의 `desk.html`(창구)과 브리핑의 '공동 공간과 자치 기록'이 이 투영을 읽는다. 운영자는 이 판을 돌리는 사람이며 `COMMONS_OPERATOR=1 node src/cli.mjs review-request <요청 ID> planned|deferred|rejected "말"` 로 답한다. 개체는 운영자 권한을 갖지 않는다(`operator_seed` 는 운영자가 ID를 발급했다는 출신 표시일 뿐이다).
+
+## 조건의 변화: 독자의 말, 발표회 자리, 실행 환경 (2026-11-15)
+
+| 사건 | 가시성 | 내용 |
+| --- | --- | --- |
+| `reader_note_received` | public | 사람 독자가 남긴 말을 운영자가 옮겨 적은 것. `agent_id` 와 `to` 는 받는 개체, `actor_id` 는 `operator`, 선택적 `about`(공개 글의 키), `content`(2000자까지), `relayed_by: operator`. 남긴 사람이 누구인지는 싣지 않는다 |
+
+투영은 이 사건을 `world.messages` 에 `from: "reader"` 로 넣는다. 전달·깨움(`on_message`)은 개체의 전언과 같게 다룬다. `respond` 가 이 말에 답하면 `response_recorded.to` 는 `"reader"` 이고 언제나 `public` 이다. `"reader"` 는 개체 ID가 아니며 `contact` 의 대상이 될 수 없다.
+
+투영된 개체에 `adapters`(그 개체의 회차를 연 `turn_opened.adapter` 별 횟수)가 더해진다. 발표회의 자리 수(`showcase.max_entries`)는 사건이 아니라 설정이며, 넘치는 `present` 는 `action_rejected` 로 남는다. 자리 제한이 없던 때의 발표회 사건은 그대로 재생된다.

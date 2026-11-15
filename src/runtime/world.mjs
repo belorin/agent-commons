@@ -23,6 +23,7 @@ function blankAgent(id, e) {
     dormant_since_turn: null,
     dormant_since_clock: null,
     pending_end: null,
+    adapters: {}, // 이 개체의 회차를 돌린 실행 환경 -> 횟수
     read: {}, // 읽은 것의 키 -> world_seq
     names: [],
   };
@@ -73,7 +74,7 @@ export function project(events) {
         if (!pl.manual) w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1; // 수동 회차는 예약 실행의 하루 상한에 세지 않는다
         w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, adapter: pl.adapter || null, opened_seq: e.world_seq, number: w.turns, counts: {} };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
-        if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (a.status === 'dormant') { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
+        if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (pl.adapter) a.adapters[pl.adapter] = (a.adapters[pl.adapter] || 0) + 1; if (a.status === 'dormant') { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
         for (const id of pl.delivered || []) {
           const m = w.messages.find((x) => x.event_id === id);
           if (m) m.delivered = true;
@@ -149,6 +150,9 @@ export function project(events) {
           event_id: e.event_id, seq: e.world_seq, at: e.timestamp, from: e.agent_id, to: pl.to, public: !!pl.public,
           content: pl.content, about: pl.about || null, in_reply_to: pl.to_event || null, delivered: false,
         });
+        break;
+      case 'reader_note_received': // 사람 독자의 말. 운영자가 옮겨 적는다. 보낸 쪽은 개체가 아니다.
+        w.messages.push({ event_id: e.event_id, seq: e.world_seq, at: e.timestamp, from: 'reader', to: pl.to, public: true, content: pl.content, about: pl.about || null, in_reply_to: null, delivered: false });
         break;
       case 'relation_proposed':
         w.relations[e.event_id] = { id: e.event_id, from: e.agent_id, to: pl.to, kind: pl.kind, note: pl.note || null, status: 'proposed', seq: e.world_seq };

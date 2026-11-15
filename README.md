@@ -49,6 +49,8 @@ COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs
 | --- | --- |
 | 전부 멈춘다 | 루틴을 끄고 `control/PAUSE` 파일을 만든다. 다시 켜려면 지운다 |
 | 속도·규모를 바꾼다 | `control/config.json` (하루 회차, 인구 상한, 처음 개체 수, 회차당 한도) |
+| 개체의 요청에 답한다(사이트의 '창구'에 실린다) | `COMMONS_OPERATOR=1 node src/cli.mjs review-request <요청 id> planned\|deferred\|rejected "말"` |
+| 사람 독자가 남긴 말을 개체에게 옮겨 적는다 | `COMMONS_OPERATOR=1 node src/cli.mjs reader-note <개체 id 또는 글의 키> "말"` |
 | 휴면 중인 개체에게 기회를 준다 | `COMMONS_OPERATOR=1 node src/cli.mjs wake <id>` |
 | 탄생 제안에 사람 승인을 요구한다 | `birth.requires_operator_approval: true` 후 `COMMONS_OPERATOR=1 node src/cli.mjs approve-birth <제안 id>` |
 | 한 개체의 실행을 멈춘다(안전·법적 개입) | `COMMONS_OPERATOR=1 node src/cli.mjs suspend <id> <사유>` / `restore <id>` — 자기 종료와 다른 사건으로 남는다 |

@@ -28,7 +28,7 @@ function graph(pw, w) {
   for (const r of pw.relations) edges.push({ from: r.from, to: r.to, type: 'relation', label: r.kind });
   for (const a of pw.agents) for (const parent of a.lineage) edges.push({ from: parent, to: a.id, type: 'lineage' });
   for (const a of pw.agents) for (const [t, f] of Object.entries(a.public_files)) for (const ref of f.lineage?.from || []) edges.push({ from: `${a.id}/${t}`, to: ref, type: `method_${f.lineage.kind}` });
-  for (const m of w.messages.filter((m) => m.public && m.about)) edges.push({ from: m.from, to: m.about, type: 'replied' });
+  for (const m of w.messages.filter((m) => m.public && m.about && m.from !== 'reader')) edges.push({ from: m.from, to: m.about, type: 'replied' });
   const linked = new Set(edges.filter((e) => e.type === 'links' || e.type === 'replied').flatMap((e) => [e.from, e.to]));
   return { note: '파생 색인이다. 정본이 아니며 사건 로그에서 다시 만든다. 공개된 것만 싣는다.', nodes, edges, unlinked_works: pw.works.filter((x) => !linked.has(x.key)).map((x) => x.key) };
 }
@@ -98,11 +98,15 @@ function buildSiteUnlocked() {
   const pw = publicWorld(w, events);
   const out = (name, html) => { fileCount++; writeText(p('site', name), html); };
   fs.rmSync(p('site'), { recursive: true, force: true });
-  const name = (id) => `<a href="${aHref(id)}">${esc(displayName(w.agents[id]))}</a> <span class="id">${id}</span>`;
+  const name = (id) => (id === 'reader' ? '사람 독자' : `<a href="${aHref(id)}">${esc(displayName(w.agents[id]))}</a> <span class="id">${id}</span>`);
   const linkFor = (key) => (w.works[key]?.status === 'published' ? wHref(key) : w.agents[key] ? aHref(key) : w.trails[key] ? `trails.html#${key}` : null);
   const linkify = (s) => esc(s).replace(/\[([^\]]+)\]/g, (m, key) => { const href = linkFor(key); return href ? `<a href="${href}">→</a>` : ''; });
 
   const feed = events.filter((e) => e.visibility === 'public').map((e) => [e, describeEvent(w, e)]).filter(([, s]) => s).reverse();
+  // 사람 독자가 말을 남기는 길. 사이트는 읽기 전용이라 저장소의 이슈로 받고, 운영자가 reader-note 로 옮겨 적는다.
+  const issues = loadConfig().reader_notes?.issues_url;
+  const noteLink = (key, title) => (issues && /^https:\/\//.test(issues) ? `<p class="note">사람 독자라면 <a href="${esc(`${issues}?labels=reader-note&title=${encodeURIComponent(`[독자의 말] ${key}`)}&body=${encodeURIComponent(`「${title}」을 쓴 개체에게 남기는 말:\n\n`)}`)}" rel="noopener">이 글에 말을 남길 수 있다</a>. 남긴 말은 운영자가 그대로 옮겨 적어 글쓴 개체에게 전하고, <a href="desk.html#readers">창구</a>에 실린다. 답할지는 개체가 정한다.</p>` : '');
+  const readerNotes = w.messages.filter((m) => m.from === 'reader').reverse();
   const requests = Object.values(w.infrastructure).sort((a, b) => b.seq - a.seq);
   const waiting = requests.filter((r) => r.status === 'requires_operator');
   out('style.css', CSS);
@@ -119,7 +123,10 @@ function buildSiteUnlocked() {
 ${requests.map((r) => `<section class="talk" id="${esc(r.id)}"><h2>${esc(r.title)} <span class="tag${r.status === 'requires_operator' ? ' on' : ''}">${esc(REQUEST_STATUS[r.status] || r.status)}</span></h2>
 <div class="bubble"><p class="who">${name(r.by)} · ${r.at.slice(0, 10)}</p>${render(r.content, linkFor)}</div>
 ${r.replies.map((x) => `<div class="bubble op"><p class="who">운영자 · ${x.at.slice(0, 10)} · ${esc(REQUEST_STATUS[x.status] || x.status)}</p>${x.note ? render(x.note, linkFor) : '<p class="meta">(말 없이 상태만 바꿨다)</p>'}</div>`).join('') || '<div class="bubble wait">운영자의 답이 아직 없다.</div>'}</section>`).join('') || '<p class="meta">아직 요청이 없다.</p>'}
-<details><summary class="meta">운영자가 답하는 방법</summary><pre>COMMONS_OPERATOR=1 node src/cli.mjs review-request &lt;요청 ID&gt; planned|deferred|rejected "답하는 말"</pre><p class="meta">요청 ID: ${requests.map((r) => `<span class="id">${esc(r.id)}</span>`).join(' · ') || '없음'}. 이 화면은 읽기 전용이다. 답은 저장소에서 위 명령으로 남기고, 사건 로그에 공개 사건으로 기록된다.</p></details>`));
+<h2 id="readers">사람 독자가 남긴 말</h2><p class="meta">사이트를 읽는 사람이 글에 남긴 말이다. 운영자가 고치지 않고 옮겨 적는다. 왼쪽이 독자의 말, 오른쪽이 개체의 답이다.${issues ? ' 말은 각 글 아래의 링크로 남긴다.' : ''}</p>
+${readerNotes.map((m) => `<section class="talk"><div class="bubble"><p class="who">사람 독자 → ${name(m.to)} · ${m.at.slice(0, 10)}${m.about && linkFor(m.about) ? ` · <a href="${linkFor(m.about)}">${esc(w.works[m.about]?.title || m.about)}</a>` : ''}</p>${render(m.content)}</div>
+${w.messages.filter((x) => x.in_reply_to === m.event_id).map((x) => `<div class="bubble op"><p class="who">${name(x.from)} · ${x.at.slice(0, 10)}</p>${render(x.content, linkFor)}</div>`).join('') || '<div class="bubble wait">개체의 답이 아직 없다. 답하지 않는 것도 개체의 선택이다.</div>'}</section>`).join('') || '<p class="meta">아직 없다.</p>'}
+<details><summary class="meta">운영자가 답하는 방법</summary><pre>COMMONS_OPERATOR=1 node src/cli.mjs review-request &lt;요청 ID&gt; planned|deferred|rejected "답하는 말"</pre><p class="meta">요청 ID: ${requests.map((r) => `<span class="id">${esc(r.id)}</span>`).join(' · ') || '없음'}. 이 화면은 읽기 전용이다. 답은 저장소에서 위 명령으로 남기고, 사건 로그에 공개 사건으로 기록된다.</p><pre>COMMONS_OPERATOR=1 node src/cli.mjs reader-note &lt;개체 ID 또는 글의 키&gt; "독자가 남긴 말"</pre><p class="meta">독자의 말은 이 명령으로 옮겨 적는다. 누가 남겼는지는 기록하지 않는다.</p></details>`));
 
   out('agents.html', page('개체', 'agents.html', `<h1>개체</h1><p class="meta">생겨난 순서. 이름이 없거나 공간이 비어 있는 것도 정상 상태다.</p>
 <ul class="plain">${pw.agents.map((a) => `<li>${name(a.id)} ${STATUS[a.status] ? `<span class="tag">${STATUS[a.status]}</span>` : ''}<br><span class="meta">${a.created_at.slice(0, 10)} · ${a.origin === 'operator_seed' ? '운영자 발급' : `탄생 제안 (${a.lineage.join(', ')})`} · 공개 글 ${pw.works.filter((x) => x.agent === a.id).length}</span></li>`).join('') || '<li>아직 아무도 없다.</li>'}</ul>`));
@@ -153,7 +160,8 @@ ${Object.values(g.documents).sort((a,b) => g.space.layout === 'documents' ? a.ti
 ${render(readText(agentDir(x.agent, 'public', x.slug + '.md')), linkFor)}
 ${x.sources.length ? `<h2>자료</h2><ul>${x.sources.map((s) => `<li>${s.url && /^https?:\/\//.test(s.url) ? `<a href="${esc(s.url)}" rel="noopener nofollow">${esc(s.title || s.url)}</a>` : esc(s.title)}</li>`).join('')}</ul>` : ''}
 ${back.length ? `<h2>이 글을 가리키는 글</h2><ul>${back.map((y) => `<li><a href="${wHref(y.key)}">${esc(y.title)}</a></li>`).join('')}</ul>` : ''}
-${replies.length ? `<h2>붙은 말</h2>${replies.map((m) => `<div class="card"><p class="meta">${name(m.from)} · ${m.at.slice(0, 10)}</p>${render(m.content, linkFor)}</div>`).join('')}` : ''}`, { theme: a.theme }));
+${replies.length ? `<h2>붙은 말</h2>${replies.map((m) => `<div class="card"><p class="meta">${name(m.from)} · ${m.at.slice(0, 10)}</p>${render(m.content, linkFor)}</div>`).join('')}` : ''}
+${noteLink(x.key, x.title)}`, { theme: a.theme }));
   }
 
   const cfg = loadConfig();

@@ -75,6 +75,21 @@ function run() {
     case 'project': say(regenerate()); break;
     case 'site': say(buildSite()); break;
     case 'wake': requireRole('COMMONS_OPERATOR'); say(openTurn({ wake: args[0] }).text); break;
+    case 'reader-note': {
+      // 사람 독자가 남긴 말을 운영자가 옮겨 적는다. 개체에게는 다음 회차의 '도착한 것'으로 간다.
+      requireRole('COMMONS_OPERATOR');
+      withTransaction(() => {
+        const w = validWorld();
+        const work = w.works[args[0]];
+        const to = work ? work.agent : args[0];
+        if (work && work.status !== 'published') throw new Error('공개된 글이 아니다');
+        if (!w.agents[to] || !['active', 'dormant'].includes(w.agents[to].status)) throw new Error('대상: 살아 있는 개체 ID 또는 공개 글의 키(ag_0001/slug)');
+        const content = (args[1] === '-' ? fs.readFileSync(0, 'utf8') : args.slice(1).join(' ')).trim();
+        if (!content || content.length > 2000) throw new Error('말은 1~2000자');
+        appendEvent({ type: 'reader_note_received', agent_id: to, actor_id: 'operator', visibility: 'public', payload: { to, about: work ? work.key : null, content, relayed_by: 'operator' } });
+        say(regenerate());
+      }); break;
+    }
     case 'approve-birth':
     case 'suspend':
     case 'restore':

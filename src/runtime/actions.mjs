@@ -5,7 +5,7 @@ import { verify } from './verify.mjs';
 import { governanceHandlers } from './governance.mjs';
 import { appendEvent, withTransaction, canonical, loadEvents, loadConfig, isPaused, agentDir, writeText, sha256 } from './store.mjs';
 import { project, living, SELF_FILES } from './world.mjs';
-import { currentSession } from './showcase.mjs';
+import { currentSession, showcaseSettings } from './showcase.mjs';
 
 const SLUG = /^[\p{L}\p{N}][\p{L}\p{N}_-]{0,63}$/u;
 const COLOR = /^#[0-9a-fA-F]{6}$/;
@@ -143,7 +143,8 @@ const HANDLERS = {
     if (!m || !(m.public || m.to === ctx.me.id || m.from === ctx.me.id)) reject('to_event: 네가 볼 수 있는 전언이 아니다');
     const to = m.from === ctx.me.id ? m.to : m.from;
     messageBudget(ctx);
-    return [{ type: 'response_recorded', visibility: a.public ? 'public' : 'direct', caused_by: [m.event_id], payload: { to, to_event: m.event_id, content: text(a.content, 'content', ctx.cfg), about: m.about, public: !!a.public } }];
+    const pub = !!a.public || to === 'reader'; // 사람 독자에게 닿는 길은 공개 화면뿐이다
+    return [{ type: 'response_recorded', visibility: pub ? 'public' : 'direct', caused_by: [m.event_id], payload: { to, to_event: m.event_id, content: text(a.content, 'content', ctx.cfg), about: m.about, public: pub } }];
   },
 
   propose_relation(ctx, a) {
@@ -210,6 +211,9 @@ const HANDLERS = {
     if (!ctx.cfg.showcase.enabled || !session) reject('열려 있는 발표회가 없다');
     const work = typeof a.work === 'string' ? ctx.w.works[`${ctx.me.id}/${a.work}`] : null;
     if (!work || work.status !== 'published') reject('work: 네가 공개한 글의 slug여야 한다');
+    const slots = showcaseSettings(ctx.w, ctx.cfg).max_entries;
+    const already = session.entries.some((x) => x.agent === ctx.me.id && x.work === work.slug);
+    if (slots != null && !already && session.entries.length >= slots) reject(`이번 발표회의 자리(${slots}개)가 찼다: ${session.entries.map((x) => x.key).join(', ')}. 누가 거두면 자리가 난다. 운영 정책이며 오류가 아니다`);
     const intro = text(a.for_humans, 'for_humans', ctx.cfg, { max: ctx.cfg.showcase.max_intro_chars });
     if (!intro.trim()) reject('for_humans: 사람 독자에게 건네는 소개가 비어 있다');
     return [{ type: 'showcase_presented', visibility: 'public', payload: { showcase: session.number, work: work.slug, key: work.key, title: work.title, revision: work.revision, for_humans: intro } }];

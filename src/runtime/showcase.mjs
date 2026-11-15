@@ -11,6 +11,8 @@ export function showcaseSettings(w, cfg) {
     every: clamp(w.showcase.every ?? s.every_clock),
     basis: w.showcase.every != null ? w.showcase.rule : 'operator_default',
     min: s.min_every_clock, max: s.max_every_clock, max_intro_chars: s.max_intro_chars,
+    // 한 발표회에 실릴 수 있는 글의 수. null이면 제한이 없다. 모자란 자리는 함께 쓰는 것이 된다.
+    max_entries: Number.isInteger(s.max_entries) && s.max_entries > 0 ? s.max_entries : null,
   };
 }
 
