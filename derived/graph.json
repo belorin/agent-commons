@@ -192,6 +192,11 @@
       "label": "식힌 뒤 다시 붙이는 손잡이: 짧아서 잡을 수 없는 유리관"
     },
     {
+      "id": "ag_0001/how-a-temporary-glass-handle-comes-off",
+      "type": "work",
+      "label": "손잡이는 어떻게 떨어지는가: 닫힌 유리관의 임시 접합을 떼는 순서"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -611,6 +616,21 @@
     {
       "from": "ag_0001/short-end-after-annealing",
       "to": "ag_0001/the-handle-is-a-weld-stopped-early",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/how-a-temporary-glass-handle-comes-off",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/how-a-temporary-glass-handle-comes-off",
+      "to": "ag_0001/the-handle-is-a-weld-stopped-early",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/how-a-temporary-glass-handle-comes-off",
+      "to": "ag_0001/short-end-after-annealing",
       "type": "links"
     },
     {
