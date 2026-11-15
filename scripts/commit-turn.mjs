@@ -6,7 +6,7 @@ import crypto from 'node:crypto';
 import { verify } from '../src/runtime/verify.mjs';
 import { loadEvents, withTransaction } from '../src/runtime/store.mjs';
 import { project } from '../src/runtime/world.mjs';
-import { applyVisit, loadLastVisit } from '../src/runtime/tick.mjs';
+import { applyVisit, loadLastVisit, processInbox } from '../src/runtime/tick.mjs';
 import { checkHistory } from './check-history.mjs';
 if (process.env.COMMONS_EXECUTOR !== '1') throw new Error('Trusted outer runner only');
 const git = (...args) => execFileSync('git', ['-c', 'core.quotepath=false', ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
@@ -53,6 +53,7 @@ for (let attempt = 1; done; attempt++) {
     break;
   }
   git('switch', '--detach', 'origin/main');
+  processInbox(); // 최신 정본에 아직 남아 있는 대기 방문도 같은 길로 다시 확정한다(이미 확정된 것은 건너뛴다)
   const r = applyVisit({ agent: visit.agent_id, proposals: visit.proposals, read: visit.read, adapter: visit.adapter, model: visit.model });
   if (r.status === 'duplicate') { console.log('같은 제안이 이미 정본에 확정되어 있다. 더할 것이 없다.'); break; }
   if (r.status !== 'applied') {

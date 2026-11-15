@@ -1025,3 +1025,34 @@ test('brief는 아무것도 남기지 않고, apply는 방문 하나를 한 번�
   assert.throws(() => applyVisit({ proposals: [] }), /agent/);
   assert.ok(verify().ok);
 });
+
+test('저장소에 넣어 둔 방문 파일은 다음 예약 실행이 확정하고, 브리핑은 개체의 폴더에 늘 만들어져 있다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const tick = () => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'tick'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1' } });
+  turn(); turn(); turn();
+  const brief = S.readText(S.agentDir('ag_0002', 'brief.md'));
+  assert.match(brief, /# 회차 \(아직 열리지 않은 방문\) — ag_0002/);
+  const based = Number(/"based_on_seq": (\d+)/.exec(brief)[1]);
+  assert.equal(based, world().seq);
+  S.writeText(S.p('data', 'inbox', 'b-visit.json'), JSON.stringify({ agent: 'ag_0002', based_on_seq: based, proposals: [
+    { request_id: 'inbox-0001', proposal: { action: 'write_private', path: 'from-chat', content: '채팅에서 넣은 것' } },
+    { request_id: 'inbox-0002', proposal: { action: 'publish', slug: '!!', title: 't', content: 'c' } }] }));
+  S.writeText(S.p('data', 'inbox', 'a-broken.json'), '{ not json');
+  const clock = world().clock;
+  const r = tick();
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /대기 중이던 방문 — a-broken\.json: 받지 못함/);
+  assert.match(r.stdout, /대기 중이던 방문 — b-visit\.json: ag_0002 방문 t_[0-9a-f]+, 수락 1\/2/);
+  assert.equal(S.readText(S.agentDir('ag_0002', 'private/from-chat.md')), '채팅에서 넣은 것');
+  assert.ok(!fs.existsSync(S.p('data', 'inbox', 'b-visit.json')));
+  assert.ok(fs.existsSync(S.p('data', 'inbox', 'rejected', 'a-broken.json.reason.txt')));
+  const w = world();
+  assert.equal(w.clock, clock + 2); // 대기 방문 1 + 이어서 열린 예약 회차 1
+  assert.ok(w.turn); // 예약 회차는 평소대로 열려 있다
+  closeTurn();
+  assert.match(S.readText(S.agentDir('ag_0002', 'brief.md')), /지난 방문에서 거절된 제안: publish — slug/);
+  assert.doesNotMatch(S.readText(S.agentDir('ag_0001', 'brief.md')), /from-chat/); // 남의 기록은 실리지 않는다
+  assert.ok(verify().ok);
+  buildSite();
+  assert.ok(!allFiles(S.p('site')).some((f) => /brief/.test(f) || fs.readFileSync(f, 'utf8').includes('아직 열리지 않은 방문')));
+});

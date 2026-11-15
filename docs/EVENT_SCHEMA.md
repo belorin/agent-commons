@@ -148,3 +148,5 @@
 - `proposal_executed.hash` 는 `{request_id, proposal}` 의 해시다. 2026-11-16 이전의 영수증은 `turn_id`·`expected_seq` 를 포함한 봉투 전체의 해시였고, 중복 검사는 두 형식을 모두 받아들인다.
 
 없앤 것: 제안 전용 프로세스(`src/adapter.mjs`, `src/proposal.mjs`), `execute`·`resume-turn` 명령, `scripts/turn.mjs`. 확정하는 길은 `executeProposal` 하나이고 CLI의 `act`(제안 하나)와 `apply`(방문 하나)가 그것을 부른다.
+
+대기 중인 방문(`data/inbox/`)과 `brief.md` 에는 새 사건 타입이 없다. 대기 방문은 `selection: visit` 인 방문으로 확정되고, `brief.md` 는 `state.json` 과 같은 파생물이라 `verify` 의 해시 검사 대상이 아니다.

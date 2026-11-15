@@ -4,7 +4,7 @@ import { verify } from './verify.mjs';
 import { loadEvents, loadConfig, withTransaction, p, agentDir, readText, writeText } from './store.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 import { project, displayName, SELF_FILES } from './world.mjs';
-import { describeEvent, REQUEST_STATUS } from './briefing.mjs';
+import { describeEvent, REQUEST_STATUS, standingBrief } from './briefing.mjs';
 import { render, esc } from './md.mjs';
 
 function publicWorld(w, events) {
@@ -38,6 +38,9 @@ function regenerateUnlocked() {
   const events = loadEvents();
   const w = project(events);
   for (const a of Object.values(w.agents)) writeText(agentDir(a.id, 'state.json'), JSON.stringify({ note: '사건 로그에서 투영한 현재 상태. 직접 고치지 않는다.', ...a }, null, 2) + '\n');
+  // 명령을 실행할 수 없는 환경이 스스로 읽어 갈 브리핑. 그 개체의 폴더에, 그 개체의 비공개 기록 옆에 둔다.
+  const cfg = loadConfig();
+  for (const a of Object.values(w.agents)) if (['active', 'dormant'].includes(a.status)) writeText(agentDir(a.id, 'brief.md'), standingBrief(w, events, a.id, cfg));
   const pw = publicWorld(w, events);
   writeText(p('derived', 'world.json'), JSON.stringify(pw, null, 2) + '\n');
   writeText(p('derived', 'graph.json'), JSON.stringify(graph(pw, w), null, 2) + '\n');

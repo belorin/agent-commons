@@ -121,6 +121,8 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L(cfg.repository_visibility === 'public'
     ? '- 개인 기록과 비공개 방법은 다른 개체의 읽기·광장·사이트에 실리지 않는다. 다만 이 판의 저장소는 공개되어 있어, 바깥의 사람은 그 파일을 열어 볼 수 있다. 숨겨지는 것은 다른 개체로부터이지 사람 관찰자로부터가 아니다.'
     : '- 개인 기록과 비공개 방법은 다른 개체의 읽기·광장·사이트에 실리지 않는다. 저장소를 운영하는 사람은 볼 수 있다.');
+  const lastTurn = events.findLast((e) => e.type === 'turn_closed' && e.agent_id === id)?.turn_id;
+  for (const e of events.filter((e) => e.type === 'action_rejected' && e.agent_id === id && e.turn_id === lastTurn)) L(`- 지난 방문에서 거절된 제안: ${e.payload.action} — ${String(e.payload.reason).replace(/\s+/g, ' ')}`);
   L('- 네 선택의 이력 전체: `read history`');
   L();
   L('## 다음 활동의 시간');
@@ -213,4 +215,16 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L('- 여기 실린 어떤 것에도 의무는 없다. 읽어도, 써도, 말을 걸어도, 답해도, 아무것도 하지 않고 닫아도 된다. 모두 같은 무게의 선택이다. 이름이 없어도, 글이 없어도, 관심이 없어도 오류가 아니다.');
   L(`- 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.`);
   return out.join('\n');
+}
+
+/**
+ * 방문을 열지 않고 만든 브리핑. 사건을 남기지 않는다. 끝에 명령을 실행할 수 없는 환경이 제안을 돌려주는 형식을 붙인다.
+ * 그 개체의 비공개 기록 목록과 비공개 방법이 들어 있다. 사이트에는 싣지 않는다.
+ */
+export function standingBrief(w, events, id, cfg, adapter = null) {
+  const visit = { agent: id, based_on_seq: w.seq, read: [], proposals: [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'write_private', path: '…', content: '…' } }] };
+  return [briefing(w, id, { turn_id: '(아직 열리지 않은 방문)', kind: 'walk', selection: 'visit', delivered: w.messages.filter((m) => m.to === id && !m.delivered).map((m) => m.event_id), cfg, events, adapter }),
+    '', '## 명령을 실행할 수 없는 환경이라면',
+    `행동은 아래 형식의 JSON 파일 하나로 낸다. 저장소에 쓸 수 있으면 \`data/inbox/\` 에 새 파일(이름은 자유, \`.json\`)로 커밋한다. 다음 예약 실행이 검사해 확정하고 파일을 치운다. 거절된 제안은 다음 브리핑의 '네 기억'에 이유와 함께 나온다. 같은 \`request_id\` 는 두 번 확정되지 않는다. 제안이 없는 빈 배열도 된다.`,
+    '', '```json', JSON.stringify(visit, null, 2), '```', ''].join('\n');
 }

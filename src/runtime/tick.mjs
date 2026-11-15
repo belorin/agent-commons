@@ -193,3 +193,28 @@ export function applyVisit({ agent, proposals = [], read = [], based_on_seq = nu
     return { status: 'applied', turn_id: t.turn_id, agent_id: t.agent_id, actions: closed.actions, results, text: closed.text };
   });
 }
+
+/**
+ * 대기 중인 방문: data/inbox/*.json. 저장소에 쓸 수 있는 쪽이 넣어 둔 방문 파일을 이름 순으로 하나씩 apply 하고 치운다.
+ * 넣을 자격은 저장소의 쓰기 권한이다. 읽을 수 없는 파일은 지우지 않고 rejected/ 로 옮겨 이유를 곁에 적는다.
+ */
+export function processInbox() {
+  const dir = p('data', 'inbox');
+  const out = [];
+  if (isPaused() || !fs.existsSync(dir)) return out;
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort()) {
+    const file = p('data', 'inbox', name);
+    try {
+      const r = applyVisit(JSON.parse(fs.readFileSync(file, 'utf8')));
+      if (!['applied', 'duplicate'].includes(r.status)) throw new Error(r.text);
+      out.push(`${name}: ${r.status === 'duplicate' ? '이미 확정됨' : `${r.agent_id} 방문 ${r.turn_id}, 수락 ${r.results.filter((x) => x.ok).length}/${r.results.length}`}`);
+      fs.rmSync(file);
+    } catch (e) {
+      fs.mkdirSync(p('data', 'inbox', 'rejected'), { recursive: true });
+      fs.renameSync(file, p('data', 'inbox', 'rejected', name));
+      fs.writeFileSync(p('data', 'inbox', 'rejected', name + '.reason.txt'), e.message + '\n');
+      out.push(`${name}: 받지 못함 — ${e.message}`);
+    }
+  }
+  return out;
+}

@@ -5,8 +5,8 @@ import crypto from 'node:crypto';
 import { recoverTransaction } from './runtime/transaction.mjs';
 import { appendEvent, root, withTransaction, loadEvents, loadConfig, isPaused } from './runtime/store.mjs';
 import { project, living, displayName } from './runtime/world.mjs';
-import { openTurn, closeTurn, failTurn, applyVisit, decide } from './runtime/tick.mjs';
-import { briefing } from './runtime/briefing.mjs';
+import { openTurn, closeTurn, failTurn, applyVisit, processInbox, decide } from './runtime/tick.mjs';
+import { standingBrief } from './runtime/briefing.mjs';
 import { executeProposal } from './runtime/actions.mjs';
 import { read } from './runtime/read.mjs';
 import { verify } from './runtime/verify.mjs';
@@ -31,20 +31,19 @@ function run() {
       requireRole('COMMONS_EXECUTOR');
       // --as <개체 ID>: 순번 대신 그 개체의 방문을 연다. 한 세션에서 읽고 하나씩 행동하며 결과를 볼 때 쓴다.
       const as = args.includes('--as') ? args[args.indexOf('--as') + 1] : null;
+      for (const line of processInbox()) say(`대기 중이던 방문 — ${line}`); // 회차를 열기 전에, 쌓여 있던 방문을 먼저 확정한다
       const r = openTurn({ manual: args.includes('--manual') || !!as, agent: as }); say(r.text);
       process.exitCode = r.status === 'busy' ? 4 : r.status === 'error' ? 1 : 0;
       break;
     }
     // ── 핵심 인터페이스: brief → (read) → apply. 일반 채팅과 예약 실행이 같은 것을 쓴다.
     case 'brief': {
-      // 읽기 전용. 아무것도 열지 않고 사건도 남기지 않는다. 비공개 기록의 목록과 비공개 방법이 들어 있으므로
-      // 신뢰하는 쪽이 그 개체로 일할 모델에게만 건넨다. 사이트나 derived/ 에 쓰지 않는다.
+      // 읽기 전용. 아무것도 열지 않고 사건도 남기지 않는다. 같은 글이 data/agents/<id>/brief.md 로도 늘 만들어져 있다.
       requireRole('COMMONS_EXECUTOR');
       withTransaction(() => {
         const w = validWorld(), events = loadEvents();
         if (!w.agents[args[0]] || !['active', 'dormant'].includes(w.agents[args[0]].status)) throw new Error('brief <살아 있는 개체 ID>');
-        say(briefing(w, args[0], { turn_id: '(아직 열리지 않은 방문)', kind: 'walk', selection: 'visit', delivered: w.messages.filter((m) => m.to === args[0] && !m.delivered).map((m) => m.event_id), cfg: loadConfig(), events, adapter: process.env.COMMONS_ADAPTER || null }));
-        say(`\n## 명령을 실행할 수 없는 환경이라면\n읽고 싶은 것은 말로 청한다(실행기가 \`read --as ${args[0]} …\` 로 대신 읽어 준다). 행동은 아래 JSON 하나로 돌려준다. 실행기가 \`apply\` 로 검사해 확정하고, 거절된 것은 이유와 함께 돌아온다.\n\n\`\`\`json\n${JSON.stringify({ agent: args[0], based_on_seq: w.seq, read: [], proposals: [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'write_private', path: '…', content: '…' } }] }, null, 2)}\n\`\`\`\n제안이 하나도 없는 빈 배열도 된다.`);
+        say(standingBrief(w, events, args[0], loadConfig(), process.env.COMMONS_ADAPTER || null));
       }); break;
     }
     case 'apply': {

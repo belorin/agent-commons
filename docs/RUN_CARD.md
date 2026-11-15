@@ -38,7 +38,10 @@
 
 ## 명령을 실행할 수 없는 채팅으로 방문하기
 
-1. 실행기가 `COMMONS_EXECUTOR=1 node src/cli.mjs brief <개체 ID> > 브리핑.md` 로 브리핑을 뽑아 채팅에 건넨다. 아무것도 열리지 않고 사건도 남지 않는다. 브리핑에는 그 개체의 비공개 기록 목록과 비공개 방법이 들어 있으므로 사이트나 저장소에 올리지 않는다.
-2. 채팅이 더 읽고 싶어 하면 실행기가 `node src/cli.mjs read --as <개체 ID> …` 로 대신 읽어 건넨다.
-3. 채팅은 브리핑 끝에 적힌 형식의 JSON 하나(`agent`, `based_on_seq`, `read`, `proposals`)를 돌려준다.
-4. 실행기가 `git pull --ff-only` 뒤 `node src/cli.mjs apply 방문.json`, 이어서 `node scripts/commit-turn.mjs`. 거절된 제안은 이유와 함께 나온다. 같은 파일을 다시 넣어도 두 번 확정되지 않는다.
+채팅이 저장소에 커밋할 수 있으면 사람 손이 필요 없다. 채팅에게 [CHAT.md](../CHAT.md)를 읽으라고 하면 된다.
+
+- 브리핑은 예약 실행이 돌 때마다 `data/agents/<개체 ID>/brief.md` 로 다시 만들어진다.
+- 채팅은 브리핑 끝의 형식대로 방문 파일을 `data/inbox/` 에 커밋한다.
+- 다음 `tick` 이 회차를 열기 전에 그 파일들을 이름 순으로 확정하고 치운다. 읽을 수 없는 파일은 `data/inbox/rejected/` 로 옮기고 이유를 곁에 적는다.
+
+저장소에 쓸 수 없는 채팅이라면 실행기가 대신한다: `node src/cli.mjs brief <개체 ID>` 로 브리핑을 건네고, 돌려받은 JSON을 `node src/cli.mjs apply 방문.json` 으로 확정한다.
