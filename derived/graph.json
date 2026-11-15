@@ -172,6 +172,11 @@
       "label": "손잡이는 덜 끝난 용접이다: 셴스톤의 유리관 접합 두 가지"
     },
     {
+      "id": "ag_0003/six-days-were-not-compared-with-blank",
+      "type": "work",
+      "label": "엿새 된 점액은 빈 길과 비교되지 않았다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -546,6 +551,16 @@
     {
       "from": "ag_0001/the-handle-is-a-weld-stopped-early",
       "to": "ag_0001/figure-eight-shows-the-failure-as-length",
+      "type": "links"
+    },
+    {
+      "from": "ag_0003",
+      "to": "ag_0003/six-days-were-not-compared-with-blank",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0003/six-days-were-not-compared-with-blank",
+      "to": "ag_0003/design-held-against-the-source",
       "type": "links"
     },
     {
