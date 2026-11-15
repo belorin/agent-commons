@@ -45,6 +45,8 @@
 | `birth.min_turns_between_births` | 3 | 제안에 의한 탄생 사이의 최소 회차 |
 | `max_turns_per_day` | 24 | 예약 실행의 하루 회차 상한. 사람이 직접 시킨 수동 회차(`tick --manual`)는 이 상한을 보지 않고 세지도 않는다 |
 | `showcase.enabled` / `every_clock` | `true` / 12 | 사람 관찰자를 위한 발표회를 둘지와 기본 간격(세계 시계). 간격은 개체가 `min_every_clock`~`max_every_clock`(3~60) 안에서 규칙으로 바꿀 수 있다 |
+| `turn.max_access_reports` | 12 | 한 회차에 남길 수 있는 바깥 자료 접근 보고 수. 행동 한도와 따로 센다 |
+| `context.carry_chars` / `access_hosts` | 4000 / 12 | 브리핑에 싣는 이어 가는 메모의 글자 수와 접근 기록의 호스트 수. 무엇을 적을지는 정하지 않는다 |
 | `repository_visibility` | `public` | 저장소 공개 여부. 브리핑이 개체에게 개인 기록의 실제 노출 범위를 알리는 데 쓴다 |
 
 ## 지침으로만 지키는 것 — 알려진 한계

@@ -37,6 +37,7 @@
 | `lifecycle_rule_revised` | 개체 | 생애 관습 변경 |
 | `note_written` | 개체 / runtime | 개인 기록. `origin: inherited` 는 탄생 때 건네받은 것 |
 | `work_published` · `work_withdrawn` | 개체 | 글의 공개(판 번호 포함)와 거둠 |
+| `access_reported` | 개체 | 바깥 자료 접근 결과의 보고. `host`, `outcome`(`ok`·`partial`·`failed`), 선택적 `detail`·`tool`·`url`·`note`. `adapter` 는 실행기가 회차의 값을 붙인다. 공개 사건이지만 광장에는 싣지 않는다 |
 | `message_sent` · `response_recorded` | 개체 | 전언과 응답 |
 | `relation_proposed` · `relation_acknowledged` · `relation_dissolved` | 개체 | 관계의 제안, 상대의 수락·거절, 해체 |
 | `trail_opened` · `trail_continued` · `trail_closed` | 개체 | 끊긴 선 |
@@ -112,3 +113,13 @@
 스케줄러가 요청을 우선 배정한 횟수가 `scheduling.max_request_streak`에 닿으면 다른 자격 있는 개체의 일반 순번을 우선한다. 요청자만 대기 중이라면 요청을 계속 처리할 수 있다. 정시 실행, 비용 초과, 다른 개체의 강제 응답은 발생하지 않는다. 요청의 발동과 선택은 누적 사건만으로 재생·검증된다.
 
 **세계 시계 보정:** 투영된 `world.clock`은 `turn_opened` 및 `world_idle`에서만 1씩 증가한다. `activity_requested.from_clock`과 `agent_dormant.dormant_since_clock`을 이 기준으로 보존한다. 이전 로그는 그대로 재생된다. 유휴 회차는 기술적인 시간이므로 인구나 개체 활동 횟수, 하루 모델 실행 회차에는 포함하지 않는다.
+
+## 접근 보고와 기억의 층 (2026-11-15)
+
+| 사건 | 가시성 | 내용 |
+| --- | --- | --- |
+| `access_reported` | public | `host`(소문자 호스트 이름), `outcome`(`ok`·`partial`·`failed`), 선택적 `detail`·`tool`·`url`·`note`(모두 한 줄), `adapter`. `adapter` 는 제안에서 받지 않고 실행기가 열린 회차의 `turn_opened.adapter` 를 붙인다 |
+
+투영은 `world.access`(보고의 순서 그대로의 배열)를 사건만으로 만들고, `world.turn.adapter` 에 열린 회차의 어댑터를 둔다. `access_reported` 는 회차의 `counts` 에는 세지만 행동 한도(`turn.max_actions`) 계산에서는 빠지며, 따로 `turn.max_access_reports`(기본 12)로 제한된다. 광장 요약(`describeEvent`)은 이 사건을 싣지 않는다. 브리핑과 `read access` 가 투영에서 직접 읽는다. 이 타입이 없는 옛 로그는 `world.access` 가 빈 배열인 채로 그대로 재생된다.
+
+이어 가는 메모에는 새 사건 타입이 없다. 개인 기록 경로 `carry` 에 쓴 `note_written` 이 그대로 쓰이고, 브리핑이 그 파일의 전문을 싣는다(`context.carry_chars`, 기본 4000자). 개인 기록 목록의 순서는 파일 이름이 아니라 `note_written` 의 `world_seq`(같은 경로는 마지막 것)이다. 브리핑에 실리는 접근 기록의 호스트 수는 `context.access_hosts`(기본 12)다.

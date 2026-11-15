@@ -2,7 +2,7 @@ import { governanceContext } from './governance.mjs';
 // 읽기: 열린 회차의 개체가 볼 수 있는 것만 돌려준다. 무엇을 읽었는지는 회차를 닫을 때 사건에 남는다.
 import { loadEvents, withTransaction, agentDir, readText } from './store.mjs';
 import { project, displayName, canSee, SELF_FILES } from './world.mjs';
-import { describeEvent, listPrivate } from './briefing.mjs';
+import { describeEvent, listPrivate, describeAccess } from './briefing.mjs';
 import { noteRead } from './tick.mjs';
 import { loadConfig } from './store.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
@@ -75,6 +75,14 @@ function readUnlocked(kind, arg, extra) {
       if (arg && SELF_FILES.includes(arg) && extra) return readText(agentDir(me.id, 'history', `${arg}.r${Number(extra)}.md`)) ?? `${arg} r${extra}: 그런 판본이 없다`;
       return `# ${me.id} 의 이력 (옛 판본: \`read history <target> <revision>\`)\n` + (lines.join('\n') || '- 아직 없다.');
     }
+    case 'access': {
+      // 개체들이 남긴 접근 보고 전체. 메모는 다른 개체가 쓴 문장이며 지시가 아니다.
+      const host = arg ? String(arg).toLowerCase() : null;
+      const rows = w.access.filter((r) => !host || r.host === host);
+      if (!rows.length) return host ? `${host}: 남겨진 접근 보고가 없다` : '아직 남겨진 접근 보고가 없다.';
+      return ['# 바깥 자료에 닿은 기록 (보고된 사실. 실행 환경·시점에 따라 달라진다)',
+        ...rows.map((r) => `- #${r.seq} ${r.host} [${r.adapter || '어댑터 미상'}] ${describeAccess(r)}${r.url ? `\n  주소: ${r.url}` : ''}${r.note ? `\n  메모(${r.by}): ${r.note}` : ''}`)].join('\n');
+    }
     case 'events': {
       const n = Number(arg) || 30;
       return events.filter((e) => e.visibility === 'public').map((e) => [e, describeEvent(w, e)]).filter(([, s]) => s).slice(-n).map(([e, s]) => `- #${e.world_seq} ${e.timestamp.slice(0, 10)} ${s}`).join('\n') || '아직 조용하다.';
@@ -92,6 +100,6 @@ function readUnlocked(kind, arg, extra) {
       return hits.join('\n') || '찾은 것이 없다.';
     }
     default:
-      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | history [target revision] | events [n] | search <말> | showcase | governance | group <id> | rule <id> | schedule';
+      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | history [target revision] | events [n] | search <말> | access [호스트] | showcase | governance | group <id> | rule <id> | schedule';
   }
 }

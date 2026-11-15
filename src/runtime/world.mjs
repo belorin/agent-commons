@@ -46,6 +46,7 @@ export function project(events) {
     relations: {},
     trails: {},
     births: {},
+    access: [], // 개체가 보고한 바깥 자료 접근 결과(사실 기록, 금지 목록이 아니다)
     turn: null, // 열려 있는 회차
     failures: 0,
   };
@@ -70,7 +71,7 @@ export function project(events) {
         w.clock += 1;
         const day = e.timestamp.slice(0, 10);
         if (!pl.manual) w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1; // 수동 회차는 예약 실행의 하루 상한에 세지 않는다
-        w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, opened_seq: e.world_seq, number: w.turns, counts: {} };
+        w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, adapter: pl.adapter || null, opened_seq: e.world_seq, number: w.turns, counts: {} };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
         if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (a.status === 'dormant') { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
         for (const id of pl.delivered || []) {
@@ -126,6 +127,9 @@ export function project(events) {
         break;
       case 'note_written':
         w.notes[`${e.agent_id}/${pl.path}`] = { agent: e.agent_id, path: pl.path, revision: pl.revision || 1, title: pl.title || null, hash: pl.hash, seq: e.world_seq, at: e.timestamp };
+        break;
+      case 'access_reported':
+        w.access.push({ host: pl.host, outcome: pl.outcome, detail: pl.detail || null, tool: pl.tool || null, url: pl.url || null, note: pl.note || null, adapter: pl.adapter || null, by: e.agent_id, seq: e.world_seq, at: e.timestamp });
         break;
       case 'work_published':
         w.works[`${e.agent_id}/${pl.slug}`] = {

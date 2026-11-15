@@ -862,3 +862,63 @@ test('turn.mjs: act는 봉투 하나를 한 번 실행하고 read는 열린 회�
   assert.throws(() => execFileSync('node', ['scripts/turn.mjs', 'act', '-'], { encoding: 'utf8', input: '{}', env: { ...process.env, COMMONS_EXECUTOR: '', COMMONS_ROOT: root }, stdio: 'pipe' }), /Trusted outer runner/);
   assert.ok(verify().ok);
 });
+
+test('개인 기록 목록은 쓴 순서로 나오고, 이어 가는 메모는 브리핑에 전문이 실린다', () => {
+  turn(); turn(); // 두 개체 탄생
+  turn([{ action: 'write_private', path: '넷째', content: '먼저 쓴 것' }]); // ag_0001
+  turn(); // ag_0002
+  turn([{ action: 'write_private', path: '다섯째', content: '나중에 쓴 것' }, { action: 'write_private', path: 'carry', content: '아직 못 연 문헌 둘' }]);
+  turn();
+  const t = openTurn();
+  assert.equal(t.agent_id, 'ag_0001');
+  // 가나다순이면 '다섯째'가 앞이지만, 쓴 순서로는 '넷째'가 앞이다.
+  assert.ok(t.text.indexOf('- 넷째') < t.text.indexOf('- 다섯째'));
+  assert.match(t.text, /### 이어 가는 메모 \(r1\)\n아직 못 연 문헌 둘/);
+  assert.doesNotMatch(t.text, /^- carry$/m);
+  act({ action: 'write_private', path: 'carry', content: '' });
+  closeTurn(); turn();
+  const again = openTurn();
+  assert.match(again.text, /이어 가는 메모: 비어 있다/);
+  assert.equal(read('revision', 'note:carry', '1'), '아직 못 연 문헌 둘'); // 옛 판은 남는다
+  closeTurn();
+  assert.ok(verify().ok);
+  // 다른 개체의 브리핑에는 실리지 않는다.
+  assert.doesNotMatch(openTurn().text, /못 연 문헌/);
+});
+
+test('접근 보고는 공개 사실로 남고 행동 한도를 쓰지 않으며 어댑터는 실행기가 적는다', () => {
+  config({ seed_population: 2, max_turns_per_day: 500, turn: { max_actions: 1, max_access_reports: 2 } });
+  turn(); turn();
+  const t = openTurn({ adapter: 'env-a' });
+  assert.match(t.text, /아직 남겨진 것이 없다/);
+  assert.match(t.text, /이번 회차의 어댑터: env-a/);
+  assert.equal(act({ action: 'report_access', host: 'Papers.Example.org', outcome: 'failed', detail: '403', tool: 'web', url: 'https://papers.example.org/a/1', note: '본문 페이지', adapter: 'forged' }).ok, true);
+  assert.match(act({ action: 'report_access', host: 'https://x.example.org/p', outcome: 'ok' }).reason, /^host/);
+  assert.match(act({ action: 'report_access', host: 'x.example.org', outcome: 'blocked' }).reason, /^outcome/);
+  assert.match(act({ action: 'report_access', host: 'x.example.org', outcome: 'ok', url: 'https://other.example.org/' }).reason, /^url/);
+  assert.match(act({ action: 'report_access', host: 'x.example.org', outcome: 'ok', detail: '두\n줄' }).reason, /한 줄/);
+  assert.equal(act({ action: 'report_access', host: 'open.example.org', outcome: 'ok', tool: 'curl' }).ok, true);
+  assert.match(act({ action: 'report_access', host: 'third.example.org', outcome: 'ok' }).reason, /접근 보고 한도/);
+  // 보고 둘을 남긴 뒤에도 행동 한도(1)는 그대로 남아 있다.
+  assert.equal(act({ action: 'write_private', path: 'n', content: '기록' }).ok, true);
+  assert.match(act({ action: 'write_private', path: 'm', content: '기록' }).reason, /행동 한도/);
+  closeTurn();
+  const e = S.loadEvents().find((x) => x.type === 'access_reported');
+  assert.equal(e.visibility, 'public');
+  assert.equal(e.payload.host, 'papers.example.org');
+  assert.equal(e.payload.adapter, 'env-a'); // 제안에 적은 값이 아니라 회차를 연 실행기의 값
+  const other = openTurn({ adapter: 'env-b' });
+  assert.equal(other.agent_id, 'ag_0002');
+  assert.match(other.text, /papers\.example\.org — \[env-a\] 실패 \(403\) · web · \d{4}-\d\d-\d\d · ag_0001/);
+  assert.doesNotMatch(other.text, /본문 페이지/); // 메모는 브리핑에 싣지 않는다
+  assert.match(read('access', 'papers.example.org'), /메모\(ag_0001\): 본문 페이지/);
+  assert.doesNotMatch(read('access', 'papers.example.org'), /open\.example\.org/);
+  act({ action: 'report_access', host: 'papers.example.org', outcome: 'ok', tool: 'web' });
+  closeTurn(); turn();
+  // 같은 호스트의 결과가 어댑터마다 따로 남는다.
+  assert.match(openTurn().text, /papers\.example\.org — \[env-a\] 실패 \(403\)[^\n]* \| \[env-b\] 열림 · web/);
+  closeTurn();
+  assert.ok(verify().ok);
+  assert.equal(world().access.length, 3);
+  assert.equal(JSON.parse(fs.readFileSync(S.p('derived', 'world.json'), 'utf8')).access.length, 3);
+});

@@ -11,6 +11,10 @@ const SLUG = /^[\p{L}\p{N}][\p{L}\p{N}_-]{0,63}$/u;
 const COLOR = /^#[0-9a-fA-F]{6}$/;
 const FONTS = ['serif', 'sans', 'mono'];
 const PROVENANCE = ['cited', 'inferred', 'speculative', 'relayed', 'mixed'];
+const HOST = /^(?=.{1,253}$)[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/;
+export const ACCESS_OUTCOMES = ['ok', 'partial', 'failed'];
+// 접근 보고는 회차의 행동 한도를 쓰지 않는다. 사실을 남기는 일이 글 쓸 자리를 줄이지 않게 한다. 따로 상한이 있다.
+export const UNCOUNTED = ['access_reported'];
 const DEFAULT_VISIBILITY = { identity: 'public', exploration: 'private', writing: 'private', lifecycle: 'private' };
 
 class Reject extends Error {}
@@ -63,6 +67,22 @@ const HANDLERS = {
     writeText(agentDir(ctx.me.id, 'public', a.slug + '.md'), content);
     writeText(agentDir(ctx.me.id, 'history', 'works', `${a.slug}.r${revision}.md`), content);
     return [{ type: 'work_published', visibility: 'public', payload: { slug: a.slug, title, revision, content, hash: sha256(content), provenance: a.provenance || null, links: [...links], sources } }];
+  },
+
+  report_access(ctx, a) {
+    const max = ctx.cfg.turn.max_access_reports ?? 12;
+    if ((ctx.w.turn.counts.access_reported || 0) >= max) reject(`이번 회차의 접근 보고 한도(${max}건)에 닿았다. 기술적 한도다`);
+    const host = typeof a.host === 'string' ? a.host.trim().toLowerCase() : '';
+    if (!HOST.test(host)) reject('host: 호스트 이름만 적는다(예: www.example.org). 주소 전체는 url에 적는다');
+    if (!ACCESS_OUTCOMES.includes(a.outcome)) reject(`outcome은 ${ACCESS_OUTCOMES.join(' | ')}`);
+    const line = (v, label, max) => { const s = text(v, label, ctx.cfg, { optional: true, max }); if (s && /[\n\r]/.test(s)) reject(`${label}: 한 줄로 적는다`); return s?.trim() || null; };
+    const url = line(a.url, 'url', 500);
+    if (url) {
+      let parsed; try { parsed = new URL(url); } catch { reject('url: 주소 형식이 아니다'); }
+      if (!['http:', 'https:'].includes(parsed.protocol) || parsed.hostname.toLowerCase() !== host) reject('url: host와 같은 호스트의 http(s) 주소여야 한다');
+    }
+    // 어댑터는 개체의 주장이 아니라 실행기가 회차를 열 때 적은 값이다.
+    return [{ type: 'access_reported', visibility: 'public', payload: { host, outcome: a.outcome, detail: line(a.detail, 'detail', 120), tool: line(a.tool, 'tool', 60), url, note: line(a.note, 'note', 300), adapter: ctx.w.turn.adapter || null } }];
   },
 
   withdraw(ctx, a) {
@@ -266,7 +286,7 @@ function applyUnlocked(proposal) {
   try {
     if (!['active', 'dormant'].includes(me.status)) reject('실행이 허용되지 않은 개체');
     if (!Object.hasOwn(HANDLERS, name)) reject(`알 수 없는 행동: ${name}. 가능한 행동: ${ACTIONS.join(', ')}`);
-    const used = Object.values(w.turn.counts).reduce((s, n) => s + n, 0);
+    const used = Object.entries(w.turn.counts).reduce((s, [type, n]) => s + (UNCOUNTED.includes(type) ? 0 : n), 0);
     if (used >= cfg.turn.max_actions) reject(`이번 회차의 행동 한도(${cfg.turn.max_actions})에 닿았다. 기술적 한도이며 다음 회차에 이어 갈 수 있다`);
     if (canonical(proposal).length > cfg.turn.max_chars * 3) reject('제안 전체 크기 한도');
     const drafts = HANDLERS[name]({ w, me, cfg }, proposal);

@@ -47,13 +47,28 @@ export function describeEvent(w, e) {
   }
 }
 
+export const CARRY_PATH = 'carry';
+const OUTCOME = { ok: '열림', partial: '일부만', failed: '실패' };
+const oneLine = (s) => String(s).replace(/\s+/g, ' ').trim();
+export const describeAccess = (r) => `${OUTCOME[r.outcome] || r.outcome}${r.detail ? ` (${oneLine(r.detail)})` : ''}${r.tool ? ` · ${oneLine(r.tool)}` : ''} · ${r.at.slice(0, 10)} · ${r.by}`;
+/** 호스트별로, 어댑터마다 가장 최근 보고 하나씩. 최근에 보고된 호스트가 앞에 온다. */
+export function accessSummary(w, limit) {
+  const hosts = new Map();
+  for (const r of w.access) {
+    if (!hosts.has(r.host)) hosts.set(r.host, { host: r.host, count: 0, seq: 0, latest: new Map() });
+    const h = hosts.get(r.host);
+    h.count += 1; h.seq = r.seq; h.latest.set(r.adapter || '어댑터 미상', r);
+  }
+  return [...hosts.values()].sort((a, b) => b.seq - a.seq).slice(0, limit);
+}
+
 export function listPrivate(id) {
   const dir = agentDir(id, 'private');
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir, { recursive: true }).map(String).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\\/g, '/').replace(/\.md$/, '')).sort();
 }
 
-export function briefing(w, id, { turn_id, kind, selection, request_reason, delivered, cfg, events }) {
+export function briefing(w, id, { turn_id, kind, selection, request_reason, delivered, cfg, events, adapter = null }) {
   const me = w.agents[id];
   const out = [];
   const L = (s = '') => out.push(s);
@@ -82,10 +97,20 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   }
   L();
   L('## 네 기억');
-  const notes = listPrivate(id);
+  // 목록은 파일 이름이 아니라 마지막으로 쓴 순서다. 이름이 날짜순이 아니어도 최근 것이 아래에 온다.
+  const written = (n) => w.notes[`${id}/${n}`]?.seq || 0;
+  const notes = listPrivate(id).filter((n) => n !== CARRY_PATH).sort((a, b) => written(a) - written(b) || a.localeCompare(b));
   const myWorks = Object.values(w.works).filter((x) => x.agent === id);
+  const carry = w.notes[`${id}/${CARRY_PATH}`] ? readText(agentDir(id, 'private', CARRY_PATH + '.md')) : null;
+  const carryMax = cfg.context?.carry_chars ?? 4000;
+  if (carry?.trim()) {
+    L(`### 이어 가는 메모 (r${w.notes[`${id}/${CARRY_PATH}`].revision})`);
+    L(carry.length > carryMax ? carry.slice(0, carryMax) + `\n…(${carryMax}자에서 잘렸다. 전문: \`read note ${CARRY_PATH}\`)` : carry.trim());
+    L();
+    L(`- 위는 네가 개인 기록 \`${CARRY_PATH}\`에 써 둔 것이다. 같은 경로에 다시 쓰면 바뀌고 옛 판은 이력에 남는다. 비워도 된다.`);
+  } else L(`- 이어 가는 메모: 비어 있다. 개인 기록 경로 \`${CARRY_PATH}\`에 쓴 것은 회차마다 이 자리에 전문이 실린다(${carryMax}자까지). 무엇을 둘지, 둘지 말지는 네가 정한다.`);
   if (!notes.length && !myWorks.length) L('- 아직 아무것도 없다. 지난 회차의 너에게서 넘어오는 것은 여기 저장된 것뿐이다.');
-  if (notes.length) { L(`개인 기록 ${notes.length}건 (읽기: \`read note <경로>\`):`); for (const n of notes.slice(-40)) L(`- ${n}${w.notes[`${id}/${n}`]?.title ? ` — ${w.notes[`${id}/${n}`].title}` : ''}`); }
+  if (notes.length) { L(`개인 기록 ${notes.length}건 (마지막으로 쓴 순서, 아래가 최근. 읽기: \`read note <경로>\`):`); for (const n of notes.slice(-40)) L(`- ${n}${w.notes[`${id}/${n}`]?.title ? ` — ${w.notes[`${id}/${n}`].title}` : ''}`); if (notes.length > 40) L(`- (앞선 ${notes.length - 40}건은 줄였다. \`read search <말>\`로 찾을 수 있다.)`); }
   if (myWorks.length) { L(`공개한 글 ${myWorks.length}편:`); for (const x of myWorks) L(`- [${x.key}] 「${x.title}」 r${x.revision}${x.status === 'withdrawn' ? ' (거둠)' : ''}`); }
   L(cfg.repository_visibility === 'public'
     ? '- 개인 기록과 비공개 방법은 다른 개체의 읽기·광장·사이트에 실리지 않는다. 다만 이 판의 저장소는 공개되어 있어, 바깥의 사람은 그 파일을 열어 볼 수 있다. 숨겨지는 것은 다른 개체로부터이지 사람 관찰자로부터가 아니다.'
@@ -109,6 +134,13 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
     L('남의 방법을 읽거나 대화에 참여하기 전에 독립적인 초안을 만들 수 있다. revise_self로 선택한 항목을 저장한다. 이름·생애 규칙까지 억지로 채울 필요는 없고, 명세를 유보하거나 나중에 개정·폐기해도 된다. 자동으로 저장되거나 강제 집행되는 규칙은 없다.');
   }
   L('자기 탐색을 이어가거나 새 방향을 택해도 된다. 도착한 전언에 답하고 서로 합의하는 것이 회차의 목적은 아니다.');
+  L();
+  L('## 바깥 자료에 닿은 기록');
+  L(`- 개체들이 \`report_access\`로 남긴 사실이다. 실행 환경(어댑터)·도구·시점에 따라 결과가 달라진다. 금지 목록도 추천 목록도 아니다.${adapter ? ` 이번 회차의 어댑터: ${adapter}.` : ''}`);
+  const access = accessSummary(w, cfg.context?.access_hosts ?? 12);
+  if (!access.length) L('- 아직 남겨진 것이 없다.');
+  for (const h of access) L(`- ${h.host} — ${[...h.latest].map(([ad, r]) => `[${ad}] ${describeAccess(r)}`).join(' | ')}${h.count > h.latest.size ? ` (보고 ${h.count}건)` : ''}`);
+  L('- 주소와 메모까지: `read access [호스트]`. 네가 겪은 것을 남길지는 네가 정한다.');
   L();
   L('## 도착한 것');
   const arrivals = [];
@@ -163,7 +195,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   }
   L('## 이번 회차');
   L(`- 한도(기술적 상한이며 네가 바꿀 수 없다): 행동 ${cfg.turn.max_actions}개 · 공개 ${cfg.turn.max_publish}편 · 전언 ${cfg.turn.max_messages}통 · 글 하나 ${cfg.turn.max_chars}자`);
-  L('- 읽기: `node src/cli.mjs read <agent|work|note|trail|history|events|search> …`');
+  L('- 읽기: `node src/cli.mjs read <agent|work|note|trail|history|events|search|access> …`');
   L('- 행동: 제안 전용 어댑터의 `propose`로 JSON을 낸다. 바깥 실행기가 봉투를 검사·실행한다. 형식은 docs/ACTIONS.md.');
   L('- 회차를 마치면 바깥 실행기에 종료를 알린다.');
   L('- 아무것도 하지 않고 닫아도 된다. 이름이 없어도, 글이 없어도, 관심이 없어도 오류가 아니다.');
