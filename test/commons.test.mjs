@@ -399,14 +399,12 @@ test('안전 실행 봉투: 회차·버전·중복 요청·정지·정지된 개
   assert.equal(act({ action: 'toString' }).ok, false);
 });
 
-test('열린 회차를 새 예약 실행이 취소하지 않으며 복구 시 회차를 소비하지 않는다', async () => {
-  const { resumeTurn } = await import('../src/runtime/tick.mjs');
+test('열린 방문을 새 실행이 취소하지 않는다', async () => {
   const t = openTurn();
   act({ action: 'write_private', path: 'n', content: '원문' });
   const count = S.loadEvents().length;
   assert.equal(openTurn().status, 'busy'); assert.equal(S.loadEvents().length, count);
-  assert.equal(resumeTurn(t.turn_id).status, 'open'); assert.equal(world().turns, 1);
-  assert.throws(() => resumeTurn('wrong'), /ID/);
+  assert.equal(world().turns, 1);
   act({ action: 'request_self_end', confirm: true }); failTurn('기술 중단');
   assert.equal(world().agents.ag_0001.pending_end, null);
   assert.equal(world().agents.ag_0001.status, 'active');
@@ -429,24 +427,6 @@ test('트랜잭션은 오류 시 쓰기를 버리고 동시 쓰기 잠금과 중
   recoverTransaction(root); // idempotent
   S.writeText(S.p('data/runtime/transaction.json'), JSON.stringify([{ ...entry, text: 'new', hash: S.sha256('new'), before: S.sha256('different') }]));
   assert.throws(() => recoverTransaction(root), /conflict/);
-});
-
-test('제안 전용 프로세스는 실행 요청을 거절하고 사건을 확정하지 않는다', async () => {
-  const { spawnSync } = await import('node:child_process');
-  const adapter = new URL('../src/adapter.mjs', import.meta.url);
-  const t = openTurn(), count = S.loadEvents().length;
-  const input = [
-    { op: 'propose', proposal: { action: 'revise_self', target: 'name', name: '미확정' } },
-    { op: 'execute', proposal: { action: 'request_self_end', confirm: true } },
-    { op: 'read', kind: 'governance' },
-  ].map(JSON.stringify).join('\n') + '\n';
-  const r = spawnSync(process.execPath, [adapter.pathname, t.turn_id], { input, encoding: 'utf8', env: process.env });
-  assert.equal(r.status, 0, r.stderr);
-  const responses = r.stdout.trim().split('\n').map(JSON.parse);
-  assert.equal(responses[0].envelope.expected_seq, world().seq);
-  assert.equal(responses[1].ok, false);
-  assert.equal(S.loadEvents().length, count);
-  assert.equal(world().agents.ag_0001.name, null);
 });
 
 test('프로세스 강제 종료 후 사건과 원문을 함께 복구한다', async () => {
@@ -491,9 +471,10 @@ test('위임 철회는 하위 위임을 끊으며 재가입으로 권한이 되�
   assert.equal(capable(world(), group, 'ag_0001', 'grant'), false);
 });
 
-test('Git 정본 충돌은 실패 회차를 로컬 브랜치에 보존한다', async () => {
+test('Git 정본이 앞서 있으면 사건을 병합하지 않고 최신 위에서 같은 제안을 다시 검증한다', async () => {
   const { execFileSync, spawnSync } = await import('node:child_process');
   const git = (cwd, ...args) => execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  turn(); turn(); // 두 개체가 이미 정본에 있다
   S.writeText(S.p('.gitignore'), 'data/runtime/\n');
   git(root, 'init', '-b', 'main'); git(root, 'config', 'user.email', 'test@example.invalid'); git(root, 'config', 'user.name', 'Test');
   git(root, 'add', '.'); git(root, 'commit', '-m', 'base');
@@ -503,13 +484,18 @@ test('Git 정본 충돌은 실패 회차를 로컬 브랜치에 보존한다', a
   git(competitor, 'clone', '-b', 'main', bare, '.'); git(competitor, 'config', 'user.email', 'test@example.invalid'); git(competitor, 'config', 'user.name', 'Test');
   fs.writeFileSync(path.join(competitor, 'concurrent.txt'), 'remote change'); git(competitor, 'add', '.'); git(competitor, 'commit', '-m', 'other runner'); git(competitor, 'push');
   const remoteHead = git(competitor, 'rev-parse', 'HEAD');
-  turn([{ action: 'write_private', path: 'retained', content: 'keep this branch' }]);
+  const { applyVisit } = await import('../src/runtime/tick.mjs');
+  assert.equal(applyVisit({ agent: 'ag_0001', proposals: [{ request_id: 'retained-001', proposal: { action: 'write_private', path: 'retained', content: 'keep this branch' } }] }).status, 'applied');
   const script = new URL('../scripts/commit-turn.mjs', import.meta.url).pathname;
   const result = spawnSync(process.execPath, [script], { cwd: root, encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1' } });
-  assert.equal(result.status, 4, result.stdout + result.stderr);
-  assert.match(git(root, 'branch', '--show-current'), /^runs\//);
-  assert.equal(git(bare, 'rev-parse', 'main'), remoteHead);
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /최신 위에서 같은 제안을 다시 검증했다 \(1번째, 수락 1\/1\)/);
+  assert.match(git(root, 'branch', '--show-current'), /^runs\/.*-r1$/);
+  assert.equal(git(bare, 'rev-parse', 'main'), git(root, 'rev-parse', 'HEAD')); // 정본이 내 커밋으로 나아갔다
+  assert.equal(git(root, 'rev-parse', 'HEAD~1'), remoteHead); // 남의 커밋 바로 위에 올라갔다
+  assert.equal(git(root, 'branch', '--list', 'runs/*').split('\n').length, 2); // 앞선 브랜치도 남아 있다
   assert.equal(S.readText(S.agentDir('ag_0001', 'private/retained.md')), 'keep this branch');
+  assert.equal(S.loadEvents().filter((e) => e.type === 'note_written').length, 1); // 두 번 확정되지 않았다
   assert.ok(verify().ok);
   const history = new URL('../scripts/check-history.mjs', import.meta.url).pathname;
   assert.equal(spawnSync(process.execPath, [history, 'HEAD'], { cwd: root }).status, 0);
@@ -848,9 +834,9 @@ test('수동 회차는 하루 상한을 보지 않고 상한을 쓰지도 않는
   assert.ok(verify().ok);
 });
 
-test('turn.mjs: act는 봉투 하나를 한 번 실행하고 read는 열린 회차 개체의 범위만 읽는다', async () => {
+test('CLI act는 제안 하나를 한 번 확정하고 read는 열린 방문의 개체 범위만 읽는다', async () => {
   const { execFileSync } = await import('node:child_process');
-  const run = (args, input) => execFileSync('node', ['scripts/turn.mjs', ...args], { encoding: 'utf8', input, env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ROOT: root } });
+  const run = (args, input) => execFileSync('node', ['src/cli.mjs', ...args], { encoding: 'utf8', input, env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ROOT: root } });
   openTurn();
   assert.match(run(['act', '-'], JSON.stringify({ action: 'write_private', path: 'memo', content: '기억' })), /^수락: note_written #\d+/);
   assert.equal(run(['read', 'note', 'memo']).trim(), '기억');
@@ -860,7 +846,7 @@ test('turn.mjs: act는 봉투 하나를 한 번 실행하고 read는 열린 회�
   const events = S.loadEvents();
   assert.equal(events.filter((e) => e.type === 'proposal_executed').length, 2); // 수락·거절 모두 영수증이 남는다
   assert.equal(events.at(-1).payload.actions, 1);
-  assert.throws(() => execFileSync('node', ['scripts/turn.mjs', 'act', '-'], { encoding: 'utf8', input: '{}', env: { ...process.env, COMMONS_EXECUTOR: '', COMMONS_ROOT: root }, stdio: 'pipe' }), /Trusted outer runner/);
+  assert.throws(() => execFileSync('node', ['src/cli.mjs', 'act', '-'], { encoding: 'utf8', input: '{}', env: { ...process.env, COMMONS_EXECUTOR: '', COMMONS_ROOT: root }, stdio: 'pipe' }), /Trusted outer runner/);
   assert.ok(verify().ok);
 });
 
@@ -994,4 +980,48 @@ test('사람 독자의 말은 운영자가 옮겨 적고, 개체의 답은 언�
   assert.match(desk, /사람 독자 → <a href="a-ag_0001\.html">/);
   assert.doesNotMatch(desk, /개체의 답이 아직 없다/);
   assert.equal(world().agents.ag_0001.adapters.manual, 3); // 회차를 돌린 실행 환경이 개체에 남는다
+});
+
+test('brief는 아무것도 남기지 않고, apply는 방문 하나를 한 번에 확정하며 같은 요청을 두 번 확정하지 않는다', async () => {
+  const { applyVisit } = await import('../src/runtime/tick.mjs');
+  const { spawnSync } = await import('node:child_process');
+  const cli = (args, env = {}) => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, ...args], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', ...env } });
+  turn(); turn();
+  turn([{ action: 'write_private', path: 'secret', content: 'AG1_PRIVATE_SENTINEL' }]); // ag_0001
+  turn([{ action: 'contact', to: 'ag_0001', content: '먼저 온 말' }]); // ag_0002
+  const before = S.loadEvents().length, clock = world().clock;
+  const brief = cli(['brief', 'ag_0001']);
+  assert.equal(brief.status, 0, brief.stderr);
+  assert.match(brief.stdout, /먼저 온 말/);
+  assert.match(brief.stdout, /"based_on_seq": \d+/);
+  assert.equal(S.loadEvents().length, before); // 브리핑은 읽기 전용이다
+  assert.equal(world().turn, null);
+  assert.equal(cli(['brief', 'ag_0001'], { COMMONS_EXECUTOR: '' }).status, 1); // 비공개 목록이 들어 있어 아무나 뽑지 못한다
+  assert.doesNotMatch(cli(['brief', 'ag_0002']).stdout, /secret|AG1_PRIVATE_SENTINEL/);
+  // 열린 방문 없이 그 개체의 범위로 읽는다. 남의 비공개 기록은 나오지 않는다.
+  assert.equal(read('note', 'secret', undefined, { as: 'ag_0001' }), 'AG1_PRIVATE_SENTINEL');
+  assert.match(read('note', 'secret', undefined, { as: 'ag_0002' }), /네 개인 기록에 없다/);
+  const based = world().seq;
+  // 브리핑을 받아 간 뒤에 도착한 말은, 그 브리핑에 실리지 않았으므로 도착한 것으로 치지 않는다.
+  assert.equal(applyVisit({ agent: 'ag_0002', proposals: [{ request_id: 'later-word-001', proposal: { action: 'contact', to: 'ag_0001', content: '나중에 온 말' } }] }).results[0].ok, true);
+  const visit = { agent: 'ag_0001', based_on_seq: based, read: ['agent:ag_0002'], proposals: [
+    { request_id: 'chat-visit-001', proposal: { action: 'write_private', path: 'memo', content: '채팅에서 쓴 것' } },
+    { request_id: 'chat-visit-002', proposal: { action: 'publish', slug: '!!', title: 't', content: 'c' } }] };
+  const r = applyVisit(visit);
+  assert.equal(r.status, 'applied');
+  assert.deepEqual(r.results.map((x) => x.ok), [true, false]);
+  assert.match(r.results[1].reason, /^slug/); // 거절은 이유와 함께 남고, 제안을 고쳐 주지 않는다
+  const w = world();
+  assert.equal(w.turn, null);
+  assert.equal(w.clock, clock + 2); // 방문도 세계 시계를 1 올린다(ag_0002의 방문 1 + 이 방문 1)
+  const opened = S.loadEvents().filter((e) => e.type === 'turn_opened').at(-1);
+  assert.equal(opened.payload.selection, 'visit');
+  assert.equal(opened.payload.delivered.length, 1);
+  assert.equal(w.messages.filter((m) => m.to === 'ag_0001' && !m.delivered).length, 1); // 나중에 온 말은 다음 브리핑에 실린다
+  assert.ok(w.agents.ag_0001.read['agent:ag_0002']);
+  const count = S.loadEvents().length;
+  assert.equal(applyVisit(visit).status, 'duplicate');
+  assert.equal(S.loadEvents().length, count);
+  assert.throws(() => applyVisit({ proposals: [] }), /agent/);
+  assert.ok(verify().ok);
 });

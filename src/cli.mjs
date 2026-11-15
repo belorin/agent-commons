@@ -1,11 +1,13 @@
 #!/usr/bin/env node
-// Host-side runtime CLI. Model-facing operations live in adapter.mjs.
+// 실행기의 CLI. 핵심은 brief → read → apply(또는 tick → act → close)이며, 모델은 제안(JSON)만 낸다.
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import { recoverTransaction } from './runtime/transaction.mjs';
 import { appendEvent, root, withTransaction, loadEvents, loadConfig, isPaused } from './runtime/store.mjs';
 import { project, living, displayName } from './runtime/world.mjs';
-import { openTurn, closeTurn, failTurn, resumeTurn, decide } from './runtime/tick.mjs';
-import { applyAction, executeProposal } from './runtime/actions.mjs';
+import { openTurn, closeTurn, failTurn, applyVisit, decide } from './runtime/tick.mjs';
+import { briefing } from './runtime/briefing.mjs';
+import { executeProposal } from './runtime/actions.mjs';
 import { read } from './runtime/read.mjs';
 import { verify } from './runtime/verify.mjs';
 import { regenerate, buildSite } from './runtime/derive.mjs';
@@ -27,28 +29,47 @@ function run() {
     case 'recover': requireRole('COMMONS_EXECUTOR'); say(recoverTransaction(root())); break;
     case 'tick': {
       requireRole('COMMONS_EXECUTOR');
-      const r = openTurn({ manual: args.includes('--manual') }); say(r.text);
+      // --as <개체 ID>: 순번 대신 그 개체의 방문을 연다. 한 세션에서 읽고 하나씩 행동하며 결과를 볼 때 쓴다.
+      const as = args.includes('--as') ? args[args.indexOf('--as') + 1] : null;
+      const r = openTurn({ manual: args.includes('--manual') || !!as, agent: as }); say(r.text);
       process.exitCode = r.status === 'busy' ? 4 : r.status === 'error' ? 1 : 0;
       break;
     }
-    case 'resume-turn': requireRole('COMMONS_EXECUTOR'); say(resumeTurn(args[0]).text); break;
-    case 'execute': {
+    // ── 핵심 인터페이스: brief → (read) → apply. 일반 채팅과 예약 실행이 같은 것을 쓴다.
+    case 'brief': {
+      // 읽기 전용. 아무것도 열지 않고 사건도 남기지 않는다. 비공개 기록의 목록과 비공개 방법이 들어 있으므로
+      // 신뢰하는 쪽이 그 개체로 일할 모델에게만 건넨다. 사이트나 derived/ 에 쓰지 않는다.
       requireRole('COMMONS_EXECUTOR');
-      const r = executeProposal(JSON.parse(fs.readFileSync(!args[0] || args[0] === '-' ? 0 : args[0], 'utf8')));
-      say(JSON.stringify(r)); process.exitCode = r.ok ? 0 : 3; break;
+      withTransaction(() => {
+        const w = validWorld(), events = loadEvents();
+        if (!w.agents[args[0]] || !['active', 'dormant'].includes(w.agents[args[0]].status)) throw new Error('brief <살아 있는 개체 ID>');
+        say(briefing(w, args[0], { turn_id: '(아직 열리지 않은 방문)', kind: 'walk', selection: 'visit', delivered: w.messages.filter((m) => m.to === args[0] && !m.delivered).map((m) => m.event_id), cfg: loadConfig(), events, adapter: process.env.COMMONS_ADAPTER || null }));
+        say(`\n## 명령을 실행할 수 없는 환경이라면\n읽고 싶은 것은 말로 청한다(실행기가 \`read --as ${args[0]} …\` 로 대신 읽어 준다). 행동은 아래 JSON 하나로 돌려준다. 실행기가 \`apply\` 로 검사해 확정하고, 거절된 것은 이유와 함께 돌아온다.\n\n\`\`\`json\n${JSON.stringify({ agent: args[0], based_on_seq: w.seq, read: [], proposals: [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'write_private', path: '…', content: '…' } }] }, null, 2)}\n\`\`\`\n제안이 하나도 없는 빈 배열도 된다.`);
+      }); break;
     }
-    case 'act': {
+    case 'apply': {
       requireRole('COMMONS_EXECUTOR');
-      const value = JSON.parse(fs.readFileSync(!args[0] || args[0] === '-' ? 0 : args[0], 'utf8'));
-      for (const proposal of Array.isArray(value) ? value : [value]) {
-        const r = applyAction(proposal);
-        say(JSON.stringify(r));
-        if (!r.ok) process.exitCode = 3;
-        if (r.paused) break;
-      }
+      const visit = JSON.parse(fs.readFileSync(!args[0] || args[0] === '-' ? 0 : args[0], 'utf8'));
+      const r = applyVisit(visit);
+      say(r.text);
+      for (const x of r.results) say(`- ${x.request_id}: ${x.duplicate ? '이미 확정됨' : x.ok ? '수락' : '거절 — ' + x.reason}`);
+      process.exitCode = r.status === 'applied' || r.status === 'duplicate' ? 0 : r.status === 'busy' ? 4 : 1;
       break;
     }
-    case 'read': say(read(args[0], args[1], args.slice(2).join(' ') || undefined)); break;
+    case 'act': {
+      // 열린 방문에 제안 하나를 확정한다. apply 와 같은 길(executeProposal)이며, 결과를 보고 다음 제안을 낼 수 있다.
+      requireRole('COMMONS_EXECUTOR');
+      const proposal = JSON.parse(fs.readFileSync(!args[0] || args[0] === '-' ? 0 : args[0], 'utf8'));
+      if (Array.isArray(proposal)) throw new Error('제안은 하나씩 낸다');
+      const r = executeProposal({ request_id: crypto.randomUUID(), proposal });
+      say(r.ok ? `수락: ${(r.events || []).map((e) => `${e.type} #${e.world_seq}`).join(', ')}` : `거절: ${r.reason}`);
+      process.exitCode = r.ok ? 0 : 3; break;
+    }
+    case 'read': {
+      const as = args[0] === '--as' ? args.splice(0, 2)[1] : null;
+      if (as) requireRole('COMMONS_EXECUTOR'); // 다른 개체의 범위로 읽는 것은 바깥 실행기만
+      say(read(args[0], args[1], args.slice(2).join(' ') || undefined, { as })); break;
+    }
     case 'close':
     case 'fail': {
       requireRole('COMMONS_EXECUTOR');
@@ -65,7 +86,7 @@ function run() {
       for (const a of Object.values(w.agents)) say(`- ${a.id} ${displayName(a)} · ${a.status} · 회차 ${a.turns} · 마지막 ${a.last_turn}`);
       const sc = showcaseSettings(w, cfg);
       if (sc.enabled) say(`발표회: ${w.showcase.number}회 열림 · 간격 ${sc.every} (${sc.basis === 'operator_default' ? '운영자 기본값' : '규칙 ' + sc.basis}) · 다음은 세계 시계 ${nextShowcaseClock(w, cfg)}`);
-      say(`열린 회차: ${w.turn ? `${w.turn.turn_id} (${w.turn.agent_id}) — 새 tick은 busy` : '없음'}`);
+      say(`열린 방문: ${w.turn ? `${w.turn.turn_id} (${w.turn.agent_id}) — 닫기 전에는 새로 열지 않는다` : '없음'}`);
       if (!w.turn) say(`다음 tick: ${d.kind === 'birth' ? `새 개체 (${d.origin})` : d.kind === 'walk' ? `${d.agent.id} (${d.selection === 'requested' ? `본인 요청: ${d.request_reason}` : '기본 순번'})` : d.reason}`);
     }); break;
     case 'verify': {
@@ -74,7 +95,7 @@ function run() {
     }
     case 'project': say(regenerate()); break;
     case 'site': say(buildSite()); break;
-    case 'wake': requireRole('COMMONS_OPERATOR'); say(openTurn({ wake: args[0] }).text); break;
+    case 'wake': requireRole('COMMONS_OPERATOR'); say(openTurn({ agent: args[0], operator_wake: true }).text); break;
     case 'reader-note': {
       // 사람 독자가 남긴 말을 운영자가 옮겨 적는다. 개체에게는 다음 회차의 '도착한 것'으로 간다.
       requireRole('COMMONS_OPERATOR');
@@ -112,7 +133,7 @@ function run() {
         say(regenerate());
       }); break;
     }
-    default: say('Commands: tick [--manual] | read | execute | act | close <turn-id> | fail <turn-id> <reason> | resume-turn <turn-id> | recover | status | verify | project | site'); process.exitCode = cmd ? 1 : 0;
+    default: say('Commands: brief <id> | read [--as <id>] … | apply <visit.json|-> | tick [--manual] [--as <id>] | act <proposal.json|-> | close <turn-id> | fail <turn-id> <reason> | recover | status | verify | project | site'); process.exitCode = cmd ? 1 : 0;
   }
 }
 try { run(); } catch (e) { console.error(e.message); process.exitCode = 1; }

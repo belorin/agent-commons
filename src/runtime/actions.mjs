@@ -6,6 +6,7 @@ import { governanceHandlers } from './governance.mjs';
 import { appendEvent, withTransaction, canonical, loadEvents, loadConfig, isPaused, agentDir, writeText, sha256 } from './store.mjs';
 import { project, living, SELF_FILES } from './world.mjs';
 import { currentSession, showcaseSettings } from './showcase.mjs';
+import { noteProposal } from './tick.mjs';
 
 const SLUG = /^[\p{L}\p{N}][\p{L}\p{N}_-]{0,63}$/u;
 const COLOR = /^#[0-9a-fA-F]{6}$/;
@@ -273,7 +274,7 @@ function messageBudget(ctx) {
 
 export const ACTIONS = Object.keys(HANDLERS);
 
-/** 열려 있는 회차의 개체 이름으로만 실행된다. 제안이 다른 행위자를 지정할 길은 없다. */
+/** 열려 있는 방문의 개체 이름으로만 실행된다. 제안이 다른 행위자를 지정할 길은 없다. 영수증 없는 내부 진입점이며 CLI 에는 없다. */
 export function applyAction(proposal) {
   return withTransaction(() => applyUnlocked(proposal));
 }
@@ -307,22 +308,29 @@ function applyUnlocked(proposal) {
   }
 }
 
-/** Trusted executor entry. The model supplies data, never execution credentials. */
+/**
+ * 제안을 확정하는 단 하나의 길. 모델은 자료(제안)를 낼 뿐 실행 자격을 갖지 않는다.
+ * request_id 는 같은 제안이 두 번 확정되는 것을 막는다(충돌 뒤 다시 적용할 때도).
+ * turn_id · expected_seq 를 함께 주면 그 방문·그 순번이 아닐 때 거절한다.
+ */
 export function executeProposal(envelope) {
   return withTransaction(() => {
     if (!envelope || typeof envelope.request_id !== 'string' || !/^[a-zA-Z0-9_-]{8,100}$/.test(envelope.request_id)) throw new Error('request_id required');
     const events = loadEvents();
     const receipt = events.find((e) => e.type === 'proposal_executed' && e.payload.request_id === envelope.request_id);
-    const hash = sha256(canonical(envelope));
+    const hash = sha256(canonical({ request_id: envelope.request_id, proposal: envelope.proposal }));
     if (receipt) {
-      if (receipt.payload.hash !== hash) throw new Error('request_id reused with different proposal');
+      // 옛 영수증은 봉투 전체의 해시였다. 그것과도 견준다.
+      if (![hash, sha256(canonical(envelope))].includes(receipt.payload.hash)) throw new Error('request_id reused with different proposal');
       return { ok: receipt.payload.ok, duplicate: true, events: [] };
     }
     const w = project(events);
-    if (!w.turn || w.turn.turn_id !== envelope.turn_id || w.seq !== envelope.expected_seq) throw new Error('Stale proposal: turn/sequence conflict');
-    const result = applyAction(envelope.proposal);
+    if (!w.turn) throw new Error('열려 있는 방문이 없다');
+    if ((envelope.turn_id != null && envelope.turn_id !== w.turn.turn_id) || (envelope.expected_seq != null && envelope.expected_seq !== w.seq)) throw new Error('Stale proposal: turn/sequence conflict');
+    const result = applyUnlocked(envelope.proposal);
     if (result.paused) return result;
     appendEvent({ type: 'proposal_executed', visibility: 'private', agent_id: w.turn.agent_id, turn_id: w.turn.turn_id, payload: { request_id: envelope.request_id, hash, ok: result.ok } });
+    noteProposal(envelope.request_id, envelope.proposal);
     return result;
   });
 }

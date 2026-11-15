@@ -7,10 +7,21 @@ import { appendEvent, withTransaction, loadEvents, loadConfig, isPaused, p, agen
 import { project, living } from './world.mjs';
 import { briefing } from './briefing.mjs';
 import { regenerate } from './derive.mjs';
+import { executeProposal } from './actions.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 
-const turnFile = () => p('data', 'runtime', 'turn.json'); // 로컬 전용(커밋하지 않음): 이번 회차에 읽은 것의 목록
+// 로컬 전용(커밋하지 않음): 열린 방문이 읽은 것과 낸 제안. 닫으면 last-visit.json 으로 남아,
+// 푸시가 거절됐을 때 최신 정본 위에서 같은 제안을 다시 검증하는 데 쓰인다.
+const turnFile = () => p('data', 'runtime', 'turn.json');
+const lastVisitFile = () => p('data', 'runtime', 'last-visit.json');
 export const loadTurnFile = () => JSON.parse(readText(turnFile()) || 'null');
+export const loadLastVisit = () => JSON.parse(readText(lastVisitFile()) || 'null');
+export function noteProposal(request_id, proposal) {
+  const t = loadTurnFile();
+  if (!t) return;
+  t.proposals.push({ request_id, proposal });
+  writeText(turnFile(), JSON.stringify(t, null, 2));
+}
 export function noteRead(key) {
   const t = loadTurnFile();
   if (!t) return;
@@ -73,13 +84,17 @@ export function decide(w, cfg) {
   return { kind: 'idle', reason: alive.length ? '깨어 있는 개체가 없다(모두 휴면)' : '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
 }
 
-function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model = process.env.COMMONS_MODEL || null, wake = null, manual = false } = {}) {
+/**
+ * 방문을 연다. agent 를 주면 그 개체의 방문이고(일반 채팅·수동 실행), 주지 않으면 순번이 고른다(예약 실행).
+ * 어느 쪽이든 같은 사건(turn_opened)이며 세계 시계가 1 흐른다. 하루 상한은 예약 실행에만 적용된다.
+ */
+function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model = process.env.COMMONS_MODEL || null, agent = null, operator_wake = false, based_on_seq = null, manual = !!agent } = {}) {
   if (isPaused()) return { status: 'paused', text: '정지 중이다(control/PAUSE). 회차를 열지 않는다. 아무것도 커밋하지 않고 끝낸다.' };
   const verification = verify();
   if (!verification.ok) throw new Error(verification.problems.join('\n'));
   const cfg = loadConfig();
   let w = project(loadEvents());
-  if (w.turn) return { status: 'busy', text: `열린 회차 ${w.turn.turn_id}가 있다. 새 회차를 열지 않는다. resume-turn으로 복구하거나 fail로 명시적으로 중단한다.` };
+  if (w.turn) return { status: 'busy', text: `이 작업 디렉터리에 열린 방문 ${w.turn.turn_id} (${w.turn.agent_id})이 있다. close 로 닫거나 fail 로 중단한 뒤 다시 연다.` };
   const today = new Date().toISOString().slice(0, 10);
   // 하루 상한은 예약 실행의 것이다. 사람이 직접 시킨 수동 회차는 상한을 보지 않고 상한을 쓰지도 않는다.
   if (!manual && (w.turns_by_day[today] || 0) >= cfg.max_turns_per_day) {
@@ -87,10 +102,10 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
     return { status: 'budget', text: `오늘의 회차 한도(${cfg.max_turns_per_day})에 닿았다. 기술적 중지다. 이 사건만 커밋하고 끝낸다.` };
   }
   let d = decide(w, cfg);
-  if (wake) {
-    const a = w.agents[wake];
-    if (!a || !['active', 'dormant'].includes(a.status)) return { status: 'error', text: `${wake}: 회차를 줄 수 있는 개체가 아니다` };
-    d = { kind: 'walk', agent: a, operator_wake: true };
+  if (agent) {
+    const a = w.agents[agent];
+    if (!a || !['active', 'dormant'].includes(a.status)) return { status: 'error', text: `${agent}: 방문을 열 수 있는 개체가 아니다` };
+    d = { kind: 'walk', agent: a, selection: 'visit', operator_wake: operator_wake || undefined };
   }
   if (d.kind === 'idle') {
     openShowcaseIfDue(w, cfg);
@@ -118,11 +133,12 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
     }
   } else agentId = d.agent.id;
 
-  const delivered = w.messages.filter((m) => m.to === agentId && !m.delivered).map((m) => m.event_id);
+  // 브리핑을 미리 받아 간 방문(based_on_seq)은 그 브리핑에 실렸던 전언만 도착한 것으로 친다.
+  const delivered = w.messages.filter((m) => m.to === agentId && !m.delivered && (based_on_seq == null || m.seq <= based_on_seq)).map((m) => m.event_id);
   openShowcaseIfDue(w, cfg);
   const before = project(loadEvents());
-  appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, manual: manual || undefined, delivered, adapter, model } });
-  writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, read: [] }, null, 2));
+  appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, manual: manual || undefined, based_on_seq: based_on_seq ?? undefined, delivered, adapter, model } });
+  writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, kind: d.kind, adapter, model, read: [], proposals: [] }, null, 2));
   return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text: briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents(), adapter }) };
 }
 
@@ -140,6 +156,7 @@ function closeUnlocked() {
   const local = loadTurnFile();
   const read = local?.turn_id === turn_id ? local.read : [];
   appendEvent({ ...base, type: 'turn_closed', visibility: 'private', payload: { turn_id, actions, counts: w.turn.counts, read, silent: actions === 0, paused_at_close: isPaused() || undefined } });
+  if (local?.turn_id === turn_id) writeText(lastVisitFile(), JSON.stringify(local, null, 2));
   fs.rmSync(turnFile(), { force: true });
   const report = regenerate();
   return { ok: true, turn_id, agent_id, actions, text: `회차 ${turn_id} (${agent_id}) 를 닫았다. 수락된 행동 ${actions}개${actions === 0 ? ' — 침묵한 회차이며 정상이다' : ''}.\n${report}` };
@@ -156,16 +173,23 @@ function failUnlocked(reason) {
 export const openTurn = (options) => withTransaction(() => openUnlocked(options));
 export const closeTurn = () => withTransaction(closeUnlocked);
 export const failTurn = (reason) => withTransaction(() => failUnlocked(reason));
-export function resumeTurn(turnId) {
+
+/**
+ * 방문 하나를 한 번에 확정한다: 연다 → 제안을 순서대로 검사·확정한다 → 닫는다.
+ * 일반 채팅이 돌려준 제안 묶음도, 푸시 충돌 뒤의 다시 적용도 이 함수 하나를 쓴다.
+ * 이미 확정된 request_id 는 건너뛴다. 유효하지 않게 된 제안은 고치지 않고 거절로 남긴다.
+ */
+export function applyVisit({ agent, proposals = [], read = [], based_on_seq = null, adapter, model } = {}) {
   return withTransaction(() => {
-    if (isPaused()) return { status: 'paused', text: '정지 중이다' };
-    const v = verify();
-    if (!v.ok) throw new Error(v.problems.join('\n'));
-    const events = loadEvents(), w = project(events);
-    if (!w.turn || w.turn.turn_id !== turnId) throw new Error('회차 ID가 맞지 않는다');
-    if (w.agents[w.turn.agent_id].status === 'suspended') throw new Error('운영 정지된 개체');
-    const local = loadTurnFile();
-    if (local?.turn_id !== turnId) writeText(turnFile(), JSON.stringify({ turn_id: turnId, agent_id: w.turn.agent_id, read: [] }));
-    return { status: 'open', text: briefing(w, w.turn.agent_id, { ...w.turn, delivered: w.messages.filter((m) => m.to === w.turn.agent_id && m.delivered).map((m) => m.event_id), cfg: loadConfig(), events }) };
+    if (typeof agent !== 'string') throw new Error('agent: 방문할 개체 ID가 필요하다');
+    if (!Array.isArray(proposals) || proposals.some((x) => !x || typeof x.request_id !== 'string' || typeof x.proposal !== 'object')) throw new Error('proposals: [{ request_id, proposal }] 의 배열');
+    const done = new Set(loadEvents().filter((e) => e.type === 'proposal_executed').map((e) => e.payload.request_id));
+    if (proposals.length && proposals.every((x) => done.has(x.request_id))) return { status: 'duplicate', text: '이미 확정된 방문이다. 아무것도 더하지 않았다.', results: [] };
+    const t = openUnlocked({ agent, based_on_seq, ...(adapter ? { adapter } : {}), ...(model ? { model } : {}) });
+    if (t.status !== 'open') return { ...t, results: [] };
+    const results = proposals.map((x) => ({ request_id: x.request_id, ...executeProposal(x) }));
+    for (const key of Array.isArray(read) ? read : []) noteRead(String(key));
+    const closed = closeUnlocked();
+    return { status: 'applied', turn_id: t.turn_id, agent_id: t.agent_id, actions: closed.actions, results, text: closed.text };
   });
 }

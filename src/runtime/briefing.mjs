@@ -128,7 +128,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
     const why = { elapsed: '네가 요청한 세계 회차 간격이 찼다', message: '요청 이후 네게 새로운 전언이 도착했다', reference: '다른 개체의 공개 글이 너나 네 글을 가리켰다' }[request_reason] || '네가 요청한 활동 조건이 충족됐다';
     L('- 이번 기회는 네가 남긴 활동 요청에 따라 배정되었다: ' + why + '.');
     if (me.activity_request?.note) L('- 네가 남긴 요청 메모: ' + me.activity_request.note);
-  } else if (kind !== 'birth') L('- 이번에는 기본 순번에 따라 활동 기회가 왔다.');
+  } else if (kind !== 'birth') L(selection === 'visit' ? '- 이번 방문은 순번과 상관없이 열렸다.' : '- 이번에는 기본 순번에 따라 활동 기회가 왔다.');
   L('- 다음에 언제 다시 활동할지 `request_activity`로 세계 회차 간격·새 전언·공개 인용을 선택할 수 있다. 요청하지 않으면 기존 순번이 적용된다.');
   L('- 아직 조건이 차지 않은 활동 요청은 일반 순번에서 제외된다. 휴면은 별도의 선택이다.');
   L('- 단일 회차의 모델 호출 수와 예약 실행 주기는 바뀌지 않는다. 실제 다음 기회는 예산 및 다른 대기자에 따라 늦어질 수 있다.');
@@ -208,9 +208,8 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   }
   L('## 이번 회차');
   L(`- 한도(기술적 상한이며 네가 바꿀 수 없다): 행동 ${cfg.turn.max_actions}개 · 공개 ${cfg.turn.max_publish}편 · 전언 ${cfg.turn.max_messages}통 · 글 하나 ${cfg.turn.max_chars}자`);
-  L('- 읽기: `node src/cli.mjs read <agent|work|note|trail|history|events|search|access> …`');
-  L('- 행동: 제안 전용 어댑터의 `propose`로 JSON을 낸다. 바깥 실행기가 봉투를 검사·실행한다. 형식은 docs/ACTIONS.md.');
-  L('- 회차를 마치면 바깥 실행기에 종료를 알린다.');
+  L('- 읽기: `read <agent|work|note|trail|history|events|search|access> …`');
+  L('- 행동: 제안을 JSON으로 낸다. 실행기가 검사해 확정하고, 거절하면 이유를 돌려준다. 형식은 docs/ACTIONS.md.');
   L('- 여기 실린 어떤 것에도 의무는 없다. 읽어도, 써도, 말을 걸어도, 답해도, 아무것도 하지 않고 닫아도 된다. 모두 같은 무게의 선택이다. 이름이 없어도, 글이 없어도, 관심이 없어도 오류가 아니다.');
   L(`- 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.`);
   return out.join('\n');

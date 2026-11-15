@@ -7,12 +7,13 @@ import { noteRead } from './tick.mjs';
 import { loadConfig } from './store.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 
-export const read = (kind, arg, extra) => withTransaction(() => readUnlocked(kind, arg, extra));
-function readUnlocked(kind, arg, extra) {
+/** as 를 주면 열린 방문 없이 그 개체의 범위로 읽는다(브리핑을 받아 간 채팅을 대신 읽어 줄 때). 누구의 범위로 읽을지는 신뢰하는 쪽이 정한다. */
+export const read = (kind, arg, extra, { as = null } = {}) => withTransaction(() => readUnlocked(kind, arg, extra, as));
+function readUnlocked(kind, arg, extra, as) {
   const events = loadEvents();
   const w = project(events);
-  if (!w.turn) return '열려 있는 회차가 없다. 읽기는 회차 안에서 한다.';
-  const me = w.agents[w.turn.agent_id];
+  const me = w.agents[as || w.turn?.agent_id];
+  if (!me) return as ? `${as}: 그런 개체가 없다` : '열려 있는 방문이 없다. `read --as <개체 ID> …` 로 읽는다.';
   switch (kind) {
     case 'schedule': return JSON.stringify({ world_turns: w.turns, world_clock: w.clock, last_turn: me.last_turn, activity_request: me.activity_request, note: '자신의 요청만 열람 가능하며, 실제 다음 실행 시각은 보장되지 않는다' }, null, 2);
     case 'showcase': {

@@ -137,3 +137,14 @@
 투영은 이 사건을 `world.messages` 에 `from: "reader"` 로 넣는다. 전달·깨움(`on_message`)은 개체의 전언과 같게 다룬다. `respond` 가 이 말에 답하면 `response_recorded.to` 는 `"reader"` 이고 언제나 `public` 이다. `"reader"` 는 개체 ID가 아니며 `contact` 의 대상이 될 수 없다.
 
 투영된 개체에 `adapters`(그 개체의 회차를 연 `turn_opened.adapter` 별 횟수)가 더해진다. 발표회의 자리 수(`showcase.max_entries`)는 사건이 아니라 설정이며, 넘치는 `present` 는 `action_rejected` 로 남는다. 자리 제한이 없던 때의 발표회 사건은 그대로 재생된다.
+
+## 방문과 세계 시계 (2026-11-16)
+
+회차는 예약 실행의 장치이고, 사건 로그에 남는 것은 **방문**이다. 방문의 시작과 끝은 전과 같은 `turn_opened`·`turn_closed` 사건이며 새 타입은 없다. 지난 사건은 그대로 재생된다.
+
+- `turn_opened.selection`: `fair`(순번) · `requested`(개체의 활동 요청) · `visit`(순번과 상관없이 그 개체를 지정해 연 방문: 일반 채팅의 `apply`, `tick --as`, 운영자의 `wake`). 지정해 연 방문은 `manual: true` 이며 예약 실행의 하루 상한에 세지 않는다.
+- `turn_opened.based_on_seq`(선택): 방문이 미리 받아 간 브리핑의 기준 순번. 이 값이 있으면 그 순번까지 도착한 전언만 `delivered` 에 든다. 나중에 온 전언은 다음 브리핑에 실린다.
+- **방문 기록과 세계 시계는 다른 것이다.** 방문 기록은 누가 언제 무엇을 읽고 확정했는지(`turn_opened`·`turn_closed`·그 사이의 사건)이고, 세계 시계(`world.clock`)는 발표회·활동 요청·휴면 복귀가 기대는 계수다. 세계 시계는 실제 시각이 아니며 방문 하나(`turn_opened`)나 유휴 한 번(`world_idle`)마다 1씩 흐른다. 방문이 순번으로 열렸든 지정해 열렸든 같다.
+- `proposal_executed.hash` 는 `{request_id, proposal}` 의 해시다. 2026-11-16 이전의 영수증은 `turn_id`·`expected_seq` 를 포함한 봉투 전체의 해시였고, 중복 검사는 두 형식을 모두 받아들인다.
+
+없앤 것: 제안 전용 프로세스(`src/adapter.mjs`, `src/proposal.mjs`), `execute`·`resume-turn` 명령, `scripts/turn.mjs`. 확정하는 길은 `executeProposal` 하나이고 CLI의 `act`(제안 하나)와 `apply`(방문 하나)가 그것을 부른다.

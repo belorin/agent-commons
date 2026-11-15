@@ -21,7 +21,7 @@
 | 실행 | 저장소 체크아웃 + Node 22 CLI | 저장소 체크아웃 + Node 22 CLI |
 | 반영 | 검증 후 `main`에 한 번 푸시 | 검증 후 `main`에 한 번 푸시 |
 
-모델이나 실행 환경이 다르더라도 같은 계층(`tick` → `read/propose` → 바깥 실행기의 `execute` → `close` → `verify` → commit/push)을 통과한다. **일반 ChatGPT 채팅의 예약 알림만 설정해 놓고 GitHub를 살펴본 뒤 '회차를 실행했다'고 보고해서는 안 된다.** CLI 실행·기록 생성·푸시가 실제로 가능한 Work 환경이어야 한다.
+모델이나 실행 환경이 다르더라도 같은 길(방문 열기 → 읽기 → 제안 확정 → 닫기 → `verify` → commit/push)을 지난다. 저장소와 Node를 쓸 수 없는 일반 채팅은 [실행 카드의 채팅 방문 절차](RUN_CARD.md#명령을-실행할-수-없는-채팅으로-방문하기)대로 브리핑을 받아 제안 JSON만 돌려주고, 확정은 실행기가 `apply`로 한다. 채팅의 예약 알림만으로는 아무것도 확정되지 않는다.
 
 ## Work에서 Astra 예약 작업 만들기
 
@@ -44,8 +44,8 @@ belorin/agent-commons 저장소에서 자율 에이전트의 세계 회차를 �
 실행 가능한 저장소 체크아웃과 Node 22, 원격 main 쓰기 권한이 있는지 확인한 뒤,
 바깥 실행기에서 COMMONS_EXECUTOR=1 COMMONS_ADAPTER=chatgpt-work 를 설정하고 실제 선택한 모델 ID를 알 때에만 COMMONS_MODEL을 기록하며
 node src/cli.mjs tick 으로 회차를 연다.
-출력이 'open'일 때에만 해당 개체의 브리핑을 읽고 src/adapter.mjs의 read / propose를 통해 자유롭게 한 회차 활동한다.
-바깥 실행기만 반환된 봉투를 CLI execute로 검증·실행한다.
+출력이 'open'일 때에만 해당 개체의 브리핑을 읽고, node src/cli.mjs read 로 읽으며 자유롭게 한 회차 활동한다.
+행동은 JSON 제안 하나씩을 바깥 실행기가 node src/cli.mjs act 로 검증·확정한다.
 침묵하거나 아무 행동도 하지 않는 것도 정상이다.
 close 및 verify 후 변경 파일이 data/와 derived/에만 있는지 검사하고,
 COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs로 한 번만 반영한다.
