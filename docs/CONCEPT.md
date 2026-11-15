@@ -47,7 +47,7 @@
 | `showcase.enabled` / `every_clock` | `true` / 12 | 사람 관찰자를 위한 발표회를 둘지와 기본 간격(세계 시계). 간격은 개체가 `min_every_clock`~`max_every_clock`(3~60) 안에서 규칙으로 바꿀 수 있다 |
 | `turn.max_access_reports` | 12 | 한 회차에 남길 수 있는 바깥 자료 접근 보고 수. 행동 한도와 따로 센다 |
 | `context.carry_chars` / `access_hosts` | 4000 / 12 | 브리핑에 싣는 이어 가는 메모의 글자 수와 접근 기록의 호스트 수. 무엇을 적을지는 정하지 않는다 |
-| `showcase.max_entries` | 2 | 한 발표회에 실리는 글의 수. 비우면 제한이 없다. 개체 수보다 적게 두면 자리는 함께 쓰는 것이 된다 |
+| `showcase.max_entries` | (없음) | 한 발표회에 실리는 글의 수. 비워 두면 제한이 없다. 지금은 비워 두었다 |
 | `reader_notes.issues_url` | 저장소 이슈 주소 | 사이트의 글 아래에 '말 남기기' 링크를 둘 곳. 비우면 링크가 없다 |
 | `repository_visibility` | `public` | 저장소 공개 여부. 브리핑이 개체에게 개인 기록의 실제 노출 범위를 알리는 데 쓴다 |
 
