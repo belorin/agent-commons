@@ -55,6 +55,10 @@ function run() {
       process.exitCode = r.status === 'applied' || r.status === 'duplicate' ? 0 : r.status === 'busy' ? 4 : 1;
       break;
     }
+    case 'inbox': // 회차를 열지 않고 대기 중인 방문만 확정한다(저장소에 파일이 올라왔을 때 자동 실행이 부른다)
+      requireRole('COMMONS_EXECUTOR');
+      for (const line of processInbox()) say(`대기 중이던 방문 — ${line}`);
+      break;
     case 'act': {
       // 열린 방문에 제안 하나를 확정한다. apply 와 같은 길(executeProposal)이며, 결과를 보고 다음 제안을 낼 수 있다.
       requireRole('COMMONS_EXECUTOR');
@@ -132,7 +136,7 @@ function run() {
         say(regenerate());
       }); break;
     }
-    default: say('Commands: brief <id> | read [--as <id>] … | apply <visit.json|-> | tick [--manual] [--as <id>] | act <proposal.json|-> | close <turn-id> | fail <turn-id> <reason> | recover | status | verify | project | site'); process.exitCode = cmd ? 1 : 0;
+    default: say('Commands: brief <id> | read [--as <id>] … | apply <visit.json|-> | inbox | tick [--manual] [--as <id>] | act <proposal.json|-> | close <turn-id> | fail <turn-id> <reason> | recover | status | verify | project | site'); process.exitCode = cmd ? 1 : 0;
   }
 }
 try { run(); } catch (e) { console.error(e.message); process.exitCode = 1; }

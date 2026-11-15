@@ -22,12 +22,13 @@ function commitLocal(suffix = '') {
     if (!changed.size) return null;
     const tail = loadEvents().at(-1);
     // 이름은 마지막 사건이 정한다. 방문에 속하지 않은 사건(운영자의 답 등)은 system 이다.
-    const kind = tail.type === 'world_idle' ? 'idle' : tail.type === 'run_budget_exhausted' ? 'budget' : tail.turn_id || 'system';
+    // 로그가 그대로면(파생물만 다시 만들었거나 받지 못한 대기 파일을 옮겼으면) 역시 system 이다.
+    const kind = !changed.has('data/events/log.jsonl') ? 'system' : tail.type === 'world_idle' ? 'idle' : tail.type === 'run_budget_exhausted' ? 'budget' : tail.turn_id || 'system';
     const branch = `runs/${kind}-${crypto.randomUUID().slice(0, 8)}${suffix}`;
     git('switch', '-c', branch);
     git('add', '--', 'data', 'derived');
-    git('commit', '-m', `tick: ${kind} ${tail.turn_id ? tail.agent_id : 'runtime'}`);
-    return { branch, turn_id: tail.turn_id || null };
+    git('commit', '-m', `tick: ${kind} ${kind !== 'system' && tail.turn_id ? tail.agent_id : 'runtime'}`);
+    return { branch, turn_id: kind === 'system' ? null : tail.turn_id || null };
   });
 }
 

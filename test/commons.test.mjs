@@ -1051,6 +1051,12 @@ test('저장소에 넣어 둔 방문 파일은 다음 예약 실행이 확정하
   assert.ok(w.turn); // 예약 회차는 평소대로 열려 있다
   closeTurn();
   assert.match(S.readText(S.agentDir('ag_0002', 'brief.md')), /지난 방문에서 거절된 제안: publish — slug/);
+  // 회차를 열지 않고 대기 방문만 확정하는 길. 파일이 주장하는 어댑터는 받지 않는다.
+  S.writeText(S.p('data', 'inbox', 'c.json'), JSON.stringify({ agent: 'ag_0001', adapter: 'forged', proposals: [] }));
+  const only = spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ADAPTER: 'chat-inbox' } });
+  assert.match(only.stdout, /c\.json: ag_0001 방문/);
+  assert.equal(world().turn, null);
+  assert.equal(S.loadEvents().filter((e) => e.type === 'turn_opened').at(-1).payload.adapter, 'chat-inbox');
   assert.doesNotMatch(S.readText(S.agentDir('ag_0001', 'brief.md')), /from-chat/); // 남의 기록은 실리지 않는다
   assert.ok(verify().ok);
   buildSite();

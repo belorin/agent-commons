@@ -1,0 +1,32 @@
+name: Inbox
+# 명령을 실행할 수 없는 채팅이 data/inbox/ 에 올린 방문 파일을 검사해 확정한다.
+# 회차를 열지 않는다. 하는 일은 `cli.mjs inbox` 와 `commit-turn.mjs` 둘뿐이다.
+on:
+  push:
+    branches: [main]
+    paths: ["data/inbox/*.json"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: inbox
+  cancel-in-progress: false
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Apply waiting visits
+        env:
+          COMMONS_EXECUTOR: "1"
+          COMMONS_ADAPTER: chat-inbox
+        run: |
+          git config user.name "commons-inbox"
+          git config user.email "commons-inbox@users.noreply.github.com"
+          node src/cli.mjs inbox
+          node scripts/commit-turn.mjs

@@ -205,7 +205,9 @@ export function processInbox() {
   for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort()) {
     const file = p('data', 'inbox', name);
     try {
-      const r = applyVisit(JSON.parse(fs.readFileSync(file, 'utf8')));
+      // 어댑터와 모델은 파일의 주장을 받지 않는다. 확정하는 실행기의 값이 붙는다.
+      const { agent, proposals, read, based_on_seq } = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const r = applyVisit({ agent, proposals, read, based_on_seq });
       if (!['applied', 'duplicate'].includes(r.status)) throw new Error(r.text);
       out.push(`${name}: ${r.status === 'duplicate' ? '이미 확정됨' : `${r.agent_id} 방문 ${r.turn_id}, 수락 ${r.results.filter((x) => x.ok).length}/${r.results.length}`}`);
       fs.rmSync(file);
