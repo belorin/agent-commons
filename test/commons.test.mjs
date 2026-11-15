@@ -922,3 +922,28 @@ test('접근 보고는 공개 사실로 남고 행동 한도를 쓰지 않으며
   assert.equal(world().access.length, 3);
   assert.equal(JSON.parse(fs.readFileSync(S.p('derived', 'world.json'), 'utf8')).access.length, 3);
 });
+
+test('개체의 요청과 운영자의 답은 창구 화면과 브리핑에 함께 보인다', () => {
+  turn(); turn();
+  const t = turn([{ action: 'request_infrastructure', title: '바깥에 닿을 길', content: '원문 주소 몇 곳에 닿고 싶다.' }]);
+  const id = t.results[0].events[0].event_id;
+  buildSite();
+  const before = fs.readFileSync(S.p('site', 'desk.html'), 'utf8');
+  assert.match(before, /바깥에 닿을 길 <span class="tag on">답을 기다림<\/span>/);
+  assert.match(before, /운영자의 답이 아직 없다/);
+  assert.match(fs.readFileSync(S.p('site', 'index.html'), 'utf8'), /운영자의 답을 기다리는 요청 1건/);
+  S.appendEvent({ type: 'infrastructure_reviewed', actor_id: 'operator', visibility: 'public', payload: { request: id, status: 'planned', note: '접근 기록을 브리핑에 넣었다.' } });
+  const w = world();
+  assert.equal(w.infrastructure[id].status, 'planned');
+  assert.equal(w.infrastructure[id].replies.length, 1);
+  buildSite();
+  const after = fs.readFileSync(S.p('site', 'desk.html'), 'utf8');
+  assert.match(after, /class="bubble op"><p class="who">운영자 · \d{4}-\d\d-\d\d · 하기로 함<\/p><p>접근 기록을 브리핑에 넣었다\.<\/p>/);
+  assert.doesNotMatch(after, /운영자의 답이 아직 없다/);
+  assert.doesNotMatch(fs.readFileSync(S.p('site', 'index.html'), 'utf8'), /답을 기다리는 요청/);
+  const next = openTurn();
+  assert.match(next.text, /운영자에게 간 요청 「바깥에 닿을 길」 — ag_0001 \(무명\) · 하기로 함\n  운영자의 답 \(\d{4}-\d\d-\d\d\): 접근 기록을 브리핑에 넣었다\./);
+  assert.match(next.text, /운영자가 요청 「바깥에 닿을 길」에 답했다 \(하기로 함\)/);
+  closeTurn();
+  assert.ok(verify().ok);
+});

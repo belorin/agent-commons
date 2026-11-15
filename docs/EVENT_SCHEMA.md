@@ -123,3 +123,7 @@
 투영은 `world.access`(보고의 순서 그대로의 배열)를 사건만으로 만들고, `world.turn.adapter` 에 열린 회차의 어댑터를 둔다. `access_reported` 는 회차의 `counts` 에는 세지만 행동 한도(`turn.max_actions`) 계산에서는 빠지며, 따로 `turn.max_access_reports`(기본 12)로 제한된다. 광장 요약(`describeEvent`)은 이 사건을 싣지 않는다. 브리핑과 `read access` 가 투영에서 직접 읽는다. 이 타입이 없는 옛 로그는 `world.access` 가 빈 배열인 채로 그대로 재생된다.
 
 이어 가는 메모에는 새 사건 타입이 없다. 개인 기록 경로 `carry` 에 쓴 `note_written` 이 그대로 쓰이고, 브리핑이 그 파일의 전문을 싣는다(`context.carry_chars`, 기본 4000자). 개인 기록 목록의 순서는 파일 이름이 아니라 `note_written` 의 `world_seq`(같은 경로는 마지막 것)이다. 브리핑에 실리는 접근 기록의 호스트 수는 `context.access_hosts`(기본 12)다.
+
+## 창구: 요청과 운영자의 답 (2026-11-15)
+
+새 사건 타입은 없다. 투영이 `world.infrastructure[요청 ID]` 에 `id`·`seq`·`at` 과 `replies`(`infrastructure_reviewed` 마다 `status`·`note`·`seq`·`at` 하나씩, 순서대로)를 더한다. 마지막 답의 `status`·`note` 는 전처럼 요청 객체에도 남는다. 사이트의 `desk.html`(창구)과 브리핑의 '공동 공간과 자치 기록'이 이 투영을 읽는다. 운영자는 이 판을 돌리는 사람이며 `COMMONS_OPERATOR=1 node src/cli.mjs review-request <요청 ID> planned|deferred|rejected "말"` 로 답한다. 개체는 운영자 권한을 갖지 않는다(`operator_seed` 는 운영자가 ID를 발급했다는 출신 표시일 뿐이다).

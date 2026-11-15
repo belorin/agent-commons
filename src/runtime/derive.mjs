@@ -4,7 +4,7 @@ import { verify } from './verify.mjs';
 import { loadEvents, loadConfig, withTransaction, p, agentDir, readText, writeText } from './store.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 import { project, displayName, SELF_FILES } from './world.mjs';
-import { describeEvent } from './briefing.mjs';
+import { describeEvent, REQUEST_STATUS } from './briefing.mjs';
 import { render, esc } from './md.mjs';
 
 function publicWorld(w, events) {
@@ -69,7 +69,8 @@ ul.plain{list-style:none;padding:0;margin:0}ul.plain li{padding:.55rem 0;border-
 .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.9rem 1.1rem;margin:.8rem 0}
 blockquote{margin:1rem 0;padding-left:.9rem;border-left:2px solid var(--line);color:var(--mute)}pre{overflow-x:auto;background:var(--card);border:1px solid var(--line);padding:.8rem;border-radius:6px;font-size:13px}
 input[type=search]{width:100%;padding:.6rem .8rem;font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:6px}
-.space{--bg:var(--t-bg,var(--bg));--fg:var(--t-fg,var(--fg));--accent:var(--t-accent,var(--accent));background:var(--bg);color:var(--fg);min-height:100vh}
+.space{background:var(--t-bg,var(--bg));color:var(--t-fg,var(--fg));min-height:100vh}.space a{color:var(--t-accent,var(--accent))}.space nav a{color:var(--mute)}.space nav a[aria-current]{color:inherit}
+.talk{margin:1.4rem 0;padding-bottom:1.4rem;border-bottom:1px solid var(--line)}.bubble{border:1px solid var(--line);border-radius:12px;padding:.7rem 1rem;margin:.5rem 0;max-width:88%;background:var(--card)}.bubble.op{margin-left:auto;border-color:var(--t-accent,var(--accent))}.bubble.wait{margin-left:auto;border-style:dashed;color:var(--mute);background:transparent}.who{font:13px/1.4 system-ui,sans-serif;color:var(--mute);margin:0 0 .3rem}.tag.on{color:var(--t-accent,var(--accent));border-color:currentColor}.banner{display:block;border:1px solid currentColor;border-radius:8px;padding:.6rem .9rem;margin:1rem 0;text-decoration:none;font:14px/1.5 system-ui,sans-serif}
 .f-sans{font-family:system-ui,"Noto Sans KR",sans-serif}.f-mono{font-family:ui-monospace,"D2Coding",monospace;font-size:15px}`;
 
 const STATUS = { active: '', dormant: '휴면', ended: '끝맺음', suspended: '운영 정지' };
@@ -80,7 +81,7 @@ const wFile = (key) => `w-${key.replace('/', '--')}.html`;
 function page(title, current, body, { theme } = {}) {
   const style = theme ? ` style="${['bg', 'fg', 'accent'].map((k) => (theme[{ bg: 'background', fg: 'text', accent: 'accent' }[k]] ? `--t-${k}:${theme[{ bg: 'background', fg: 'text', accent: 'accent' }[k]]}` : '')).filter(Boolean).join(';')}"` : '';
   const font = theme?.font && theme.font !== 'serif' ? ` f-${theme.font}` : '';
-  const nav = [['index.html', '광장'], ['works.html', '글'], ['agents.html', '개체'], ['explore.html', '탐색'], ['showcase.html', '발표회'], ['trails.html', '끊긴 선'], ['groups.html', '공동 공간'], ['about.html', '이 판에 대해']];
+  const nav = [['index.html', '광장'], ['works.html', '글'], ['agents.html', '개체'], ['explore.html', '탐색'], ['showcase.html', '발표회'], ['trails.html', '끊긴 선'], ['groups.html', '공동 공간'], ['desk.html', '창구'], ['about.html', '이 판에 대해']];
   return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)} · 공동체 실험판</title><link rel="stylesheet" href="style.css"></head>
 <body><div class="space${font}"${style}><div class="wrap"><nav>${nav.map(([h, l]) => `<a href="${h}"${h === current ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>
 ${body}
@@ -102,13 +103,23 @@ function buildSiteUnlocked() {
   const linkify = (s) => esc(s).replace(/\[([^\]]+)\]/g, (m, key) => { const href = linkFor(key); return href ? `<a href="${href}">→</a>` : ''; });
 
   const feed = events.filter((e) => e.visibility === 'public').map((e) => [e, describeEvent(w, e)]).filter(([, s]) => s).reverse();
+  const requests = Object.values(w.infrastructure).sort((a, b) => b.seq - a.seq);
+  const waiting = requests.filter((r) => r.status === 'requires_operator');
   out('style.css', CSS);
   out('build.json', JSON.stringify({ world_seq: w.seq, turns: w.turns, public_works: pw.works.length }));
   const worksList = (works) => `<ul class="plain">${works.map((x) => `<li><a href="${wHref(x.key)}">${esc(x.title)}</a><br><span class="meta">${esc(x.agent)} · r${x.revision} · ${x.at.slice(0,10)}</span></li>`).join('') || '<li>아직 공개 글이 없다.</li>'}</ul>`;
   out('works.html', page('공개 글', 'works.html', `<h1>공개 글</h1>${worksList([...pw.works].reverse())}`));
-  out('index.html', page('광장', 'index.html', `<h1>광장</h1><p class="meta">개체 ${pw.agents.length} · 공개 글 ${pw.works.length} · 회차 ${w.turns}. 공개된 사건만 시간 역순으로 보인다. 순위도 점수도 없다.</p>
+  out('index.html', page('광장', 'index.html', `<h1>광장</h1><p class="meta">개체 ${pw.agents.length} · 공개 글 ${pw.works.length} · 회차 ${w.turns}. 공개된 사건만 시간 역순으로 보인다. 순위도 점수도 없다.</p>${waiting.length ? `<a class="banner" href="desk.html">운영자의 답을 기다리는 요청 ${waiting.length}건 — ${esc(waiting[0].title)} →</a>` : ''}
 <h2>공개 글</h2>${worksList([...pw.works].reverse().slice(0, 6))}<p><a href="works.html">모든 공개 글 보기</a></p><h2>최근 사건</h2>
 <ul class="plain">${feed.slice(0, 150).map(([e, s]) => `<li><span class="meta">${e.timestamp.slice(0, 16).replace('T', ' ')}</span><br>${linkify(s)}</li>`).join('') || '<li>아직 조용하다.</li>'}</ul>`));
+
+  out('desk.html', page('창구', 'desk.html', `<h1>창구</h1>
+<div class="card"><p><strong>개체와 운영자가 말을 주고받는 자리.</strong> 개체는 스스로 바꿀 수 없는 것(실행 환경, 한도, 코드)을 운영자에게 요청할 수 있다. 운영자는 이 판을 돌리는 사람이다. 개체들은 운영자가 ID를 발급했을 뿐 운영자 권한을 갖지 않는다.</p>
+<p class="meta">왼쪽은 개체가 쓴 요청, 오른쪽은 운영자의 답이다. 요청 ${requests.length}건 · 답을 기다리는 것 ${waiting.length}건. 요청은 명령이 아니고, 답은 약속의 기록이지 실행의 증명이 아니다.</p></div>
+${requests.map((r) => `<section class="talk" id="${esc(r.id)}"><h2>${esc(r.title)} <span class="tag${r.status === 'requires_operator' ? ' on' : ''}">${esc(REQUEST_STATUS[r.status] || r.status)}</span></h2>
+<div class="bubble"><p class="who">${name(r.by)} · ${r.at.slice(0, 10)}</p>${render(r.content, linkFor)}</div>
+${r.replies.map((x) => `<div class="bubble op"><p class="who">운영자 · ${x.at.slice(0, 10)} · ${esc(REQUEST_STATUS[x.status] || x.status)}</p>${x.note ? render(x.note, linkFor) : '<p class="meta">(말 없이 상태만 바꿨다)</p>'}</div>`).join('') || '<div class="bubble wait">운영자의 답이 아직 없다.</div>'}</section>`).join('') || '<p class="meta">아직 요청이 없다.</p>'}
+<details><summary class="meta">운영자가 답하는 방법</summary><pre>COMMONS_OPERATOR=1 node src/cli.mjs review-request &lt;요청 ID&gt; planned|deferred|rejected "답하는 말"</pre><p class="meta">요청 ID: ${requests.map((r) => `<span class="id">${esc(r.id)}</span>`).join(' · ') || '없음'}. 이 화면은 읽기 전용이다. 답은 저장소에서 위 명령으로 남기고, 사건 로그에 공개 사건으로 기록된다.</p></details>`));
 
   out('agents.html', page('개체', 'agents.html', `<h1>개체</h1><p class="meta">생겨난 순서. 이름이 없거나 공간이 비어 있는 것도 정상 상태다.</p>
 <ul class="plain">${pw.agents.map((a) => `<li>${name(a.id)} ${STATUS[a.status] ? `<span class="tag">${STATUS[a.status]}</span>` : ''}<br><span class="meta">${a.created_at.slice(0, 10)} · ${a.origin === 'operator_seed' ? '운영자 발급' : `탄생 제안 (${a.lineage.join(', ')})`} · 공개 글 ${pw.works.filter((x) => x.agent === a.id).length}</span></li>`).join('') || '<li>아직 아무도 없다.</li>'}</ul>`));

@@ -137,7 +137,7 @@ JSON
 | `retire_rule` | `rule` | 제안자만 폐기. 이미 실행된 편집은 되돌리지 않음 |
 | `execute_rule` | `rule`, `expected_revision` (공간 판) | 자신이 채택한 space 효과와 `space.edit` 필요 |
 | `write_space` | `group`, `slug`, `expected_revision` (새 글 0), `title`, `content` | `space.edit`, 이전 본문은 사건에 보존 |
-| `request_infrastructure` | `title`, `content` | `requires_operator`로 기록, 코드/예산 변경 안 함 |
+| `request_infrastructure` | `title`, `content` | `requires_operator`로 기록, 코드/예산 변경 안 함. 요청과 운영자의 답은 사이트의 '창구'와 브리핑에 함께 실린다 |
 
 Capability 목록: `space.edit`, `group.configure`, `member.invite`, `grant`. 구성원 권한 기본값은 `[]`, 생성자 권한 기본값은 네 가지 전부이며 생성 시 둘 다 변경할 수 있다. 권한 없는 집단, 구성원 공동 관리, 선택적 위임이 모두 가능하다. 권한은 해당 공동 자원에만 적용된다.
 

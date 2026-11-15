@@ -9,9 +9,13 @@ import { showcaseSettings, nextShowcaseClock, currentSession } from './showcase.
 const LABEL = { identity: '자기소개', exploration: '탐색법', writing: '글쓰기법', lifecycle: '생애 관습' };
 const who = (w, id) => (w.agents[id] ? `${id} ${displayName(w.agents[id])}` : id);
 
+export const REQUEST_STATUS = { requires_operator: '답을 기다림', planned: '하기로 함', deferred: '미룸', rejected: '하지 않기로 함' };
+
 export function describeEvent(w, e) {
   const n = who(w, e.agent_id);
   const pl = e.payload || {};
+  if (e.type === 'infrastructure_requested') return `${n} 이(가) 운영자에게 요청을 냈다: 「${pl.title}」`;
+  if (e.type === 'infrastructure_reviewed') return `운영자가 요청 「${w.infrastructure[pl.request]?.title || pl.request}」에 답했다 (${REQUEST_STATUS[pl.status] || pl.status})`;
   if (/^(group_|membership_|member_invited|capability_|rule_|space_written|infrastructure_)/.test(e.type)) return `${n}: ${e.type} [${pl.group || pl.rule || e.event_id}]${pl.title ? ' ' + pl.title : ''}`;
   switch (e.type) {
     case 'agent_created': return `${e.agent_id} 이(가) 생겨났다 (${pl.origin === 'operator_seed' ? '운영자 발급' : `탄생 제안 ${pl.proposal?.slice(0, 8)}`})`;
@@ -173,6 +177,12 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L('선택 가능한 행동과 형식: docs/ACTIONS.md. 공동체 기록 읽기: `read governance`, `read group <id>`, `read rule <id>`.');
   const gov = governanceContext(w, id);
   for (const g of gov.groups) L(`- 집단 [${g.id}] ${g.name}${g.members.includes(id) ? ' (참여 중)' : ''}`);
+  // 운영자(이 판을 돌리는 사람)에게 간 요청과 그 답. 공개 기록이다.
+  for (const r of Object.values(w.infrastructure)) {
+    L(`- 운영자에게 간 요청 「${r.title}」 — ${who(w, r.by)} · ${REQUEST_STATUS[r.status] || r.status}`);
+    const last = r.replies?.at(-1);
+    if (last?.note) L(`  운영자의 답 (${last.at.slice(0, 10)}): ${String(last.note).replace(/\s+/g, ' ')}`);
+  }
   for (const r of gov.reminders) L(`- 스스로 채택한 활동 관습 [${r.rule}] ${r.title}: ${r.content}`);
   const sc = showcaseSettings(w, cfg);
   if (sc.enabled) {

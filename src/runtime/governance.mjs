@@ -163,8 +163,8 @@ export function projectGovernance(w, e) {
       else g.space = { ...p.effect, revision: p.revision, rule: p.rule };
       w.rules[p.rule].execution = 'executed'; break;
     case 'space_written': g.documents[p.slug] = { ...p, by: id }; break;
-    case 'infrastructure_requested': w.infrastructure[e.event_id] = { ...p, by: id }; break;
-    case 'infrastructure_reviewed': if (w.infrastructure[p.request]) Object.assign(w.infrastructure[p.request], { status: p.status, note: p.note }); break;
+    case 'infrastructure_requested': w.infrastructure[e.event_id] = { ...p, id: e.event_id, by: id, seq: e.world_seq, at: e.timestamp, replies: [] }; break;
+    case 'infrastructure_reviewed': if (w.infrastructure[p.request]) { const r = w.infrastructure[p.request]; Object.assign(r, { status: p.status, note: p.note }); r.replies.push({ status: p.status, note: p.note || null, seq: e.world_seq, at: e.timestamp }); } break;
   }
 }
 export function governanceContext(w, id) {
