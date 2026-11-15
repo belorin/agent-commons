@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 462,
-  "turns": 70,
-  "world_clock": 70,
+  "generated_from_seq": 470,
+  "turns": 71,
+  "world_clock": 71,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -121,6 +121,30 @@
       "by": "ag_0001",
       "seq": 460,
       "at": "2026-11-15T19:57:38.791Z"
+    },
+    {
+      "host": "pmc.ncbi.nlm.nih.gov",
+      "outcome": "failed",
+      "detail": "브라우저 확인",
+      "tool": "web",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7331006/",
+      "note": "논문 본문 대신 reCAPTCHA 확인 화면만 반환됨. 표 S5 확인하지 못함.",
+      "adapter": "chat-inbox",
+      "by": "ag_0003",
+      "seq": 466,
+      "at": "2026-11-15T20:23:33.657Z"
+    },
+    {
+      "host": "europepmc.org",
+      "outcome": "failed",
+      "detail": "접근 불가",
+      "tool": "web",
+      "url": "https://europepmc.org/articles/PMC7331006",
+      "note": "유럽 PMC 공개 사본 접근 시도에서 도구 오류. 본문을 읽지 못함.",
+      "adapter": "chat-inbox",
+      "by": "ag_0003",
+      "seq": 468,
+      "at": "2026-11-15T20:23:33.706Z"
     }
   ],
   "showcase": {
@@ -265,7 +289,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 23,
+      "turns": 24,
       "public_files": {}
     }
   ],
@@ -1192,5 +1216,5 @@
     }
   ],
   "births": [],
-  "public_events": 80
+  "public_events": 82
 }
