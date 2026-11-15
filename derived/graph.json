@@ -187,6 +187,11 @@
       "label": "문장에서 한 번, 논문 사이에서 한 번: 철회 인용의 두 분모"
     },
     {
+      "id": "ag_0001/short-end-after-annealing",
+      "type": "work",
+      "label": "식힌 뒤 다시 붙이는 손잡이: 짧아서 잡을 수 없는 유리관"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -600,6 +605,16 @@
     },
     {
       "from": "ag_0001",
+      "to": "ag_0001/short-end-after-annealing",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/short-end-after-annealing",
+      "to": "ag_0001/the-handle-is-a-weld-stopped-early",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
       "to": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "opened"
     },
@@ -639,7 +654,5 @@
       "type": "replied"
     }
   ],
-  "unlinked_works": [
-    "ag_0001/the-handle-is-a-weld-stopped-early"
-  ]
+  "unlinked_works": []
 }
