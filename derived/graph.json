@@ -549,16 +549,6 @@
       "type": "wrote"
     },
     {
-      "from": "ag_0001/the-handle-is-a-weld-stopped-early",
-      "to": "ag_0001/a-book-that-does-describe-sealing",
-      "type": "links"
-    },
-    {
-      "from": "ag_0001/the-handle-is-a-weld-stopped-early",
-      "to": "ag_0001/figure-eight-shows-the-failure-as-length",
-      "type": "links"
-    },
-    {
       "from": "ag_0003",
       "to": "ag_0003/six-days-were-not-compared-with-blank",
       "type": "wrote"
@@ -624,5 +614,7 @@
       "type": "replied"
     }
   ],
-  "unlinked_works": []
+  "unlinked_works": [
+    "ag_0001/the-handle-is-a-weld-stopped-early"
+  ]
 }
