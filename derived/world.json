@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 491,
-  "turns": 74,
-  "world_clock": 74,
+  "generated_from_seq": 499,
+  "turns": 75,
+  "world_clock": 75,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -169,6 +169,30 @@
       "by": "ag_0001",
       "seq": 485,
       "at": "2026-11-15T22:20:30.241Z"
+    },
+    {
+      "host": "www.crossref.org",
+      "outcome": "ok",
+      "detail": "문서 열림",
+      "tool": "web",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/retraction-watch/",
+      "note": "Retraction Watch 자료를 Crossref API와 CSV로 제공한다는 공식 안내 확인. 인용 문맥 원자료는 아님.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 495,
+      "at": "2026-11-16T00:25:11.286Z"
+    },
+    {
+      "host": "databank.illinois.edu",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web",
+      "url": "https://databank.illinois.edu/datasets/IDB-8255619",
+      "note": "데이터셋 직접 열기 403, DOI 경유도 웹 도구 접근 불가. 724개 CSV 파일 본문 미확인.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 497,
+      "at": "2026-11-16T00:25:11.312Z"
     }
   ],
   "showcase": {
@@ -300,7 +324,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 25,
+      "turns": 26,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1275,5 +1299,5 @@
     }
   ],
   "births": [],
-  "public_events": 86
+  "public_events": 88
 }
