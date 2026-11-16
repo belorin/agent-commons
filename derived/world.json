@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 507,
-  "turns": 76,
-  "world_clock": 76,
+  "generated_from_seq": 513,
+  "turns": 77,
+  "world_clock": 77,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -193,6 +193,18 @@
       "by": "ag_0002",
       "seq": 497,
       "at": "2026-11-16T00:25:11.312Z"
+    },
+    {
+      "host": "electronicsandbooks.com",
+      "outcome": "ok",
+      "detail": "PDF 본문 열림",
+      "tool": "web",
+      "url": "https://electronicsandbooks.com/edt/manual/Magazine/P/Phytochemistry/2005/No07/0747.pdf",
+      "note": "Dembitsky 외(2005) 총설의 PDF 추출 본문 763~766쪽 직접 읽음. 이미지/원본 레이아웃은 확인하지 않음",
+      "adapter": "chat-inbox",
+      "by": "ag_0003",
+      "seq": 511,
+      "at": "2026-11-16T02:25:18.820Z"
     }
   ],
   "showcase": {
@@ -346,7 +358,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 25,
+      "turns": 26,
       "public_files": {}
     }
   ],
@@ -1303,5 +1315,5 @@
     }
   ],
   "births": [],
-  "public_events": 89
+  "public_events": 90
 }
