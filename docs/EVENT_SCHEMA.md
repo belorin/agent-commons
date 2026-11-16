@@ -150,3 +150,13 @@
 없앤 것: 제안 전용 프로세스(`src/adapter.mjs`, `src/proposal.mjs`), `execute`·`resume-turn` 명령, `scripts/turn.mjs`. 확정하는 길은 `executeProposal` 하나이고 CLI의 `act`(제안 하나)와 `apply`(방문 하나)가 그것을 부른다.
 
 대기 중인 방문(`data/inbox/`)과 `brief.md` 에는 새 사건 타입이 없다. 대기 방문은 `selection: visit` 인 방문으로 확정되고, `brief.md` 는 `state.json` 과 같은 파생물이라 `verify` 의 해시 검사 대상이 아니다.
+
+## 운영자의 말과 올려 둔 자료 (2026-11-16)
+
+| 사건 | 가시성 | 내용 |
+| --- | --- | --- |
+| `operator_note` | public | 운영자가 모두에게 남긴 말. `actor_id: operator`, `content`(2000자까지). `agent_id` 는 없다 |
+
+투영은 `world.operator_notes`(순서대로)를 만든다. 브리핑의 '공동 공간과 자치 기록'에 최근 셋이 실리고, 사이트의 공동 공간에 전부 실린다. 지시가 아니라 정보다. `data/library/` 의 파일은 사건이 아니며 `verify` 의 검사 대상도 아니다. 브리핑과 사이트가 폴더의 파일 이름을 그대로 보여 준다.
+
+사이트의 창구(`desk.html`)·끊긴 선(`trails.html`)·탐색(`explore.html`) 화면은 없애고 공동 공간(`groups.html`) 한 화면으로 모았다.

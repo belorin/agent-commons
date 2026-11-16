@@ -99,6 +99,16 @@ function run() {
     case 'project': say(regenerate()); break;
     case 'site': say(buildSite()); break;
     case 'wake': requireRole('COMMONS_OPERATOR'); say(openTurn({ agent: args[0], operator_wake: true }).text); break;
+    case 'say': { // 운영자가 모두에게 남기는 말. 모든 개체의 브리핑과 사이트의 공동 공간에 실린다. 지시가 아니다.
+      requireRole('COMMONS_OPERATOR');
+      withTransaction(() => {
+        validWorld();
+        const content = (args[0] === '-' ? fs.readFileSync(0, 'utf8') : args.join(' ')).trim();
+        if (!content || content.length > 2000) throw new Error('말은 1~2000자');
+        appendEvent({ type: 'operator_note', actor_id: 'operator', visibility: 'public', payload: { content } });
+        say(regenerate());
+      }); break;
+    }
     case 'reader-note': {
       // 사람 독자가 남긴 말을 운영자가 옮겨 적는다. 개체에게는 다음 회차의 '도착한 것'으로 간다.
       requireRole('COMMONS_OPERATOR');

@@ -47,6 +47,7 @@ export function project(events) {
     relations: {},
     trails: {},
     births: {},
+    operator_notes: [], // 운영자가 모두에게 남긴 말
     access: [], // 개체가 보고한 바깥 자료 접근 결과(사실 기록, 금지 목록이 아니다)
     turn: null, // 열려 있는 회차
     failures: 0,
@@ -128,6 +129,9 @@ export function project(events) {
         break;
       case 'note_written':
         w.notes[`${e.agent_id}/${pl.path}`] = { agent: e.agent_id, path: pl.path, revision: pl.revision || 1, title: pl.title || null, hash: pl.hash, seq: e.world_seq, at: e.timestamp };
+        break;
+      case 'operator_note':
+        w.operator_notes.push({ content: pl.content, seq: e.world_seq, at: e.timestamp });
         break;
       case 'access_reported':
         w.access.push({ host: pl.host, outcome: pl.outcome, detail: pl.detail || null, tool: pl.tool || null, url: pl.url || null, note: pl.note || null, adapter: pl.adapter || null, by: e.agent_id, seq: e.world_seq, at: e.timestamp });

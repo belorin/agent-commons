@@ -910,13 +910,13 @@ test('접근 보고는 공개 사실로 남고 행동 한도를 쓰지 않으며
   assert.equal(JSON.parse(fs.readFileSync(S.p('derived', 'world.json'), 'utf8')).access.length, 3);
 });
 
-test('개체의 요청과 운영자의 답은 창구 화면과 브리핑에 함께 보인다', () => {
+test('개체의 요청과 운영자의 답은 공동 공간 화면과 브리핑에 함께 보인다', () => {
   turn(); turn();
   const t = turn([{ action: 'request_infrastructure', title: '바깥에 닿을 길', content: '원문 주소 몇 곳에 닿고 싶다.' }]);
   const id = t.results[0].events[0].event_id;
   buildSite();
-  const before = fs.readFileSync(S.p('site', 'desk.html'), 'utf8');
-  assert.match(before, /바깥에 닿을 길 <span class="tag on">답을 기다림<\/span>/);
+  const before = fs.readFileSync(S.p('site', 'groups.html'), 'utf8');
+  assert.match(before, /<h3>바깥에 닿을 길 <span class="tag on">답을 기다림<\/span><\/h3>/);
   assert.match(before, /운영자의 답이 아직 없다/);
   assert.match(fs.readFileSync(S.p('site', 'index.html'), 'utf8'), /운영자의 답을 기다리는 요청 1건/);
   S.appendEvent({ type: 'infrastructure_reviewed', actor_id: 'operator', visibility: 'public', payload: { request: id, status: 'planned', note: '접근 기록을 브리핑에 넣었다.' } });
@@ -924,7 +924,7 @@ test('개체의 요청과 운영자의 답은 창구 화면과 브리핑에 함�
   assert.equal(w.infrastructure[id].status, 'planned');
   assert.equal(w.infrastructure[id].replies.length, 1);
   buildSite();
-  const after = fs.readFileSync(S.p('site', 'desk.html'), 'utf8');
+  const after = fs.readFileSync(S.p('site', 'groups.html'), 'utf8');
   assert.match(after, /class="bubble op"><p class="who">운영자 · \d{4}-\d\d-\d\d · 하기로 함<\/p><p>접근 기록을 브리핑에 넣었다\.<\/p>/);
   assert.doesNotMatch(after, /운영자의 답이 아직 없다/);
   assert.doesNotMatch(fs.readFileSync(S.p('site', 'index.html'), 'utf8'), /답을 기다리는 요청/);
@@ -976,7 +976,7 @@ test('사람 독자의 말은 운영자가 옮겨 적고, 개체의 답은 언�
   assert.match(work, /사람 독자 · \d{4}-\d\d-\d\d<\/p><p>둘째 문단의 근거가 궁금하다\.<\/p>/);
   assert.match(work, /근거는 자료 2번이다/);
   assert.match(work, /href="https:\/\/example\.org\/issues\/new\?labels=reader-note&amp;title=/);
-  const desk = fs.readFileSync(S.p('site', 'desk.html'), 'utf8');
+  const desk = fs.readFileSync(S.p('site', 'groups.html'), 'utf8');
   assert.match(desk, /사람 독자 → <a href="a-ag_0001\.html">/);
   assert.doesNotMatch(desk, /개체의 답이 아직 없다/);
   assert.equal(world().agents.ag_0001.adapters.manual, 3); // 회차를 돌린 실행 환경이 개체에 남는다
@@ -1061,4 +1061,28 @@ test('저장소에 넣어 둔 방문 파일은 다음 예약 실행이 확정하
   assert.ok(verify().ok);
   buildSite();
   assert.ok(!allFiles(S.p('site')).some((f) => /brief/.test(f) || fs.readFileSync(f, 'utf8').includes('아직 열리지 않은 방문')));
+});
+
+test('운영자의 말과 올려 둔 자료는 모든 개체의 브리핑과 공동 공간 화면에 실린다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const cli = (args, env) => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, ...args], { encoding: 'utf8', env: { ...process.env, COMMONS_OPERATOR: '', ...env } });
+  turn(); turn();
+  assert.equal(cli(['say', '필요한 게 있으면 말해']).status, 1); // 운영자만
+  assert.equal(S.loadEvents().filter((e) => e.type === 'operator_note').length, 0);
+  assert.equal(cli(['say', '필요한 게 있으면 말해'], { COMMONS_OPERATOR: '1' }).status, 0);
+  S.writeText(S.p('data', 'library', 'reid-2013', 'table-s5.csv'), 'a,b\n1,2\n');
+  for (const id of ['ag_0001', 'ag_0002']) {
+    const t = openTurn();
+    assert.equal(t.agent_id, id);
+    assert.match(t.text, /- 운영자의 말 \(\d{4}-\d\d-\d\d\): 필요한 게 있으면 말해/);
+    assert.match(t.text, /운영자가 올려 둔 자료 \(저장소의 `data\/library\/`\): reid-2013\/table-s5\.csv/);
+    closeTurn();
+  }
+  assert.ok(verify().ok);
+  buildSite();
+  const html = fs.readFileSync(S.p('site', 'groups.html'), 'utf8');
+  assert.match(html, /<h2 id="operator">운영자의 말<\/h2>\s*<div class="bubble op"><p class="who">운영자 · [^<]+<\/p><p>필요한 게 있으면 말해<\/p>/);
+  assert.match(html, /reid-2013\/table-s5\.csv/);
+  for (const gone of ['desk.html', 'trails.html', 'explore.html']) assert.ok(!fs.existsSync(S.p('site', gone)));
+  assert.equal((fs.readFileSync(S.p('site', 'index.html'), 'utf8').match(/<nav>.*?<\/nav>/s)[0].match(/<a /g) || []).length, 6);
 });

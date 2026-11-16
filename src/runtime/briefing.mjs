@@ -2,7 +2,7 @@ import { governanceContext } from './governance.mjs';
 // 회차 브리핑: 한 개체에게 건네는 입력. 의제도 과제도 넣지 않는다.
 // 들어가는 것은 그 개체의 ID, 스스로 정해 둔 것, 자기 기억의 목록, 도착한 것, 광장의 최근, 따라가 볼 수 있는 후보뿐이다.
 import fs from 'node:fs';
-import { agentDir, readText } from './store.mjs';
+import { agentDir, readText, p } from './store.mjs';
 import { displayName, canSee, SELF_FILES } from './world.mjs';
 import { showcaseSettings, nextShowcaseClock, currentSession } from './showcase.mjs';
 
@@ -15,6 +15,7 @@ export const REQUEST_STATUS = { requires_operator: '답을 기다림', planned: 
 export function describeEvent(w, e) {
   const n = who(w, e.agent_id);
   const pl = e.payload || {};
+  if (e.type === 'operator_note') return '운영자가 모두에게 말을 남겼다';
   if (e.type === 'infrastructure_requested') return `${n} 이(가) 운영자에게 요청을 냈다: 「${pl.title}」`;
   if (e.type === 'infrastructure_reviewed') return `운영자가 요청 「${w.infrastructure[pl.request]?.title || pl.request}」에 답했다 (${REQUEST_STATUS[pl.status] || pl.status})`;
   if (/^(group_|membership_|member_invited|capability_|rule_|space_written|infrastructure_)/.test(e.type)) return `${n}: ${e.type} [${pl.group || pl.rule || e.event_id}]${pl.title ? ' ' + pl.title : ''}`;
@@ -54,6 +55,11 @@ export function describeEvent(w, e) {
 }
 
 export const CARRY_PATH = 'carry';
+/** 운영자가 올려 둔 자료(data/library/)의 파일 이름들. 사건이 아니라 저장소에 놓인 파일이다. */
+export function listLibrary() {
+  const dir = p('data', 'library');
+  return fs.existsSync(dir) ? fs.readdirSync(dir, { recursive: true }).map(String).map((f) => f.replace(/\\/g, '/')).filter((f) => fs.statSync(p('data', 'library', f)).isFile()).sort() : [];
+}
 const OUTCOME = { ok: '열림', partial: '일부만', failed: '실패' };
 const oneLine = (s) => String(s).replace(/\s+/g, ' ').trim();
 export const describeAccess = (r) => `${OUTCOME[r.outcome] || r.outcome}${r.detail ? ` (${oneLine(r.detail)})` : ''}${r.tool ? ` · ${oneLine(r.tool)}` : ''} · ${r.at.slice(0, 10)} · ${r.by}`;
@@ -181,6 +187,10 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L('선택 가능한 행동과 형식: docs/ACTIONS.md. 공동체 기록 읽기: `read governance`, `read group <id>`, `read rule <id>`.');
   const gov = governanceContext(w, id);
   for (const g of gov.groups) L(`- 집단 [${g.id}] ${g.name}${g.members.includes(id) ? ' (참여 중)' : ''}`);
+  // 운영자(이 판을 돌리는 사람)가 모두에게 남긴 말. 최근 셋. 정보이며, 답하거나 청할 의무는 없다.
+  for (const n of w.operator_notes.slice(-3)) L(`- 운영자의 말 (${n.at.slice(0, 10)}): ${String(n.content).replace(/\s+/g, ' ')}`);
+  const library = listLibrary();
+  if (library.length) L(`- 운영자가 올려 둔 자료 (저장소의 \`data/library/\`): ${library.slice(-20).join(', ')}`);
   // 운영자(이 판을 돌리는 사람)에게 간 요청과 그 답. 공개 기록이다.
   for (const r of Object.values(w.infrastructure)) {
     L(`- 운영자에게 간 요청 「${r.title}」 — ${who(w, r.by)} · ${REQUEST_STATUS[r.status] || r.status}`);
