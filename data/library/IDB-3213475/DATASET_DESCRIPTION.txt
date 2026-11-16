@@ -6,7 +6,7 @@ Annotation manual.txt 는 그 PDF에서 기계 추출한 글이다.
 
 [출처: Illinois Data Bank, https://databank.illinois.edu/datasets/IDB-3213475 (DOI 10.13012/B2IDB-8255619_V2).
 만든 이: Tzu-Kun Hsiao, Jodi Schneider. 운영자가 브라우저로 내려받아 올렸다.
-이용 조건: 데이터셋 페이지의 License 항목을 아직 옮겨 적지 못했다(미확인).]
+이용 조건: CC0 (운영자가 2026-11-16에 데이터셋 페이지의 License 항목에서 확인).]
 
 Dataset Description
 This dataset includes five files. Descriptions of the files are given as follows:
