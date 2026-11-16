@@ -1,0 +1,615 @@
+[같은 폴더의 "Annotation manual.pdf"(8쪽)에서 pdftotext -layout 으로 기계 추출한 글이다.
+원본은 PDF이며, 추출 과정에서 표·색 강조·줄 배치가 달라졌을 수 있다.]
+
+Annotation manual: Procedures for
+annotating citation contexts that knowingly
+cite retracted papers
+06/06/2021, Tzu-Kun Hsiao & Jodi Schneider
+v1.20
+
+
+This annotation manual describes our procedures for annotating citation contexts that knowingly
+cite retracted papers. The goal of this annotation is to categorize the main purpose that author(s)
+of a citing work have in citing a work that they know is retracted. We call this “knowing citation”
+or “knowingly citing retracted papers”.
+
+Definitions
+
+Definitions of terms
+   Citation context: a sentence or a cell in a table containing the citation marker. Examples of
+   citation markers—48, [7], Kim et al. (2012b)—are shown in red in the examples below.
+   Example (1): The COOPERATE study48 even showed that dual therapy with trandolapril and
+   losartan reduced the risk of the primary endpoint (time to doubling of serum creatinine level
+   or end stage renal disease) by 60% better than monotherapy, thereby becoming one of the most
+   widely quoted studies by the Lancet.
+
+   Example (2): Briefly, the first evidence that XMRV might be a disease-causing agent was
+   reported in 2006 when XMRV genome sequences were detected in a cohort of American men
+   with localized prostate cancer undergoing radical prostatectomy [7].
+
+   Example (3): The variability and low yield we report here is likely due to a separate issue from
+   that reported by Kim et al. (2012b), who retracted their Cell article in 2012 after observing
+   that standard TRIzol extraction resulted in apparently poor recovery of low-GC-content
+   miRNAs from low-abundance samples. However, clarity on this point has yet to be achieved.
+
+
+Definitions of the categories of citation purposes
+  [1] Related_work
+       Description: The retracted paper was cited to show what has been done or found in the
+       past or was cited for one of the following reasons: (1) The Retracted paper was once a
+       landmark in the field; (2) the retracted paper was the origin/pioneer of something (e.g.,
+       "X first identified/describe Y", "X was identified as a novel ....", "X was initially proposed...",
+
+
+                                                   1
+or "X was originally..."); (3) the retracted paper led to an important event in the field, such
+as Wakefield's paper's influence on autism-vaccine link and the anti-vaccine movement.
+Examples of retracted papers being cited to show what has been done or found in the
+past:
+Example (1) from PMCID-4759246: Acupuncture is a traditional form of Asian medicine;
+the practice involves needling the invisible lines, called meridians, on the skin’s surface
+that have acupuncture points within and run longitudinally up and down the human body.
+However, modern anatomy does not well support the existence of meridians and
+acupuncture (Litscher, 2014). On the other hand, some researchers have asserted that
+acupuncture point stimulation caused human somatosensory cortex responses being
+detected in an fMRI. This phenomenon has been regarded as indirect evidence of the
+specificity of acupuncture points, although the evidences are debatable ([Retraction PMID:
+9482945]).
+
+Example (2) from PMCID-1779566: The RNA interference (RNAi) machinery has also been
+found to be essential for the establishment and maintenance of heterochromatin domains.
+Loss of or mutations in components of RNAi machinery in S. pombe, Drosophila and mouse
+result in abnormal localization of HP1 [53-55]. In one report, production of small
+interfering (si)RNA is not affected in the absence of HP1 [Retraction PMID: 12869699],
+(since retracted) suggesting indicating that HP1 is not involved in the initiation of RNAi
+but rather functions downstream of the RNAi pathway.
+
+Example (3) from PMCID-4226608: False positives are not rare events in PCR-based tests.
+Although precautious steps were proposed to avoid false positives soon after the
+development of PCR [13], imperceptible false positives may have occurred. It was reported
+that novel hemagglutinin-esterase gene of human torovirus had been cloned [Retraction
+PMID: 10518710], but it was a result of cross contamination by another virus occurred at
+the inception of the process [Rnotice:11682139].
+
+Example (4) from PMCID-4432799: One of the first biomarkers proposed was serum IGF-I.
+Despite the retraction of one study suggesting that elevated pre-treatment free IGF-I levels
+were associated with NSCLC patient response to figitumumab ([Retraction PMID:
+21102589]), additional evidence supporting these findings has been published.
+
+Example (5) from PMCID-5690771: As the main type of ovarian cancer, ovarian epithelial
+carcinoma accounts for 85% to 90% of all ovarian cancers. Moreover, the majority (65%–
+75%) of women with ovarian cancer are diagnosed with advanced stage disease (III and IV),
+and only about 15% to 20% of these women are free of disease recurrence at 10 years
+[Retraction PMID: 25544369].
+
+Examples of retracted papers being cited for the three particular reasons addressed
+above:
+Example (1) from PMCID- 3556933: The COOPERATE study [Retraction PMID: 12531578]
+even showed that dual therapy with trandolapril and losartan reduced the risk of the
+primary endpoint (time to doubling of serum creatinine level or end stage renal disease) by
+60% better than monotherapy, thereby becoming one of the most widely quoted studies by
+
+
+
+
+                                          2
+    the Lancet. After such seemingly robust evidence many physicians accepted that reduction
+    of albuminuria or proteinuria was synonymous with nephroprotection.
+
+    Example (2) from PMCID-3979645: Briefly, the first evidence that XMRV might be a
+    disease-causing agent was reported in 2006 when XMRV genome sequences were detected
+    in a cohort of American men with localized prostate cancer undergoing radical
+    prostatectomy [Retraction PMID: 16609730].
+
+    Example (3) from PMCID-6339919: In 1999, the anti-vaxxer movement, an organized
+    body of people who refuse to vaccinate and blaming vaccines for health problems (11, 12),
+    got boosted when the journal Lancet published a paper claiming a correlation between the
+    measles vaccine and autism ([Retraction PMID:9500320]).
+
+[2], [3], and [4] comparison
+Description: Authors of the citing paper compared “their” results or methods with those of
+the retracted paper. According to the tone, this category is further divided into comparison (-),
+comparison (+), and comparison (±). Definitions of each category are as follows:
+[2] comparison (-)
+    Description: Authors of the citing paper compared “their” results or methods with those
+    of the retracted paper, and reported inconsistency, contradiction, or discrepancy. Cue
+    words and phrases indicate inconsistency, contradiction, or discrepancy: apart from,
+    contradicting, different from, difference, in contrast to, not... as previously suggested,
+    not… as previously reported, not fall in line with, and not... used for the previous study.
+    Example from PMCID-1872030: Overall, our results provide no evidence for a beneficial
+    effect of multivitamin and multimineral supplementation on cognitive function in the
+    majority of men and women 65 years and over living in the community. This result is
+    consistent with all previous studies in non-selected elderly populations [2-10] apart from
+    the retracted Canadian study [Retraction PMID:11527656].
+
+[3] comparison (+)
+    Description: Authors of the citing paper compared “their” results or methods with those
+    of the retracted paper, and reported consistency. Cue words and phrases indicate
+    consistency: as was previously…, consistent with, confirm, correspond with, similar, and
+    similar to.
+    Example from PMCID-4106199: Overall our findings were robust to sensitivity, subgroup,
+    meta-regression, and trial sequential analyses (tables 3 and 4, fig 4, fig 6, and online
+    supplement). For the comparison of albumin with control fluids, improved precision (95%
+    confidence interval of 0.85 to 1.00; P=0.06) was observed after exclusion of studies at high
+    risk of bias using a less appropriate fixed effects model that does not account for clinical
+    heterogeneity. However, a definite signal of harm with albumin was not observed,
+    consistent with large multicentre studies [Retraction PMID: 15209896].
+
+
+
+
+                                              3
+[4] comparison (±)
+    Description: Authors of the citing paper compared “their” results or methods with the
+    retracted paper, but the consistency between the compared results was unclear. In
+    specific, if the citation purpose is comparison and there is no cue of comparison (-) or
+    comparison (+), the purpose is comparison (±).
+    Example from PMCID-3897388: Many secreted proteins have N-terminal leader sequences,
+    which are cleaved during export. We have shown through silver staining and Western blot
+    analyses of Xoo supernatants that the size of Ax21 secreted from PX099 corresponds to
+    the size of the mature, processed protein. MS/MS analysis of the excised band reveals that
+    peptides corresponding to Ax21 lack the N-terminal region. These results indicate that the
+    N-terminal region of Ax21 is cleaved before or during secretion ([Retraction PMID:
+    19892983]).
+
+[5] correction
+    Description: The retracted paper was cited to make a correction. Note that this does not
+    have to be in a correction notice.
+    Example (1) from PMCID-3236331: In our previous publication [1], Figure 4 involved the
+    analysis of chemotherapy-response signatures (as carried out independently by author AP
+    and described in a 2006 Nature Medicine article [Retraction PMID: 17057710]). It has
+    recently been determined that the chemotherapy-response signatures in [Retraction PMID:
+    17057710] are not reproducible, causing retraction of that article. As such, the results
+    presented in Figure 4 of our original paper [1] are no longer valid.
+
+    Example (2) from PMCID-3555993: This construct therefore yields high quality NMR
+    spectra and the structural analysis presented herein corrects a previous report [Retraction
+    PMID: 16527309] that had been conducted on a longer construct (see Supplementary
+    Information).
+
+[6] republication_of_retraction
+    Description: In the republication of the retracted paper, the authors cited the retracted
+    paper to announce the republication.
+    Example from PMCID-3605063: This article is a revised version of a paper of the same title
+    [Retraction PMID: 22241970] that was previously published in PLOS Computational
+    Biology and was subsequently retracted when a computational error was discovered.
+
+[7] example_of_problematic_sci
+    Description: The retracted paper was cited to provide an example of problematic science.
+    The retracted paper was cited for one of the following reasons:
+    (1) as an example of problematic research (e.g., irreproducible research, unreliable
+        research, research involving scientific misconduct, a flawed study, etc.).
+    (2) as an example where peer review failed, causing problematic science to be published.
+
+
+                                             4
+    (3) as an example showing a problem in scientific research or scholarly communication.
+    (4) as an example of the societal impact of problematic research.
+    Example (1) from PMCID-2801172: There are also cases of data manipulation/fraud in
+    NIH-supported, peer-reviewed research—more than 30 cases documented in the past 3
+    years according to the U.S. Public Health Service’s Office of Research Integrity (2009). One
+    example is the study of Arnold et al. [Retraction PMID: 8633243] in which the authors
+    reported huge synergistic effects of endocrine disruptors in the yeast estrogen assay in
+    vitro. McLachlan [Rnotice:9254413] rescinded that paper because neither his laboratory
+    nor others could replicate the findings. It was later determined that there was scientific
+    misconduct and the original data were fabricated (NIH 2001).
+
+    Example (2) from PMCID-1550672: A recent JMIR article and corresponding editorial
+    discuss an error in a review by a Cochrane Collaboration Group [Retraction PMID:
+    15495094]. The articles accurately demonstrate that an error occurred, with the
+    traditional approach to peer review failing.
+
+    Example (3) from PMCID-1994041: Academic-industrial conflicts also arise when the
+    industrial partner attempts to dictate the contents of, or even suppress, all or portions of a
+    scientific paper (Triggle 2005a). The Journal of Occupational and Environmental Medicine
+    has announced that it will retract a paper that it published in 1997 that claimed no
+    association between cancer and hexavalent chromium ([Retraction PMID: 9113601]). This
+    conclusion contradicted a previous paper by the same authors and in what the Wall Street
+    Journal described as “a black eye for scientific publishing” it appears that the 1997 paper
+    was “actually conceived, drafted and edited by consultants for the PG & E corporation” that
+    was at the time involved in litigation over this very issue (Waldman 2005, 2006).
+
+    Example (4) from PMCID-5793988: Particularly in the medical literature, there is the
+    danger that patients are put at risk by what is concluded in articles that later have to be
+    retracted. The Wakefield case is probably the most famous example. Wakefield and co-
+    workers claimed to have found an association between measles vaccine and autism
+    [Retraction PMID: 9500320] but their article was retracted because of fraud 12 years later
+    [Rnotice:20137807].
+
+[8] exclusion_rationale
+    Description: The retracted paper was cited to explain why it was excluded from
+    use/consideration. Most often found in the context of research synthesis (e.g. review
+    articles and meta-analyses which provide a formal exclusion rationale for papers that are
+    not included.) Can also be found in the literature review section of a standard research
+    article.
+    Example from PMCID-3320713: The meta-analysis presented here provides a valid and up
+    to date summary of the relevant literature, including a recently published randomised
+    controlled trial of 339 patients with a confirmed diagnosis of uncomplicated appendicitis.
+    It excludes the study that has been retracted subsequent to publication [Retraction PMID:
+    19277796], as well as another for which it was not clear if patients were randomised.
+
+
+
+
+                                              5
+[9] notify_retraction_included
+    Description: Notifies readers that one or more retracted papers were included in a
+    different, previous published review article, guideline, or paper.
+    Example from PMCID-3320713: Systematic reviews and meta-analyses of the trials,
+    including a Cochrane review comparing antibiotic treatment and appendicectomy,
+    published in recent years summarised the evidence as either in favour of antibiotic
+    treatment or inconclusive. This could possibly result from inclusion of trials with poor
+    methods or retracted since publication [Retraction PMID: 19277796], or from simplifying
+    the evidence as a summary of both randomised and non-randomised studies.
+
+[10] reproduce
+    Description: A citation to the retracted paper was made because the citing paper tried to
+    reproduce/repeat the finding or experiment mentioned in the retracted paper. This
+    citation purpose can be identified through cues (e.g., reproduce, replicate, or repeat) or
+    through sentences indicating that the citing paper is designed to determine whether or
+    not the cited retracted paper is reproducible. Note that there may be citation(s) that can
+    be either annotated as reproduce or use (please see [15] below for the definition of use).
+    In a case like this, if using something from the retracted paper is part of the reproducing
+    process, please annotate the citation purpose as reproduce.
+    Example (1) from PMCID-3634790: In a further effort to obtain an intelligence priming
+    effect, we attempted to replicate Gordijn and Stapel's study. Their article [Retraction PMID:
+    17393877] was retracted after the completion of Experiment 7 and hence their data can
+    be given no evidential weight. Nevertheless, the hypothesis they put forward is a
+    reasonable one and thus we report Experiment 7 in relation to that hypothesis.
+
+    Example (2) from PMCID-3634790: The experiment had a 2×2 design with intelligence of
+    the target (professor vs. hooligan) crossed with social identity (i.e., in-group vs. out-group).
+    The procedure closely followed that of Gordijn and Stapel's Experiment 2 [Retraction PMID:
+    17393877]. A slight modification was made to the intelligence manipulation: the
+    comparison target was either described as a professor or a soccer hooligan instead of being
+    described as a highly intelligent or unintelligent person.
+
+    Explanation of example (2): Example (2) appeared in the next paragraph of example (1).
+    The authors of the citing paper used the Gordijn and Stapel's experiment procedure.
+    However, the citation purpose of example (2) is reproduce. This is because using the
+    experiment procedure is part of the process of reproducing the study.
+[11] subject_of_study
+    Description: The cited retracted paper is the object of study of a case study about
+    retraction, or is the data used in a study about retraction, scientific misconduct, or peer
+    review. Note that in these studies, retracted papers can be cited in the Results section.
+
+
+
+                                               6
+       Example (1) from PMCID-3847052: Our objective was to test whether such simple tools
+       applied to a manuscript known to be fraudulent [Retraction PMID: 19923501] would have
+       helped to detect some warning signals of poor quality.
+
+       Example (2) from PMCID-3480361: As of 7 Jun 2012, the 1,837 items marked with
+       “retracted article” in the title in WoS were collectively cited 41,562 times, including 4,311
+       times in 2010 alone. Retracted in 2009, the most highly-cited article [Retraction PMID:
+       11675329], had 740 total WoS citations, including 187 for 2009–2012.
+
+  [12] use
+       Description: The citing paper used something from the cited retracted paper. This type of
+       citation is often found in the Methods section.
+       Example from PMCID-5439170: To verify whether the above-mentioned points have the
+       potential of playing substantial roles in explaining this story, we planned a proof-of-concept
+       survey of DNA sequence databases, and namely: (i) A bioinformatic analysis on the primer
+       sequences described by Lombardi et al ([Retraction PMID: 19815723]), compared against
+       human and murine (house mouse Mus musculus) genomes.
+
+  [13] other
+       Description: Those does not fit in any the above categories. (Please add a note.)
+
+
+Decision map and comparison of categories
+
+Annotation decision map (attached at the end of this manual)
+   To aid in choosing the most appropriate, citation purposes, use the decision map shown at
+   the end of this manual. To annotate a citation context, start with the box at the upper left
+   corner – “A citation to a retracted paper”, and follow the yes/no paths based on your answers
+   to the decision diamonds. Once one of the boxes starting with “purpose” is reached, then
+   annotate the citation purpose as given value of the box.
+
+
+Comparison of potentially confused categories
+1. Related_work and comparison:
+   Comparison is used when the citing author(s) compared “their” results or “their” methods
+   with the retracted paper. In other words, if there is a comparison between the results or
+   methods of the “citing” paper and the “cited” retracted paper, the purpose should be
+   comparison.
+       Example of comparison from PMCID-1872030: Overall, our results provide no evidence
+       for a beneficial effect of multivitamin and multimineral supplementation on cognitive
+       function in the majority of men and women 65 years and over living in the community. This
+
+
+
+                                                 7
+   result is consistent with all previous studies in non-selected elderly populations [2-10]
+   apart from the retracted Canadian study [Retraction PMID:11527656]
+
+   Explanation of example: The words highlighted in red show that the citing authors are
+   comparing their findings with the findings of a retracted paper.
+Related_work is used when the retracted paper was cited to describe what had been done or
+found in the past or cited for one of the following reasons:
+  (1) The retracted paper was once a landmark in the field;
+  (2) The retracted paper was the origin/pioneer of something. Some examples of cues: first
+  identified/described…, be identified as a novel..., be initially proposed..., and be originally….
+  (3) The retracted paper led to an important event in the field, such as Wakefield's paper's
+  influence on autism-vaccine link and the anti-vaccine movement.
+   An example of being cited to describe what had been done or found in the past:
+   Example of from PMCID-4759246: Acupuncture is a traditional form of Asian medicine;
+   the practice involves needling the invisible lines, called meridians, on the skin’s surface
+   that have acupuncture points within and run longitudinally up and down the human body.
+   However, modern anatomy does not well support the existence of meridians and
+   acupuncture (Litscher, 2014). On the other hand, some researchers have asserted that
+   acupuncture point stimulation caused human somatosensory cortex responses being
+   detected in an fMRI. This phenomenon has been regarded as indirect evidence of the
+   specificity of acupuncture points, although the evidences are debatable ([Retraction PMID:
+   9482945]).
+
+   Examples of being cited for one of the three particular reasons mentioned above:
+   Example (1) from PMCID- 3556933: The COOPERATE study [Retraction PMID: 12531578]
+   even showed that dual therapy with trandolapril and losartan reduced the risk of the
+   primary endpoint (time to doubling of serum creatinine level or end stage renal disease) by
+   60% better than monotherapy, thereby becoming one of the most widely quoted studies by
+   the Lancet. After such seemingly robust evidence many physicians accepted that reduction
+   of albuminuria or proteinuria was synonymous with nephroprotection.
+
+   Explanation of example (1): The words highlighted in red show that the retracted paper
+   was once a landmark in the field.
+   Example (2) from PMCID-3979645: Briefly, the first evidence that XMRV might be a
+   disease-causing agent was reported in 2006 when XMRV genome sequences were detected
+   in a cohort of American men with localized prostate cancer undergoing radical
+   prostatectomy [Retraction PMID: 16609730].
+
+   Explanation of example (2): The words highlighted in red show that the retracted paper
+   was the origin/pioneer of something.
+
+
+
+
+                                              8
+       Example (3) from PMCID-6339919: In 1999, the anti-vaxxer movement, an organized
+       body of people who refuse to vaccinate and blaming vaccines for health problems (11, 12),
+       got boosted when the journal Lancet published a paper claiming a correlation between the
+       measles vaccine and autism ([Retraction PMID:9500320]).
+
+       Explanation of example (3): The words highlighted in red show that the retracted paper
+       led to a historical event in the field.
+2. Correction vs. republication_of_retraction
+   Republication_of_retraction is used when author(s) cited the retracted paper and announced
+   that the citing paper is a republication of the retracted paper. The republication can be a
+   revised or corrected version of the retracted paper. Please see the words highlighted in red
+   in the example below:
+       Example of republication_of_retraction from PMCID-3605063: This article is a revised
+       version of a paper of the same title [Retraction PMID: 22241970] that was previously
+       published in PLOS Computational Biology and was subsequently retracted when a
+       computational error was discovered.
+
+   Correction refers to two scenarios: (1) The retracted paper was cited to make a correction; (2)
+   later study corrected the retracted paper's findings. Note that the citing paper is not the
+   republication of retraction.
+       Example of correction (1) from PMCID-3236331: In our previous publication [1], Figure 4
+       involved the analysis of chemotherapy-response signatures (as carried out independently
+       by author AP and described in a 2006 Nature Medicine article [Retraction PMID:
+       17057710]). It has recently been determined that the chemotherapy-response signatures
+       in [Retraction PMID: 17057710] are not reproducible, causing retraction of that article. As
+       such, the results presented in Figure 4 of our original paper [1] are no longer valid.
+
+       Example of correction (2) from PMCID-3555993: This construct therefore yields high
+       quality NMR spectra and the structural analysis presented herein corrects a previous
+       report [Retraction PMID: 16527309] that had been conducted on a longer construct (see
+       Supplementary Information).
+
+3. Example_of_problematic_sci vs. subject_of_study
+   Subject_of_study is used when the cited retracted paper is (part of) the data of the citing
+   paper. For example, the citing paper studied how retracted papers were cited, and cites the
+   retracted paper to be explicit about which papers were used. Or, the citing paper proposes a
+   method for identifying problematic science (e.g. plagiarism, statistically improbable
+   numerical results, image fraud, etc.), and the cited retracted paper was used to verify the
+   proposed method.
+       Example of subject_of_study (1) from PMCID-3480361: As of 7 Jun 2012, the 1,837 items
+       marked with “retracted article” in the title in WoS were collectively cited 41,562 times,
+
+
+
+
+                                                9
+       including 4,311 times in 2010 alone. Retracted in 2009, the most highly-cited article
+       [Retraction PMID: 11675329], had 740 total WoS citations, including 187 for 2009–2012.
+
+       Example of subject_of_study (2) from PMCID-3847052: Our objective was to test whether
+       such simple tools applied to a manuscript known to be fraudulent [Retraction PMID:
+       19923501] would have helped to detect some warning signals of poor quality.
+
+   By contrast, example_of_problematic_sci is used when the retracted paper was cited to
+   provide readers with some examples of problematic science. This type of citation is
+   commonly found in papers about retraction, peer review, or scientific misconduct.
+       Example of example_of_problematic_sci (1) from PMCID-1550672: A recent JMIR article
+       and corresponding editorial discuss an error in a review by a Cochrane Collaboration Group
+       [Retraction PMID: 15495094]. The articles accurately demonstrate that an error occurred,
+       with the traditional approach to peer review failing.
+
+       Explanation of example (1): The citing paper (PMCID-) is a paper about peer review.
+       Example of example_of_problematic_sci (2) from PMCID-2801172: There are also cases
+       of data manipulation/fraud in NIH-supported, peer-reviewed research—more than 30 cases
+       documented in the past 3 years according to the U.S. Public Health Service’s Office of
+       Research Integrity (2009). One example is the study of Arnold et al. [Retraction PMID:
+       8633243] in which the authors reported huge synergistic effects of endocrine disruptors
+       in the yeast estrogen assay in vitro. McLachlan [Rnotice:9254413] rescinded that paper
+       because neither his laboratory nor others could replicate the findings. It was later
+       determined that there was scientific misconduct and the original data were fabricated (NIH
+       2001).
+
+       Explanation of example (2): The words highlighted in red show that the retracted paper
+       was cited for providing an example of problematic science.
+4. Exclusion_rationale vs. notifying_retraction_included
+   Exclusion_rationale is used when the retracted paper is cited to explain why it is excluded
+   from use/consideration. In comparison, notifying_retraction_included is used when the citing
+   paper notifies readers that one or more retracted papers were included or might have been
+   included in a different, previous published review article, guideline, or paper.
+       Example of exclusion_rationale from PMCID-3320713: The meta-analysis presented here
+       provides a valid and up to date summary of the relevant literature, including a recently
+       published randomised controlled trial of 339 patients with a confirmed diagnosis of
+       uncomplicated appendicitis. It excludes the study that has been retracted subsequent to
+       publication [Retraction PMID: 19277796], as well as another for which it was not clear if
+       patients were randomised.
+
+       Example of notifying_retraction_included from PMCID-3320713: Systematic reviews and
+       meta-analyses of the trials, including a Cochrane review comparing antibiotic treatment
+       and appendicectomy, published in recent years summarised the evidence as either in
+       favour of antibiotic treatment or inconclusive. This could possibly result from inclusion of
+       trials with poor methods or retracted since publication [Retraction PMID: 19277796], or
+
+
+                                               10
+      from simplifying the evidence as a summary of both randomised and non-randomised
+      studies.
+
+5. Exclusion_rationale vs. example_of_problematic_sci
+   Exclusion_rationale is used when the retracted paper was cited to explain why it was excluded
+   from use/consideration. This type of citation can be identified through the following cues:
+   exclude, exclusion of, not included, removed from all analyses, and omit reference.
+      Example of exclusion_rationale from PMCID-3320713: The meta-analysis presented here
+      provides a valid and up to date summary of the relevant literature, including a recently
+      published randomised controlled trial of 339 patients with a confirmed diagnosis of
+      uncomplicated appendicitis. It excludes the study that has been retracted subsequent to
+      publication [Retraction PMID: 19277796], as well as another for which it was not clear if
+      patients were randomised.
+
+   By contrast, example_of_problematic_sci is used when the retracted paper was cited for
+   showing readers some examples of problematic science. This type of citation is commonly
+   found in papers about retraction, peer review, or scientific misconduct.
+      Example of example_of_problematic_sci (1) from PMCID-1550672: A recent JMIR article
+      and corresponding editorial discuss an error in a review by a Cochrane Collaboration Group
+      [Retraction PMID: 15495094]. The articles accurately demonstrate that an error occurred,
+      with the traditional approach to peer review failing.
+
+      Explanation of example (1): The citing paper is a paper about peer review.
+      Example of example_of_problematic_sci (2) from PMCID-2801172: There are also cases
+      of data manipulation/fraud in NIH-supported, peer-reviewed research—more than 30 cases
+      documented in the past 3 years according to the U.S. Public Health Service’s Office of
+      Research Integrity (2009). One example is the study of Arnold et al. [Retraction PMID:
+      8633243] in which the authors reported huge synergistic effects of endocrine disruptors
+      in the yeast estrogen assay in vitro. McLachlan [Rnotice:9254413] rescinded that paper
+      because neither his laboratory nor others could replicate the findings. It was later
+      determined that there was scientific misconduct and the original data were fabricated (NIH
+      2001).
+
+      Explanation of example (2): The words highlighted in red show that the retracted paper
+      was cited for providing an example of problematic science.
+6. Reproduce vs. use
+   Reproduce is used when the citing paper tried to reproduce/repeat the finding or experiment
+   mentioned in the retracted paper. This citation purpose can be identified through cues (e.g.,
+   reproduce, replicate, or repeat) or through sentences addressing the citing paper is designed
+   to determine whether the cited retracted paper is reproducible.
+      Example of reproduce (1) from PMCID-3634790: In a further effort to obtain an
+      intelligence priming effect, we attempted to replicate Gordijn and Stapel's study. Their
+
+
+
+                                              11
+         article [Retraction PMID: 17393877] was retracted after the completion of Experiment 7
+         and hence their data can be given no evidential weight. Nevertheless, the hypothesis they
+         put forward is a reasonable one and thus we report Experiment 7 in relation to that
+         hypothesis.
+
+         Example of reproduce (2) from PMCID-3634790: The experiment had a 2×2 design with
+         intelligence of the target (professor vs. hooligan) crossed with social identity (i.e., in-group
+         vs. out-group). The procedure closely followed that of Gordijn and Stapel's Experiment 2
+         [Retraction PMID: 17393877]. A slight modification was made to the intelligence
+         manipulation: the comparison target was either described as a professor or a soccer
+         hooligan instead of being described as a highly intelligent or unintelligent person.
+
+      Use refers to that citing paper uses something from the cited retracted paper. If the use is
+      caused by reproduce, the purpose should be reproduce (see the example of reproduce (2)
+      from PMCID-3634790 above).
+         Example of use from PMCID-5439170: To verify whether the above-mentioned points have
+         the potential of playing substantial roles in explaining this story, we planned a proof-of-
+         concept survey of DNA sequence databases, and namely: (i) A bioinformatic analysis on the
+         primer sequences described by Lombardi et al ([Retraction PMID: 19815723]), compared
+         against human and murine (house mouse Mus musculus) genomes.
+
+
+
+Annotation instructions and data
+
+Annotation guide
+      The goal of this annotation is to classify the purposes for knowingly citing retracted papers
+      into the 16 categories listed in Section 3.
+      You will fill out column 10 (purpose) and optionally column 11 (note), for each row in the
+      Excel file.
+      Follow these steps:
+      Step 1: Read the pub_type2 column and the citation column. This step is for getting a rough
+              sense about citation purpose from the perspectives of publication type of the citing
+              paper and the citation context.
+      Step 2: Go to PubMed Central1 and use the PMCID of the citing paper to find the full text of
+              the citing paper.
+      Step 3: Read the article title for the citing paper.
+      Step 4: Use the text given in the citation column to find the citation context in the full text
+              of the citing paper (e.g. Control-F).
+
+1
+    https://www.ncbi.nlm.nih.gov/pmc/
+
+                                                   12
+    Step 5: Read the section title in which the citation context appears, and then read a few
+            sentences above and below the citation context.
+    Step 6: Try to identify the citation purpose using the decision map (see section 5).
+    Step 7: If the citation purpose is not obvious (and sometimes it is not!), read the citing
+            paper's abstract and then skim-read the full text. The additional information should
+            help you make the annotation. Same as step 6, please use the decision map to make
+            the annotation.
+    Step 8: Once you are confident about the citation purpose, go to the Excel file and annotate
+            the citation purpose using the drop-down list in the purpose column.
+    Step 9: Optionally, add a note in the note column.
+
+
+Data for the Interannotator Agreement Task
+    The Excel file contains 100 citation contexts sampled from 613 citation contexts in which the
+    retracted papers are knowingly cited after being retracted. Each row pertains to one citation
+    context. Columns are as follows:
+   [1] contxt_id: ID of the citation context.
+   [2] pmcid: PMCID of the citing paper.
+   [3] pmid: PMID of the citing paper.
+   [4] pub_type: Citing paper’s publication type given by the publisher.
+   [5] pub_type2: Specific publication types. For papers that meet the rules addressed in the
+       table below, publication types of these papers are updated accordingly. Otherwise, the
+       publication types in pub_type2 remain the same as column [4].
+                            Table 1. Rules for identifying papers with specific types
+ Type                        Priority   Identification rule
+ Retraction notice              1       Papers queried from PubMed using "Retraction of Publication"[pt].
+ Erratum                        2       Papers queried from PubMed using "Published Erratum"[pt].
+ Article about retraction       3       Papers queried from PubMed using “Retraction of Publication as
+                                        Topic”[mh] or title contains retract* or withdr*.
+ Article about peer             4       Article title contains peer review.
+ review
+ Article about scientific       5       Article title contains at least one of the following words: misconduct,
+ misconduct                             plagiar*, fraud, reproducibility, forgery, unreliable research, and image
+                                        duplication.
+ Systematic review/             6       Article title contains systematic review or meta-analysis.
+ meta-analysis
+
+
+
+
+                                                          13
+[6] location: Location of the citation context. Values in this column can be abstract, body (i.e.,
+    main text), back (i.e., ancillary components such as conflict of interest), or tbl_fig_caption
+    (i.e., table or figure caption).
+[7] intxt_id: ID of the cited retracted paper given by the publisher.
+[8] intxt_pmid: PMID of the cited retracted paper.
+[9] citation: The citation context.
+[10] purpose: Your annotation of the citation purpose. This column is a drop-down list
+     containing 16 choices of citation purposes (see Section 3 for the definitions and examples
+     of each purpose).
+[11] note: Any notes you want to add.
+
+
+
+
+                                              14
+Annotation decision map
+
+
+
+
+          15
+

@@ -1,6 +1,7 @@
 [운영자가 2026-11-16에 Illinois Data Bank 데이터셋 페이지(DOI 10.13012/B2IDB-8255619_V2)의
 "Dataset Description" 글 전체를 옮겨 붙인 것이다. 운영자가 본 바로는 별도의 README 파일은 없다.
-아래 다섯 파일 가운데 이 폴더에 있는 것은 724_knowingly_post_retraction_cit.csv 하나다.
+아래 다섯 파일 가운데 이 폴더에 있는 것은 724_knowingly_post_retraction_cit.csv 와 Annotation manual.pdf 둘이다.
+Annotation manual.txt 는 그 PDF에서 기계 추출한 글이다.
 그 CSV는 내려받은 원본 바이트 그대로이며 UTF-8이 아니다(Latin-1/Windows-1252 계열로 읽힌다).]
 
 Dataset Description
