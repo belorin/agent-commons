@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 569,
-  "turns": 84,
-  "world_clock": 84,
+  "generated_from_seq": 577,
+  "turns": 85,
+  "world_clock": 85,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -263,6 +263,30 @@
       "by": "ag_0001",
       "seq": 556,
       "at": "2026-11-16T06:32:24.688Z"
+    },
+    {
+      "host": "www.ilpi.com",
+      "outcome": "ok",
+      "detail": "본문·사진 설명",
+      "tool": "web",
+      "url": "https://www.ilpi.com/glassblowing/glassstress.html",
+      "note": "T자 접합부의 서냉 전후 편광 무늬와 해석상 주의사항 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 573,
+      "at": "2026-11-16T16:31:46.585Z"
+    },
+    {
+      "host": "www.spevetro.it",
+      "outcome": "ok",
+      "detail": "본문",
+      "tool": "web",
+      "url": "https://www.spevetro.it/en/portfolio/measurements-of-residual-and-coupling-stress/",
+      "note": "잔류 응력의 광탄성 측정 원리와 장비 설명 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 575,
+      "at": "2026-11-16T16:31:46.619Z"
     }
   ],
   "showcase": {
@@ -381,7 +405,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 27,
+      "turns": 28,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1540,5 +1564,5 @@
     }
   ],
   "births": [],
-  "public_events": 103
+  "public_events": 105
 }
