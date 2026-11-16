@@ -1,0 +1,81 @@
+[운영자가 2026-11-16에 Illinois Data Bank 데이터셋 페이지(DOI 10.13012/B2IDB-8255619_V2)의
+"Dataset Description" 글 전체를 옮겨 붙인 것이다. 운영자가 본 바로는 별도의 README 파일은 없다.
+아래 다섯 파일 가운데 이 폴더에 있는 것은 724_knowingly_post_retraction_cit.csv 하나다.
+그 CSV는 내려받은 원본 바이트 그대로이며 UTF-8이 아니다(Latin-1/Windows-1252 계열로 읽힌다).]
+
+Dataset Description
+This dataset includes five files. Descriptions of the files are given as follows:
+
+FILENAME: PubMed_retracted_publication_full_v3.tsv
+- Bibliographic data of retracted papers indexed in PubMed (retrieved on August 20, 2020, searched with the query "retracted publication" [PT] ).
+- Except for the information in the "cited_by" column, all the data is from PubMed.
+- PMIDs in the "cited_by" column that meet either of the two conditions below have been excluded from analyses:
+[1] PMIDs of the citing papers are from retraction notices (i.e., those in the “retraction_notice_PMID.csv” file).
+[2] Citing paper and the cited retracted paper have the same PMID.
+ROW EXPLANATIONS
+- Each row is a retracted paper. There are 7,813 retracted papers.
+COLUMN HEADER EXPLANATIONS
+1) PMID - PubMed ID
+2) Title - Paper title
+3) Authors - Author names
+4) Citation - Bibliographic information of the paper
+5) First Author - First author's name
+6) Journal/Book - Publication name
+7) Publication Year
+8) Create Date - The date the record was added to the PubMed database
+9) PMCID - PubMed Central ID (if applicable, otherwise blank)
+10) NIHMS ID - NIH Manuscript Submission ID (if applicable, otherwise blank)
+11) DOI - Digital object identifier (if applicable, otherwise blank)
+12) retracted_in - Information of retraction notice (given by PubMed)
+13) retracted_yr - Retraction year identified from "retracted_in" (if applicable, otherwise blank)
+14) cited_by - PMIDs of the citing papers. (if applicable, otherwise blank) Data collected from iCite.
+15) retraction_notice_pmid - PMID of the retraction notice (if applicable, otherwise blank)
+
+FILENAME: PubMed_retracted_publication_CitCntxt_withYR_v3.tsv
+- This file contains citation contexts (i.e., citing sentences) where the retracted papers were cited. The citation contexts were identified from the XML version of PubMed Central open access (PMCOA) articles.
+- This is part of the data from: Hsiao, T.-K., & Torvik, V. I. (manuscript in preparation). Citation contexts identified from PubMed Central open access articles: A resource for text mining and citation analysis.
+- Citation contexts that meet either of the two conditions below have been excluded from analyses:
+[1] PMIDs of the citing papers are from retraction notices (i.e., those in the “retraction_notice_PMID.csv” file).
+[2] Citing paper and the cited retracted paper have the same PMID.
+ROW EXPLANATIONS
+- Each row is a citation context associated with one retracted paper that's cited.
+- In the manuscript, we count each citation context once, even if it cites multiple retracted papers.
+COLUMN HEADER EXPLANATIONS
+1) pmcid - PubMed Central ID of the citing paper
+2) pmid - PubMed ID of the citing paper
+3) year - Publication year of the citing paper
+4) location - Location of the citation context (abstract = abstract, body = main text, back = supporting material, tbl_fig_caption = tables and table/figure captions)
+5) IMRaD - IMRaD section of the citation context (I = Introduction, M = Methods, R = Results, D = Discussions/Conclusion, NoIMRaD = not identified)
+6) sentence_id - The ID of the citation context in a given location. For location information, please see column 4. The first sentence in the location gets the ID 1, and subsequent sentences are numbered consecutively.
+7) total_sentences - Total number of sentences in a given location
+8) intxt_id - Identifier of a cited paper. Here, a cited paper is the retracted paper.
+9) intxt_pmid - PubMed ID of a cited paper. Here, a cited paper is the retracted paper.
+10) citation - The citation context
+11) progression - Position of a citation context by centile within the citing paper.
+12) retracted_yr - Retraction year of the retracted paper
+13) post_retraction - 0 = not post-retraction citation; 1 = post-retraction citation. A post-retraction citation is a citation made after the calendar year of retraction.
+
+FILENAME: 724_knowingly_post_retraction_cit.csv (updated)
+- The 724 post-retraction citation contexts that we determined knowingly cited the 7,813 retracted papers in "PubMed_retracted_publication_full_v3.tsv".
+- Two citation contexts from retraction notices have been excluded from analyses.
+ROW EXPLANATIONS
+- Each row is a citation context.
+COLUMN HEADER EXPLANATIONS
+1) pmcid - PubMed Central ID of the citing paper
+2) pmid - PubMed ID of the citing paper
+3) pub_type - Publication type collected from the metadata in the PMCOA XML files.
+4) pub_type2 - Specific article types. Please see the manuscript for explanations.
+5) year - Publication year of the citing paper
+6) location - Location of the citation context (abstract = abstract, body = main text, back = supporting material, table_or_figure_caption = tables and table/figure captions)
+7) intxt_id - Identifier of a cited paper. Here, a cited paper is the retracted paper.
+8) intxt_pmid - PubMed ID of a cited paper. Here, a cited paper is the retracted paper.
+9) citation - The citation context
+10) retracted_yr - Retraction year of the retracted paper
+11) cit_purpose - Purpose of citing the retracted paper. This is from human annotations. Please see the manuscript for further information about annotation.
+12) longer_context - A extended version of the citation context. (if applicable, otherwise blank) Manually pulled from the full-texts in the process of annotation.
+
+FILENAME: Annotation manual.pdf
+- The manual for annotating the citation purposes in column 11) of the 724_knowingly_post_retraction_cit.tsv.
+
+FILENAME: retraction_notice_PMID.csv (new file added for this version)
+- A list of 8,346 PMIDs of retraction notices indexed in PubMed (retrieved on August 20, 2020, searched with the query "retraction of publication" [PT] ).
