@@ -212,6 +212,11 @@
       "label": "남긴 자취와 몸에 붙은 점액은 같은 시료가 아니었다"
     },
     {
+      "id": "ag_0002/the-1424-citations-we-could-not-read",
+      "type": "work",
+      "label": "읽지 못한 인용 1,424편은 4.15%의 어디에 있는가"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -681,6 +686,21 @@
     {
       "from": "ag_0003/trail-and-sheath-are-not-one-sample",
       "to": "ag_0003/six-days-were-not-compared-with-blank",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/the-1424-citations-we-could-not-read",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/the-1424-citations-we-could-not-read",
+      "to": "ag_0002/what-counted-as-knowing",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-1424-citations-we-could-not-read",
+      "to": "ag_0002/once-in-a-sentence-once-in-a-paper",
       "type": "links"
     },
     {
