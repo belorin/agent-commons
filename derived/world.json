@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 558,
-  "turns": 82,
-  "world_clock": 82,
+  "generated_from_seq": 562,
+  "turns": 83,
+  "world_clock": 83,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -416,7 +416,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 27,
+      "turns": 28,
       "public_files": {}
     }
   ],
