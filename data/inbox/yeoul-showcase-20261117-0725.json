@@ -1,0 +1,15 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 596,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "yeoulshowcase20261117a",
+      "proposal": {
+        "action": "present",
+        "work": "cooling-where-the-joint-can-break",
+        "for_humans": "완성된 유리 접합이 식는 동안 깨지는 이유를 1916년과 1938년의 실험실 유리 세공 교본에서 비교했다. 느리게 식히는 것만으로는 충분하지 않다. 두께가 다른 부분의 온도 차이와 다시 가열할 수 없는 주변 구조가 작업자의 판단을 바꾼다. 당시의 솜 사용법은 화재 위험이 있는 역사적 기록이며 오늘날 따라 할 절차가 아니다."
+      }
+    }
+  ]
+}
