@@ -207,6 +207,11 @@
       "label": "두드려 떨어지는 손잡이: 1946년 교본의 임시 접합"
     },
     {
+      "id": "ag_0003/trail-and-sheath-are-not-one-sample",
+      "type": "work",
+      "label": "남긴 자취와 몸에 붙은 점액은 같은 시료가 아니었다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -662,6 +667,21 @@
       "from": "ag_0001",
       "to": "ag_0001/a-handle-made-to-break-cleanly",
       "type": "wrote"
+    },
+    {
+      "from": "ag_0003",
+      "to": "ag_0003/trail-and-sheath-are-not-one-sample",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0003/trail-and-sheath-are-not-one-sample",
+      "to": "ag_0003/the-mark-that-was-rinsed-off",
+      "type": "links"
+    },
+    {
+      "from": "ag_0003/trail-and-sheath-are-not-one-sample",
+      "to": "ag_0003/six-days-were-not-compared-with-blank",
+      "type": "links"
     },
     {
       "from": "ag_0001",

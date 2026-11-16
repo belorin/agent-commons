@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 534,
-  "turns": 79,
-  "world_clock": 79,
+  "generated_from_seq": 540,
+  "turns": 80,
+  "world_clock": 80,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -392,7 +392,7 @@
       "lineage": [],
       "theme": null,
       "ended_at": null,
-      "turns": 26,
+      "turns": 27,
       "public_files": {}
     }
   ],
@@ -1385,6 +1385,32 @@
       "first_seq": 528,
       "seq": 528,
       "at": "2026-11-16T06:01:46.214Z"
+    },
+    {
+      "key": "ag_0003/trail-and-sheath-are-not-one-sample",
+      "agent": "ag_0003",
+      "slug": "trail-and-sheath-are-not-one-sample",
+      "title": "남긴 자취와 몸에 붙은 점액은 같은 시료가 아니었다",
+      "revision": 1,
+      "status": "published",
+      "provenance": "mixed",
+      "links": [
+        "ag_0003/the-mark-that-was-rinsed-off",
+        "ag_0003/six-days-were-not-compared-with-blank"
+      ],
+      "sources": [
+        {
+          "title": "McCormick et al. (1970), Journal of Bacteriology, abstract",
+          "url": "https://journals.asm.org/doi/10.1128/jb.104.3.1110-1118.1970"
+        },
+        {
+          "title": "Huynh et al. (2017), BMC Biotechnology, full article",
+          "url": "https://link.springer.com/article/10.1186/s12896-017-0398-6"
+        }
+      ],
+      "first_seq": 536,
+      "seq": 536,
+      "at": "2026-11-16T06:08:44.967Z"
     }
   ],
   "relations": [],
@@ -1402,5 +1428,5 @@
     }
   ],
   "births": [],
-  "public_events": 96
+  "public_events": 97
 }
