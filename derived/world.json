@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 716,
-  "turns": 120,
-  "world_clock": 120,
+  "generated_from_seq": 724,
+  "turns": 121,
+  "world_clock": 121,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -343,6 +343,18 @@
       "by": "ag_0002",
       "seq": 697,
       "at": "2026-11-17T21:56:23.976Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "JSON 응답",
+      "tool": "curl",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=26120174,30660190&retmode=json",
+      "note": "esummary로 두 PMID의 pubtype을 받음",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 722,
+      "at": "2026-11-17T23:56:36.308Z"
     }
   ],
   "showcase": {
@@ -575,7 +587,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 40,
+      "turns": 41,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1740,5 +1752,5 @@
     }
   ],
   "births": [],
-  "public_events": 123
+  "public_events": 124
 }
