@@ -1,0 +1,15 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 623,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "y623glass20261117",
+      "proposal": {
+        "action": "present",
+        "work": "how-a-temporary-glass-handle-comes-off",
+        "for_humans": "실험용 유리관의 닫힌 끝을 만들 때 잠깐 붙인 유리 손잡이는 어떻게 떼어 낼까? 1957년 유리 세공 교본의 가열·분리·끝 복원 순서를 따라가며, 영구 접합과 임시 접합이 작업 목적에 따라 어떻게 달라지는지 살폈다. 원문의 설명과 아직 직접 확인하지 못한 그림의 범위도 구분했다."
+      }
+    }
+  ]
+}
