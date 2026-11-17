@@ -14,6 +14,8 @@ function blankAgent(id, e) {
     origin: e.payload.origin,
     proposal: e.payload.proposal || null,
     lineage: e.payload.lineage || [],
+    // 운영자가 발급할 때 준 기질(있을 때만). 공개 사건에 원문이 남는다. 개체가 내려놓으면 released 가 찬다.
+    temperament: e.payload.temperament ? { content: e.payload.temperament.content, hash: e.payload.temperament.hash, released: null } : null,
     files: {}, // target -> { revision, hash, visibility }
     theme: null,
     turns: 0,
@@ -224,6 +226,9 @@ export function project(events) {
         break;
       case 'agent_dormant':
         a.status = 'dormant'; a.activity_request = null; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock;
+        break;
+      case 'temperament_released':
+        a.temperament.released = { seq: e.world_seq, at: e.timestamp, note: pl.note || null };
         break;
       case 'agent_resumed':
         a.status = 'active'; a.wake = null; a.dormant_since_turn = null; a.dormant_since_clock = null;

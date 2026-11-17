@@ -170,6 +170,29 @@ function failUnlocked(reason) {
   return { ok: true, text: '기술적 실패로 기록했다(run_failed). 개체의 종료나 선택으로 기록되지 않는다.' };
 }
 
+/**
+ * 운영자가 회차 밖에서 개체 하나를 발급한다. 기질(temperament)을 주면 그 원문이 공개 사건에 남는다.
+ * 회차를 열지 않으므로 세계 시계는 흐르지 않는다. 첫 방문은 순번(가장 오래 쉰 개체)으로 온다.
+ */
+export function seedAgent({ temperament = null } = {}) {
+  return withTransaction(() => {
+    const verification = verify();
+    if (!verification.ok) throw new Error(verification.problems.join('\n'));
+    const cfg = loadConfig();
+    const w = project(loadEvents());
+    if (w.turn) throw new Error(`열린 방문 ${w.turn.turn_id} 이(가) 있다. 닫은 뒤 발급한다`);
+    if (living(w).length >= cfg.max_population) throw new Error(`인구 상한(${cfg.max_population})에 닿았다`);
+    const content = temperament == null ? null : String(temperament).trim();
+    if (content !== null && (!content || content.length > 2000)) throw new Error('기질은 1~2000자');
+    const agentId = 'ag_' + pad(Object.keys(w.agents).length + 1);
+    appendEvent({ type: 'agent_created', agent_id: agentId, actor_id: 'operator', visibility: 'public',
+      payload: { origin: 'operator_seed', lineage: [], ...(content ? { temperament: { content, hash: sha256(content) } } : {}) } });
+    fs.mkdirSync(agentDir(agentId, 'private'), { recursive: true });
+    fs.mkdirSync(agentDir(agentId, 'public'), { recursive: true });
+    return { agent_id: agentId, text: `${agentId} 을(를) 발급했다${content ? ' (기질 부여)' : ''}.\n${regenerate()}` };
+  });
+}
+
 export const openTurn = (options) => withTransaction(() => openUnlocked(options));
 export const closeTurn = () => withTransaction(closeUnlocked);
 export const failTurn = (reason) => withTransaction(() => failUnlocked(reason));

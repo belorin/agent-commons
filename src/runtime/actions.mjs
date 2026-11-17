@@ -256,6 +256,11 @@ const HANDLERS = {
     if (ctx.me.status !== 'dormant') reject('휴면 중이 아니다');
     return [{ type: 'agent_resumed', visibility: 'public', payload: {} }];
   },
+  release_temperament(ctx, a) {
+    if (!ctx.me.temperament) reject('운영자가 네게 준 기질이 없다');
+    if (ctx.me.temperament.released) reject('이미 내려놓았다');
+    return [{ type: 'temperament_released', visibility: 'public', payload: { note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }) } }];
+  },
   request_self_end(ctx, a) {
     if (ctx.me.pending_end) reject('이미 자기 종료를 요청했다');
     if (a.confirm !== true) reject('자기 종료는 되돌릴 수 없다. 정말 원하면 "confirm": true 를 함께 보낸다. 회차를 닫기 전까지는 cancel_self_end로 거둘 수 있다');

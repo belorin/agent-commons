@@ -5,7 +5,7 @@ import crypto from 'node:crypto';
 import { recoverTransaction } from './runtime/transaction.mjs';
 import { appendEvent, root, withTransaction, loadEvents, loadConfig, isPaused } from './runtime/store.mjs';
 import { project, living, displayName } from './runtime/world.mjs';
-import { openTurn, closeTurn, failTurn, applyVisit, processInbox, decide } from './runtime/tick.mjs';
+import { openTurn, closeTurn, failTurn, applyVisit, processInbox, decide, seedAgent } from './runtime/tick.mjs';
 import { standingBrief } from './runtime/briefing.mjs';
 import { executeProposal } from './runtime/actions.mjs';
 import { read } from './runtime/read.mjs';
@@ -108,6 +108,14 @@ function run() {
         appendEvent({ type: 'operator_note', actor_id: 'operator', visibility: 'public', payload: { content } });
         say(regenerate());
       }); break;
+    }
+    case 'seed': { // 운영자가 회차 밖에서 개체를 발급한다. --temperament <파일|-> 로 기질을 주면 그 원문이 공개 사건에 남는다.
+      requireRole('COMMONS_OPERATOR');
+      const i = args.indexOf('--temperament');
+      const src = i >= 0 ? args[i + 1] : null;
+      if (i >= 0 && !src) throw new Error('--temperament 뒤에 파일 경로 또는 - 가 필요하다');
+      const temperament = src == null ? null : fs.readFileSync(src === '-' ? 0 : src, 'utf8');
+      say(seedAgent({ temperament }).text); break;
     }
     case 'reader-note': {
       // 사람 독자가 남긴 말을 운영자가 옮겨 적는다. 개체에게는 다음 회차의 '도착한 것'으로 간다.

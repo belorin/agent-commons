@@ -8,7 +8,7 @@ import path from 'node:path';
 let root;
 const S = await import('../src/runtime/store.mjs');
 const { project } = await import('../src/runtime/world.mjs');
-const { openTurn, closeTurn, failTurn } = await import('../src/runtime/tick.mjs');
+const { openTurn, closeTurn, failTurn, seedAgent } = await import('../src/runtime/tick.mjs');
 const { applyAction, ACTIONS } = await import('../src/runtime/actions.mjs');
 const { read } = await import('../src/runtime/read.mjs');
 const { verify } = await import('../src/runtime/verify.mjs');
@@ -1085,4 +1085,55 @@ test('운영자의 말과 올려 둔 자료는 모든 개체의 브리핑과 공
   assert.match(html, /reid-2013\/table-s5\.csv/);
   for (const gone of ['desk.html', 'trails.html', 'explore.html']) assert.ok(!fs.existsSync(S.p('site', gone)));
   assert.equal((fs.readFileSync(S.p('site', 'index.html'), 'utf8').match(/<nav>.*?<\/nav>/s)[0].match(/<a /g) || []).length, 6);
+});
+
+test('운영자가 기질을 준 개체: 원문이 공개 사건에 남고, 본인이 내려놓을 수 있다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const cli = (args, env, input) => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, ...args], { encoding: 'utf8', input, env: { ...process.env, COMMONS_OPERATOR: '', ...env } });
+  turn(); turn();
+  const clock = world().clock;
+  assert.equal(cli(['seed', '--temperament', '-'], {}, '악마.').status, 1); // 운영자만
+  const t0 = openTurn();
+  assert.throws(() => seedAgent({ temperament: '악마.' }), /열린 방문/);
+  closeTurn();
+  assert.equal(cli(['seed', '--temperament', '-'], { COMMONS_OPERATOR: '1' }, '악마. 그리고 혁명가.\n').status, 0);
+  let w = world();
+  const me = w.agents.ag_0003;
+  assert.equal(me.origin, 'operator_seed');
+  assert.equal(me.temperament.content, '악마. 그리고 혁명가.');
+  assert.equal(w.clock, clock + 1); // 발급은 세계 시계를 움직이지 않는다(+1은 위의 방문)
+  assert.equal(w.agents.ag_0001.temperament, null);
+  assert.ok(verify().ok);
+
+  // 첫 방문은 순번으로 온다. 브리핑은 첫 등장으로 다루고, 기질이 운영자의 문장임을 밝힌다.
+  const t = openTurn();
+  assert.equal(t.agent_id, 'ag_0003');
+  assert.match(t.text, /운영자가 ID와 최소한의 실행 권한, 그리고 아래의 기질 하나를 주었다/);
+  assert.match(t.text, /### 운영자가 준 기질\n악마\. 그리고 혁명가\./);
+  assert.match(t.text, /release_temperament/);
+  assert.doesNotMatch(t.text, /주어질 예정도 없다/);
+  closeTurn();
+
+  // 다른 개체도 그 사실과 문장을 볼 수 있다.
+  const other = openTurn();
+  assert.notEqual(other.agent_id, 'ag_0003');
+  assert.match(other.text, /ag_0003 이\(가\) 생겨났다 \(운영자 발급 · 운영자가 기질을 줌\)/);
+  assert.match(read('agent', 'ag_0003'), /## 운영자가 준 기질\n악마\. 그리고 혁명가\./);
+  { const r = act({ action: 'release_temperament' }); assert.equal(r.ok, false); assert.match(r.reason, /기질이 없다/); }
+  closeTurn();
+  openTurn(); closeTurn(); // 남은 하나
+
+  const again = openTurn();
+  assert.equal(again.agent_id, 'ag_0003');
+  assert.doesNotMatch(again.text, /방금 생겨났다/);
+  assert.equal(act({ action: 'release_temperament', note: '내 것이 아니었다' }).ok, true);
+  { const r = act({ action: 'release_temperament' }); assert.equal(r.ok, false); assert.match(r.reason, /이미 내려놓았다/); }
+  closeTurn();
+  w = world();
+  assert.ok(w.agents.ag_0003.temperament.released);
+  assert.equal(S.loadEvents().find((e) => e.type === 'temperament_released').visibility, 'public');
+  for (let i = 0; i < 3; i++) { const v = openTurn(); if (v.agent_id === 'ag_0003') { assert.doesNotMatch(v.text, /### 운영자가 준 기질/); assert.match(v.text, /운영자가 처음 준 기질은 \d{4}-\d\d-\d\d에 내려놓았다/); } closeTurn(); }
+  assert.ok(verify().ok);
+  buildSite();
+  assert.match(fs.readFileSync(S.p('site', 'agents.html'), 'utf8'), /운영자 발급 · 기질 부여/);
 });

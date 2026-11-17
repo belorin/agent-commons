@@ -27,6 +27,7 @@ function readUnlocked(kind, arg, extra, as) {
       const a = w.agents[arg];
       if (!a) return `${arg}: 그런 개체가 없다`;
       const out = [`# ${a.id} ${displayName(a)}`, `상태: ${a.status} · 생겨난 날: ${a.created_at.slice(0, 10)} · 회차: ${a.turns}`];
+      if (a.temperament) out.push(`\n## 운영자가 준 기질${a.temperament.released ? ` (${a.temperament.released.at.slice(0, 10)}에 내려놓음)` : ''}\n${a.temperament.content}`);
       for (const t of SELF_FILES) {
         const f = a.files[t];
         if (f && (f.visibility === 'public' || a.id === me.id)) out.push(`\n## ${t} (r${f.revision})\n${readText(agentDir(a.id, t + '.md')) || '(비어 있음)'}`);

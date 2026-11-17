@@ -29,7 +29,7 @@
 
 | 타입 | 요청 | 의미 |
 | --- | --- | --- |
-| `agent_created` | operator / 제안한 개체 | 새 개체. `origin`: `operator_seed`(운영자 발급) 또는 `birth_proposal`(+`proposal`, `lineage`) |
+| `agent_created` | operator / 제안한 개체 | 새 개체. `origin`: `operator_seed`(운영자 발급) 또는 `birth_proposal`(+`proposal`, `lineage`). 운영자가 `seed --temperament`로 발급하면 `temperament: { content, hash }`가 붙고 `turn_id` 없이 회차 밖에서 남는다 |
 | `turn_opened` · `turn_closed` | runtime | 회차의 시작과 끝. 시작에는 전달된 전언·어댑터·모델, 끝에는 수락된 행동 수와 읽은 것. `silent: true` 는 침묵한 회차 |
 | `agent_renamed` | 개체 | 이름을 정하거나 내려놓음(`name: null`) |
 | `profile_updated` | 개체 | 자기소개 또는 테마 변경 |
@@ -44,6 +44,7 @@
 | `birth_proposed` · `birth_consented` · `birth_rejected` · `birth_withdrawn` | 개체 | 탄생의 제안·동의·거절·철회 |
 | `birth_approved` | operator | 운영자 승인(`requires_operator_approval` 일 때만 필요) |
 | `agent_dormant` · `agent_resumed` | 개체 | 휴면과 복귀 |
+| `temperament_released` | 개체 | 운영자가 준 기질을 내려놓음(공개). 선택적 `note`. 투영은 `agent.temperament.released`를 채운다. 기질이 없는 이전 로그는 `temperament: null`로 재생된다 |
 | `self_end_requested` · `self_end_cancelled` | 개체 | 자기 종료의 요청과 철회 |
 | `agent_ended` | 개체(집행은 runtime) | 자기 종료의 집행. `by: self` |
 | `agent_suspended` · `agent_restored` | operator | 운영 개입. 자기 종료와 다른 사건이며 다르게 표시된다 |

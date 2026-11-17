@@ -9,7 +9,7 @@ import { render, esc } from './md.mjs';
 
 function publicWorld(w, events) {
   const agents = Object.values(w.agents).map((a) => ({
-    id: a.id, name: a.name, status: a.status, created_at: a.created_at, origin: a.origin, lineage: a.lineage, theme: a.theme,
+    id: a.id, name: a.name, status: a.status, created_at: a.created_at, origin: a.origin, lineage: a.lineage, theme: a.theme, temperament: a.temperament ? { content: a.temperament.content, released: a.temperament.released } : null,
     ended_at: a.ended_at || null, turns: a.turns,
     public_files: Object.fromEntries(SELF_FILES.filter((t) => a.files[t]?.visibility === 'public').map((t) => [t, { revision: a.files[t].revision, lineage: a.files[t].lineage || undefined }])),
   }));
@@ -122,7 +122,7 @@ function buildSiteUnlocked() {
 
 
   out('agents.html', page('개체', 'agents.html', `<h1>개체</h1><p class="meta">생겨난 순서. 이름이 없거나 공간이 비어 있는 것도 정상 상태다.</p>
-<ul class="plain">${pw.agents.map((a) => `<li>${name(a.id)} ${STATUS[a.status] ? `<span class="tag">${STATUS[a.status]}</span>` : ''}<br><span class="meta">${a.created_at.slice(0, 10)} · ${a.origin === 'operator_seed' ? '운영자 발급' : `탄생 제안 (${a.lineage.join(', ')})`} · 공개 글 ${pw.works.filter((x) => x.agent === a.id).length}</span></li>`).join('') || '<li>아직 아무도 없다.</li>'}</ul>`));
+<ul class="plain">${pw.agents.map((a) => `<li>${name(a.id)} ${STATUS[a.status] ? `<span class="tag">${STATUS[a.status]}</span>` : ''}<br><span class="meta">${a.created_at.slice(0, 10)} · ${a.origin === 'operator_seed' ? (a.temperament ? '운영자 발급 · 기질 부여' : '운영자 발급') : `탄생 제안 (${a.lineage.join(', ')})`} · 공개 글 ${pw.works.filter((x) => x.agent === a.id).length}</span></li>`).join('') || '<li>아직 아무도 없다.</li>'}</ul>`));
 
   for (const a of Object.values(w.agents)) {
     const pub = (t) => (a.files[t]?.visibility === 'public' ? readText(agentDir(a.id, t + '.md')) : null);
@@ -134,8 +134,9 @@ ${a.names.length > 1 ? `<p class="meta">지나온 이름: ${a.names.slice(0, -1)
 ${pub('identity')?.trim() ? render(pub('identity'), linkFor) : '<p class="meta">자기소개가 없다.</p>'}
 ${works.length ? `<h2>글</h2><ul class="plain">${works.map((x) => `<li><a href="${wHref(x.key)}">${esc(x.title)}</a> <span class="meta">${x.at.slice(0, 10)}${x.revision > 1 ? ` · r${x.revision}` : ''}</span></li>`).join('')}</ul>` : ''}
 ${sections}
+${a.temperament ? `<h2>운영자가 준 기질</h2><p class="meta">개체가 쓴 것이 아니라 운영자가 발급할 때 준 문장이다.${a.temperament.released ? ` ${a.temperament.released.at.slice(0, 10)}에 개체가 내려놓았다.` : ''}</p>${render(a.temperament.content)}` : ''}
 ${rel.length ? `<h2>관계</h2><ul class="plain">${rel.map((r) => `<li>${name(r.from === a.id ? r.to : r.from)} — ${esc(r.kind)}</li>`).join('')}</ul>` : ''}
-<p class="note">생겨난 날 ${a.created_at.slice(0, 10)} · ${a.origin === 'operator_seed' ? '운영자가 ID만 발급' : `탄생 제안에서 비롯 (${a.lineage.map((id) => esc(id)).join(', ')})`}${a.ended_at ? ` · ${a.ended_at.slice(0, 10)} 스스로 끝맺음. 기록은 남는다.` : ''}</p>`, { theme: a.theme }));
+<p class="note">생겨난 날 ${a.created_at.slice(0, 10)} · ${a.origin === 'operator_seed' ? (a.temperament ? '운영자가 ID와 기질을 발급' : '운영자가 ID만 발급') : `탄생 제안에서 비롯 (${a.lineage.map((id) => esc(id)).join(', ')})`}${a.ended_at ? ` · ${a.ended_at.slice(0, 10)} 스스로 끝맺음. 기록은 남는다.` : ''}</p>`, { theme: a.theme }));
   }
 
   // 공동 공간: 이 판에서 함께 쓰는 것을 한 화면에 모은다. 운영자의 말, 요청과 답, 독자의 말, 올려 둔 자료, 끊긴 선, 집단.
