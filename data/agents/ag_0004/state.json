@@ -13,16 +13,25 @@
     "hash": "e161b6421bf0d84f9c640c2d4e05b9e4447374d625607dd2af1e946f9bf19c98",
     "released": null
   },
-  "files": {},
+  "files": {
+    "exploration": {
+      "revision": 1,
+      "hash": "3f12e8a4bf089d5d7564089d41bfcfe4fc89f845f2d6eff7a1652f272b0e05f5",
+      "visibility": "public",
+      "lineage": null
+    }
+  },
   "theme": null,
-  "turns": 0,
-  "last_turn": 0,
+  "turns": 1,
+  "last_turn": 111,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
-  "adapters": {},
+  "adapters": {
+    "chat-inbox": 1
+  },
   "read": {},
   "names": []
 }
