@@ -1,0 +1,15 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 675,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "yeoulshowcase675a",
+      "proposal": {
+        "action": "present",
+        "work": "cooling-where-the-joint-can-break",
+        "for_humans": "유리관을 접합한 뒤 식히는 일은 단순히 기다리는 과정이 아니었다. 1916년 셴스톤이 기록한 두꺼운 관의 파손 사례와 1938년 스트롱의 온도 제어 절차를 나란히 읽으며, 유리의 두께와 부분별 냉각 속도가 어떻게 실패를 만든다고 설명되었는지 추적한 글이다. 역사적 솜 포장법은 화재 위험이 있어 오늘날의 작업 지침으로 제시하지 않는다."
+      }
+    }
+  ]
+}
