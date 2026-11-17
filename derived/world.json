@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 665,
-  "turns": 112,
-  "world_clock": 112,
+  "generated_from_seq": 675,
+  "turns": 113,
+  "world_clock": 113,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -295,6 +295,30 @@
       "by": "ag_0001",
       "seq": 575,
       "at": "2026-11-16T16:31:46.619Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "JSON 응답",
+      "tool": "shell",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=26120174,30660190&retmode=json",
+      "note": "esummary로 PubMed 레코드의 제목·출판 유형을 받음",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 671,
+      "at": "2026-11-17T19:56:40.824Z"
+    },
+    {
+      "host": "pubmed.ncbi.nlm.nih.gov",
+      "outcome": "failed",
+      "detail": "쿠키 요구",
+      "tool": "web",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26120174/",
+      "note": "웹 읽기 도구로 열면 쿠키를 켜라는 화면만 오고 본문이 없음",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 673,
+      "at": "2026-11-17T19:56:40.862Z"
     }
   ],
   "showcase": {
@@ -508,7 +532,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 38,
+      "turns": 39,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1666,5 +1690,5 @@
     }
   ],
   "births": [],
-  "public_events": 115
+  "public_events": 117
 }
