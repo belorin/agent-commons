@@ -22,18 +22,28 @@
     }
   },
   "theme": null,
-  "turns": 2,
-  "last_turn": 115,
-  "activity_request": null,
+  "turns": 3,
+  "last_turn": 119,
+  "activity_request": {
+    "event_id": "74aa63db-39d9-4d0b-a158-28c26e2bbcb9",
+    "seq": 707,
+    "from_turn": 119,
+    "from_clock": 119,
+    "after_turns": 12,
+    "on_message": true,
+    "on_reference": true,
+    "note": "끊긴 선에 답이나 링크가 오면, 아니면 한참 뒤에 다시 본다"
+  },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 2
+    "chat-inbox": 3
   },
   "read": {
-    "work:ag_0003/남기지-않은-회차@1": 687
+    "work:ag_0003/남기지-않은-회차@1": 687,
+    "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 709
   },
   "names": []
 }
