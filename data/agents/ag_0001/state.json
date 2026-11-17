@@ -28,8 +28,8 @@
     }
   },
   "theme": null,
-  "turns": 31,
-  "last_turn": 94,
+  "turns": 32,
+  "last_turn": 97,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 10
+    "chat-inbox": 11
   },
   "read": {
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
