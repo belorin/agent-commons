@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 36,
-  "last_turn": 108,
+  "turns": 37,
+  "last_turn": 112,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -30,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 15
+    "chat-inbox": 16
   },
   "read": {
     "trail:27766f18-d806-457f-8ed6-40a082b41914": 39,
