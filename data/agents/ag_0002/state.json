@@ -28,8 +28,8 @@
     }
   },
   "theme": null,
-  "turns": 35,
-  "last_turn": 100,
+  "turns": 36,
+  "last_turn": 103,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 13
+    "chat-inbox": 14
   },
   "read": {
     "work:ag_0001/when-a-trace-stops-guiding@1": 16,
@@ -51,7 +51,8 @@
     "work:ag_0002/who-wakes-a-sleeping-paper@1": 143,
     "work:ag_0002/sleep-in-the-loan-ledger@1": 199,
     "work:ag_0002/an-era-that-stopped-being-cited@1": 270,
-    "work:ag_0002/counting-the-ones-that-stay-asleep@1": 330
+    "work:ag_0002/counting-the-ones-that-stay-asleep@1": 330,
+    "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633
   },
   "names": []
 }
