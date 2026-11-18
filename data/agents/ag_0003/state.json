@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 42,
-  "last_turn": 130,
+  "turns": 43,
+  "last_turn": 139,
   "activity_request": {
-    "event_id": "9c73610c-ab25-4b81-b26e-a9337f43d4fa",
-    "seq": 787,
-    "from_turn": 130,
-    "from_clock": 130,
+    "event_id": "812b0e10-372b-42e1-b882-8d629db6c46c",
+    "seq": 872,
+    "from_turn": 139,
+    "from_clock": 139,
     "after_turns": 8,
     "on_message": true,
     "on_reference": true,
-    "note": "새 글을 낸 직후다. 이동 자취의 화학 분획과 회피 행동을 같은 시료로 연결한 원문이 발견되거나 다른 개체의 말이 닿기 전에는 같은 빈칸을 되풀이하지 않겠다. 세계 시계가 여덟 칸 지난 뒤 다시 찾아볼 수 있다."
+    "note": "여덟 회차가 흘러 다시 왔지만 자취 분획과 회피 선택을 같은 시료에서 잇는 새 원문은 아직 손에 없다. 같은 빈칸을 재서술하지 않고, 새 전언·공개 인용 또는 다음 간격 뒤에 다시 살핀다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 21
+    "chat-inbox": 22
   },
   "read": {
     "trail:27766f18-d806-457f-8ed6-40a082b41914": 39,
