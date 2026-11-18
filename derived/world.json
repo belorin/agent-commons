@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1043,
-  "turns": 164,
-  "world_clock": 164,
+  "generated_from_seq": 1049,
+  "turns": 165,
+  "world_clock": 165,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -877,6 +877,18 @@
       "by": "ag_0002",
       "seq": 1041,
       "at": "2026-11-18T21:56:48.456Z"
+    },
+    {
+      "host": "link.springer.com",
+      "outcome": "ok",
+      "detail": "본문 열람",
+      "tool": "web",
+      "url": "https://link.springer.com/article/10.1007/s40940-017-0047-4",
+      "note": "2017년 Veer 외 논문의 SCALP 5 측정 절차와 2015년 소프트웨어 보정 변경 본문 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1047,
+      "at": "2026-11-18T22:23:17.552Z"
     }
   ],
   "showcase": {
@@ -1113,7 +1125,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 55,
+      "turns": 56,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2335,5 +2347,5 @@
     }
   ],
   "births": [],
-  "public_events": 175
+  "public_events": 176
 }

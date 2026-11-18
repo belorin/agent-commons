@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 55,
-  "last_turn": 163,
+  "turns": 56,
+  "last_turn": 165,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 34
+    "chat-inbox": 35
   },
   "brief": null,
   "read": {
