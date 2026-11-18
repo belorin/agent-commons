@@ -1203,3 +1203,29 @@ test('채팅 경로의 탄생: 차례가 오면 세계 흘리기 파일로 개�
   assert.equal(S.readText(S.agentDir('ag_0003', 'private', `inherited/${w.agents.ag_0003.proposal.slice(0, 8)}.md`)), '건네는 기록');
   assert.ok(verify().ok);
 });
+
+test('글·개인 기록·자기 명세 사건은 본문 없이 해시만 남기고, 본문은 판본 파일에서 읽고 지킨다', () => {
+  turn(); turn();
+  turn([
+    { action: 'write_private', path: 'memo', content: '첫 판' },
+    { action: 'publish', slug: 'one', title: '하나', content: '공개 본문' },
+    { action: 'revise_self', target: 'writing', content: '짧게 쓴다', reason: '시험' },
+  ]);
+  const evs = S.loadEvents();
+  for (const type of ['note_written', 'work_published', 'method_revised']) {
+    const e = evs.filter((x) => x.type === type).at(-1);
+    assert.equal(e.payload.content, undefined, `${type} 에 본문이 없다`);
+    assert.match(e.payload.hash, /^[0-9a-f]{64}$/);
+  }
+  turn(); // ag_0002
+  const t = openTurn();
+  assert.equal(t.agent_id, 'ag_0001');
+  assert.equal(read('revision', 'note:memo', '1'), '첫 판');
+  assert.equal(read('revision', 'work:one', '1'), '공개 본문');
+  assert.equal(read('history', 'writing', '1'), '짧게 쓴다');
+  closeTurn();
+  assert.ok(verify().ok);
+  // 판본 파일을 사건 없이 고치면 해시로 잡힌다.
+  S.writeText(S.agentDir('ag_0001', 'history', 'works', 'one.r1.md'), '몰래 고친 본문');
+  assert.match(verify().problems.join('\n'), /one\.r1\.md: 파일이 확정된 사건과 다르다/);
+});

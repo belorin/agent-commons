@@ -98,7 +98,7 @@ function createAgent(w, d, turn_id = null) {
     const path = `inherited/${d.proposal.id.slice(0, 8)}`;
     writeText(agentDir(agentId, 'private', path + '.md'), d.proposal.seed_note);
     writeText(agentDir(agentId, 'history', 'notes', path + '.r1.md'), d.proposal.seed_note);
-    appendEvent({ type: 'note_written', agent_id: agentId, actor_id: 'runtime', turn_id: turn_id ?? undefined, visibility: 'private', caused_by: [created.event_id], payload: { path, revision: 1, content: d.proposal.seed_note, title: `${d.proposal.by} 이(가) 건넨 기록`, hash: sha256(d.proposal.seed_note), origin: 'inherited' } });
+    appendEvent({ type: 'note_written', agent_id: agentId, actor_id: 'runtime', turn_id: turn_id ?? undefined, visibility: 'private', caused_by: [created.event_id], payload: { path, revision: 1, title: `${d.proposal.by} 이(가) 건넨 기록`, hash: sha256(d.proposal.seed_note), origin: 'inherited' } });
   }
   return agentId;
 }

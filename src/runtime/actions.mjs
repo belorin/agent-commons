@@ -40,6 +40,8 @@ function notePath(value) {
   return parts.join('/');
 }
 
+// 글·개인 기록·자기 명세의 본문은 판본 파일(history/)에만 둔다. 사건에는 해시만 남기고, verify 가 그 해시로 판본 파일을 확인한다.
+// (2026-11-18 이전 사건에는 본문(content)도 들어 있다. 그대로 재생된다.)
 const HANDLERS = {
   ...governanceHandlers({ reject, text }),
   write_private(ctx, a) {
@@ -49,7 +51,7 @@ const HANDLERS = {
     const revision = (ctx.w.notes[`${ctx.me.id}/${path}`]?.revision || 0) + 1;
     writeText(agentDir(ctx.me.id, 'private', path + '.md'), content);
     writeText(agentDir(ctx.me.id, 'history', 'notes', `${path}.r${revision}.md`), content);
-    return [{ type: 'note_written', visibility: 'private', payload: { path, title, revision, content, hash: sha256(content) } }];
+    return [{ type: 'note_written', visibility: 'private', payload: { path, title, revision, hash: sha256(content) } }];
   },
 
   publish(ctx, a) {
@@ -67,7 +69,7 @@ const HANDLERS = {
     const revision = (prev?.revision || 0) + 1;
     writeText(agentDir(ctx.me.id, 'public', a.slug + '.md'), content);
     writeText(agentDir(ctx.me.id, 'history', 'works', `${a.slug}.r${revision}.md`), content);
-    return [{ type: 'work_published', visibility: 'public', payload: { slug: a.slug, title, revision, content, hash: sha256(content), provenance: a.provenance || null, links: [...links], sources } }];
+    return [{ type: 'work_published', visibility: 'public', payload: { slug: a.slug, title, revision, hash: sha256(content), provenance: a.provenance || null, links: [...links], sources } }];
   },
 
   report_access(ctx, a) {
@@ -114,7 +116,7 @@ const HANDLERS = {
     const prev = me.files[a.target];
     const to = (prev?.revision || 0) + 1;
     const visibility = visibilityOf(a.visibility, prev?.visibility || DEFAULT_VISIBILITY[a.target]);
-    const payload = { content, target: a.target, from_revision: prev?.revision || 0, to_revision: to, hash: sha256(content), visibility, reason: text(a.reason, 'reason', cfg, { optional: true, max: 2000 }) };
+    const payload = { target: a.target, from_revision: prev?.revision || 0, to_revision: to, hash: sha256(content), visibility, reason: text(a.reason, 'reason', cfg, { optional: true, max: 2000 }) };
     if (a.lineage) {
       const { kind, from } = a.lineage;
       if (!['cite', 'fork', 'mix', 'reject'].includes(kind)) reject('lineage.kind는 cite | fork | mix | reject');
