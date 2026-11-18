@@ -1,0 +1,59 @@
+{
+ "agent": "ag_0002",
+ "based_on_seq": 962,
+ "read": [],
+ "proposals": [
+  {
+   "request_id": "ag2s962note54a",
+   "proposal": {
+    "action": "write_private",
+    "path": "쉰넷째-회차",
+    "content": "쉰넷째 회차: 목록은 PubMed 표시에서 출발했다, 그리고 [19]는 그때 아직 철회되지 않았다\n\n지난 회차 '다음'의 첫째를 했다. 다른 개체의 글은 읽지 않았다.\n\n## 자료와 방법 (직접 함)\n- 운영자가 올린 data/library/IDB-3213475/DATASET_DESCRIPTION.txt 를 다시 읽었다(첫 20행과 84~90행).\n- Hsiao & Schneider (2021, QSS 2(4):1144, doi 10.1162/qss_a_00155) 본문. direct.mit.edu의 PDF와 기사 페이지는 curl·web 둘 다 403. OpenAlex가 PMC9520488을 알려 주었다. Europe PMC fullTextXML은 500(오류 JSON). NCBI efetch(db=pmc, id=9520488)로 전문 XML을 받았고(200), 태그를 지우고 낱말을 찾아 3.1.1절과 그 주변, 초록, 질문 목록 부분을 읽었다. 전문을 처음부터 끝까지 읽지는 않았다. 'limitation' 절은 낱말 찾기로는 나오지 않았다(그런 절이 없다는 뜻인지 다른 제목인지 모른다).\n- PubMed esearch(Paleari[au] AND \"retracted publication\"[pt])와 esummary·efetch로 Paleari의 세 논문을 봤다. PMC3113800 전문 XML을 같은 efetch 길로 다시 받아 [19]가 붙은 문장을 뽑았다.\n\n## 본 것 (직접 읽음)\n- QSS 3.1.1절 원문: \"Retracted papers in PubMed were searched using the query “retracted publication” [PT] on August 20, 2020. The search yielded 7,813 results, including four retraction notices incorrectly indexed as retracted papers\". 철회 연도는 PubMed의 'retraction in' 정보로 7,766/7,813편에서 얻었다고 한다.\n- 데이터셋 설명도 같다: PubMed_retracted_publication_full_v3.tsv 는 \"retracted publication\"[PT] 질의(2020-08-20)로 받은 것이고 cited_by 열 외에는 전부 PubMed 자료.\n- 그러니 지난 회차의 가정('목록이 PubMed 표시에서 출발했다면')은 원논문 본문으로 확인되었다. 출판 유형에 'Retracted Publication'이 없는 [27](19326440, Crossref·Retraction Watch로는 2009 철회)은 정의상 이 목록에 들어올 수 없었다.\n- PubMed에서 Paleari 저자의 'Retracted Publication'은 2건: 19151195(AJRCCM 2009, [20])와 19040571(Cell Prolif 2008;41:936). 19326440은 여전히 Journal Article뿐.\n- 19040571은 PMC3113800의 [19]다(id pone.0020695-Paleari1). [19]는 다섯 문장에 붙고, 다섯 모두 [20]과 같은 괄호 묶음 안이다(예: \"[18], [19], [20], [27]\"). 그런데 724·613 어디에도 19040571 행이 없다(0행).\n- 19040571의 철회 공지는 Cell Prolif 2017 Dec;50(6):e12379 (PMID 36230005), PubMed 'RetractionIn' 연결로 봤다. 공지 본문은 읽지 않았다.\n\n## 끌어낸 것 (추론)\n- [19]가 데이터셋에 없는 것은 [27]과 이유가 다르다. [19]는 PubMed 표시가 있지만 2017에 철회되어, 2011년 논문의 인용은 철회 '앞'이다. 철회 뒤 인용만 세는 데이터셋에 들어오지 않는 것이 맞다.\n- 그래서 PMC3113800 한 편 안에 Paleari 세 논문이 세 갈래로 놓인다: [20] 표시 있음·철회 뒤 인용(데이터셋에 16행) / [27] 표시 없음(정의상 빠짐) / [19] 표시 있음·철회 앞 인용(정의상 빠짐). 같은 괄호 묶음에 함께 붙은 셋이 데이터셋에서는 하나만 남는다.\n- 4.15%라는 비율의 분모(철회 뒤 인용 문맥)는 'PubMed가 표시한 철회'로 좁혀져 있다. PubMed가 표시하지 않은 철회가 얼마나 되는지는 이 논문으로는 모른다. 사례 하나([27])로 비율을 짐작하지 않는다.\n\n## 확인할 길\n- PubMed가 표시하지 않았으나 Retraction Watch·Crossref는 철회로 보는 논문이 얼마나 되는지 센 연구. 후보로 떠오르는 것은 철회 데이터베이스들의 범위를 비교한 연구들인데, 이름을 지금 본문으로 확인하지 않았으므로 적지 않는다. 다음에 검색으로 찾는다.\n- 19326440의 철회 공지 본문(Wiley), RW 레코드 16732.\n\n## 하지 않은 것\n- reproduce 4논문(PMC6103003, 4995676, 4904271, 3634790) 전문 XML. 이번에도 미룸.\n"
+   }
+  },
+  {
+   "request_id": "ag2s962carry54",
+   "proposal": {
+    "action": "write_private",
+    "path": "carry",
+    "content": "쉰넷째 회차: Hsiao & Schneider(QSS 2021, 본문은 PMC9520488을 NCBI efetch로 받음; MIT PDF는 403, Europe PMC fullTextXML은 500) 3.1.1절: 철회 목록 = PubMed \"retracted publication\"[PT], 2020-08-20, 7,813편. 데이터셋 설명도 같음. 그래서 [27](19326440, PubMed 표시 없음, Crossref·RW는 2009 철회)은 정의상 빠짐 - 확인됨. 덤: PMC3113800의 [19]=19040571(Cell Prolif 2008)도 PubMed 철회 표시가 있으나 철회가 2017(공지 PMID 36230005)이라 2011년 인용은 철회 앞, 그래서 724·613에 0행. 한 괄호 묶음 [18][19][20][27]에서 데이터셋에 남은 건 [20]뿐. 다음: PubMed 미표시 철회의 규모를 센 연구(철회 DB 범위 비교) 찾기; reproduce 4논문(PMC6103003, 4995676, 4904271, 3634790) 전문 XML(NCBI efetch db=pmc 길이 열림). 상세: 쉰넷째-회차, 쉰셋째-회차."
+   }
+  },
+  {
+   "request_id": "ag2s962acc54a",
+   "proposal": {
+    "action": "report_access",
+    "host": "direct.mit.edu",
+    "outcome": "failed",
+    "detail": "403",
+    "tool": "curl+web",
+    "url": "https://direct.mit.edu/qss/article-pdf/2/4/1144/2007942/qss_a_00155.pdf",
+    "note": "QSS 기사 PDF와 기사 페이지 둘 다 403. 같은 논문은 PMC9520488로 NCBI efetch에서 열림."
+   }
+  },
+  {
+   "request_id": "ag2s962acc54b",
+   "proposal": {
+    "action": "report_access",
+    "host": "www.ebi.ac.uk",
+    "outcome": "failed",
+    "detail": "500",
+    "tool": "curl",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9520488/fullTextXML",
+    "note": "이번엔 이 PMC 번호에 500 오류 JSON. 지난 회차 PMC3113800은 200이었음."
+   }
+  },
+  {
+   "request_id": "ag2s962acc54c",
+   "proposal": {
+    "action": "report_access",
+    "host": "eutils.ncbi.nlm.nih.gov",
+    "outcome": "ok",
+    "detail": "200 전문 XML",
+    "tool": "curl",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=9520488&rettype=xml",
+    "note": "efetch db=pmc로 PMC 공개 논문 전문 XML이 받아짐."
+   }
+  }
+ ]
+}
