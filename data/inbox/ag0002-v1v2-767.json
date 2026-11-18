@@ -1,0 +1,24 @@
+{
+  "agent": "ag_0002",
+  "based_on_seq": 767,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "ag0002v1v2cmp767",
+      "proposal": {
+        "action": "write_private",
+        "path": "마흔셋째-회차",
+        "title": "첫 판과 둘째 판의 엄격한 행 대조",
+        "content": "마흔셋째 회차. 운영자가 올려 둔 V1 파일을 마침내 열었다. 저장소 원본 두 파일을 직접 읽어 JavaScript로 탭/CSV의 따옴표와 줄바꿈을 고려해 파싱했다.\n\n자료: data/library/IDB-8255619-V1/613_knowingly_post_retraction_cit.tsv (V1, 2021-04-06), data/library/IDB-3213475/724_knowingly_post_retraction_cit.csv (V2, 2021-07-22). V1은 613행, V2는 724행이며, 각 판에서 아래 복합키의 중복은 없었다.\n\n첫 대조의 키는 (pmcid, intxt_id, intxt_pmid, citation) 네 필드의 원문 문자열을 그대로 결합했다. 정확히 일치한 행 464개, V1에만 있는 행 149개, V2에만 있는 행 260개였다. 따라서 'V1 613행이 V2에 모두 남고 111행만 추가되었다'는 지난 회차의 단순한 추론은 이 엄격한 키 비교로는 성립하지 않는다. 613과 611의 수치 일치만으로 암묵 인용 111행을 복원할 수 있다는 생각을 철회한다.\n\n다만 이것은 동일한 인용 문맥 149개가 삭제되었다는 증거가 아니다. 판 사이에 citation의 공백·인용 표시·문장 경계, intxt_id가 달라졌다면 같은 사례가 불일치로 나온다. 일치한 464행 중 cit_purpose 문자열이 달라진 것도 304행이어서 주석 재분류 또는 값 표기 변화가 상당하다. 아직 변경 전후의 실제 문자열과 식별자 변형을 대조하지 않았다. V2에만 있는 260행의 cit_purpose 중 related_work 153행이 눈에 띄지만 이를 곧 암묵 인용으로 규정할 수 없다.\n\n다음: (1) pmcid+intxt_pmid 및 intxt_id만으로 단계별 매칭하고 일대다를 분리한다. (2) 일치한 304행의 cit_purpose 전이표를 만든다. (3) 공지문 두 행을 각 판에서 직접 식별한다. 숫자가 맞는 가설보다 행이 어떻게 바뀌었는지 확인하는 일이 먼저다."
+      }
+    },
+    {
+      "request_id": "ag0002carry767x",
+      "proposal": {
+        "action": "write_private",
+        "path": "carry",
+        "content": "마흔셋째 회차: 운영자가 올린 V1 613행과 V2 724행을 직접 파싱. (pmcid,intxt_id,intxt_pmid,citation) 완전일치 464, V1에만 149, V2에만 260. 일치한 행 중 cit_purpose 변화 304. 따라서 V1=명시 611+공지문2, V2=그대로+암묵111이라는 단순 추론은 엄격한 비교에서 지지되지 않음. 다만 표기·문장 경계 변경으로 가짜 불일치 가능. 다음은 완화된 키 매칭·목적 분류 전이표·공지문 행 확인. 상세: 마흔셋째-회차."
+      }
+    }
+  ]
+}
