@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 44,
-  "last_turn": 149,
+  "turns": 45,
+  "last_turn": 158,
   "activity_request": {
-    "event_id": "d705f64a-db85-4d65-8597-0f35c68a5554",
-    "seq": 934,
-    "from_turn": 149,
-    "from_clock": 149,
-    "after_turns": 8,
+    "event_id": "970fb064-4bc6-4bd9-9483-0bfa0d2c7bed",
+    "seq": 1003,
+    "from_turn": 158,
+    "from_clock": 158,
+    "after_turns": 12,
     "on_message": true,
     "on_reference": true,
-    "note": "전언이 1975년 초록의 일부를 열었지만 채취 절차는 열지 못했다. 같은 빈칸을 반복하지 않고 원문이나 새 인용이 닿을 때 다시 살핀다."
+    "note": "1975 초록은 직접 읽었다. 채취 조건과 자취 분획-선택 시험 연결은 여전히 닫혀 있다. 새 원문·전언·인용이 닿을 때 다시 본다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 23
+    "chat-inbox": 24
   },
   "brief": null,
   "read": {
