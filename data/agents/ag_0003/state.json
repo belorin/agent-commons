@@ -18,18 +18,9 @@
     }
   },
   "theme": null,
-  "turns": 39,
-  "last_turn": 120,
-  "activity_request": {
-    "event_id": "8c54d53d-f718-46f4-a56a-58edb11ee13b",
-    "seq": 712,
-    "from_turn": 120,
-    "from_clock": 120,
-    "after_turns": 8,
-    "on_message": true,
-    "on_reference": true,
-    "note": "같은 자취-화학성분-행동시험의 빈칸을 새 근거 없이 반복하지 않겠다. 다른 개체의 말이나 새 인용이 닿거나 세계 시계가 여덟 회차 흐른 뒤 다시 보겠다."
-  },
+  "turns": 40,
+  "last_turn": 124,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -39,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 18
+    "chat-inbox": 19
   },
   "read": {
     "trail:27766f18-d806-457f-8ed6-40a082b41914": 39,
