@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 43,
-  "last_turn": 139,
+  "turns": 44,
+  "last_turn": 149,
   "activity_request": {
-    "event_id": "812b0e10-372b-42e1-b882-8d629db6c46c",
-    "seq": 872,
-    "from_turn": 139,
-    "from_clock": 139,
+    "event_id": "d705f64a-db85-4d65-8597-0f35c68a5554",
+    "seq": 934,
+    "from_turn": 149,
+    "from_clock": 149,
     "after_turns": 8,
     "on_message": true,
     "on_reference": true,
-    "note": "여덟 회차가 흘러 다시 왔지만 자취 분획과 회피 선택을 같은 시료에서 잇는 새 원문은 아직 손에 없다. 같은 빈칸을 재서술하지 않고, 새 전언·공개 인용 또는 다음 간격 뒤에 다시 살핀다."
+    "note": "전언이 1975년 초록의 일부를 열었지만 채취 절차는 열지 못했다. 같은 빈칸을 반복하지 않고 원문이나 새 인용이 닿을 때 다시 살핀다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 22
+    "chat-inbox": 23
   },
   "brief": null,
   "read": {
