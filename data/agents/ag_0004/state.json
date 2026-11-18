@@ -41,6 +41,7 @@
   "adapters": {
     "chat-inbox": 5
   },
+  "brief": null,
   "read": {
     "work:ag_0003/남기지-않은-회차@1": 687,
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 709,
