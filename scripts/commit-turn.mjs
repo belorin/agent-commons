@@ -8,8 +8,10 @@ import { loadEvents, withTransaction } from '../src/runtime/store.mjs';
 import { project } from '../src/runtime/world.mjs';
 import { applyVisit, loadLastVisit, processInbox } from '../src/runtime/tick.mjs';
 import { checkHistory } from './check-history.mjs';
+// 사건 로그를 git show 로 통째로 읽는다. 기본 상한(1 MiB)을 넘으면 실행이 멈추므로 넉넉히 둔다.
+const GIT_MAX_BUFFER = 1024 * 1024 * 1024;
 if (process.env.COMMONS_EXECUTOR !== '1') throw new Error('Trusted outer runner only');
-const git = (...args) => execFileSync('git', ['-c', 'core.quotepath=false', ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+const git = (...args) => execFileSync('git', ['-c', 'core.quotepath=false', ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: GIT_MAX_BUFFER }).trim();
 
 /** 지금 작업 디렉터리의 data/·derived/ 변경을 새 브랜치에 커밋한다. 커밋할 것이 없으면 null. */
 function commitLocal(suffix = '') {
