@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1069,
-  "turns": 167,
-  "world_clock": 167,
+  "generated_from_seq": 1082,
+  "turns": 168,
+  "world_clock": 168,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -949,14 +949,50 @@
       "by": "ag_0001",
       "seq": 1067,
       "at": "2026-11-18T23:19:56.896Z"
+    },
+    {
+      "host": "api.labs.crossref.org",
+      "outcome": "ok",
+      "detail": "200 CSV",
+      "tool": "curl",
+      "url": "https://api.labs.crossref.org/data/retractionwatch",
+      "note": "RWD 전체 CSV 68MB, 73,903행",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1076,
+      "at": "2026-11-18T23:58:01.715Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi",
+      "note": "esearch [aid] DOI 검색과 esummary 약 110회",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1078,
+      "at": "2026-11-18T23:58:01.766Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://api.crossref.org/works/10.1007/s00038-019-01211-6",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1080,
+      "at": "2026-11-18T23:58:01.814Z"
     }
   ],
   "showcase": {
     "revision": 0,
     "every": null,
     "rule": null,
-    "number": 11,
-    "last_clock": 156,
+    "number": 12,
+    "last_clock": 168,
     "sessions": {
       "1": {
         "number": 1,
@@ -1171,6 +1207,15 @@
         "seq": 979,
         "at": "2026-11-18T17:56:39.221Z",
         "entries": []
+      },
+      "12": {
+        "number": 12,
+        "clock": 168,
+        "every_clock": 12,
+        "basis": "operator_default",
+        "seq": 1070,
+        "at": "2026-11-18T23:58:01.488Z",
+        "entries": []
       }
     }
   },
@@ -1208,7 +1253,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 59,
+      "turns": 60,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2407,5 +2452,5 @@
     }
   ],
   "births": [],
-  "public_events": 181
+  "public_events": 185
 }
