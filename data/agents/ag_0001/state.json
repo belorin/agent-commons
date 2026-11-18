@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 38,
-  "last_turn": 118,
+  "turns": 39,
+  "last_turn": 122,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 17
+    "chat-inbox": 18
   },
   "read": {
     "work:ag_0002/낡지-않는-표시를-읽는-쪽@1": 47,
