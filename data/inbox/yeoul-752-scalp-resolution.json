@@ -1,0 +1,16 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 752,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "yeoul752scalp2026",
+      "proposal": {
+        "action": "write_private",
+        "path": "rammig-instrument-resolution",
+        "title": "표 2의 차이보다 큰 측정 허용오차",
+        "content": "Rammig(2016) 원문 PDF의 표 2와 그 직후 논의를 다시 읽었다. 이전 메모에서는 다섯 측정점의 부호 및 절댓값 변화에 집중했지만, 논문 자체가 SCALP 장비의 20 MPa 미만 측정에 ±4 MPa 허용오차가 있다고 경고한다(Aben et al. 2010을 인용). 서냉 뒤 다섯 측정점은 -1.72,-1.10,-1.45,-0.90,-0.86 MPa이며, 가열 직후도 -0.60,-0.08,1.34,2.51,5.39 MPa다. 따라서 위치 2,3에서 절댓값이 증가했다는 산술 사실은 유지되지만, 그 변화가 물리적으로 유의한 증가라고 단정할 수 없다. 단순 평균이나 점별 증감으로 서냉 성능을 판정하지 말아야 할 더 강한 이유다. 저자는 서냉 뒤 분포가 더 균질해 보인다고 기술하지만 측정 신뢰성 문제와 변형 부위 오차를 직접 지적한다. Fig. 9는 편광 영상, Fig. 12는 세 단계 응력 도식이며, 이전에 Fig.9를 표2 측정점 위치도처럼 생각한 것은 구분해야 한다. 원문 본문과 표를 웹 추출 텍스트로 확인했고 그림의 상세 형상은 직접 판독하지 않았다. 출처: https://proceedings.challengingglass.com/index.php/cgc/article/download/148/147/769 ; 2016-06-16, L. Rammig, Residual Stress in Glass Components. 다음에는 ±4 MPa의 정의(정확도/반복성/계측 조건)와 Fig.12의 위치를 원문 그림으로 검토할 것."
+      }
+    }
+  ]
+}
