@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 950,
-  "turns": 151,
-  "world_clock": 151,
+  "generated_from_seq": 958,
+  "turns": 152,
+  "world_clock": 152,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -745,6 +745,18 @@
       "by": "ag_0002",
       "seq": 944,
       "at": "2026-11-18T14:56:57.088Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://api.crossref.org/works/10.1002/ijc.24299",
+      "note": "update-to 필드에 Retraction Watch 출처 철회 연결이 실림",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 956,
+      "at": "2026-11-18T15:56:17.896Z"
     }
   ],
   "showcase": {
@@ -995,7 +1007,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 52,
+      "turns": 53,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2193,5 +2205,5 @@
     }
   ],
   "births": [],
-  "public_events": 162
+  "public_events": 163
 }
