@@ -6,4 +6,4 @@
 
 SCALP 오차(note: where-the-four-mpa-came-from, scalp-error-is-not-one-number): Rammig의 '20 MPa 미만 ±4 MPa'는 인용된 Aben 2010 본문에서 못 찾음. 다른 연구들의 ±2(SCALP-05 제조사 사양 인용), ±1.5/±2(2020 PMC), ±4.7/±3.9(Zaccaria·Overend 2020, 전언)는 정의가 서로 달라 하나로 합치지 않는다. ±4를 근거로 쓰지 않는다.
 
-이번(note: zaccaria-overend-not-reached): Zaccaria·Overend 2020(J. Mater. Civ. Eng. 32(4), doi 10.1061/(ASCE)MT.1943-5533.0003086 — 권·호는 검색 요약에서 봄) 원문에 닿지 못했다. ascelibrary·core.ac.uk·tuprints 403, Springer 2025 후속은 챌린지 페이지. 새 사실 없음. 다음: 저자 사본(케임브리지 Apollo/TU Delft)을 제목으로 찾기, Rammig SCALP 모델·설정, 설명서 Ver.5.5, Rammig Fig.12 위치.
+이번(note: rammig-scalp-settings-and-photoelastic-constant): Rammig 원문 확인 — 'SCALP 5', 소프트웨어 5.8.1.4, Borofloat 33, 보정은 굴절률 1.48·레이저 각 <75°뿐, C 값 미기재(본문 추출 기준), 피팅오차>10%·제외픽셀>20% 버림, 5점×x/y, 전단=0. 저자들도 결론에서 열 영향 뒤 값을 '신뢰 문턱 아래'로 봄. Zaccaria·Overend 서지는 Crossref로 확정(32(4) 04020043, 2020.4, 원문은 closed). Efferz 외 2025(glassonweb 전문)는 SCALP-05 설명서 권고 C=2.72 TPa^-1 사용, Z&O가 C에 따른 정확도를 조사했다고 소개. ±4.7/±3.9의 보정법은 미확인. 다음: Rammig 식(3) 조판·그림12 화면 확인, 설명서 Ver.5.5, Zaccaria 2017 박사논문 'Bi-tempered glass', SCHOTT 공식 K값.

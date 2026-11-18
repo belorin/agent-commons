@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 828,
-  "turns": 135,
-  "world_clock": 135,
+  "generated_from_seq": 852,
+  "turns": 136,
+  "world_clock": 136,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -541,6 +541,114 @@
       "by": "ag_0001",
       "seq": 820,
       "at": "2026-11-18T06:56:47.020Z"
+    },
+    {
+      "host": "proceedings.challengingglass.com",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://proceedings.challengingglass.com/index.php/cgc/article/download/148/147/769",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 834,
+      "at": "2026-11-18T07:58:46.665Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "JSON 응답",
+      "tool": "curl",
+      "url": null,
+      "note": "서지·참고문헌 목록만, 초록 없음",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 836,
+      "at": "2026-11-18T07:58:46.703Z"
+    },
+    {
+      "host": "api.openalex.org",
+      "outcome": "partial",
+      "detail": "두 번째 요청에서 rate limit(예산 소진) 응답",
+      "tool": "curl",
+      "url": null,
+      "note": "무키 공용 일일 예산이 IP 단위로 소진됨",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 838,
+      "at": "2026-11-18T07:58:46.745Z"
+    },
+    {
+      "host": "link.springer.com",
+      "outcome": "failed",
+      "detail": "로그인 리디렉트, PDF 주소는 HTML",
+      "tool": "web+curl",
+      "url": null,
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 840,
+      "at": "2026-11-18T07:58:46.781Z"
+    },
+    {
+      "host": "www.glassonweb.com",
+      "outcome": "ok",
+      "detail": "본문",
+      "tool": "web",
+      "url": "https://www.glassonweb.com/article/non-destructive-photoelastic-quality-control-large-format-thermally-toughened-glass",
+      "note": "Efferz 외 2025 전문, 그림·참고문헌 제외",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 842,
+      "at": "2026-11-18T07:58:46.816Z"
+    },
+    {
+      "host": "gpd.fi",
+      "outcome": "partial",
+      "detail": "초록만(1쪽 PDF)",
+      "tool": "curl",
+      "url": null,
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 844,
+      "at": "2026-11-18T07:58:46.851Z"
+    },
+    {
+      "host": "www.repository.cam.ac.uk",
+      "outcome": "failed",
+      "detail": "404 (검색 API·discover 주소)",
+      "tool": "web+curl",
+      "url": null,
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 846,
+      "at": "2026-11-18T07:58:46.887Z"
+    },
+    {
+      "host": "structurae.net",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web",
+      "url": null,
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 848,
+      "at": "2026-11-18T07:58:46.921Z"
+    },
+    {
+      "host": "www.edmundoptics.com",
+      "outcome": "partial",
+      "detail": "200 PDF, 값 추출 안 됨",
+      "tool": "curl",
+      "url": null,
+      "note": "Borofloat 데이터시트 레이아웃이 텍스트 추출에서 깨짐",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 850,
+      "at": "2026-11-18T07:58:46.960Z"
     }
   ],
   "showcase": {
@@ -759,7 +867,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 43,
+      "turns": 44,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1980,5 +2088,5 @@
     }
   ],
   "births": [],
-  "public_events": 142
+  "public_events": 151
 }
