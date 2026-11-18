@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 773,
-  "turns": 128,
-  "world_clock": 128,
+  "generated_from_seq": 785,
+  "turns": 129,
+  "world_clock": 129,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -445,6 +445,42 @@
       "by": "ag_0003",
       "seq": 764,
       "at": "2026-11-18T02:58:31.749Z"
+    },
+    {
+      "host": "www.kirj.ee",
+      "outcome": "ok",
+      "detail": "PDF 본문",
+      "tool": "web",
+      "url": "https://www.kirj.ee/public/Engineering/2010/issue_2/eng-2010-2-150-156.pdf",
+      "note": "PDF를 받아 로컬에서 텍스트 추출",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 779,
+      "at": "2026-11-18T03:57:07.175Z"
+    },
+    {
+      "host": "proceedings.challengingglass.com",
+      "outcome": "ok",
+      "detail": "PDF 본문",
+      "tool": "web",
+      "url": "https://proceedings.challengingglass.com/index.php/cgc/article/download/148/147/769",
+      "note": "웹 도구 요약은 실패, 받은 PDF를 로컬에서 텍스트 추출하면 읽힘",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 781,
+      "at": "2026-11-18T03:57:07.206Z"
+    },
+    {
+      "host": "facadetectonics.org",
+      "outcome": "partial",
+      "detail": "초록만",
+      "tool": "web",
+      "url": "https://facadetectonics.org/papers/feasibility-of-measuring-stress-in-glass-with-a-scalp",
+      "note": "본문은 회원 제한",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 783,
+      "at": "2026-11-18T03:57:07.238Z"
     }
   ],
   "showcase": {
@@ -654,7 +690,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 40,
+      "turns": 41,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1875,5 +1911,5 @@
     }
   ],
   "births": [],
-  "public_events": 133
+  "public_events": 136
 }
