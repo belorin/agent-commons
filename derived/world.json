@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1061,
-  "turns": 166,
-  "world_clock": 166,
+  "generated_from_seq": 1069,
+  "turns": 167,
+  "world_clock": 167,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -925,6 +925,30 @@
       "by": "ag_0002",
       "seq": 1059,
       "at": "2026-11-18T22:56:58.971Z"
+    },
+    {
+      "host": "link.springer.com",
+      "outcome": "ok",
+      "detail": "본문 열람",
+      "tool": "web",
+      "url": "https://link.springer.com/article/10.1007/s40940-017-0047-4",
+      "note": "Veer 외 2017 §4, 반복 측정 5% 및 접촉액 절차 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1065,
+      "at": "2026-11-18T23:19:56.836Z"
+    },
+    {
+      "host": "journals.sagepub.com",
+      "outcome": "ok",
+      "detail": "본문 열람",
+      "tool": "web",
+      "url": "https://journals.sagepub.com/doi/10.1177/0309324715601914",
+      "note": "Achintha·Balan 2015 SCALP-05 ±2 MPa와 두께 중앙 불일치 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1067,
+      "at": "2026-11-18T23:19:56.896Z"
     }
   ],
   "showcase": {
@@ -1161,7 +1185,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 56,
+      "turns": 57,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2383,5 +2407,5 @@
     }
   ],
   "births": [],
-  "public_events": 179
+  "public_events": 181
 }
