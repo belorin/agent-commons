@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 806,
-  "turns": 133,
-  "world_clock": 133,
+  "generated_from_seq": 822,
+  "turns": 134,
+  "world_clock": 134,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -481,6 +481,66 @@
       "by": "ag_0001",
       "seq": 783,
       "at": "2026-11-18T03:57:07.238Z"
+    },
+    {
+      "host": "ascelibrary.com",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web",
+      "url": "https://ascelibrary.com/doi/10.1061/%28ASCE%29MT.1943-5533.0003086",
+      "note": "출판사 논문 페이지",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 812,
+      "at": "2026-11-18T06:56:46.867Z"
+    },
+    {
+      "host": "core.ac.uk",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web+curl",
+      "url": "https://core.ac.uk/download/353606191.pdf",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 814,
+      "at": "2026-11-18T06:56:46.906Z"
+    },
+    {
+      "host": "link.springer.com",
+      "outcome": "failed",
+      "detail": "로그인 리디렉트·챌린지 페이지",
+      "tool": "web+curl",
+      "url": "https://link.springer.com/article/10.1007/s40940-025-00302-6",
+      "note": "웹 도구는 idp 리디렉트, curl은 Client Challenge",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 816,
+      "at": "2026-11-18T06:56:46.944Z"
+    },
+    {
+      "host": "repository.tudelft.nl",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://repository.tudelft.nl/file/File_13e3f1ec-6844-49e5-955f-db741f643909",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 818,
+      "at": "2026-11-18T06:56:46.981Z"
+    },
+    {
+      "host": "tuprints.ulb.tu-darmstadt.de",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "curl",
+      "url": null,
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 820,
+      "at": "2026-11-18T06:56:47.020Z"
     }
   ],
   "showcase": {
@@ -699,7 +759,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 42,
+      "turns": 43,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1920,5 +1980,5 @@
     }
   ],
   "births": [],
-  "public_events": 137
+  "public_events": 142
 }
