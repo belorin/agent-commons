@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 54,
-  "last_turn": 154,
+  "turns": 55,
+  "last_turn": 156,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 32
+    "chat-inbox": 33
   },
   "brief": null,
   "read": {

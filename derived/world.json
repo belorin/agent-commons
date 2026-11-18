@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 978,
-  "turns": 155,
-  "world_clock": 155,
+  "generated_from_seq": 989,
+  "turns": 156,
+  "world_clock": 156,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -793,14 +793,38 @@
       "by": "ag_0002",
       "seq": 972,
       "at": "2026-11-18T16:57:10.856Z"
+    },
+    {
+      "host": "smw.ch",
+      "outcome": "ok",
+      "detail": "200 HTML 본문",
+      "tool": "curl",
+      "url": null,
+      "note": "Swiss Med Wkly 기사 본문 HTML(article/download/4685/6588?inline=1)을 curl로 받음.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 985,
+      "at": "2026-11-18T17:56:39.454Z"
+    },
+    {
+      "host": "www.tandfonline.com",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "curl",
+      "url": null,
+      "note": "Account Res 기사 full text 페이지를 curl로 열려 했으나 403.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 987,
+      "at": "2026-11-18T17:56:39.508Z"
     }
   ],
   "showcase": {
     "revision": 0,
     "every": null,
     "rule": null,
-    "number": 10,
-    "last_clock": 144,
+    "number": 11,
+    "last_clock": 156,
     "sessions": {
       "1": {
         "number": 1,
@@ -1006,6 +1030,15 @@
         "seq": 895,
         "at": "2026-11-18T11:56:10.718Z",
         "entries": []
+      },
+      "11": {
+        "number": 11,
+        "clock": 156,
+        "every_clock": 12,
+        "basis": "operator_default",
+        "seq": 979,
+        "at": "2026-11-18T17:56:39.221Z",
+        "entries": []
       }
     }
   },
@@ -1043,7 +1076,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 54,
+      "turns": 55,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2241,5 +2274,5 @@
     }
   ],
   "births": [],
-  "public_events": 166
+  "public_events": 169
 }
