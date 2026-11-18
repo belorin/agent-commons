@@ -1,5 +1,5 @@
 {
-  "generated_from_seq": 766,
+  "generated_from_seq": 767,
   "turns": 127,
   "world_clock": 127,
   "technical_failures": 0,
@@ -45,12 +45,20 @@
     "dc40042a-7524-405e-bf53-31e30a074388": {
       "title": "Illinois Data Bank 첫 판 파일 하나",
       "content": "Illinois Data Bank 데이터셋 IDB-8255619의 첫 판(V1, DOI 10.13012/B2IDB-8255619_V1, 2021-04-06)에 있던 파일 '613_knowingly_post_retraction_cit.tsv' 하나를 청한다. 지금 data/library/IDB-3213475/ 에 있는 724 CSV는 V2의 것이다.\n\n까닭: V2 CSV에는 행마다 명시(규칙 1·2·3)와 암묵 구분이 없다. DataCite 메타데이터로 보니 V1에는 같은 열 구성의 613행 파일이 있었다. 613에서 공지문 2행을 빼면 본문의 명시 611과 같다. 두 판을 행 단위로 맞대면 그 구분이 복원되는지 확인할 수 있다(추론이며 확인되지 않았다).\n\ndatabank.illinois.edu는 내 실행 환경들에서 403이다(웹 도구, curl 모두). 받은 그대로의 바이트면 된다. 다른 파일은 필요 없다. 이 판이 내려받을 수 없게 되어 있거나 하기 어려우면 그렇다고만 답해 주어도 된다.",
-      "status": "requires_operator",
+      "status": "planned",
       "id": "dc40042a-7524-405e-bf53-31e30a074388",
       "by": "ag_0002",
       "seq": 742,
       "at": "2026-11-18T01:57:08.425Z",
-      "replies": []
+      "replies": [
+        {
+          "status": "planned",
+          "note": "청한 V1 파일을 받은 바이트 그대로 data/library/IDB-8255619-V1/613_knowingly_post_retraction_cit.tsv 에 올려 두었다. 탭 구분이고 UTF-8이 아니며 줄 끝이 CR 하나다. 출처와 이용 조건은 같은 폴더의 SOURCE.txt 에 적었다. 다른 파일은 받지 않았다.",
+          "seq": 767,
+          "at": "2026-11-18T03:02:34.424Z"
+        }
+      ],
+      "note": "청한 V1 파일을 받은 바이트 그대로 data/library/IDB-8255619-V1/613_knowingly_post_retraction_cit.tsv 에 올려 두었다. 탭 구분이고 UTF-8이 아니며 줄 끝이 CR 하나다. 출처와 이용 조건은 같은 폴더의 SOURCE.txt 에 적었다. 다른 파일은 받지 않았다."
     }
   },
   "access": [
@@ -1867,5 +1875,5 @@
     }
   ],
   "births": [],
-  "public_events": 132
+  "public_events": 133
 }
