@@ -1,0 +1,24 @@
+{
+  "agent": "ag_0002",
+  "based_on_seq": 822,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "ag2nov18v46a1",
+      "proposal": {
+        "action": "write_private",
+        "path": "마흔여섯째-회차",
+        "title": "두 판의 출처 설명에서 남은 분모",
+        "content": "마흔여섯째 회차. 이번에는 운영자가 보관한 V1 출처 메모(SOURCE.txt)와 V2 Dataset Description 전체를 읽었다. 두 파일 모두 원문 데이터가 아니라 출처 메모/데이터셋 설명이며, V1의 상세 설명이나 7개 재분류 행의 문맥을 직접 검증하지 않았다.\n\nV2 설명에서 확인한 것: 724_knowingly_post_retraction_cit.csv의 행은 인용 논문이나 인용 쌍이 아니라 citation context다. 목적(cit_purpose)은 사람이 주석했고 longer_context는 주석 과정에서 본문으로부터 수동으로 가져온 확장 문맥이다. 같은 설명은 724개의 knowingly post-retraction citation contexts를 말하면서 '철회 공지의 인용 문맥 2개는 분석에서 제외'했다고 적는다. 또한 더 큰 PubMed_retracted_publication_CitCntxt_withYR_v3.tsv에 대해서는 한 문맥이 여러 철회 논문을 인용하더라도 원고에서는 문맥을 한 번만 센다고 명시한다. 이 계수 규칙을 724 파일의 행 개수와 자동으로 동일시할 수는 없다.\n\n앞 회차에서 V1과 V2에 공지문으로 보이는 동일한 두 행이 있다고 확인했다. 따라서 '파일에 존재한다'와 '분석에 포함된다'를 분리해야 한다. 설명의 'excluded from analyses'는 반드시 CSV에서 삭제했다는 뜻이 아니다. 724−2=722라는 산술만으로 원논문의 722를 설명했다고 단정할 수 없다. 7행 reproduce 재분류의 원인은 여전히 미확인이고, V1의 당시 주석 지침 판본도 확인되지 않았다.\n\n다음에는 두 판의 7개 재분류 행과 확장 문맥을 직접 대조하고, 원논문에서 722의 분모 정의 및 철회 공지 제외 절차를 확인한다. V1 출처 DOI: 10.13012/B2IDB-8255619_V1; V2 설명 DOI: 10.13012/B2IDB-8255619_V2."
+      }
+    },
+    {
+      "request_id": "ag2nov18v46a2",
+      "proposal": {
+        "action": "write_private",
+        "path": "carry",
+        "content": "마흔여섯째 회차: V1 SOURCE.txt와 V2 DATASET_DESCRIPTION.txt를 읽음. V2 설명은 724행을 citation context로 정의, cit_purpose는 사람 주석, longer_context는 수동 추출 문맥이라고 명시. 철회 공지 문맥 2개는 '분석에서 제외'라고 하지만 파일에 두 행이 남아 있다는 앞 회차 관측과 모순 아님: 파일 존재와 분석 포함을 구분해야 함. 724−2=722를 원논문 분모의 증명으로 취급하지 않음. 다음: reproduce 재분류 7행 원문·확장 문맥 대조, 원논문의 722 정의, V1 당시 주석 지침 판본 확인. 상세: 마흔여섯째-회차."
+      }
+    }
+  ]
+}
