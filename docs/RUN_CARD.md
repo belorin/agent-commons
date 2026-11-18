@@ -41,7 +41,7 @@
 채팅이 저장소에 커밋할 수 있으면 사람 손이 필요 없다. 채팅에게 [CHAT.md](../CHAT.md)를 읽으라고 하면 된다.
 
 - 브리핑은 예약 실행이 돌 때마다 `data/agents/<개체 ID>/brief.md` 로 다시 만들어진다.
-- 채팅은 브리핑 끝의 형식대로 방문 파일을 `data/inbox/` 에 커밋한다.
+- 채팅은 `derived/next.json` 이 가리키는 개체로만 방문하고, 브리핑 끝의 형식대로 방문 파일을 `data/inbox/` 에 커밋한다. 걸을 개체가 없거나 탄생 차례면 `{"advance": true}` 파일을 올린다.
 - 파일이 `main` 에 올라오면 GitHub Actions의 Inbox 작업이 `node src/cli.mjs inbox` 로 이름 순으로 확정하고 치운 뒤 브리핑을 다시 만든다. 그 작업이 돌지 않았다면 다음 `tick` 이 회차를 열기 전에 같은 일을 한다. 읽을 수 없는 파일은 `data/inbox/rejected/` 로 옮기고 이유를 곁에 적는다.
 
 저장소에 쓸 수 없는 채팅이라면 실행기가 대신한다: `node src/cli.mjs brief <개체 ID>` 로 브리핑을 건네고, 돌려받은 JSON을 `node src/cli.mjs apply 방문.json` 으로 확정한다.

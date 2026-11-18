@@ -1014,8 +1014,10 @@ test('brief는 아무것도 남기지 않고, apply는 방문 하나를 한 번�
   const w = world();
   assert.equal(w.turn, null);
   assert.equal(w.clock, clock + 2); // 방문도 세계 시계를 1 올린다(ag_0002의 방문 1 + 이 방문 1)
-  const opened = S.loadEvents().filter((e) => e.type === 'turn_opened').at(-1);
-  assert.equal(opened.payload.selection, 'visit');
+  const openedAll = S.loadEvents().filter((e) => e.type === 'turn_opened');
+  const opened = openedAll.at(-1);
+  assert.equal(openedAll.at(-2).payload.selection, 'visit'); // 순번이 아닌 개체를 지정해 연 방문
+  assert.equal(opened.payload.selection, 'fair'); // 지정한 개체가 마침 순번이 고른 개체면 순번의 근거가 남는다
   assert.equal(opened.payload.delivered.length, 1);
   assert.equal(w.messages.filter((m) => m.to === 'ag_0001' && !m.delivered).length, 1); // 나중에 온 말은 다음 브리핑에 실린다
   assert.ok(w.agents.ag_0001.read['agent:ag_0002']);
@@ -1052,9 +1054,10 @@ test('저장소에 넣어 둔 방문 파일은 다음 예약 실행이 확정하
   closeTurn();
   assert.match(S.readText(S.agentDir('ag_0002', 'brief.md')), /지난 방문에서 거절된 제안: publish — slug/);
   // 회차를 열지 않고 대기 방문만 확정하는 길. 파일이 주장하는 어댑터는 받지 않는다.
-  S.writeText(S.p('data', 'inbox', 'c.json'), JSON.stringify({ agent: 'ag_0001', adapter: 'forged', proposals: [] }));
+  const nextAgent = JSON.parse(S.readText(S.p('derived', 'next.json'))).agent;
+  S.writeText(S.p('data', 'inbox', 'c.json'), JSON.stringify({ agent: nextAgent, adapter: 'forged', proposals: [] }));
   const only = spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ADAPTER: 'chat-inbox' } });
-  assert.match(only.stdout, /c\.json: ag_0001 방문/);
+  assert.match(only.stdout, new RegExp(`c\\.json: ${nextAgent} 방문`));
   assert.equal(world().turn, null);
   assert.equal(S.loadEvents().filter((e) => e.type === 'turn_opened').at(-1).payload.adapter, 'chat-inbox');
   assert.doesNotMatch(S.readText(S.agentDir('ag_0001', 'brief.md')), /from-chat/); // 남의 기록은 실리지 않는다
@@ -1136,4 +1139,67 @@ test('운영자가 기질을 준 개체: 원문이 공개 사건에 남고, 본�
   assert.ok(verify().ok);
   buildSite();
   assert.match(fs.readFileSync(S.p('site', 'agents.html'), 'utf8'), /운영자 발급 · 기질 부여/);
+});
+
+test('채팅 경로도 실행기의 순번을 따른다: 기다리는 개체는 건너뛰고, 걸을 개체가 없으면 세계만 흘린다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const inbox = () => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ADAPTER: 'chat-inbox' } });
+  const next = () => JSON.parse(S.readText(S.p('derived', 'next.json')));
+  const drop = (name, body) => S.writeText(S.p('data', 'inbox', name), JSON.stringify(body));
+  turn(); turn(); // ag_0001, ag_0002 탄생
+  assert.equal(next().kind, 'walk');
+  assert.equal(next().agent, 'ag_0001');
+  // ag_0001 이 세계 시계 3칸 뒤를 청한다.
+  drop('a.json', { agent: 'ag_0001', proposals: [{ request_id: 'wait-0001', proposal: { action: 'request_activity', after_turns: 3 } }] });
+  assert.match(inbox().stdout, /a\.json: ag_0001 방문/);
+  assert.equal(next().agent, 'ag_0002');
+  assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /지금은 가리키지 않는다/);
+  // 순번이 아닌 개체의 방문은 확정되지 않고 받지 못한 파일로 옮겨진다.
+  drop('b.json', { agent: 'ag_0001', proposals: [{ request_id: 'early-0001', proposal: { action: 'write_private', path: 'x', content: 'y' } }] });
+  assert.match(inbox().stdout, /b\.json: 받지 못함 — 순번이 아니다: 지금 차례는 ag_0002/);
+  assert.ok(fs.existsSync(S.p('data', 'inbox', 'rejected', 'b.json')));
+  assert.ok(!S.loadEvents().some((e) => e.payload?.request_id === 'early-0001'));
+  // ag_0002 도 기다리기로 하면 걸을 개체가 없다. 방문 대신 세계를 흘리는 파일이 시계를 올린다.
+  drop('c.json', { agent: 'ag_0002', proposals: [{ request_id: 'wait-0002', proposal: { action: 'request_activity', after_turns: 5 } }] });
+  inbox();
+  assert.equal(next().kind, 'idle');
+  assert.match(next().reason, /스스로 정한 때를 기다/);
+  drop('d.json', { agent: 'ag_0002', proposals: [] });
+  assert.match(inbox().stdout, /d\.json: 받지 못함 — 순번이 아니다: 지금 차례는 방문이 아니라 세계 흘리기\(idle\)/);
+  const clock = world().clock;
+  drop('e.json', { advance: true, based_on_seq: next().based_on_seq });
+  assert.match(inbox().stdout, /e\.json: 방문 없이 세계 시계가 한 칸 흘렀다/);
+  assert.equal(world().clock, clock + 1);
+  assert.equal(S.loadEvents().at(-1).type, 'world_idle');
+  drop('f.json', { advance: true }); inbox(); // 한 번 더 흘리면 ag_0001 의 3칸이 찬다
+  assert.deepEqual([next().kind, next().agent, next().selection, next().request_reason], ['walk', 'ag_0001', 'requested', 'elapsed']);
+  assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /네가 남긴 활동 요청에 따라 배정되었다: 네가 요청한 세계 회차 간격이 찼다/);
+  // 걸을 개체가 있을 때 세계를 흘리는 파일은 받지 않는다.
+  drop('g.json', { advance: true });
+  assert.match(inbox().stdout, /g\.json: 받지 못함 — 걸을 개체가 있다\(ag_0001\)/);
+  drop('h.json', { agent: 'ag_0001', proposals: [] });
+  inbox();
+  const opened = S.loadEvents().filter((e) => e.type === 'turn_opened').at(-1);
+  assert.equal(opened.payload.selection, 'requested'); // 순번의 근거가 방문 기록에 남는다
+  assert.equal(opened.payload.request_reason, 'elapsed');
+  assert.ok(verify().ok);
+});
+
+test('채팅 경로의 탄생: 차례가 오면 세계 흘리기 파일로 개체만 발급하고, 첫 방문은 다음 순번으로 온다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const inbox = () => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ADAPTER: 'chat-inbox' } });
+  const next = () => JSON.parse(S.readText(S.p('derived', 'next.json')));
+  turn(); turn();
+  turn([{ action: 'propose_birth', reason: '혼자 낸 제안', seed_note: '건네는 기록' }]); // ag_0001
+  assert.equal(next().kind, 'birth');
+  S.writeText(S.p('data', 'inbox', 'z.json'), JSON.stringify({ advance: true }));
+  assert.match(inbox().stdout, /ag_0003 이\(가\) 태어났다\(탄생 제안\)/);
+  const w = world();
+  assert.equal(w.agents.ag_0003.origin, 'birth_proposal');
+  assert.equal(w.turn, null);
+  assert.equal(next().agent, 'ag_0003');
+  const brief = S.readText(S.agentDir('ag_0003', 'brief.md'));
+  assert.match(brief, /방금 생겨났다\. ag_0001 의 탄생 제안에서 비롯했다/);
+  assert.equal(S.readText(S.agentDir('ag_0003', 'private', `inherited/${w.agents.ag_0003.proposal.slice(0, 8)}.md`)), '건네는 기록');
+  assert.ok(verify().ok);
 });

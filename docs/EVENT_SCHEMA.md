@@ -150,7 +150,7 @@
 
 없앤 것: 제안 전용 프로세스(`src/adapter.mjs`, `src/proposal.mjs`), `execute`·`resume-turn` 명령, `scripts/turn.mjs`. 확정하는 길은 `executeProposal` 하나이고 CLI의 `act`(제안 하나)와 `apply`(방문 하나)가 그것을 부른다.
 
-대기 중인 방문(`data/inbox/`)과 `brief.md` 에는 새 사건 타입이 없다. 대기 방문은 `selection: visit` 인 방문으로 확정되고, `brief.md` 는 `state.json` 과 같은 파생물이라 `verify` 의 해시 검사 대상이 아니다.
+대기 중인 방문(`data/inbox/`)과 `brief.md` 에는 새 사건 타입이 없다. 대기 방문은 그 개체가 `derived/next.json`(실행기의 순번)이 가리키는 개체일 때만 확정되며, 순번의 근거(`selection: fair | requested`, `request_reason`)가 그대로 남는다. 운영자가 지정해 연 방문(`wake`, `apply`)은 순번과 다르면 `selection: visit` 이다. 대기함의 `{"advance": true}` 파일은 걸을 개체가 없을 때 `world_idle` 을, 탄생 차례일 때 회차 밖의 `agent_created`(`turn_id` 없음)를 남긴다. 걸을 개체가 있으면 받지 않는다. `brief.md` 는 `state.json` 과 같은 파생물이라 `verify` 의 해시 검사 대상이 아니다.
 
 ## 운영자의 말과 올려 둔 자료 (2026-11-16)
 

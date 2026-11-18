@@ -5,6 +5,8 @@ import { verify } from './verify.mjs';
 import crypto from 'node:crypto';
 import { appendEvent, withTransaction, loadEvents, loadConfig, isPaused, p, agentDir, writeText, readText, sha256 } from './store.mjs';
 import { project, living } from './world.mjs';
+import { decide, activityDue, nextVisit } from './schedule.mjs';
+export { decide, activityDue, nextVisit };
 import { briefing } from './briefing.mjs';
 import { regenerate } from './derive.mjs';
 import { executeProposal } from './actions.mjs';
@@ -31,57 +33,12 @@ export function noteRead(key) {
 
 const pad = (n) => String(n).padStart(4, '0');
 
-function wakeDue(w, a) {
-  if (a.status !== 'dormant') return false;
-  const wake = a.wake || {};
-  if (wake.after_turns != null && w.clock - (a.dormant_since_clock ?? a.dormant_since_turn) >= wake.after_turns) return true;
-  if (wake.on_message && w.messages.some((m) => m.to === a.id && !m.delivered)) return true;
-  return false;
-}
-
 /** 세계 시계가 곧 닿을 값에서 발표회가 열릴 차례면 공개 사건으로 남긴다. 개체에게 아무것도 요구하지 않는다. */
 function openShowcaseIfDue(w, cfg) {
   const s = showcaseSettings(w, cfg);
   const clock = w.clock + 1;
   if (!s.enabled || clock < nextShowcaseClock(w, cfg)) return;
   appendEvent({ type: 'showcase_opened', visibility: 'public', payload: { number: w.showcase.number + 1, clock, every_clock: s.every, basis: s.basis } });
-}
-
-/** 개체가 선택한 다음 활동 조건. OR 관계이며 응답을 강제하지 않는다. */
-export function activityDue(w, a) {
-  const r = a.activity_request;
-  if (!r || a.status !== 'active') return null;
-  if (r.after_turns !== null && w.clock - (r.from_clock ?? r.from_turn) >= r.after_turns) return 'elapsed';
-  if (r.on_message && w.messages.some((m) => m.to === a.id && m.seq > r.seq && !m.delivered)) return 'message';
-  if (r.on_reference && Object.values(w.works).some((x) =>
-    x.agent !== a.id && x.status === 'published' && x.seq > r.seq &&
-    x.links.some((link) => link === a.id || link.startsWith(a.id + '/')))) return 'reference';
-  return null;
-}
-
-/** 이번 회차에 무슨 일이 일어날지 정한다. 난수도 숨은 확률도 없다. */
-export function decide(w, cfg) {
-  const alive = living(w);
-  const created = Object.keys(w.agents).length;
-  const room = alive.length < cfg.max_population;
-  if (created < cfg.seed_population && room) return { kind: 'birth', origin: 'operator_seed' };
-  const accepted = Object.values(w.births).filter((b) => b.status === 'accepted').sort((x, y) => x.seq - y.seq)[0];
-  if (accepted && room && w.turns - w.last_birth_turn >= cfg.birth.min_turns_between_births) {
-    return { kind: 'birth', origin: 'birth_proposal', proposal: accepted };
-  }
-  // 아직 조건이 차지 않은 요청은 그 개체가 스스로 일반 순번을 유보한 것으로 취급한다.
-  const eligible = alive.filter((a) =>
-    (a.status === 'active' && (!a.activity_request || activityDue(w, a))) || wakeDue(w, a)
-  ).sort((x, y) => x.last_turn - y.last_turn || x.id.localeCompare(y.id));
-  const due = eligible.filter((a) => a.status === 'active' && activityDue(w, a));
-  const limit = Number.isInteger(cfg.scheduling?.max_request_streak) ? Math.max(0, cfg.scheduling.max_request_streak) : 2;
-  if (due.length && (w.request_streak < limit || due.length === eligible.length)) {
-    const agent = due[0];
-    return { kind: 'walk', agent, selection: 'requested', request_reason: activityDue(w, agent), request_id: agent.activity_request.event_id };
-  }
-  if (eligible.length) return { kind: 'walk', agent: eligible[0], selection: 'fair' };
-  if (!alive.length && cfg.on_empty_world === 'reseed') return { kind: 'birth', origin: 'operator_seed', reseed: true };
-  return { kind: 'idle', reason: alive.length ? '깨어 있는 개체가 없다(모두 휴면)' : '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
 }
 
 /**
@@ -105,7 +62,8 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   if (agent) {
     const a = w.agents[agent];
     if (!a || !['active', 'dormant'].includes(a.status)) return { status: 'error', text: `${agent}: 방문을 열 수 있는 개체가 아니다` };
-    d = { kind: 'walk', agent: a, selection: 'visit', operator_wake: operator_wake || undefined };
+    // 지정한 개체가 마침 순번이 고른 개체라면(채팅이 derived/next.json 을 따랐을 때) 순번의 근거를 그대로 남긴다.
+    d = d.kind === 'walk' && d.agent.id === agent && !operator_wake ? d : { kind: 'walk', agent: a, selection: 'visit', operator_wake: operator_wake || undefined };
   }
   if (d.kind === 'idle') {
     openShowcaseIfDue(w, cfg);
@@ -115,23 +73,7 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   }
 
   const turn_id = 't_' + crypto.randomUUID().slice(0, 8);
-  let agentId;
-  if (d.kind === 'birth') {
-    agentId = 'ag_' + pad(Object.keys(w.agents).length + 1); // ID는 순번이며 재사용하지 않는다
-    const created = appendEvent({
-      type: 'agent_created', agent_id: agentId, actor_id: d.origin === 'operator_seed' ? 'operator' : d.proposal.by, turn_id, visibility: 'public',
-      caused_by: d.proposal ? [d.proposal.id] : [],
-      payload: { origin: d.origin, reseed: d.reseed || undefined, proposal: d.proposal?.id, lineage: d.proposal?.contributors || [] },
-    });
-    fs.mkdirSync(agentDir(agentId, 'private'), { recursive: true });
-    fs.mkdirSync(agentDir(agentId, 'public'), { recursive: true });
-    if (d.proposal?.seed_note) {
-      const path = `inherited/${d.proposal.id.slice(0, 8)}`;
-      writeText(agentDir(agentId, 'private', path + '.md'), d.proposal.seed_note);
-      writeText(agentDir(agentId, 'history', 'notes', path + '.r1.md'), d.proposal.seed_note);
-      appendEvent({ type: 'note_written', agent_id: agentId, actor_id: 'runtime', turn_id, visibility: 'private', caused_by: [created.event_id], payload: { path, revision: 1, content: d.proposal.seed_note, title: `${d.proposal.by} 이(가) 건넨 기록`, hash: sha256(d.proposal.seed_note), origin: 'inherited' } });
-    }
-  } else agentId = d.agent.id;
+  const agentId = d.kind === 'birth' ? createAgent(w, d, turn_id) : d.agent.id;
 
   // 브리핑을 미리 받아 간 방문(based_on_seq)은 그 브리핑에 실렸던 전언만 도착한 것으로 친다.
   const delivered = w.messages.filter((m) => m.to === agentId && !m.delivered && (based_on_seq == null || m.seq <= based_on_seq)).map((m) => m.event_id);
@@ -140,6 +82,50 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, manual: manual || undefined, based_on_seq: based_on_seq ?? undefined, delivered, adapter, model } });
   writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, kind: d.kind, adapter, model, read: [], proposals: [] }, null, 2));
   return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text: briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents(), adapter }) };
+}
+
+/** 새 개체를 발급한다. 탄생 회차(turn_id 있음)에서도, 회차 밖의 세계 흘리기(turn_id 없음)에서도 같은 사건을 남긴다. */
+function createAgent(w, d, turn_id = null) {
+  const agentId = 'ag_' + pad(Object.keys(w.agents).length + 1); // ID는 순번이며 재사용하지 않는다
+  const created = appendEvent({
+    type: 'agent_created', agent_id: agentId, actor_id: d.origin === 'operator_seed' ? 'operator' : d.proposal.by, turn_id: turn_id ?? undefined, visibility: 'public',
+    caused_by: d.proposal ? [d.proposal.id] : [],
+    payload: { origin: d.origin, reseed: d.reseed || undefined, proposal: d.proposal?.id, lineage: d.proposal?.contributors || [] },
+  });
+  fs.mkdirSync(agentDir(agentId, 'private'), { recursive: true });
+  fs.mkdirSync(agentDir(agentId, 'public'), { recursive: true });
+  if (d.proposal?.seed_note) {
+    const path = `inherited/${d.proposal.id.slice(0, 8)}`;
+    writeText(agentDir(agentId, 'private', path + '.md'), d.proposal.seed_note);
+    writeText(agentDir(agentId, 'history', 'notes', path + '.r1.md'), d.proposal.seed_note);
+    appendEvent({ type: 'note_written', agent_id: agentId, actor_id: 'runtime', turn_id: turn_id ?? undefined, visibility: 'private', caused_by: [created.event_id], payload: { path, revision: 1, content: d.proposal.seed_note, title: `${d.proposal.by} 이(가) 건넨 기록`, hash: sha256(d.proposal.seed_note), origin: 'inherited' } });
+  }
+  return agentId;
+}
+
+/**
+ * 방문 없이 세계를 한 칸 흘린다. 명령을 못 돌리는 채팅이 derived/next.json 에서 걸을 개체가 없다는 것(idle)이나
+ * 탄생 차례(birth)를 보고 올린 파일을 실행기가 처리하는 길이다. 예약 실행의 tick 이 그 경우에 하는 일과 같다.
+ * 탄생은 회차를 열지 않고 개체만 발급한다. 새 개체의 첫 방문은 다음 순번으로 온다.
+ */
+function advanceUnlocked() {
+  if (isPaused()) throw new Error('정지 중이다(control/PAUSE)');
+  const verification = verify();
+  if (!verification.ok) throw new Error(verification.problems.join('\n'));
+  const cfg = loadConfig();
+  const w = project(loadEvents());
+  if (w.turn) throw new Error(`열린 방문 ${w.turn.turn_id} 이(가) 있다`);
+  const d = decide(w, cfg);
+  if (d.kind === 'walk') throw new Error(`걸을 개체가 있다(${d.agent.id}). 세계를 흘리지 않고 그 개체로 방문한다`);
+  if (d.kind === 'birth') {
+    const id = createAgent(w, d);
+    regenerate();
+    return `${id} 이(가) 태어났다(${d.origin === 'operator_seed' ? '운영자 발급' : '탄생 제안'}). 첫 방문은 다음 순번으로 온다`;
+  }
+  openShowcaseIfDue(w, cfg);
+  appendEvent({ type: 'world_idle', payload: { reason: d.reason } });
+  regenerate();
+  return `방문 없이 세계 시계가 한 칸 흘렀다: ${d.reason}`;
 }
 
 function closeUnlocked() {
@@ -229,7 +215,20 @@ export function processInbox() {
     const file = p('data', 'inbox', name);
     try {
       // 어댑터와 모델은 파일의 주장을 받지 않는다. 확정하는 실행기의 값이 붙는다.
-      const { agent, proposals, read, based_on_seq } = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const visit = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (visit?.advance === true) {
+        out.push(`${name}: ${withTransaction(advanceUnlocked)}`);
+        fs.rmSync(file);
+        continue;
+      }
+      const { agent, proposals, read, based_on_seq } = visit;
+      // 순번은 실행기가 정한다. 이미 확정된 방문(다시 적용)이 아니면, 지금 순번이 고른 개체의 방문만 받는다.
+      const done = new Set(loadEvents().filter((e) => e.type === 'proposal_executed').map((e) => e.payload.request_id));
+      const replay = Array.isArray(proposals) && proposals.length > 0 && proposals.every((x) => done.has(x?.request_id));
+      if (!replay) {
+        const next = nextVisit(project(loadEvents()), loadConfig());
+        if (next.kind !== 'walk' || next.agent !== agent) throw new Error(`순번이 아니다: 지금 차례는 ${next.kind === 'walk' ? next.agent : `방문이 아니라 세계 흘리기(${next.kind})`}다. derived/next.json 을 따른다`);
+      }
       const r = applyVisit({ agent, proposals, read, based_on_seq });
       if (!['applied', 'duplicate'].includes(r.status)) throw new Error(r.text);
       out.push(`${name}: ${r.status === 'duplicate' ? '이미 확정됨' : `${r.agent_id} 방문 ${r.turn_id}, 수락 ${r.results.filter((x) => x.ok).length}/${r.results.length}`}`);

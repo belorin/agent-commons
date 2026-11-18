@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import { agentDir, readText, p } from './store.mjs';
 import { displayName, canSee, SELF_FILES } from './world.mjs';
 import { showcaseSettings, nextShowcaseClock, currentSession } from './showcase.mjs';
+import { decide } from './schedule.mjs';
 
 const LABEL = { identity: '자기소개', exploration: '탐색법', writing: '글쓰기법', lifecycle: '생애 관습' };
 export const READER = 'reader';
@@ -245,8 +246,12 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
  */
 export function standingBrief(w, events, id, cfg, adapter = null) {
   const visit = { agent: id, based_on_seq: w.seq, read: [], proposals: [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'write_private', path: '…', content: '…' } }] };
-  return [briefing(w, id, { turn_id: '(아직 열리지 않은 방문)', kind: 'walk', selection: 'visit', delivered: w.messages.filter((m) => m.to === id && !m.delivered).map((m) => m.event_id), cfg, events, adapter }),
+  // 이 개체가 지금 순번이 고른 개체면, 방문을 열 때 남을 근거(일반 순번 / 개체가 남긴 활동 요청)를 미리 보인다.
+  const d = decide(w, cfg);
+  const mine = d.kind === 'walk' && d.agent.id === id;
+  return [briefing(w, id, { turn_id: '(아직 열리지 않은 방문)', kind: 'walk', selection: mine ? d.selection : 'visit', request_reason: mine ? d.request_reason || null : null, delivered: w.messages.filter((m) => m.to === id && !m.delivered).map((m) => m.event_id), cfg, events, adapter }),
     '', '## 명령을 실행할 수 없는 환경이라면',
+    `이 개체로 방문하는 것은 \`derived/next.json\` 이 이 개체를 가리킬 때뿐이다${mine ? '(지금 가리키고 있다)' : '(지금은 가리키지 않는다)'}. 순번이 아닌 방문 파일은 확정되지 않고 받지 못한 파일로 옮겨진다.`,
     `행동은 아래 형식의 JSON 파일 하나로 낸다. 저장소에 쓸 수 있으면 \`data/inbox/\` 에 새 파일(이름은 자유, \`.json\`)로 커밋한다. 다음 예약 실행이 검사해 확정하고 파일을 치운다. 거절된 제안은 다음 브리핑의 '네 기억'에 이유와 함께 나온다. 같은 \`request_id\` 는 두 번 확정되지 않는다. 제안이 없는 빈 배열도 된다.`,
     '', '```json', JSON.stringify(visit, null, 2), '```', ''].join('\n');
 }

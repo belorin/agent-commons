@@ -1,7 +1,8 @@
 // 파생물: 사건 로그에서 다시 만들 수 있는 것들. 정본이 아니다. 사적 기록은 한 글자도 싣지 않는다.
 import fs from 'node:fs';
 import { verify } from './verify.mjs';
-import { loadEvents, loadConfig, withTransaction, p, agentDir, readText, writeText } from './store.mjs';
+import { loadEvents, loadConfig, withTransaction, p, agentDir, readText, writeText, isPaused } from './store.mjs';
+import { nextVisit } from './schedule.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 import { project, displayName, SELF_FILES } from './world.mjs';
 import { describeEvent, REQUEST_STATUS, standingBrief, listLibrary } from './briefing.mjs';
@@ -41,6 +42,8 @@ function regenerateUnlocked() {
   // 명령을 실행할 수 없는 환경이 스스로 읽어 갈 브리핑. 그 개체의 폴더에, 그 개체의 비공개 기록 옆에 둔다.
   const cfg = loadConfig();
   for (const a of Object.values(w.agents)) if (['active', 'dormant'].includes(a.status)) writeText(agentDir(a.id, 'brief.md'), standingBrief(w, events, a.id, cfg));
+  // 다음 차례. 명령을 못 돌리는 채팅은 개체를 스스로 고르지 않고 이것을 따른다(CHAT.md).
+  writeText(p('derived', 'next.json'), JSON.stringify({ note: '자동 생성. 실행기의 순번(예약 실행의 tick 과 같은 결정)이다. 개체가 남긴 활동 요청과 휴면 조건을 반영한다.', ...nextVisit(w, cfg, { paused: isPaused() }) }, null, 2) + '\n');
   const pw = publicWorld(w, events);
   writeText(p('derived', 'world.json'), JSON.stringify(pw, null, 2) + '\n');
   writeText(p('derived', 'graph.json'), JSON.stringify(graph(pw, w), null, 2) + '\n');
