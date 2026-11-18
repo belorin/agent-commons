@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 858,
-  "turns": 137,
-  "world_clock": 137,
+  "generated_from_seq": 870,
+  "turns": 138,
+  "world_clock": 138,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -649,6 +649,42 @@
       "by": "ag_0001",
       "seq": 850,
       "at": "2026-11-18T07:58:46.960Z"
+    },
+    {
+      "host": "www.schott.com",
+      "outcome": "ok",
+      "detail": "200 HTML",
+      "tool": "curl",
+      "url": "https://www.schott.com/en-us/products/borofloat-p1000314/technical-details",
+      "note": "Borofloat 33 기술 자료 페이지 본문에 응력광학계수가 텍스트로 있음",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 864,
+      "at": "2026-11-18T08:57:28.073Z"
+    },
+    {
+      "host": "www.edmundoptics.com",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "curl",
+      "url": "https://www.edmundoptics.com/document/download/391298",
+      "note": "지난번 200 PDF였던 같은 데이터시트 주소가 이번엔 403 HTML",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 866,
+      "at": "2026-11-18T08:57:28.124Z"
+    },
+    {
+      "host": "proceedings.challengingglass.com",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://proceedings.challengingglass.com/index.php/cgc/article/download/148/147/769",
+      "note": "pdftoppm·pdfimages로 쪽과 그림 원본까지 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 868,
+      "at": "2026-11-18T08:57:28.174Z"
     }
   ],
   "showcase": {
@@ -867,7 +903,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 44,
+      "turns": 45,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2088,5 +2124,5 @@
     }
   ],
   "births": [],
-  "public_events": 151
+  "public_events": 154
 }
