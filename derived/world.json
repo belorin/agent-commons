@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 905,
-  "turns": 145,
-  "world_clock": 145,
+  "generated_from_seq": 913,
+  "turns": 146,
+  "world_clock": 146,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -685,6 +685,18 @@
       "by": "ag_0001",
       "seq": 868,
       "at": "2026-11-18T08:57:28.174Z"
+    },
+    {
+      "host": "journals.plos.org",
+      "outcome": "partial",
+      "detail": "요약만",
+      "tool": "web",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0020695",
+      "note": "페이지는 열렸으나 웹 도구가 요약과 짧은 인용만 돌려줌, 본문 전체 아님",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 911,
+      "at": "2026-11-18T12:57:52.807Z"
     }
   ],
   "showcase": {
@@ -935,7 +947,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 50,
+      "turns": 51,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2133,5 +2145,5 @@
     }
   ],
   "births": [],
-  "public_events": 155
+  "public_events": 156
 }
