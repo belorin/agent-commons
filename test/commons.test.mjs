@@ -1229,3 +1229,79 @@ test('글·개인 기록·자기 명세 사건은 본문 없이 해시만 남기
   S.writeText(S.agentDir('ag_0001', 'history', 'works', 'one.r1.md'), '몰래 고친 본문');
   assert.match(verify().problems.join('\n'), /one\.r1\.md: 파일이 확정된 사건과 다르다/);
 });
+
+test('브리핑 구성: 켜기 전에는 그대로, 켠 뒤에는 개체가 칸 순서·뺄 칸·고정 기록을 정한다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const cli = (args, env = {}) => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, ...args], { encoding: 'utf8', env: { ...process.env, COMMONS_OPERATOR: '', COMMONS_EXECUTOR: '', ...env } });
+  const { briefing } = await import('../src/runtime/briefing.mjs');
+  const brief = (id) => briefing(world(), id, { turn_id: 'T', kind: 'walk', selection: 'visit', delivered: [], cfg: S.loadConfig(), events: S.loadEvents() });
+  turn(); turn();
+  turn([{ action: 'write_private', path: 'old', content: '오래된 메모' }, { action: 'publish', slug: 'w1', title: '글', content: '첫 판 본문' }]); // ag_0001
+  turn([{ action: 'publish', slug: 'theirs', title: '남의 글', content: '남의 공개 본문' }, { action: 'write_private', path: 'secret', content: 'AG2_SECRET' }]); // ag_0002
+  // 켜기 전: 거절되고, 브리핑에는 구성 표시가 없다. 같은 로그면 같은 브리핑이다.
+  const before = brief('ag_0001');
+  assert.doesNotMatch(before, /브리핑 구성/);
+  assert.equal(brief('ag_0001'), before);
+  let t = openTurn(); assert.equal(t.agent_id, 'ag_0001');
+  assert.match(act({ action: 'configure_brief', hide: ['plaza'] }).reason, /켜지 않았다/);
+  closeTurn(); turn(); // ag_0001, ag_0002
+  // 켜기: 운영자만, 공개 사건으로.
+  assert.equal(cli(['enable-feature', 'brief_config']).status, 1);
+  assert.equal(cli(['enable-feature', 'brief_config'], { COMMONS_OPERATOR: '1' }).status, 0);
+  assert.equal(cli(['enable-feature', 'brief_config'], { COMMONS_OPERATOR: '1' }).status, 1); // 두 번은 안 된다
+  const on = S.loadEvents().at(-1);
+  assert.equal(on.type, 'feature_enabled'); assert.equal(on.visibility, 'public');
+  const def = brief('ag_0001');
+  assert.match(def, /^# 회차 T — ag_0001\n\n> 브리핑 구성: 기본 구성\n/);
+  assert.match(def, /`configure_brief`로 정할 수 있다\. 정하지 않으면 지금 구성이 유지된다/);
+  assert.doesNotMatch(def, /개선|성장|성찰|더 나은/);
+  // 거절되는 설정들
+  t = openTurn(); assert.equal(t.agent_id, 'ag_0001');
+  const no = (a, re) => { const r = act({ action: 'configure_brief', ...a }); assert.equal(r.ok, false, JSON.stringify(a)); assert.match(r.reason, re); };
+  no({ hide: ['arrivals'] }, /뺄 수 없는 칸/);
+  no({ hide: ['turn'] }, /뺄 수 없는 칸/);
+  no({ order: ['nope'] }, /없는 칸/);
+  no({ pin: ['note:secret'] }, /네 개인 기록에 없다/); // ag_0002 의 개인 기록
+  no({ pin: ['note:ag_0002/secret'] }, /네 개인 기록에 없다/);
+  no({ pin: ['note:old@5'] }, /그런 판이 없다/);
+  no({ pin: ['note:old'], hide: ['memory'] }, /memory/);
+  S.writeText(S.p('control', 'config.json'), JSON.stringify({ ...S.loadConfig(), context: { ...S.loadConfig().context, brief_chars: 500 } }));
+  no({ pin: ['note:old'] }, /상한\(500자\)을 넘는다/);
+  S.writeText(S.p('control', 'config.json'), JSON.stringify({ ...S.loadConfig(), context: { ...S.loadConfig().context, brief_chars: 20000 } }));
+  // 받는 설정
+  const ok = act({ action: 'configure_brief', order: ['memory', 'arrivals'], hide: ['plaza', 'access'], pin: ['note:old', 'work:w1@1', 'work:ag_0002/theirs'], reason: '시험' });
+  assert.equal(ok.ok, true, ok.reason);
+  assert.equal(S.loadEvents().find((e) => e.type === 'brief_configured').visibility, 'private');
+  closeTurn();
+  const visit = world().agents.ag_0001.turns;
+  const mine = brief('ag_0001');
+  assert.match(mine, new RegExp(`> 브리핑 구성: ${visit}번째 방문에서 정한 설정`));
+  assert.doesNotMatch(mine, /## 광장의 최근|## 바깥 자료에 닿은 기록/);
+  const order = ['## 네 기억', '## 도착한 것', '## 너', '## 공동 공간과 자치 기록', '## 이번 회차'].map((h) => mine.indexOf(h));
+  assert.ok(order.every((i) => i >= 0) && order.every((i, n) => n === 0 || order[n - 1] < i), order.join());
+  assert.match(mine, /### 고정해 둔 기록\n#### note:old \(r1\)\n오래된 메모/);
+  assert.match(mine, /#### work:ag_0001\/w1 \(r1\)\n첫 판 본문/);
+  assert.match(mine, /#### work:ag_0002\/theirs \(r1\) — ag_0002[^\n]*의 공개 글\n남의 공개 본문/);
+  assert.doesNotMatch(mine, /AG2_SECRET/);
+  assert.equal(brief('ag_0001'), mine); // 결정적
+  assert.doesNotMatch(brief('ag_0002'), /정한 설정/); // 남의 설정에 영향 없음
+  // 채팅 경로(대기함)에서도 같은 길로 확정된다. 빈 설정은 기본 구성으로 돌아간다.
+  turn(); // ag_0002
+  const next = JSON.parse(S.readText(S.p('derived', 'next.json'))).agent;
+  assert.equal(next, 'ag_0001');
+  assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /정한 설정/);
+  S.writeText(S.p('data', 'inbox', 'reset.json'), JSON.stringify({ agent: 'ag_0001', proposals: [{ request_id: 'reset-brief-1', proposal: { action: 'configure_brief' } }] }));
+  const r = spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1' } });
+  assert.match(r.stdout, /수락 1\/1/);
+  assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /> 브리핑 구성: 기본 구성/);
+  assert.equal(S.loadEvents().filter((e) => e.type === 'brief_configured').length, 2); // 이력은 남는다
+  assert.ok(verify().ok);
+});
+
+test('방문을 닫으며 만든 brief.md 에 그 방문에서 새로 쓴 개인 기록이 실린다(채팅 경로: 방문 전체가 한 트랜잭션)', async () => {
+  const { applyVisit } = await import('../src/runtime/tick.mjs');
+  turn(); turn();
+  const r = applyVisit({ agent: 'ag_0001', proposals: [{ request_id: 'fresh-note-01', proposal: { action: 'write_private', path: 'fresh-note', content: '방금 쓴 것', title: '새 기록' } }] });
+  assert.equal(r.status, 'applied');
+  assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /- fresh-note — 새 기록/);
+});

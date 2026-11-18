@@ -7,6 +7,7 @@ import { appendEvent, withTransaction, canonical, loadEvents, loadConfig, isPaus
 import { project, living, SELF_FILES } from './world.mjs';
 import { currentSession, showcaseSettings } from './showcase.mjs';
 import { noteProposal } from './tick.mjs';
+import { briefing, resolvePin, BRIEF_KEYS, BRIEF_REQUIRED } from './briefing.mjs';
 
 const SLUG = /^[\p{L}\p{N}][\p{L}\p{N}_-]{0,63}$/u;
 const COLOR = /^#[0-9a-fA-F]{6}$/;
@@ -257,6 +258,37 @@ const HANDLERS = {
   resume(ctx) {
     if (ctx.me.status !== 'dormant') reject('휴면 중이 아니다');
     return [{ type: 'agent_resumed', visibility: 'public', payload: {} }];
+  },
+  // 자기 브리핑의 구성. 운영자가 brief_config 기능을 켠 뒤에만 받는다. 아무 항목도 없으면 기본 구성으로 돌아간다.
+  configure_brief(ctx, a) {
+    if (!ctx.w.features?.brief_config) reject('운영자가 아직 브리핑 구성 기능을 켜지 않았다');
+    const keys = (v, label) => {
+      if (v == null) return [];
+      if (!Array.isArray(v) || v.some((k) => typeof k !== 'string')) reject(`${label}: 칸 이름의 배열`);
+      for (const k of v) if (!BRIEF_KEYS.includes(k)) reject(`${label}: ${k} 은(는) 없는 칸이다. 칸: ${BRIEF_KEYS.join(', ')}`);
+      if (new Set(v).size !== v.length) reject(`${label}: 같은 칸이 두 번 있다`);
+      return v;
+    };
+    const order = keys(a.order, 'order');
+    const hide = keys(a.hide, 'hide');
+    for (const k of hide) if (BRIEF_REQUIRED.includes(k)) reject(`hide: ${k} 은(는) 뺄 수 없는 칸이다(${BRIEF_REQUIRED.join(', ')})`);
+    if (a.pin != null && (!Array.isArray(a.pin) || a.pin.some((x) => typeof x !== 'string'))) reject('pin: 기록 식별자의 배열');
+    const pin = a.pin || [];
+    if (pin.length > 10) reject('pin: 열 개까지');
+    if (new Set(pin).size !== pin.length) reject('pin: 같은 기록이 두 번 있다');
+    for (const ref of pin) { const r = resolvePin(ctx.w, ctx.me.id, ref); if (r.error) reject('pin: ' + r.error); }
+    if (pin.length && hide.includes('memory')) reject('hide: 고정 기록이 있으면 memory(네 기억) 칸을 뺄 수 없다. 고정 기록이 그 칸에 실린다');
+    const reason = text(a.reason, 'reason', ctx.cfg, { optional: true, max: 1000 });
+    // 이 설정으로 조립한 브리핑이 상한 안에 드는지 미리 본다.
+    const max = ctx.cfg.context?.brief_chars ?? 20000;
+    const empty = !order.length && !hide.length && !pin.length;
+    if (!empty) {
+      const trial = structuredClone(ctx.w);
+      trial.agents[ctx.me.id].brief = { order, hide, pin, reason, set_at_visit: ctx.me.turns, seq: ctx.w.seq };
+      const length = briefing(trial, ctx.me.id, { turn_id: '(검사)', kind: 'walk', selection: 'visit', delivered: [], cfg: ctx.cfg, events: loadEvents() }).length;
+      if (length > max) reject(`이 설정으로 만든 브리핑이 ${length}자로 상한(${max}자)을 넘는다. 고정 기록을 줄이거나 칸을 뺀다`);
+    }
+    return [{ type: 'brief_configured', visibility: 'private', payload: { order, hide, pin, reason } }];
   },
   release_temperament(ctx, a) {
     if (!ctx.me.temperament) reject('운영자가 네게 준 기질이 없다');

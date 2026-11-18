@@ -4,6 +4,8 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 let active = null;
 export const stagedText = (file) => active?.writes.get(file);
+/** 열린 트랜잭션에서 아직 디스크에 쓰지 않은 파일 가운데 dir 아래에 있는 것. 디렉터리 목록은 이것을 보지 못하므로 합쳐 본다. */
+export const stagedPaths = (dir) => (active ? [...active.writes.keys()].filter((f) => f.startsWith(dir + path.sep)) : []);
 export function stageText(file, text) {
   if (!active) return false;
   active.writes.set(file, text);

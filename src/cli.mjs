@@ -117,6 +117,17 @@ function run() {
       const temperament = src == null ? null : fs.readFileSync(src === '-' ? 0 : src, 'utf8');
       say(seedAgent({ temperament }).text); break;
     }
+    case 'enable-feature': { // 판 전체 기능을 켠다. 날짜가 찍힌 공개 운영자 사건으로 남고, 그 전의 기록에는 소급하지 않는다.
+      requireRole('COMMONS_OPERATOR');
+      const FEATURES = ['brief_config'];
+      withTransaction(() => {
+        const w = validWorld();
+        if (!FEATURES.includes(args[0])) throw new Error(`enable-feature <${FEATURES.join(' | ')}>`);
+        if (w.features[args[0]]) throw new Error(`${args[0]}: 이미 켜져 있다 (사건 ${w.features[args[0]].seq})`);
+        appendEvent({ type: 'feature_enabled', actor_id: 'operator', visibility: 'public', payload: { feature: args[0] } });
+        say(regenerate());
+      }); break;
+    }
     case 'reader-note': {
       // 사람 독자가 남긴 말을 운영자가 옮겨 적는다. 개체에게는 다음 회차의 '도착한 것'으로 간다.
       requireRole('COMMONS_OPERATOR');

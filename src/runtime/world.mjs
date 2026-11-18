@@ -26,6 +26,7 @@ function blankAgent(id, e) {
     dormant_since_clock: null,
     pending_end: null,
     adapters: {}, // 이 개체의 회차를 돌린 실행 환경 -> 횟수
+    brief: null, // 개체가 정한 자기 브리핑 구성(가장 최근 설정). 없으면 기본 구성
     read: {}, // 읽은 것의 키 -> world_seq
     names: [],
   };
@@ -50,6 +51,7 @@ export function project(events) {
     trails: {},
     births: {},
     operator_notes: [], // 운영자가 모두에게 남긴 말
+    features: {}, // 운영자가 켠 판 전체 기능 -> { seq, at }
     access: [], // 개체가 보고한 바깥 자료 접근 결과(사실 기록, 금지 목록이 아니다)
     turn: null, // 열려 있는 회차
     failures: 0,
@@ -227,6 +229,14 @@ export function project(events) {
       case 'agent_dormant':
         a.status = 'dormant'; a.activity_request = null; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock;
         break;
+      case 'feature_enabled':
+        w.features[pl.feature] = { seq: e.world_seq, at: e.timestamp };
+        break;
+      case 'brief_configured': {
+        const empty = !pl.order?.length && !pl.hide?.length && !pl.pin?.length;
+        a.brief = empty ? null : { order: pl.order || [], hide: pl.hide || [], pin: pl.pin || [], reason: pl.reason || null, set_at_visit: a.turns, seq: e.world_seq };
+        break;
+      }
       case 'temperament_released':
         a.temperament.released = { seq: e.world_seq, at: e.timestamp, note: pl.note || null };
         break;

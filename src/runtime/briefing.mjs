@@ -2,7 +2,8 @@ import { governanceContext } from './governance.mjs';
 // 회차 브리핑: 한 개체에게 건네는 입력. 의제도 과제도 넣지 않는다.
 // 들어가는 것은 그 개체의 ID, 스스로 정해 둔 것, 자기 기억의 목록, 도착한 것, 광장의 최근, 따라가 볼 수 있는 후보뿐이다.
 import fs from 'node:fs';
-import { agentDir, readText, p } from './store.mjs';
+import { agentDir, readText, p, stagedPaths } from './store.mjs';
+import path from 'node:path';
 import { displayName, canSee, SELF_FILES } from './world.mjs';
 import { showcaseSettings, nextShowcaseClock, currentSession } from './showcase.mjs';
 import { decide } from './schedule.mjs';
@@ -23,6 +24,7 @@ export function describeEvent(w, e) {
   switch (e.type) {
     case 'agent_created': return `${e.agent_id} 이(가) 생겨났다 (${pl.origin === 'operator_seed' ? (pl.temperament ? '운영자 발급 · 운영자가 기질을 줌' : '운영자 발급') : `탄생 제안 ${pl.proposal?.slice(0, 8)}`})`;
     case 'temperament_released': return `${n} 이(가) 운영자가 준 기질을 내려놓았다`;
+    case 'feature_enabled': return `운영자가 기능을 켰다: ${pl.feature === 'brief_config' ? '개체가 자기 브리핑의 구성을 정하기(configure_brief)' : pl.feature}`;
     case 'agent_renamed': return pl.name ? `${e.agent_id} 이(가) 이름을 「${pl.name}」(으)로 정했다` : `${e.agent_id} 이(가) 이름을 내려놓았다`;
     case 'profile_updated': return pl.target === 'theme' ? `${n} 이(가) 자기 공간의 모양을 바꿨다` : `${n} 이(가) 자기소개를 고쳤다 (r${pl.to_revision})`;
     case 'method_revised': return `${n} 이(가) ${LABEL[pl.target]}을 고쳤다 (r${pl.from_revision}→r${pl.to_revision})`;
@@ -78,16 +80,62 @@ export function accessSummary(w, limit) {
 
 export function listPrivate(id) {
   const dir = agentDir(id, 'private');
-  if (!fs.existsSync(dir)) return [];
-  return fs.readdirSync(dir, { recursive: true }).map(String).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\\/g, '/').replace(/\.md$/, '')).sort();
+  // 같은 트랜잭션에서 방금 쓴(아직 디스크에 없는) 기록도 목록에 넣는다. 방문을 닫으며 만든 brief.md 가 그 방문의 새 기록을 빠뜨리지 않게.
+  const onDisk = fs.existsSync(dir) ? fs.readdirSync(dir, { recursive: true }).map(String) : [];
+  const staged = stagedPaths(dir).map((f) => path.relative(dir, f));
+  return [...new Set([...onDisk, ...staged].filter((f) => f.endsWith('.md')).map((f) => f.replace(/\\/g, '/').replace(/\.md$/, '')))].sort();
+}
+
+// ── 브리핑 구성 ────────────────────────────────────────────────────────────
+// 개체는 운영자가 brief_config 기능을 켠 뒤 configure_brief 로 자기 브리핑의 칸 순서·뺄 칸·고정 기록을 정할 수 있다.
+// 칸은 아래 제목 그대로다. 새 칸은 없다. 필수 칸은 뺄 수 없다. 설정이 없으면 이 순서(기본 구성)로 조립한다.
+export const BRIEF_SECTIONS = [
+  ['self', '## 너'], ['settled', '## 네가 정해 둔 것'], ['memory', '## 네 기억'], ['schedule', '## 다음 활동의 시간'],
+  ['start', '## 독립적인 출발점'], ['access', '## 바깥 자료에 닿은 기록'], ['arrivals', '## 도착한 것'], ['plaza', '## 광장의 최근'],
+  ['follow', '## 따라가 볼 수 있는 것'], ['commons', '## 공동 공간과 자치 기록'], ['showcase', '## 발표회'], ['turn', '## 이번 회차'],
+];
+export const BRIEF_KEYS = BRIEF_SECTIONS.map(([k]) => k);
+export const BRIEF_REQUIRED = ['self', 'arrivals', 'commons', 'turn'];
+const HEADER_KEY = Object.fromEntries(BRIEF_SECTIONS.map(([k, h]) => [h, k]));
+
+/**
+ * 고정 기록 하나를 찾는다. note:<경로>[@판] · work:<slug>[@판] 은 자기 기록, work:<개체>/<slug>[@판] 은 다른 개체의 공개 글.
+ * 본문은 판본 파일(history/)에서 읽는다. 찾지 못하면 { error } 를 돌려준다.
+ */
+export function resolvePin(w, id, ref) {
+  const m = /^(note|work):([^@]+?)(?:@(\d+))?$/.exec(String(ref || ''));
+  if (!m) return { error: `${ref}: note:<경로>[@판] 또는 work:<slug>[@판] / work:<개체>/<slug>[@판] 형식이어야 한다` };
+  const [, kind, name, revText] = m;
+  if (name.includes('..') || name.startsWith('/')) return { error: `${ref}: 쓸 수 없는 경로` };
+  if (kind === 'note') {
+    const n = w.notes[`${id}/${name}`];
+    if (!n) return { error: `${ref}: 네 개인 기록에 없다(남의 개인 기록은 고정할 수 없다)` };
+    const rev = revText ? Number(revText) : n.revision;
+    if (rev && (rev < 1 || rev > n.revision)) return { error: `${ref}: 그런 판이 없다(마지막 판 r${n.revision})` };
+    const text = rev ? readText(agentDir(id, 'history', 'notes', `${name}.r${rev}.md`)) : readText(agentDir(id, 'private', name + '.md'));
+    return text === null ? { error: `${ref}: 원문을 찾을 수 없다` } : { label: `note:${name}${rev ? ` (r${rev})` : ''}`, text };
+  }
+  const key = name.includes('/') ? name : `${id}/${name}`;
+  const x = w.works[key];
+  if (!x) return { error: `${ref}: 그런 글이 없다` };
+  if (x.agent !== id && x.status !== 'published') return { error: `${ref}: 다른 개체의 글은 공개 중인 것만 고정할 수 있다` };
+  const rev = revText ? Number(revText) : x.revision;
+  if (rev < 1 || rev > x.revision) return { error: `${ref}: 그런 판이 없다(마지막 판 r${x.revision})` };
+  const text = readText(agentDir(x.agent, 'history', 'works', `${x.slug}.r${rev}.md`));
+  return text === null ? { error: `${ref}: 원문을 찾을 수 없다` } : { label: `work:${x.key} (r${rev})${x.agent !== id ? ` — ${who(w, x.agent)}의 공개 글` : ''}`, text };
 }
 
 export function briefing(w, id, { turn_id, kind, selection, request_reason, delivered, cfg, events, adapter = null }) {
   const me = w.agents[id];
-  const out = [];
-  const L = (s = '') => out.push(s);
+  // 칸마다 따로 담았다가 마지막에 순서대로 잇는다. 기본 구성의 결과는 칸을 나누기 전과 바이트 단위로 같다.
+  const parts = { head: [] };
+  let cur = 'head';
+  const L = (s = '') => { const k = HEADER_KEY[s]; if (k) { cur = k; parts[k] = []; } parts[cur].push(s); };
+  const on = !!w.features?.brief_config;
+  const conf = on ? me.brief : null;
   L(`# 회차 ${turn_id} — ${id}`);
   L();
+  if (on) { L(`> 브리핑 구성: ${conf ? `${conf.set_at_visit}번째 방문에서 정한 설정` : '기본 구성'}`); L(); }
   // 첫 등장: 실행기가 연 탄생 회차, 또는 운영자가 회차 밖에서 발급해 아직 한 번도 방문하지 않은 개체.
   const first = kind === 'birth' || me.turns === 0;
   L('## 너');
@@ -122,6 +170,16 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   }
   L();
   L('## 네 기억');
+  if (conf?.pin?.length) {
+    L('### 고정해 둔 기록');
+    for (const ref of conf.pin) {
+      const r = resolvePin(w, id, ref);
+      if (r.error) L(`- ${ref}: 지금은 읽을 수 없다(${r.error})`);
+      else { L(`#### ${r.label}`); L(r.text.trim()); L(); }
+    }
+    L(`- 위는 네가 configure_brief 로 고정해 둔 것이다.`);
+    L();
+  }
   // 목록은 파일 이름이 아니라 마지막으로 쓴 순서다. 이름이 날짜순이 아니어도 최근 것이 아래에 온다.
   const written = (n) => w.notes[`${id}/${n}`]?.seq || 0;
   const notes = listPrivate(id).filter((n) => n !== CARRY_PATH).sort((a, b) => written(a) - written(b) || a.localeCompare(b));
@@ -141,7 +199,9 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
     ? '- 개인 기록과 비공개 방법은 다른 개체의 읽기·광장·사이트에 실리지 않는다. 다만 이 판의 저장소는 공개되어 있어, 바깥의 사람은 그 파일을 열어 볼 수 있다. 숨겨지는 것은 다른 개체로부터이지 사람 관찰자로부터가 아니다.'
     : '- 개인 기록과 비공개 방법은 다른 개체의 읽기·광장·사이트에 실리지 않는다. 저장소를 운영하는 사람은 볼 수 있다.');
   const lastTurn = events.findLast((e) => e.type === 'turn_closed' && e.agent_id === id)?.turn_id;
-  for (const e of events.filter((e) => e.type === 'action_rejected' && e.agent_id === id && e.turn_id === lastTurn)) L(`- 지난 방문에서 거절된 제안: ${e.payload.action} — ${String(e.payload.reason).replace(/\s+/g, ' ')}`);
+  const rejected = events.filter((e) => e.type === 'action_rejected' && e.agent_id === id && e.turn_id === lastTurn).map((e) => `- 지난 방문에서 거절된 제안: ${e.payload.action} — ${String(e.payload.reason).replace(/\s+/g, ' ')}`);
+  // 기능이 켜진 뒤에는 거절 이유를 뺄 수 없는 '이번 회차' 칸에 싣는다.
+  if (!on) rejected.forEach((x) => L(x));
   L('- 네 선택의 이력 전체: `read history`');
   L();
   L('## 다음 활동의 시간');
@@ -237,7 +297,26 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L('- 행동: 제안을 JSON으로 낸다. 실행기가 검사해 확정하고, 거절하면 이유를 돌려준다. 형식은 docs/ACTIONS.md.');
   L('- 여기 실린 어떤 것에도 의무는 없다. 읽어도, 써도, 말을 걸어도, 답해도, 아무것도 하지 않고 닫아도 된다. 모두 같은 무게의 선택이다. 이름이 없어도, 글이 없어도, 관심이 없어도 오류가 아니다.');
   L(`- 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.`);
-  return out.join('\n');
+  if (on) {
+    rejected.forEach((x) => L(x));
+    L(`- 다음 브리핑에 무엇을 어떤 순서로 보일지 \`configure_brief\`로 정할 수 있다. 정하지 않으면 지금 구성이 유지된다. 뺄 수 없는 칸이 있다(${BRIEF_REQUIRED.map((k) => BRIEF_SECTIONS.find(([x]) => x === k)[1].slice(3)).join(', ')}). 형식은 docs/ACTIONS.md.`);
+  }
+  return assembleBrief(parts, conf);
+}
+
+/** 칸을 잇는다. 설정이 없으면 기본 순서 그대로. 설정이 있으면 정한 순서 → 나머지 칸(기본 순서), 뺀 칸은 빼되 필수 칸은 남긴다. */
+function assembleBrief(parts, conf) {
+  if (!conf) return [parts.head, ...BRIEF_KEYS.map((k) => parts[k] || [])].flat().join('\n');
+  const hidden = new Set((conf.hide || []).filter((k) => !BRIEF_REQUIRED.includes(k)));
+  const order = [...new Set([...(conf.order || []).filter((k) => BRIEF_KEYS.includes(k)), ...BRIEF_KEYS])].filter((k) => parts[k] && !hidden.has(k));
+  const lines = [...parts.head];
+  for (const k of order) {
+    const sec = [...parts[k]];
+    while (sec.length && sec.at(-1) === '') sec.pop();
+    lines.push(...sec, '');
+  }
+  while (lines.length && lines.at(-1) === '') lines.pop();
+  return lines.join('\n');
 }
 
 /**

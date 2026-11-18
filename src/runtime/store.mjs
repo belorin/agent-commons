@@ -3,7 +3,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { transaction, stagedText, stageText } from './transaction.mjs';
+import { transaction, stagedText, stageText, stagedPaths } from './transaction.mjs';
+export { stagedPaths };
 import { fileURLToPath } from 'node:url';
 
 const CODE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -101,7 +102,7 @@ const DEFAULTS = {
   max_turns_per_day: 12,
   turn: { max_actions: 8, max_publish: 2, max_messages: 4, max_chars: 20000 },
   birth: { min_turns_between_births: 3, requires_operator_approval: false },
-  context: { recent_public_events: 15, candidates: 8 },
+  context: { recent_public_events: 15, candidates: 8, brief_chars: 20000 },
   scheduling: { max_request_streak: 2 },
   // 발표회는 운영 정책이다. 기본은 꺼져 있고 control/config.json에서 켠다.
   showcase: { enabled: false, every_clock: 12, min_every_clock: 3, max_every_clock: 60, max_intro_chars: 1500 },
