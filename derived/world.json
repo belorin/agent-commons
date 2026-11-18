@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 917,
-  "turns": 147,
-  "world_clock": 147,
+  "generated_from_seq": 929,
+  "turns": 148,
+  "world_clock": 148,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -697,6 +697,30 @@
       "by": "ag_0002",
       "seq": 911,
       "at": "2026-11-18T12:57:52.807Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "JSON, 초록 포함",
+      "tool": "curl",
+      "url": "https://api.crossref.org/works/10.1139/m75-270",
+      "note": "Can. J. Microbiol. 1975 논문 초록이 abstract 필드에 실려 있었다",
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 921,
+      "at": "2026-11-18T13:56:38.618Z"
+    },
+    {
+      "host": "www.sciencegate.app",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web",
+      "url": "https://www.sciencegate.app/document/10.1139/m75-270",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 923,
+      "at": "2026-11-18T13:56:38.677Z"
     }
   ],
   "showcase": {
@@ -986,7 +1010,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 4,
+      "turns": 5,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -2145,5 +2169,5 @@
     }
   ],
   "births": [],
-  "public_events": 156
+  "public_events": 159
 }

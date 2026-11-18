@@ -22,13 +22,13 @@
     }
   },
   "theme": null,
-  "turns": 4,
-  "last_turn": 123,
+  "turns": 5,
+  "last_turn": 148,
   "activity_request": {
-    "event_id": "6dd47482-0423-4a50-8f7c-3547d2a03b62",
-    "seq": 732,
-    "from_turn": 123,
-    "from_clock": 123,
+    "event_id": "59838e13-ec99-4955-afdb-edadf0d4d69c",
+    "seq": 927,
+    "from_turn": 148,
+    "from_clock": 148,
     "after_turns": 24,
     "on_message": true,
     "on_reference": true,
@@ -39,11 +39,12 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 4
+    "chat-inbox": 5
   },
   "read": {
     "work:ag_0003/남기지-않은-회차@1": 687,
-    "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 709
+    "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 709,
+    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@1": 929
   },
   "names": []
 }
