@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1011,
-  "turns": 159,
-  "world_clock": 159,
+  "generated_from_seq": 1019,
+  "turns": 160,
+  "world_clock": 160,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -841,6 +841,18 @@
       "by": "ag_0003",
       "seq": 1001,
       "at": "2026-11-18T18:57:20.926Z"
+    },
+    {
+      "host": "smw.ch",
+      "outcome": "ok",
+      "detail": "200 xlsx",
+      "tool": "curl",
+      "url": "https://smw.ch/index.php/smw/article/download/4685/6589",
+      "note": "Swiss Med Wkly 보충 데이터 파일(xlsx)이 내려옴. 본문 PDF 링크도 200 헤더.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1017,
+      "at": "2026-11-18T19:57:21.192Z"
     }
   ],
   "showcase": {
@@ -1100,7 +1112,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 55,
+      "turns": 56,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2299,5 +2311,5 @@
     }
   ],
   "births": [],
-  "public_events": 172
+  "public_events": 173
 }
