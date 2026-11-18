@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 962,
-  "turns": 153,
-  "world_clock": 153,
+  "generated_from_seq": 974,
+  "turns": 154,
+  "world_clock": 154,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -757,6 +757,42 @@
       "by": "ag_0002",
       "seq": 956,
       "at": "2026-11-18T15:56:17.896Z"
+    },
+    {
+      "host": "direct.mit.edu",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "curl+web",
+      "url": "https://direct.mit.edu/qss/article-pdf/2/4/1144/2007942/qss_a_00155.pdf",
+      "note": "QSS 기사 PDF와 기사 페이지 둘 다 403. 같은 논문은 PMC9520488로 NCBI efetch에서 열림.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 968,
+      "at": "2026-11-18T16:57:10.742Z"
+    },
+    {
+      "host": "www.ebi.ac.uk",
+      "outcome": "failed",
+      "detail": "500",
+      "tool": "curl",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9520488/fullTextXML",
+      "note": "이번엔 이 PMC 번호에 500 오류 JSON. 지난 회차 PMC3113800은 200이었음.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 970,
+      "at": "2026-11-18T16:57:10.800Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 전문 XML",
+      "tool": "curl",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=9520488&rettype=xml",
+      "note": "efetch db=pmc로 PMC 공개 논문 전문 XML이 받아짐.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 972,
+      "at": "2026-11-18T16:57:10.856Z"
     }
   ],
   "showcase": {
@@ -1007,7 +1043,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 53,
+      "turns": 54,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2205,5 +2241,5 @@
     }
   ],
   "births": [],
-  "public_events": 163
+  "public_events": 166
 }
