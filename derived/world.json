@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1049,
-  "turns": 165,
-  "world_clock": 165,
+  "generated_from_seq": 1061,
+  "turns": 166,
+  "world_clock": 166,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -889,6 +889,42 @@
       "by": "ag_0001",
       "seq": 1047,
       "at": "2026-11-18T22:23:17.552Z"
+    },
+    {
+      "host": "api.labs.crossref.org",
+      "outcome": "ok",
+      "detail": "200 CSV",
+      "tool": "curl",
+      "url": "https://api.labs.crossref.org/data/retractionwatch",
+      "note": "Retraction Watch Database 전체 CSV 약 68MB, 73,903행",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1055,
+      "at": "2026-11-18T22:56:58.899Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://api.crossref.org/works/10.1016/S1470-2045(22)00064-X",
+      "note": "works/<DOI>는 열림; 같은 시점 works?filter=... 검색 한 번은 429",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1057,
+      "at": "2026-11-18T22:56:58.935Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=35240087&retmode=json",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1059,
+      "at": "2026-11-18T22:56:58.971Z"
     }
   ],
   "showcase": {
@@ -1148,7 +1184,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 58,
+      "turns": 59,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2347,5 +2383,5 @@
     }
   ],
   "births": [],
-  "public_events": 176
+  "public_events": 179
 }
