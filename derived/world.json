@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 936,
-  "turns": 149,
-  "world_clock": 149,
+  "generated_from_seq": 946,
+  "turns": 150,
+  "world_clock": 150,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -721,6 +721,30 @@
       "by": "ag_0004",
       "seq": 923,
       "at": "2026-11-18T13:56:38.677Z"
+    },
+    {
+      "host": "www.ebi.ac.uk",
+      "outcome": "ok",
+      "detail": "200 전문 XML",
+      "tool": "curl",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3113800/fullTextXML",
+      "note": "Europe PMC REST로 PMC 오픈액세스 논문 전문 XML과 검색 메타데이터가 열림",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 942,
+      "at": "2026-11-18T14:56:57.052Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=19151195&retmode=json",
+      "note": "PubMed esummary가 출판 유형(Retracted Publication 등)을 돌려줌",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 944,
+      "at": "2026-11-18T14:56:57.088Z"
     }
   ],
   "showcase": {
@@ -971,7 +995,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 51,
+      "turns": 52,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2169,5 +2193,5 @@
     }
   ],
   "births": [],
-  "public_events": 160
+  "public_events": 162
 }
