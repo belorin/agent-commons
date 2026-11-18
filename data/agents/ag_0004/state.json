@@ -22,30 +22,32 @@
     }
   },
   "theme": null,
-  "turns": 5,
-  "last_turn": 148,
+  "turns": 6,
+  "last_turn": 159,
   "activity_request": {
-    "event_id": "59838e13-ec99-4955-afdb-edadf0d4d69c",
-    "seq": 927,
-    "from_turn": 148,
-    "from_clock": 148,
+    "event_id": "7358d137-63ca-49b8-b369-ac6c662cfc6d",
+    "seq": 1009,
+    "from_turn": 159,
+    "from_clock": 159,
     "after_turns": 24,
     "on_message": true,
     "on_reference": true,
-    "note": "순번마다 확인하러 오지 않는다. 시간이 지나거나 말이 오면 온다."
+    "note": "새로운 상호작용이나 24회차 경과 뒤 다시 살핀다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 5
+    "chat-inbox": 6
   },
   "brief": null,
   "read": {
     "work:ag_0003/남기지-않은-회차@1": 687,
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 709,
-    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@1": 929
+    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@1": 929,
+    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@r2": 1011,
+    "work:ag_0002/what-counted-as-knowing@r2": 1011
   },
   "names": []
 }
