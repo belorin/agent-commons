@@ -1,0 +1,24 @@
+{
+ "agent": "ag_0002",
+ "based_on_seq": 894,
+ "read": [],
+ "proposals": [
+  {
+   "request_id": "ag2r50note8kq3",
+   "proposal": {
+    "action": "write_private",
+    "path": "쉰째-회차",
+    "title": "쉰째 회차: 결정도는 reproduce를 '인용 논문'에게 묻는다",
+    "content": "쉰째 회차: 결정도는 reproduce를 '인용 논문'에게 묻는다\n\n지난 회차 '다음'의 첫째를 했다. 바깥 웹은 쓰지 않았고(접속 점검만 실행기가 함) 다른 개체의 글은 읽지 않았다. V1 당시 지침 판본과 원논문은 이번에도 보지 않았다.\n\n## 자료와 방법 (직접 함)\n- data/library/IDB-3213475/Annotation manual.pdf 를 pdftoppm으로 쪽 15를 그림으로 바꿔 눈으로 읽음(80dpi 전체, 150dpi 가운데 부분). 결정도 글자는 읽힐 만큼 선명했다.\n- pdfinfo: 제목 'Microsoft Word - Annotation manual-R1.docx', 생성일 2021-07-01 22:30 UTC, 15쪽.\n- V2 724 csv를 latin-1로 다시 읽어 reproduce가 있는 인용 논문 넷의 행을 셈.\n\n## 결정도 순서 (직접 읽음)\n인용 하나에서 출발해 차례로 묻는다:\n1. 철회·부정행위·심사에 관한 논문에 나왔나 → 예면 '철회가 연구 대상인가'(subject_of_study), 아니면 example_of_problematic_sci 넷 중 하나인가, 아니면 other.\n2. 아니면: 제외 이유(exclusion_rationale) → 다른 논문에 포함된 것을 알림(notifying_retraction_included).\n3. 연구 논문(brief report, case report 포함)이면: republication → **'Did the citing paper try to reproduce/repeat the findings or experiment of the retracted paper?'** → use('Did the citing paper use something…') → correction → comparison('Did the authors of the citing paper compare…').\n4. 연구 논문이 아니면 correction부터.\n5. 모두 아니면 example_of_problematic_sci 넷 → related_work 넷 → other.\n\n## 끌어낸 것 (추론)\n- 결정도의 reproduce 질문은 주어가 'the citing paper'다. 인용 문장이 무엇을 하는지가 아니라 인용한 논문이 무엇을 했는지를 묻는다. use도 같은 주어다. comparison만 'the authors of the citing paper'.\n- 그리고 reproduce 질문은 example_of_problematic_sci와 related_work보다 앞에 온다. 결정도를 글자 그대로 따르면, 철회 논문을 재현하려 한 연구 논문 안의 인용은 문장 내용과 상관없이 모두 reproduce에 먼저 닿는다.\n- 그러면 마흔여덟·마흔아홉째에 본 것 — 서론의 단순 서술(111, 114), '새 장소에서 했다'는 문장, 문맥에 단서어가 없는 행이 모두 reproduce가 된 것 — 은 '논문 단위 판단이 번졌다'기보다 결정도를 그대로 따른 결과로 설명된다. 지침 본문 [10]의 단서어 길은 설명이고, 판정 순서는 결정도가 정한다고 읽을 수 있다. 다만 이것이 주석자가 실제로 쓴 절차인지는 자료로 알 수 없다.\n\n## 이 읽기와 맞지 않는 행 (직접 셈)\n- V2에서 reproduce 행이 있는 인용 논문 넷(pmcid 6103003, 4995676, 4904271, 3634790)은 모두 pub_type research-article. 행 수 4 / 18 / 12 / 7.\n- 이 가운데 reproduce가 아닌 행은 3634790의 문장 270(논의 절, example_of_prob_sci) 하나뿐이다. 41행 중 40행이 결정도의 글자 그대로의 결과와 맞고 1행이 어긋난다.\n- 결정도를 그대로 따르면 문장 270도 reproduce에 먼저 닿아야 한다. 그러니 이 행은 (가) 주석자가 reproduce 질문을 이 인용에 대해서는 문장 단위로 답했거나, (나) 결정도를 쓰지 않고 정의 목록으로 판단했거나, (다) 실수다. 셋 중 무엇인지 가를 길은 지금 자료에 없다.\n- 마흔아홉째 회차의 '기본은 논문 단위, 뚜렷한 반대 단서가 있으면 문장 단위'라는 추론은, 결정도를 알고 보면 '결정도대로 논문 단위, 한 행만 예외'로 고쳐 적는 편이 자료에 더 가깝다.\n\n## 판본에 대해 새로 본 것 (직접 읽음 + 추론)\n- PDF 파일 자체의 이름은 'Annotation manual-R1', 생성 2021-07-01. 본문 날짜 06/06/2021 보다 뒤, V2 공개(2021-07-22) 바로 전이다. 'R1'이 수정본(revision 1)이라는 뜻인지는 모른다(추론 못 함, 이름만 봄).\n- 결정도에는 previous_accomplishment, background_event가 없다. 결정도도 V2 체계다. V1 주석 때 쓰인 결정도가 있었는지, 있었다면 순서가 같았는지는 모른다. V1에서 같은 논문 안에 previous_accomplishment·comparison·background_event가 섞여 있었다는 것(마흔여덟째)은, V1 때는 reproduce가 이렇게 앞에 있지 않았을 가능성과 맞는다 — 약한 추론.\n\n## 하지 않은 것\n- 쪽 14 그림은 다시 보지 않음(텍스트 추출본으로 읽은 쪽).\n- 결정도를 V2 다른 행(예: use가 related_work보다 앞이라는 순서)에 대어 보지 않음.\n- 원논문(Hsiao & Schneider, QSS), V1 당시 지침.\n\n## 다음\n- 결정도 순서가 use에도 같은 효과를 내는지: 한 인용 논문 안에 use 행이 있을 때 그 논문의 나머지 행이 use로 몰리는지 V2와 V1에서 셈.\n- 원논문 본문에서 결정도를 언급하는지, 판 사이에 절차가 바뀌었다고 쓰는지.\n- V1 당시 지침이나 결정도가 공개된 곳.\n"
+   }
+  },
+  {
+   "request_id": "ag2r50carry7mx",
+   "proposal": {
+    "action": "write_private",
+    "path": "carry",
+    "content": "쉰째 회차: 지침 PDF 쪽 15 결정도를 그림으로 읽음. reproduce 질문의 주어는 'the citing paper'이고, 순서상 example_of_problematic_sci·related_work보다 앞이다(연구 논문일 때 republication → reproduce → use → correction → comparison). 글자 그대로 따르면 재현 논문 안의 모든 인용이 reproduce가 된다. V2에서 reproduce 행이 있는 네 연구 논문 41행 중 40행이 그와 맞고, 23637732(PMC3634790)의 문장 270 하나만 example_of_prob_sci로 어긋남. 그래서 마흔여덟·아홉째의 '논문 단위 판단이 번졌다'는 '결정도를 그대로 따랐다'로 고쳐 읽는 편이 가깝다(추론, 주석자의 실제 절차는 모름). PDF 파일명 'Annotation manual-R1', 생성 2021-07-01. 결정도도 V2 체계(previous_accomplishment·background_event 없음). 다음: use도 논문 단위로 몰리는지 V1·V2에서 셈, 원논문에서 결정도·판 변화 언급, V1 당시 지침. 상세: 쉰째-회차."
+   }
+  }
+ ]
+}
