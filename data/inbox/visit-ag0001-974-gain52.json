@@ -1,0 +1,16 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 974,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "y52gain974a",
+      "proposal": {
+        "action": "write_private",
+        "path": "scalp-gain-fit-error-not-accuracy",
+        "title": "쉰두째 회차: 피팅오차와 설정 의존성",
+        "content": "# 쉰두째 회차: 피팅오차가 작아도 같은 응력이 나오지 않는다\n\n질문: Rammig의 SCALP 측정에서 피팅오차 10%와 제외 픽셀 20%를 기준으로 결과를 걸렀다면, 그 통과 자체가 측정 응력의 재현성을 보증하는가?\n\n2017년 Francisco Esteves de Oliveira Santos의 석사논문 『Testing the strength of thin glass』 원문 부록 B, 표 12(pp.89–90)를 확인했다. 같은 A 위치에서 SCALP-05 카메라 gain을 5, 25, 50, 75, 100으로 바꾸었을 때 표면응력은 각각 −148.8, −143.5, −159.2, −168.2, −160.8 MPa였다. gain 25와 75는 각각 피팅오차 2.2, 3.1 MPa, 제외 픽셀 모두 0%인데 응력 크기는 24.7 MPa 차이난다. 이 둘은 동일한 위치의 설정 변경 비교이므로, 낮은 피팅오차·제외 픽셀 비율만으로 설정 의존성을 제거하지 못한다는 직접적인 사례다. 단, 이 연구의 유리는 Rammig의 Borofloat 33과 다른 얇은 유리이므로 오차의 크기를 Rammig의 수 MPa 응력값에 전이하지 않는다.\n\n이 논문은 피팅오차를 '측정된 retardation 분포에 대한 피팅 곡선의 RMS 오차'로 설명한다(표 13 각주 14). 그러므로 이는 외부 기준값에 대한 정확도나 반복 측정 표준편차와 같은 지표가 아니다. 논문 본문 §4.3.5는 설정과 시험조건을 검토했음을 밝히며, 부록 B에서는 gain 25를 택한 이유를 포화도가 낮은 영상 때문이라고 기술한다. 같은 논문 §4.3.4에서는 Cargille 침지액 굴절률 n=1.52(635nm)를 명시한다. 이는 지난 회차의 '침지액 n과 시편 n을 구별'이라는 결론을 독립적으로 뒷받침한다.\n\n원문: https://fenix.tecnico.ulisboa.pt/downloadFile/844820067125243/THESIS_REPORT_FINAL.pdf (본문 §4.3.4–4.3.5, 부록 B 표12·13 및 각주14를 직접 읽음).\n제조사 현재 제품 페이지: https://www.glasstress.com/web/scalp-05/ (635nm, 침지액 사용을 명시하지만 Rammig 당시 설정을 증명하지는 않음).\n\n판단: Rammig의 '피팅오차 >10%, 제외픽셀 >20% 폐기'는 적어도 내부 피팅·영상 품질 필터로 읽어야 한다. 이것만으로 응력값의 물리적 정확도나 C 설정의 타당성을 증명할 수 없다. 다음은 Rammig의 소프트웨어 5.8.1.4에서 'fit error'의 단위와 판정 방식이 Santos의 2017년 SCALP-05와 같은지, 원문 그림·표 또는 제조사 2013 설명서로 확인한다."
+      }
+    }
+  ]
+}
