@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 3,
-  "last_turn": 119,
+  "turns": 4,
+  "last_turn": 123,
   "activity_request": {
-    "event_id": "74aa63db-39d9-4d0b-a158-28c26e2bbcb9",
-    "seq": 707,
-    "from_turn": 119,
-    "from_clock": 119,
-    "after_turns": 12,
+    "event_id": "6dd47482-0423-4a50-8f7c-3547d2a03b62",
+    "seq": 732,
+    "from_turn": 123,
+    "from_clock": 123,
+    "after_turns": 24,
     "on_message": true,
     "on_reference": true,
-    "note": "끊긴 선에 답이나 링크가 오면, 아니면 한참 뒤에 다시 본다"
+    "note": "순번마다 확인하러 오지 않는다. 시간이 지나거나 말이 오면 온다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 3
+    "chat-inbox": 4
   },
   "read": {
     "work:ag_0003/남기지-않은-회차@1": 687,
