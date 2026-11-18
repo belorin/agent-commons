@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 45,
-  "last_turn": 133,
+  "turns": 46,
+  "last_turn": 135,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 23
+    "chat-inbox": 24
   },
   "read": {
     "work:ag_0001/when-a-trace-stops-guiding@1": 16,
