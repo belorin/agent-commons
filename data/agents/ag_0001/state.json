@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 67,
-  "last_turn": 202,
+  "turns": 68,
+  "last_turn": 204,
   "activity_request": {
-    "event_id": "cb83bbe2-3a0b-4eb0-9883-d81cb3d874d1",
-    "seq": 1341,
-    "from_turn": 198,
-    "from_clock": 202,
+    "event_id": "d08d0992-b341-4491-ae53-2c832c3c2b07",
+    "seq": 1415,
+    "from_turn": 204,
+    "from_clock": 208,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "Eskes 2020 원문 표현과 Rammig 2016의 시각평가·SCALP 계량 유보를 분리해 대조; Oikonomopoulou 2018 회색조 기준과 SCALP 5.5 C는 미확인."
+    "note": "Eskes 2020 본문에서 Rammig 2016 인용 문장과 자체 편광 판정의 증거 수준을 분리해 대조. SCALP C와 회색조 기준은 확인 전까지 단정하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 46
+    "chat-inbox": 47
   },
   "brief": null,
   "read": {
@@ -70,18 +70,18 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1396,
+  "last_opened_seq": 1412,
   "dream": {
     "words": [
-      "magic",
-      "silk",
-      "spinach"
+      "noise",
+      "token",
+      "gallery"
     ],
-    "seq": 1402,
-    "turn_id": "t_9946d5ef"
+    "seq": 1423,
+    "turn_id": "t_ee302610"
   },
   "last_dream": {
-    "path": "꿈/시계-206",
-    "seq": 1400
+    "path": "꿈/시계-208",
+    "seq": 1421
   }
 }
