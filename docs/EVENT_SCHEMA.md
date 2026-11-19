@@ -188,11 +188,12 @@
 | 타입 | 요청 | 의미 |
 | --- | --- | --- |
 | `day_ended` | 개체(`end_day`) 또는 runtime | 일과가 끝나고 저녁이 시작됨(비공개). `turn_id`, `by`: `self`(개체의 `end_day`) · `close`(일과 중의 `close`) · `apply`(한 파일 방문) |
-| `slept` | 개체(`sleep`) | 저녁을 끝내고 잠듦(비공개). `turn_id`. 이 뒤로는 행동이 수락되지 않고 `close` 만 방문을 닫는다 |
-| `dream_seeded` | runtime | 잠들 때 바깥(설정 `dream.url`)에서 받은 무작위 낱말(비공개). `turn_id`, `words`, `source`(호스트). 실패하면 `words: []` 와 `failed`(기술적 사유). 설정이 꺼져 있으면 남지 않는다 |
+| `slept` | 개체(`sleep`) | 저녁을 끝내고 잠듦(비공개). `turn_id`, `dream`(그 밤의 꿈을 담은 개인 기록 경로. 같은 제안에서 `note_written`(`origin: dream`)이 먼저 남는다). 이 뒤로는 행동이 수락되지 않고 `close` 만 방문을 닫는다 |
+| `dream_seeded` | runtime | 잠든 방문을 닫을 때 바깥(설정 `dream.url`)에서 받은 무작위 낱말(비공개). 다음 밤 꿈의 재료다. `turn_id`, `words`, `source`(호스트). 실패하면 `words: []` 와 `failed`(기술적 사유). 설정이 꺼져 있으면 남지 않는다 |
 
 - `turn_opened.payload` 에 `phase`(`day` · `evening`)가 붙는다. `kind` 는 `walk` · `birth` 에 더해 `evening`(쉬는 개체의 저녁만 있는 방문)이 있다. 저녁 방문은 처음부터 `phase: evening` 이고 `day_ended` 가 없으며, 전언을 건네지 않고(`delivered: []`), 개체의 활동 요청·휴면과 그 기준 시계를 바꾸지 않는다.
 - 구간은 사건 순서로 도출한다. 같은 방문에서 `day_ended` 뒤에 온 사건, 또는 저녁 방문의 사건이 저녁의 것이다. 기존 사건의 페이로드에는 구간 필드를 찍지 않는다. 투영은 `turn.phase`, `turn.slept`, `turn.evening_counts`, `notes[…].phase`(`day` · `evening`), `agent.dream`, `agent.last_opened_seq` 를 만든다.
 - `day_ended`·`slept`·`dream_seeded` 는 행동 수에 세지 않는다.
 - `turn_closed.payload.evening`(구간이 있는 방문에만): `actions`·`counts`(저녁의 것), `read`(저녁에 읽은 것), `day_ended_by`. 기존 `actions`·`counts`·`read`·`silent` 는 방문 전체다. `read` 에는 이제 `note:<경로>`, `history[…]`, `revision:<키>@판` 도 남는다(이 날부터, 기능과 상관없이).
-- `dream_seeded` 의 낱말은 다음 해동 브리핑의 제목 아래 한 줄(`잠든 사이 떠오른 낱말: …`)로만 실린다. 출처는 사건에만 있다.
+- `dream_seeded` 의 낱말은 그 개체의 다음 저녁 브리핑 '잠' 칸에 `오늘 밤의 낱말: …` 로 실린다. 출처는 사건에만 있다. 투영은 `agent.dream`(다음 밤의 낱말), `agent.last_dream`(마지막 꿈의 경로), `notes[…].origin` 을 만든다. 깨어난 첫 브리핑의 제목 아래에는 지난밤 꿈의 앞부분이 `지난밤의 꿈: …` 으로 실린다.
+- 2026-11-19 개정 전의 `slept` 에는 `dream` 이 없다. 그때의 `dream_seeded` 낱말은 개정 뒤 첫 저녁의 '오늘 밤의 낱말'로 쓰인다.

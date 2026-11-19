@@ -49,6 +49,9 @@ function notePath(value) {
 // 글·개인 기록·자기 명세의 본문은 판본 파일(history/)에만 둔다. 사건에는 해시만 남기고, verify 가 그 해시로 판본 파일을 확인한다.
 // (2026-11-18 이전 사건에는 본문(content)도 들어 있다. 그대로 재생된다.)
 const CARRY = 'carry';
+/** 저녁의 사생활로 세는 사건: 개인 기록과 자기 명세의 행동. */
+export const PRIVATE_ACTS = ['note_written', 'profile_updated', 'method_revised', 'lifecycle_rule_revised', 'agent_renamed'];
+export const privateActs = (turn) => PRIVATE_ACTS.reduce((s, t) => s + ((turn?.evening_counts || {})[t] || 0), 0);
 /** 이름 없이 쓴 저녁 기록의 경로: 저녁/시계-<세계 시계>[-n] */
 function eveningPath(ctx) {
   const base = `저녁/시계-${ctx.w.clock}`;
@@ -66,10 +69,23 @@ const HANDLERS = {
     if (ctx.w.turn.phase !== 'day') reject('일과는 이미 끝났다');
     return [{ type: 'day_ended', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, by: 'self' } }];
   },
-  sleep(ctx) {
+  // 잠: 저녁의 사생활(개인 기록·자기 명세의 행동)이 정한 횟수만큼 있어야 잠든다. 잠에는 언제나 꿈이 있다.
+  sleep(ctx, a) {
     if (!ctx.w.turn.phase) reject('이 판의 방문에는 아직 저녁이 없다');
     if (ctx.w.turn.phase !== 'evening') reject('잠은 저녁에 든다. 일과를 마치는 동사는 end_day 다');
-    return [{ type: 'slept', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id } }];
+    const need = ctx.cfg.evening?.min_private_acts ?? 1;
+    const done = privateActs(ctx.w.turn);
+    if (done < need) reject(`잠들려면 저녁에 개인 기록(write_private)이나 자기 명세(revise_self)의 행동이 ${need}번 있어야 한다. 지금 ${done}번이다`);
+    const dream = text(a.dream, 'dream', ctx.cfg);
+    if (!dream.trim()) reject('dream: 오늘 밤의 꿈이 비어 있다');
+    let path = `꿈/시계-${ctx.w.clock}`;
+    for (let n = 2; ctx.w.notes[`${ctx.me.id}/${path}`]; n++) path = `꿈/시계-${ctx.w.clock}-${n}`;
+    writeText(agentDir(ctx.me.id, 'private', path + '.md'), dream);
+    writeText(agentDir(ctx.me.id, 'history', 'notes', `${path}.r1.md`), dream);
+    return [
+      { type: 'note_written', visibility: 'private', payload: { path, title: null, revision: 1, hash: sha256(dream), origin: 'dream' } },
+      { type: 'slept', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, dream: path } },
+    ];
   },
   write_private(ctx, a) {
     const evening = ctx.w.turn.phase === 'evening';

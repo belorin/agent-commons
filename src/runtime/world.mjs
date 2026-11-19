@@ -32,7 +32,8 @@ function blankAgent(id, e) {
     read: {}, // 읽은 것의 키 -> world_seq
     names: [],
     last_opened_seq: 0, // 이 개체의 마지막 turn_opened 순번
-    dream: null, // 마지막 잠에서 받은 낱말 { words, seq, turn_id } (evening 기능)
+    dream: null, // 다음 밤 꿈의 낱말: 방문을 닫을 때 받는다 { words, seq, turn_id } (evening 기능)
+    last_dream: null, // 마지막 밤의 꿈(개인 기록 경로) { path, seq }
   };
 }
 
@@ -110,6 +111,7 @@ export function project(events) {
         break;
       case 'slept':
         if (w.turn?.phase && w.turn.turn_id === pl.turn_id) w.turn.slept = true;
+        if (a && pl.dream) a.last_dream = { path: pl.dream, seq: e.world_seq };
         break;
       case 'dream_seeded':
         if (a) a.dream = { words: pl.words || [], seq: e.world_seq, turn_id: pl.turn_id || null };
@@ -154,7 +156,7 @@ export function project(events) {
       case 'note_written':
         // 어느 구간에서 썼는지는 사건 순서로 도출한다. 구간이 없던 방문과 회차 밖의 기록은 일과의 것이다.
         w.notes[`${e.agent_id}/${pl.path}`] = { agent: e.agent_id, path: pl.path, revision: pl.revision || 1, title: pl.title || null, hash: pl.hash, seq: e.world_seq, at: e.timestamp,
-          phase: w.turn && e.turn_id === w.turn.turn_id && w.turn.phase === 'evening' ? 'evening' : 'day' };
+          phase: w.turn && e.turn_id === w.turn.turn_id && w.turn.phase === 'evening' ? 'evening' : 'day', origin: pl.origin || null };
         break;
       case 'operator_note':
         w.operator_notes.push({ content: pl.content, seq: e.world_seq, at: e.timestamp });

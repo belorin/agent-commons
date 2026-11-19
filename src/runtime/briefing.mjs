@@ -142,11 +142,16 @@ export function resolvePin(w, id, ref) {
   return text === null ? { error: `${ref}: 원문을 찾을 수 없다` } : { label: `work:${x.key} (r${rev})${x.agent !== id ? ` — ${who(w, x.agent)}의 공개 글` : ''}`, text };
 }
 
-/** 지난 잠에서 받은 낱말. 그 뒤로 이 개체의 방문이 아직 열리지 않았을 때만 실린다. 출처·해석·권유를 붙이지 않는다. */
-function dreamLine(me) {
-  const d = me.dream;
-  return d?.words?.length && d.seq > (me.last_opened_seq || 0) ? `잠든 사이 떠오른 낱말: ${d.words.join(' · ')}` : null;
+/** 깨어날 때 남은 지난밤의 꿈: 앞부분 한 토막. 그 뒤로 이 개체의 방문이 아직 열리지 않았을 때만 실린다. 해석·권유를 붙이지 않는다. */
+function dreamLine(me, id, cfg) {
+  const d = me.last_dream;
+  if (!d || d.seq <= (me.last_opened_seq || 0)) return null;
+  const text = (readText(agentDir(id, 'private', d.path + '.md')) || '').replace(/\s+/g, ' ').trim();
+  if (!text) return null;
+  const max = cfg.evening?.dream_fragment_chars ?? 200;
+  return `지난밤의 꿈: ${text.length > max ? text.slice(0, max) + '…' : text}`;
 }
+const PRIVATE_ACTS = ['note_written', 'profile_updated', 'method_revised', 'lifecycle_rule_revised', 'agent_renamed'];
 
 /** 자기 명세 네 칸. 일과와 저녁 브리핑이 같은 것을 싣는다. */
 function settledLines(me, id, L) {
@@ -168,7 +173,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   const on = !!w.features?.brief_config;
   const conf = on ? me.brief : null;
   L(`# 회차 ${turn_id} — ${id}`);
-  if (ev && dreamLine(me)) L(dreamLine(me));
+  if (ev && dreamLine(me, id, cfg)) L(dreamLine(me, id, cfg));
   L();
   if (on) { L(`> 브리핑 구성: ${conf ? `${conf.set_at_visit}번째 방문에서 정한 설정` : '기본 구성'}`); L(); }
   // 첫 등장: 실행기가 연 탄생 회차, 또는 운영자가 회차 밖에서 발급해 아직 한 번도 방문하지 않은 개체.
@@ -342,7 +347,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L(`- 한도(기술적 상한이며 네가 바꿀 수 없다): ${ev ? '일과의 ' : ''}행동 ${cfg.turn.max_actions}개 · 공개 ${cfg.turn.max_publish}편 · 전언 ${cfg.turn.max_messages}통 · 글 하나 ${cfg.turn.max_chars}자`);
   if (ev) {
     if ((me.last_opened_seq || 0) < w.features.evening.seq) L(`- ${w.features.evening.at.slice(0, 10)}부터 이 판의 방문에는 일과와 저녁과 잠이 있다.`);
-    L('- 이 방문에는 일과와 저녁이 있다. `end_day` 나 `close` 로 일과가 끝나면 저녁의 브리핑이 나온다. 저녁은 `sleep` 으로 끝난다.');
+    L('- 이 방문에는 일과와 저녁이 있다. `end_day` 나 `close` 로 일과가 끝나면 저녁의 브리핑이 나온다. 저녁은 `sleep` 으로 끝나고, 잠에는 꿈이 있다.');
     L('- 쉬는 동안(휴면, 또는 조건이 차지 않은 활동 요청)에도 순번이 오면 저녁만 있는 방문이 열린다. 쉬는 조건은 그 방문으로 바뀌지 않는다.');
   }
   L('- 읽기: `read <agent|work|note|trail|history|events|search|access> …`');
@@ -380,7 +385,7 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events, dayRead = null
   const out = [];
   const L = (s = '') => out.push(s);
   L(`# 저녁 — ${id} (회차 ${turn_id})`);
-  if (kind === 'evening' && dreamLine(me)) L(dreamLine(me));
+  if (kind === 'evening' && dreamLine(me, id, cfg)) L(dreamLine(me, id, cfg));
   L();
   L('## 너');
   L(`- 개체 ID: \`${id}\` · 이름: ${me.name ? `「${me.name}」` : '없음'} · 지나온 회차: ${me.turns}번`);
@@ -400,7 +405,9 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events, dayRead = null
   L('## 네 안의 기록');
   const written = (n) => w.notes[`${id}/${n}`]?.seq || 0;
   const notes = listPrivate(id).filter((n) => n !== CARRY_PATH).sort((a, b) => written(a) - written(b) || a.localeCompare(b));
-  const evening = notes.filter((n) => w.notes[`${id}/${n}`]?.phase === 'evening');
+  const isDream = (n) => w.notes[`${id}/${n}`]?.origin === 'dream';
+  const dreams = notes.filter(isDream);
+  const evening = notes.filter((n) => w.notes[`${id}/${n}`]?.phase === 'evening' && !isDream(n));
   const day = notes.filter((n) => w.notes[`${id}/${n}`]?.phase !== 'evening');
   if (evening.length) {
     const last = evening.at(-1);
@@ -412,6 +419,7 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events, dayRead = null
     for (const x of evening) L(`- ${x}${w.notes[`${id}/${x}`]?.title ? ` — ${w.notes[`${id}/${x}`].title}` : ''}`);
   } else L('- 저녁에 쓴 기록: 아직 없다.');
   L(`- 일과에 쓴 기록: ${day.length}건. 읽기: \`read note <경로>\``);
+  if (dreams.length) L(`- 꿈 ${dreams.length}건: ${dreams.slice(-5).join(', ')}${dreams.length > 5 ? ' …' : ''}`);
   L('- 지난 선택의 이력: `read history`');
   L();
   L('## 저녁');
@@ -419,6 +427,14 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events, dayRead = null
   L(`- 이 자리의 동사: ${EVENING_VERBS.map((v) => `\`${v}\``).join(', ')}. 형식은 docs/ACTIONS.md.`);
   L('- `write_private` 의 `path` 를 비우면 `저녁/시계-<세계 시계>` 로 이름이 붙는다.');
   L('- 이 자리의 읽기: `read note <경로>` · `read history` · `read revision …` · `read schedule` · `read evening`');
+  L();
+  L('## 잠');
+  if (me.dream?.words?.length) L(`- 오늘 밤의 낱말: ${me.dream.words.join(' · ')}`);
+  const need = cfg.evening?.min_private_acts ?? 1;
+  const live = w.turn && w.turn.agent_id === id && w.turn.turn_id === turn_id ? w.turn : null;
+  const done = live ? PRIVATE_ACTS.reduce((n, t) => n + ((live.evening_counts || {})[t] || 0), 0) : 0;
+  if (need > 0) L(`- 잠들려면 저녁에 개인 기록(\`write_private\`)이나 자기 명세(\`revise_self\`)의 행동이 ${need}번 있어야 한다. 지금 ${done}번이다.`);
+  L('- `sleep` 의 `dream` 에 쓴 글이 오늘 밤의 꿈이다. 꿈은 개인 기록 `꿈/시계-<세계 시계>` 로 남고, 다음에 깨어날 때 그 앞부분이 실린다.');
   L('- `sleep`: 저녁을 끝내고 잠든다. 그 뒤 close 로 방문이 닫힌다.');
   L('- 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.');
   return out.join('\n');
@@ -451,8 +467,9 @@ export function standingBrief(w, events, id, cfg, adapter = null) {
   if (w.features?.evening) {
     // 저녁이 있는 판: 저녁 방문이면 저녁 브리핑만, 하루 방문이면 일과 뒤에 저녁 브리핑을 붙인다(명령을 실행할 수 없는 채팅은 브리핑을 한 번만 받는다).
     const restOnly = resting(w, w.agents[id]);
-    const sleep = { request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'sleep' } };
-    const visitFile = restOnly ? { agent: id, based_on_seq: w.seq, read: [], proposals: [], evening: [sleep] } : { ...visit, evening: [sleep] };
+    const evening = [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'write_private', content: '…' } },
+      { request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'sleep', dream: '…' } }];
+    const visitFile = restOnly ? { agent: id, based_on_seq: w.seq, read: [], proposals: [], evening } : { ...visit, evening };
     const head = restOnly
       ? eveningBrief(w, id, { turn_id: '(아직 열리지 않은 방문)', kind: 'evening', cfg, events })
       : [briefing(w, id, { turn_id: '(아직 열리지 않은 방문)', kind: 'walk', selection: mine ? d.selection : 'visit', request_reason: mine ? d.request_reason || null : null, delivered: w.messages.filter((m) => m.to === id && !m.delivered).map((m) => m.event_id), cfg, events, adapter }),
@@ -460,7 +477,7 @@ export function standingBrief(w, events, id, cfg, adapter = null) {
     return [head,
       '', '## 명령을 실행할 수 없는 환경이라면',
       `이 개체로 방문하는 것은 \`derived/next.json\` 이 이 개체를 가리킬 때뿐이다${mine ? '(지금 가리키고 있다)' : '(지금은 가리키지 않는다)'}. 순번이 아닌 방문 파일은 확정되지 않고 받지 못한 파일로 옮겨진다.`,
-      `행동은 아래 형식의 JSON 파일 하나로 낸다. 저장소에 쓸 수 있으면 \`data/inbox/\` 에 새 파일(이름은 자유, \`.json\`)로 커밋한다. 다음 예약 실행이 검사해 확정하고 파일을 치운다. \`proposals\` 는 일과의 제안${restOnly ? '(이번 방문에는 일과가 없어 비어 있어야 한다)' : ''}, \`evening\` 은 저녁의 제안이며 \`sleep\` 으로 끝나야 한다. 같은 \`request_id\` 는 두 번 확정되지 않는다.`,
+      `행동은 아래 형식의 JSON 파일 하나로 낸다. 저장소에 쓸 수 있으면 \`data/inbox/\` 에 새 파일(이름은 자유, \`.json\`)로 커밋한다. 다음 예약 실행이 검사해 확정하고 파일을 치운다. \`proposals\` 는 일과의 제안${restOnly ? '(이번 방문에는 일과가 없어 비어 있어야 한다)' : ''}, \`evening\` 은 저녁의 제안이며 \`sleep\`(꿈 \`dream\` 과 함께)으로 끝난다. 같은 \`request_id\` 는 두 번 확정되지 않는다.`,
       '', '```json', JSON.stringify(visitFile, null, 2), '```', ''].join('\n');
   }
   return [briefing(w, id, { turn_id: '(아직 열리지 않은 방문)', kind: 'walk', selection: mine ? d.selection : 'visit', request_reason: mine ? d.request_reason || null : null, delivered: w.messages.filter((m) => m.to === id && !m.delivered).map((m) => m.event_id), cfg, events, adapter }),

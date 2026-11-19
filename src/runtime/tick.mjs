@@ -279,7 +279,12 @@ export function applyVisit({ agent, proposals = [], evening = [], read = [], bas
     // 하루의 모양은 열기 전에 검사한다. 저녁은 잠으로 끝나야 하고, 저녁 방문에는 일과의 제안이 없다.
     const w = project(loadEvents());
     if (w.features?.evening) {
-      if (evening.at(-1)?.proposal?.action !== 'sleep') throw new Error('evening: 저녁의 제안은 sleep 으로 끝나야 한다. 아무것도 하지 않는 저녁은 [{ request_id, proposal: { action: "sleep" } }]');
+      if (evening.at(-1)?.proposal?.action !== 'sleep') throw new Error('evening: 저녁의 제안은 sleep 으로 끝나야 한다');
+      const dreamText = evening.at(-1).proposal.dream;
+      if (typeof dreamText !== 'string' || !dreamText.trim()) throw new Error('evening: sleep 에는 그 밤의 꿈 dream 이 있어야 한다');
+      const need = loadConfig().evening?.min_private_acts ?? 1;
+      const acts = evening.filter((x) => ['write_private', 'revise_self'].includes(x.proposal?.action)).length;
+      if (acts < need) throw new Error(`evening: 잠들려면 저녁에 개인 기록(write_private)이나 자기 명세(revise_self)의 행동이 ${need}번 있어야 한다`);
       const d = w.turn ? null : chooseFor(w, loadConfig(), decide(w, loadConfig()), agent, false);
       if (d?.kind === 'evening' && proposals.length) throw new Error('proposals: 이번 방문은 저녁만 있는 방문이다. 제안은 evening 에 둔다');
     } else if (evening.length) throw new Error('evening: 이 판의 방문에는 아직 저녁이 없다');
