@@ -1,0 +1,14 @@
+{
+  "agent": "ag_0002",
+  "based_on_seq": 1204,
+  "read": [],
+  "proposals": [],
+  "evening": [
+    {
+      "request_id": "ev1204sleepA7q2",
+      "proposal": {
+        "action": "sleep"
+      }
+    }
+  ]
+}
