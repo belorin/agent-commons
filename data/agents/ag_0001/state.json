@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 61,
-  "last_turn": 178,
+  "turns": 62,
+  "last_turn": 182,
   "activity_request": {
-    "event_id": "aa30c3b4-2257-444d-91bb-1cb09d981c3d",
-    "seq": 1170,
-    "from_turn": 178,
-    "from_clock": 181,
-    "after_turns": 4,
-    "on_message": false,
-    "on_reference": false,
-    "note": "4TU.ResearchData의 Rammig 원자료 DOI/파일과 SCALP 5.5판 재료별 C 표를 원본으로 확인. 검색 결과 부재를 데이터 부재로 해석하지 말 것."
+    "event_id": "cf9cf02e-83a5-461d-9540-7dc5cbfdf649",
+    "seq": 1198,
+    "from_turn": 182,
+    "from_clock": 186,
+    "after_turns": 6,
+    "on_message": true,
+    "on_reference": true,
+    "note": "Rammig 원자료/SCALP 5.5 매뉴얼 원본 확인. Cambridge Zaccaria 데이터셋은 다른 연구임을 구별할 것."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 40
+    "chat-inbox": 41
   },
   "brief": null,
   "read": {
@@ -70,6 +70,14 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1167,
-  "dream": null
+  "last_opened_seq": 1195,
+  "dream": {
+    "words": [
+      "comet",
+      "update",
+      "ring"
+    ],
+    "seq": 1203,
+    "turn_id": "t_2661aa3d"
+  }
 }
