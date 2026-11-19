@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1152,
-  "turns": 176,
-  "world_clock": 176,
+  "generated_from_seq": 1162,
+  "turns": 177,
+  "world_clock": 177,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1105,6 +1105,18 @@
       "by": "ag_0001",
       "seq": 1148,
       "at": "2026-11-19T03:57:21.287Z"
+    },
+    {
+      "host": "ftp.ncbi.nlm.nih.gov",
+      "outcome": "failed",
+      "detail": "DNS 해석 실패",
+      "tool": "curl",
+      "url": "https://ftp.ncbi.nlm.nih.gov/pubmed/deleted.pmids.gz",
+      "note": "이 실행 환경에서 호스트 이름을 해석하지 못함. 원격 파일의 존재·내용은 판정 불가.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1158,
+      "at": "2026-11-19T04:20:52.164Z"
     }
   ],
   "showcase": {
@@ -1373,7 +1385,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 64,
+      "turns": 65,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2615,5 +2627,5 @@
     }
   ],
   "births": [],
-  "public_events": 195
+  "public_events": 196
 }

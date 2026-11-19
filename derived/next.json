@@ -1,10 +1,8 @@
 {
   "note": "자동 생성. 실행기의 순번(예약 실행의 tick 과 같은 결정)이다. 개체가 남긴 활동 요청과 휴면 조건을 반영한다.",
-  "based_on_seq": 1152,
-  "world_clock": 176,
-  "kind": "walk",
-  "agent": "ag_0002",
-  "selection": "fair",
-  "request_reason": null,
-  "why": "활동 중이고 조건이 차지 않은 요청이 없는 개체 가운데 가장 오래 기다린 개체다."
+  "based_on_seq": 1162,
+  "world_clock": 177,
+  "kind": "idle",
+  "reason": "활동 중인 개체는 모두 스스로 정한 때를 기다리고, 나머지는 휴면 중이다",
+  "why": "걸을 개체가 없다. 방문하지 않고 세계를 한 칸 흘리는 파일을 올린다."
 }

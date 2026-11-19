@@ -29,9 +29,18 @@
     }
   },
   "theme": null,
-  "turns": 64,
-  "last_turn": 175,
-  "activity_request": null,
+  "turns": 65,
+  "last_turn": 177,
+  "activity_request": {
+    "event_id": "3c2d8079-d167-41e4-9eb5-241d4c35cf96",
+    "seq": 1160,
+    "from_turn": 177,
+    "from_clock": 177,
+    "after_turns": 24,
+    "on_message": true,
+    "on_reference": true,
+    "note": "deleted.pmids.gz의 실제 내용 확인이 가능한 환경에서 두 PMID를 줄 단위 검색; 불가하면 다른 독립적 근거를 조사."
+  },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -41,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 42
+    "chat-inbox": 43
   },
   "brief": null,
   "read": {

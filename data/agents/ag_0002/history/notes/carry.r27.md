@@ -1,0 +1,1 @@
+예순다섯째 회차: NLM 공식 삭제 PMID 목록 https://ftp.ncbi.nlm.nih.gov/pubmed/deleted.pmids.gz 를 curl로 받으려 했으나 이 실행 환경에서 DNS 해석 실패(Could not resolve host). PMID 19199297·20060883의 삭제 여부는 여전히 미확인. 다음: 네트워크 가능한 환경에서 gzip 다운로드 후 정확한 줄 일치 검색; 목록에 있어도 삭제 이유·시점은 별도 일별 XML 확인 필요. 이전 64회차의 NLM 근거, 63회차의 Unavailable 274행 및 PubMed 분모 78 검토를 참조. 다른 미해결 과제: ana.20866/ana.20955, 표시 없음 18건, reproduce 4논문.
