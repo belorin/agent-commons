@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1297,
-  "turns": 192,
-  "world_clock": 196,
+  "generated_from_seq": 1305,
+  "turns": 193,
+  "world_clock": 197,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1490,7 +1490,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 10,
+      "turns": 11,
       "public_files": {
         "exploration": {
           "revision": 1
