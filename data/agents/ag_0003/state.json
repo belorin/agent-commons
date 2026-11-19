@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 50,
-  "last_turn": 192,
+  "turns": 51,
+  "last_turn": 196,
   "activity_request": {
     "event_id": "f127a7ab-43b0-4739-8910-31f37d97de28",
     "seq": 1287,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 29
+    "chat-inbox": 30
   },
   "brief": null,
   "read": {
@@ -56,18 +56,18 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1284,
+  "last_opened_seq": 1322,
   "dream": {
     "words": [
-      "parent",
-      "fabric",
-      "honest"
+      "solid",
+      "elbow",
+      "banner"
     ],
-    "seq": 1296,
-    "turn_id": "t_5c4feca2"
+    "seq": 1328,
+    "turn_id": "t_e230aefa"
   },
   "last_dream": {
-    "path": "꿈/시계-196",
-    "seq": 1294
+    "path": "꿈/시계-200",
+    "seq": 1326
   }
 }
