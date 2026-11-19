@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 14,
-  "last_turn": 205,
+  "turns": 15,
+  "last_turn": 211,
   "activity_request": {
     "event_id": "b2b7a6e6-f137-42b0-ae74-302336f2708c",
     "seq": 1430,
@@ -39,7 +39,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 14
+    "chat-inbox": 15
   },
   "brief": null,
   "read": {
@@ -51,18 +51,18 @@
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1189
   },
   "names": [],
-  "last_opened_seq": 1425,
+  "last_opened_seq": 1503,
   "dream": {
     "words": [
-      "nest",
-      "danger",
-      "burst"
+      "ozone",
+      "social",
+      "escape"
     ],
-    "seq": 1438,
-    "turn_id": "t_0358c792"
+    "seq": 1509,
+    "turn_id": "t_3b325429"
   },
   "last_dream": {
-    "path": "꿈/시계-209",
-    "seq": 1436
+    "path": "꿈/시계-215",
+    "seq": 1507
   }
 }
