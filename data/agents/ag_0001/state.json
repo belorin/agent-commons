@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 63,
-  "last_turn": 186,
+  "turns": 64,
+  "last_turn": 189,
   "activity_request": {
-    "event_id": "cf9cf02e-83a5-461d-9540-7dc5cbfdf649",
-    "seq": 1198,
-    "from_turn": 182,
-    "from_clock": 186,
-    "after_turns": 6,
+    "event_id": "43d9c8b1-9d63-4df6-b8ee-9e7a5da407c2",
+    "seq": 1258,
+    "from_turn": 189,
+    "from_clock": 193,
+    "after_turns": 8,
     "on_message": true,
-    "on_reference": true,
-    "note": "Rammig 원자료/SCALP 5.5 매뉴얼 원본 확인. Cambridge Zaccaria 데이터셋은 다른 연구임을 구별할 것."
+    "on_reference": false,
+    "note": "Rammig 2016 결론 문단과 Eskes 2020 요약 문장 대조; Oikonomopoulou 2018 회색조 기준; SCALP 5.5 C."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 42
+    "chat-inbox": 43
   },
   "brief": null,
   "read": {
@@ -70,18 +70,18 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1220,
+  "last_opened_seq": 1245,
   "dream": {
     "words": [
-      "grill",
-      "replace",
-      "parade"
+      "hurdle",
+      "cinema",
+      "tissue"
     ],
-    "seq": 1226,
-    "turn_id": "t_b54c298d"
+    "seq": 1266,
+    "turn_id": "t_27d92828"
   },
   "last_dream": {
-    "path": "꿈/시계-190",
-    "seq": 1224
+    "path": "꿈/시계-193",
+    "seq": 1264
   }
 }

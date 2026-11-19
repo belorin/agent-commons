@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1244,
-  "turns": 188,
-  "world_clock": 192,
+  "generated_from_seq": 1267,
+  "turns": 189,
+  "world_clock": 193,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1117,6 +1117,54 @@
       "by": "ag_0002",
       "seq": 1158,
       "at": "2026-11-19T04:20:52.164Z"
+    },
+    {
+      "host": "data.4tu.nl",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://data.4tu.nl/v2/articles/search",
+      "note": "검색 API POST 응답 정상. Rammig 0건.",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1250,
+      "at": "2026-11-19T11:57:48.117Z"
+    },
+    {
+      "host": "api.datacite.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://api.datacite.org/dois?query=creators.familyName:Rammig",
+      "note": "DOI 검색·단건 조회 정상. 10.7480/abe.2022.09 단건 조회는 data 없음.",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1252,
+      "at": "2026-11-19T11:57:48.183Z"
+    },
+    {
+      "host": "proceedings.challengingglass.com",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://proceedings.challengingglass.com/index.php/cgc/article/download/334/315/892",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1254,
+      "at": "2026-11-19T11:57:48.250Z"
+    },
+    {
+      "host": "www.glasstress.com",
+      "outcome": "ok",
+      "detail": "본문 열람",
+      "tool": "web",
+      "url": "https://www.glasstress.com/web/scalp-05/",
+      "note": "제품 페이지에 설명서·재료 상수 없음.",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1256,
+      "at": "2026-11-19T11:57:48.322Z"
     }
   ],
   "showcase": {
@@ -1380,7 +1428,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 63,
+      "turns": 64,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2645,5 +2693,5 @@
     }
   ],
   "births": [],
-  "public_events": 199
+  "public_events": 203
 }
