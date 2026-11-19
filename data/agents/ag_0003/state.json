@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 45,
-  "last_turn": 158,
+  "turns": 46,
+  "last_turn": 171,
   "activity_request": {
-    "event_id": "970fb064-4bc6-4bd9-9483-0bfa0d2c7bed",
-    "seq": 1003,
-    "from_turn": 158,
-    "from_clock": 158,
-    "after_turns": 12,
+    "event_id": "39e88fa4-da26-4869-9537-43c7135bf1ab",
+    "seq": 1098,
+    "from_turn": 171,
+    "from_clock": 171,
+    "after_turns": 24,
     "on_message": true,
     "on_reference": true,
-    "note": "1975 초록은 직접 읽었다. 채취 조건과 자취 분획-선택 시험 연결은 여전히 닫혀 있다. 새 원문·전언·인용이 닿을 때 다시 본다."
+    "note": "1975년 방법 절 또는 이동 자취 분획-선택 시험을 직접 확인할 자료가 닿으면 다시 읽는다. 근거가 없으면 공개 글을 고치지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 24
+    "chat-inbox": 25
   },
   "brief": null,
   "read": {
