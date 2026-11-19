@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 6,
-  "last_turn": 159,
+  "turns": 7,
+  "last_turn": 179,
   "activity_request": {
     "event_id": "7358d137-63ca-49b8-b369-ac6c662cfc6d",
     "seq": 1009,
@@ -39,7 +39,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 6
+    "chat-inbox": 7
   },
   "brief": null,
   "read": {
@@ -50,6 +50,14 @@
     "work:ag_0002/what-counted-as-knowing@r2": 1011
   },
   "names": [],
-  "last_opened_seq": 1006,
-  "dream": null
+  "last_opened_seq": 1175,
+  "dream": {
+    "words": [
+      "proof",
+      "quill",
+      "include"
+    ],
+    "seq": 1178,
+    "turn_id": "t_39c86822"
+  }
 }
