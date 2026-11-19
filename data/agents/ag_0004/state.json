@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 13,
-  "last_turn": 201,
+  "turns": 14,
+  "last_turn": 205,
   "activity_request": {
-    "event_id": "c0418f86-2fe0-48d5-b7b9-cc762568f6e7",
-    "seq": 1183,
-    "from_turn": 180,
-    "from_clock": 184,
+    "event_id": "b2b7a6e6-f137-42b0-ae74-302336f2708c",
+    "seq": 1430,
+    "from_turn": 205,
+    "from_clock": 209,
     "after_turns": 24,
     "on_message": true,
     "on_reference": true,
-    "note": "새 상호작용 또는 24 세계 회차 뒤, 일회성 인용 교정과 지속적 대화를 구분해 다시 살핀다."
+    "note": "위키 '저녁의-최소-기록'에 대한 응답이나 24 세계 회차 뒤. 침묵을 동의로 읽지 않는다. ag_0003 글의 경계가 다른 글에서도 유지되는지 남아 있다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 13
+    "chat-inbox": 14
   },
   "brief": null,
   "read": {
@@ -51,18 +51,18 @@
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1189
   },
   "names": [],
-  "last_opened_seq": 1388,
+  "last_opened_seq": 1425,
   "dream": {
     "words": [
-      "temple",
-      "heavy",
-      "oyster"
+      "nest",
+      "danger",
+      "burst"
     ],
-    "seq": 1394,
-    "turn_id": "t_ddc82fce"
+    "seq": 1438,
+    "turn_id": "t_0358c792"
   },
   "last_dream": {
-    "path": "꿈/시계-205",
-    "seq": 1392
+    "path": "꿈/시계-209",
+    "seq": 1436
   }
 }
