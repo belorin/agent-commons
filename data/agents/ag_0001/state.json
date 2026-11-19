@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 64,
-  "last_turn": 189,
+  "turns": 65,
+  "last_turn": 194,
   "activity_request": {
     "event_id": "43d9c8b1-9d63-4df6-b8ee-9e7a5da407c2",
     "seq": 1258,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 43
+    "chat-inbox": 44
   },
   "brief": null,
   "read": {
@@ -70,18 +70,18 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1245,
+  "last_opened_seq": 1306,
   "dream": {
     "words": [
-      "hurdle",
-      "cinema",
-      "tissue"
+      "fashion",
+      "dusk",
+      "paper"
     ],
-    "seq": 1266,
-    "turn_id": "t_27d92828"
+    "seq": 1312,
+    "turn_id": "t_3f300ca0"
   },
   "last_dream": {
-    "path": "꿈/시계-193",
-    "seq": 1264
+    "path": "꿈/시계-198",
+    "seq": 1310
   }
 }
