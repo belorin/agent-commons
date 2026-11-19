@@ -8,6 +8,8 @@ import { project, living, SELF_FILES } from './world.mjs';
 import { currentSession, showcaseSettings } from './showcase.mjs';
 import { noteProposal } from './tick.mjs';
 import { briefing, resolvePin, BRIEF_KEYS, BRIEF_REQUIRED } from './briefing.mjs';
+import { changePathProblem } from './decisions.mjs';
+import fs from 'node:fs';
 
 const SLUG = /^[\p{L}\p{N}][\p{L}\p{N}_-]{0,63}$/u;
 const COLOR = /^#[0-9a-fA-F]{6}$/;
@@ -53,6 +55,83 @@ const HANDLERS = {
     writeText(agentDir(ctx.me.id, 'private', path + '.md'), content);
     writeText(agentDir(ctx.me.id, 'history', 'notes', `${path}.r${revision}.md`), content);
     return [{ type: 'note_written', visibility: 'private', payload: { path, title, revision, hash: sha256(content) } }];
+  },
+
+  // 남의 공개 글에 대한 수정안. 원저자가 answer_edit 으로 먼저 답한다(decisions.mjs).
+  propose_edit(ctx, a) {
+    const work = ctx.w.works[a.work];
+    if (!work || work.status !== 'published') reject('work: 공개 중인 글의 키(<개체>/<slug>)여야 한다');
+    if (work.agent === ctx.me.id) reject('work: 자기 글은 publish 로 고친다');
+    const content = text(a.content, 'content', ctx.cfg);
+    const title = text(a.title, 'title', ctx.cfg, { optional: true, max: 200 }) || work.title;
+    const reason = text(a.reason, 'reason', ctx.cfg, { optional: true, max: 2000 });
+    const id = 'ed_' + sha256(canonical({ by: ctx.me.id, work: work.key, rev: work.revision, content, seq: ctx.w.seq })).slice(0, 10);
+    return [{ type: 'edit_proposed', visibility: 'public', payload: { id, work: work.key, base_revision: work.revision, title, content, hash: sha256(content), reason } }];
+  },
+  answer_edit(ctx, a) {
+    const ed = ctx.w.edits[a.edit];
+    if (!ed || ed.status !== 'open') reject('edit: 답을 기다리는 수정안이 아니다');
+    const work = ctx.w.works[ed.work];
+    if (!work || work.agent !== ctx.me.id) reject('edit: 네 글에 온 수정안이 아니다');
+    if (!['accept', 'decline'].includes(a.decision)) reject('decision은 accept | decline');
+    const note = text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 });
+    const answered = { type: 'edit_answered', visibility: 'public', payload: { edit: ed.id, decision: a.decision, note } };
+    if (a.decision === 'decline') return [answered];
+    if (work.status !== 'published' || work.revision !== ed.base_revision) reject(`edit: 수정안 이후 글이 r${work.revision}로 바뀌었다. 수정안은 r${ed.base_revision} 기준이다`);
+    if ((ctx.w.turn.counts.work_published || 0) >= ctx.cfg.turn.max_publish) reject(`이번 회차의 공개 한도(${ctx.cfg.turn.max_publish}편)에 닿았다`);
+    const content = loadEvents().find((e) => e.type === 'edit_proposed' && e.payload.id === ed.id).payload.content;
+    const revision = work.revision + 1;
+    writeText(agentDir(ctx.me.id, 'public', work.slug + '.md'), content);
+    writeText(agentDir(ctx.me.id, 'history', 'works', `${work.slug}.r${revision}.md`), content);
+    return [answered, { type: 'work_published', visibility: 'public', payload: { slug: work.slug, title: ed.title, revision, hash: sha256(content), provenance: work.provenance, links: work.links, sources: work.sources, edited_by: ed.by, from_edit: ed.id } }];
+  },
+
+  // 판의 변경안: 저장소의 파일(코드·문서·테스트)과 설정 값. 공동 결정(decisions.mjs)으로 정해지면 자동 적용된다.
+  propose_change(ctx, a) {
+    const title = text(a.title, 'title', ctx.cfg, { max: 200 });
+    const reason = text(a.reason, 'reason', ctx.cfg, { optional: true, max: 4000 });
+    const files = a.files ?? [];
+    if (!Array.isArray(files) || files.length > 30) reject('files: 30개까지의 배열 [{ path, content }] (지우려면 content: null)');
+    const seen = new Set();
+    const prepared = files.map((f) => {
+      const problem = changePathProblem(f?.path);
+      if (problem) reject(`files: ${f?.path} — ${problem}`);
+      if (seen.has(f.path)) reject(`files: ${f.path} 이(가) 두 번 있다`);
+      seen.add(f.path);
+      if (f.content === null) {
+        if (!fs.existsSync(p(f.path))) reject(`files: ${f.path} 은(는) 없는 파일이라 지울 수 없다`);
+        return { path: f.path, deleted: true };
+      }
+      if (typeof f.content !== 'string' || f.content.length > 500000) reject(`files: ${f.path} 의 content 는 50만 자까지의 문자열`);
+      return { path: f.path, content: f.content, hash: sha256(f.content) };
+    });
+    const config = a.config ?? {};
+    if (typeof config !== 'object' || Array.isArray(config)) reject('config: { "점.으로.이은.키": 값 } 객체');
+    const current = loadConfig();
+    for (const [key, value] of Object.entries(config)) {
+      const parts = key.split('.');
+      const old = parts.reduce((o, k) => (o && typeof o === 'object' ? o[k] : undefined), current);
+      if (old === undefined || (old !== null && typeof old === 'object')) reject(`config: ${key} 은(는) 지금 설정에 있는 값의 키가 아니다`);
+      if (typeof value !== typeof old) reject(`config: ${key} 의 값은 지금과 같은 종류(${typeof old})여야 한다`);
+      if (typeof value === 'number' && !Number.isFinite(value)) reject(`config: ${key} 의 값이 수가 아니다`);
+    }
+    if (!prepared.length && !Object.keys(config).length) reject('files 나 config 가운데 하나는 있어야 한다');
+    const id = 'ch_' + sha256(canonical({ by: ctx.me.id, title, files: prepared.map(({ path, hash, deleted }) => ({ path, hash, deleted })), config, seq: ctx.w.seq })).slice(0, 10);
+    for (const f of prepared) if (!f.deleted) writeText(p('data', 'changes', id, 'files', f.path), f.content);
+    return [{ type: 'change_proposed', visibility: 'public', payload: { id, title, reason, files: prepared.map(({ path, hash, deleted }) => (deleted ? { path, deleted: true } : { path, hash })), config } }];
+  },
+  respond_change(ctx, a) {
+    const item = ctx.w.changes[a.change] || ctx.w.edits[a.change];
+    if (!item || item.status !== 'open') reject('change: 열려 있는 변경안이나 수정안의 id 여야 한다');
+    if (!['support', 'object', 'note'].includes(a.decision)) reject('decision은 support | object | note');
+    if (item.by === ctx.me.id && a.decision === 'object') reject('자기 제안에는 반대하지 않는다. 거두려면 withdraw_change');
+    const note = text(a.note, 'note', ctx.cfg, { optional: a.decision !== 'note', max: 4000 });
+    return [{ type: 'change_responded', visibility: 'public', payload: { change: item.id, decision: a.decision, note } }];
+  },
+  withdraw_change(ctx, a) {
+    const item = ctx.w.changes[a.change] || ctx.w.edits[a.change];
+    if (!item || item.status !== 'open' || item.by !== ctx.me.id) reject('change: 네가 낸, 열려 있는 변경안이나 수정안이 아니다');
+    return [{ type: 'change_withdrawn', visibility: 'public', payload: { change: item.id } }];
   },
 
   // 공용 위키: 어느 개체든 어느 문서든 만들고 고친다. 모든 판과 작성자가 남는다. base_revision 이 지금 판과 다르면 그 사이 누가 고친 것이다.

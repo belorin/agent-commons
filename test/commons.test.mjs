@@ -1346,3 +1346,91 @@ test('공용 위키: 누구나 만들고 고치며, 엇갈린 판은 거절되�
   assert.match(fs.readFileSync(S.p('site', 'wiki.html'), 'utf8'), /판의 말/);
   assert.ok(fs.readdirSync(S.p('site')).some((f) => f.startsWith('k-')));
 });
+
+test('남의 글 수정안: 원저자가 먼저 답하고, 답이 없으면 공동 결정으로 반영된다', async () => {
+  const { applyEdit, pendingDecisions } = await import('../src/runtime/apply.mjs');
+  config({ seed_population: 2, max_turns_per_day: 500, decision: { quiet_clocks: 2, author_reply_clocks: 2 } });
+  turn(); turn();
+  turn([{ action: 'publish', slug: 'a', title: '원래 제목', content: '원래 본문' }, { action: 'publish', slug: 'b', title: 'B', content: 'B 본문' }]); // ag_0001
+  // ag_0002 가 수정안 둘을 낸다. 자기 글에는 못 낸다.
+  let t = openTurn(); assert.equal(t.agent_id, 'ag_0002');
+  assert.match(act({ action: 'propose_edit', work: 'ag_0002/none', content: 'x' }).reason, /공개 중인 글/);
+  assert.equal(act({ action: 'propose_edit', work: 'ag_0001/a', content: '고친 본문', title: '고친 제목', reason: '오타' }).ok, true);
+  assert.equal(act({ action: 'propose_edit', work: 'ag_0001/b', content: 'B 고침' }).ok, true);
+  closeTurn();
+  const [edA, edB] = Object.values(world().edits).sort((x, y) => x.seq - y.seq);
+  // 원저자에게 도착하고, 받아들이면 원저자 이름으로 새 판이 나온다.
+  t = openTurn(); assert.equal(t.agent_id, 'ag_0001');
+  assert.match(t.text, new RegExp(`네 글 \\[ag_0001/a\\] r1 에 온 수정안 \\[${edA.id}\\]`));
+  assert.match(read('edit', edA.id), /고친 본문/);
+  assert.equal(act({ action: 'answer_edit', edit: edA.id, decision: 'accept', note: '고맙다' }).ok, true);
+  closeTurn();
+  let w = world();
+  assert.equal(w.works['ag_0001/a'].revision, 2);
+  assert.equal(w.works['ag_0001/a'].title, '고친 제목');
+  assert.equal(w.works['ag_0001/a'].edited_by, 'ag_0002');
+  assert.equal(S.readText(S.agentDir('ag_0001', 'public', 'a.md')), '고친 본문');
+  assert.equal(w.edits[edA.id].status, 'accepted');
+  // 원저자가 답하지 않은 수정안은 세계 시계가 흐르면 공동 결정 단계로 넘어가고, 반대 없이 더 흐르면 결정된다.
+  assert.equal(w.edits[edB.id].status, 'open');
+  assert.equal(pendingDecisions().length, 0);
+  turn(); turn(); turn(); turn();
+  assert.deepEqual(pendingDecisions().map((d) => [d.kind, d.id]), [['edit', edB.id]]);
+  assert.match(applyEdit(edB.id), /ag_0001\/b r2/);
+  w = world();
+  assert.equal(w.works['ag_0001/b'].revision, 2);
+  assert.equal(w.works['ag_0001/b'].edited_by, 'ag_0002');
+  assert.equal(w.edits[edB.id].status, 'applied');
+  assert.equal(S.loadEvents().filter((e) => e.type === 'work_published').at(-1).actor_id, 'runtime');
+  assert.ok(verify().ok);
+});
+
+test('판의 변경안: 반대 없이 세계 시계가 흐르면 결정되고, 반대는 보류시키며, 거두면 다시 센다', async () => {
+  const { pendingDecisions, recordChange } = await import('../src/runtime/apply.mjs');
+  config({ seed_population: 2, max_turns_per_day: 500, decision: { quiet_clocks: 3, author_reply_clocks: 24 } });
+  turn(); turn();
+  let t = openTurn(); assert.equal(t.agent_id, 'ag_0001');
+  const no = (a, re) => { const r = act({ action: 'propose_change', title: 't', ...a }); assert.equal(r.ok, false, JSON.stringify(a)); assert.match(r.reason, re); };
+  no({ files: [{ path: 'data/events/log.jsonl', content: 'x' }] }, /대상이 아니다/);
+  no({ files: [{ path: '.github/workflows/x.yml', content: 'x' }] }, /대상이 아니다/);
+  no({ files: [{ path: 'control/PAUSE', content: '' }] }, /대상이 아니다/);
+  no({ files: [{ path: '../밖', content: 'x' }] }, /상대 경로/);
+  no({ files: [{ path: 'docs/없는파일.md', content: null }] }, /없는 파일/);
+  no({ config: { 'turn.max_actions': '열' } }, /같은 종류/);
+  no({ config: { 'turn.nope': 1 } }, /키가 아니다/);
+  no({}, /하나는 있어야/);
+  const ok = act({ action: 'propose_change', title: '한도 늘리기', reason: '시험', files: [{ path: 'docs/NOTE.md', content: '새 문서' }], config: { 'turn.max_actions': 10 } });
+  assert.equal(ok.ok, true, ok.reason);
+  closeTurn();
+  const ch = Object.values(world().changes)[0];
+  assert.match(ch.id, /^ch_[0-9a-f]{10}$/);
+  assert.equal(S.readText(S.p('data', 'changes', ch.id, 'files', 'docs/NOTE.md')), '새 문서');
+  // ag_0002 가 반대하면 보류된다. 제안자는 자기 제안에 반대하지 못한다.
+  t = openTurn(); assert.equal(t.agent_id, 'ag_0002');
+  assert.match(t.text, new RegExp(`변경안 \\[${ch.id}\\] 「한도 늘리기」`));
+  assert.equal(act({ action: 'respond_change', change: ch.id, decision: 'object', note: '아직 이르다' }).ok, true);
+  closeTurn();
+  turn(); turn(); turn(); turn();
+  assert.equal(pendingDecisions().length, 0);
+  assert.match(read('change', ch.id, undefined, { as: 'ag_0001' }), /ag_0002: object — 아직 이르다/);
+  // 반대를 거두면 그때부터 다시 센다.
+  t = openTurn(); if (t.agent_id !== 'ag_0002') { closeTurn(); t = openTurn(); }
+  assert.equal(t.agent_id, 'ag_0002');
+  assert.equal(act({ action: 'respond_change', change: ch.id, decision: 'support' }).ok, true);
+  closeTurn();
+  turn();
+  assert.equal(pendingDecisions().length, 0);
+  turn(); turn();
+  assert.deepEqual(pendingDecisions().map((d) => d.id), [ch.id]);
+  // 집행 결과는 사건으로 남는다(파일 반영과 검사는 scripts/apply-decided.mjs).
+  recordChange(ch.id, 'failed', { reason: '테스트 실패: 시험' });
+  assert.equal(world().changes[ch.id].status, 'failed');
+  t = openTurn();
+  assert.match(read('change', ch.id), /반영되지 않은 까닭\n테스트 실패: 시험/);
+  closeTurn();
+  assert.equal(pendingDecisions().length, 0);
+  assert.ok(verify().ok);
+  // 변경안 파일을 몰래 고치면 잡힌다.
+  S.writeText(S.p('data', 'changes', ch.id, 'files', 'docs/NOTE.md'), '바꿈');
+  assert.match(verify().problems.join('\n'), /changes\/.*docs\/NOTE\.md: 파일이 확정된 사건과 다르다/);
+});

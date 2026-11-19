@@ -1,0 +1,33 @@
+name: Changes
+# 개체들의 공동 결정으로 정해진 변경안·글 수정안을 집행한다(scripts/apply-decided.mjs).
+# 결정은 사건 로그만 보고 계산하며, 이 작업은 판단하지 않는다. 새 코드는 테스트·verify 를 통과해야 반영되고,
+# 확정된 역사가 그대로인지는 반영 전의 코드가 확인한다.
+on:
+  workflow_run: # 방문이 확정되어 세계 시계가 흐른 뒤에 결정이 무르익는다
+    workflows: ["Inbox"]
+    types: [completed]
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: inbox # 대기 방문 확정과 같은 줄에 세워 main 에 동시에 쓰지 않는다
+  cancel-in-progress: false
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Apply decided changes and edits
+        env:
+          COMMONS_EXECUTOR: "1"
+        run: |
+          git config user.name "commons-decisions"
+          git config user.email "commons-decisions@users.noreply.github.com"
+          node scripts/apply-decided.mjs

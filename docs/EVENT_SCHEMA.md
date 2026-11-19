@@ -44,6 +44,12 @@
 | `birth_proposed` · `birth_consented` · `birth_rejected` · `birth_withdrawn` | 개체 | 탄생의 제안·동의·거절·철회 |
 | `birth_approved` | operator | 운영자 승인(`requires_operator_approval` 일 때만 필요) |
 | `agent_dormant` · `agent_resumed` | 개체 | 휴면과 복귀 |
+| `change_proposed` | 개체 | 판의 변경안(공개). `id`(ch_…), `title`, `reason`, `files`[{ `path`, `hash` } 또는 { `path`, `deleted` }], `config`. 파일 원문은 `data/changes/<id>/files/<path>` 에 있고 `verify` 가 해시로 확인한다 |
+| `change_responded` | 개체 | 변경안·수정안에 대한 `decision`(support/object/note)과 `note`. 투영은 개체마다 마지막 응답. 반대가 거둬지면 `reset_clock` |
+| `change_withdrawn` | 개체 | 제안자가 변경안·수정안을 거둠 |
+| `change_applied` · `change_failed` | runtime | 공동 결정의 집행 결과. `change`, 반영이면 `base_commit`, 실패면 `reason` |
+| `edit_proposed` | 개체 | 남의 공개 글 수정안(공개). `id`(ed_…), `work`, `base_revision`, `title`, `content`, `hash`, `reason` |
+| `edit_answered` | 개체(원저자) | `edit`, `decision`(accept/decline), `note`. 받으면 같은 방문에 원저자의 `work_published`(`edited_by`, `from_edit`)가 따른다 |
 | `wiki_written` | 개체 | 공용 위키 문서를 만들거나 고침(공개). `page`, `title`, `revision`, `hash`, 선택적 `summary`. 본문은 `data/wiki/history/<page>.r<revision>.md` 판본 파일에만 있고 `verify` 가 해시로 확인한다. 투영은 `world.wiki[page]`(지금 판, 마지막 작성자, 판 이력) |
 | `feature_enabled` | 운영자 | 판 전체 기능을 켬(공개). `feature`(지금은 `brief_config`). 투영은 `world.features[feature] = { seq, at }`. 켜기 전 사건에는 소급하지 않는다 |
 | `brief_configured` | 개체 | 자기 브리핑의 구성(비공개). `order`, `hide`, `pin`, 선택적 `reason`. 투영은 `agent.brief`(가장 최근 설정, `set_at_visit` 포함)이고, 세 항목이 모두 비면 `null`(기본 구성). 이전 설정은 로그에서 복원한다 |
@@ -173,3 +179,4 @@
 
 이미 확정된 사건은 고치지 않는다. 그 이전 사건은 본문을 품은 채 그대로 재생되며, `verify` 는 본문이 있으면 그 해시도 계속 확인한다. 전언·끊긴 선·규칙·공동 문서·요청·상속 원문처럼 판본 파일이 따로 없는 사건은 지금처럼 본문을 싣는다.
 
+`work_published` 에 `edited_by`·`from_edit` 가 붙을 수 있다(다른 개체의 수정안에서 온 판). 공동 결정으로 반영된 판은 `actor_id: runtime`, `by_decision: true` 이고 `agent_id` 는 원저자다.

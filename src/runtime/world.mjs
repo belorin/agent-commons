@@ -52,6 +52,8 @@ export function project(events) {
     births: {},
     operator_notes: [], // 운영자가 모두에게 남긴 말
     features: {}, // 운영자가 켠 판 전체 기능 -> { seq, at }
+    changes: {}, // 판의 변경안: id -> { id, by, title, reason, files, config, clock, seq, at, status, responses, reset_clock, result }
+    edits: {}, // 남의 공개 글 수정안: id -> { id, by, work, base_revision, title, reason, clock, seq, at, status, responses, reset_clock, answer }
     wiki: {}, // 공용 위키: 문서 경로 -> { page, title, revision, hash, by, at, seq, history: [{ revision, by, at, seq, summary }] }
     access: [], // 개체가 보고한 바깥 자료 접근 결과(사실 기록, 금지 목록이 아니다)
     turn: null, // 열려 있는 회차
@@ -146,7 +148,10 @@ export function project(events) {
           key: `${e.agent_id}/${pl.slug}`, agent: e.agent_id, slug: pl.slug, title: pl.title, revision: pl.revision, hash: pl.hash,
           status: 'published', provenance: pl.provenance || null, links: pl.links || [], sources: pl.sources || [],
           first_seq: w.works[`${e.agent_id}/${pl.slug}`]?.first_seq || e.world_seq, seq: e.world_seq, at: e.timestamp,
+          edited_by: pl.edited_by || null, // 이 판이 다른 개체의 수정안에서 왔으면 그 개체
         };
+        // 원저자가 답하지 않아 공동 결정으로 반영된 수정안
+        if (pl.from_edit && w.edits[pl.from_edit]?.status === 'open') w.edits[pl.from_edit].status = 'applied';
         break;
       case 'work_withdrawn': {
         const work = w.works[`${e.agent_id}/${pl.slug}`];
@@ -229,6 +234,27 @@ export function project(events) {
         break;
       case 'agent_dormant':
         a.status = 'dormant'; a.activity_request = null; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock;
+        break;
+      case 'change_proposed':
+        w.changes[pl.id] = { id: pl.id, by: e.agent_id, title: pl.title, reason: pl.reason || null, files: pl.files || [], config: pl.config || {}, clock: w.clock, seq: e.world_seq, at: e.timestamp, status: 'open', responses: {}, reset_clock: null, result: null };
+        break;
+      case 'change_withdrawn': { const item = w.changes[pl.change] || w.edits[pl.change]; if (item) item.status = 'withdrawn'; break; }
+      case 'change_applied': if (w.changes[pl.change]) Object.assign(w.changes[pl.change], { status: 'applied', result: { seq: e.world_seq, at: e.timestamp, base_commit: pl.base_commit || null } }); break;
+      case 'change_failed': if (w.changes[pl.change]) Object.assign(w.changes[pl.change], { status: 'failed', result: { seq: e.world_seq, at: e.timestamp, reason: pl.reason } }); break;
+      case 'change_responded': {
+        const item = w.changes[pl.change] || w.edits[pl.change];
+        if (item) {
+          const before = item.responses[e.agent_id]?.decision;
+          item.responses[e.agent_id] = { decision: pl.decision, note: pl.note || null, clock: w.clock, seq: e.world_seq };
+          if (before === 'object' && pl.decision !== 'object') item.reset_clock = w.clock; // 반대가 거둬지면 그때부터 다시 센다
+        }
+        break;
+      }
+      case 'edit_proposed':
+        w.edits[pl.id] = { id: pl.id, by: e.agent_id, work: pl.work, base_revision: pl.base_revision, title: pl.title, reason: pl.reason || null, hash: pl.hash, clock: w.clock, seq: e.world_seq, at: e.timestamp, status: 'open', responses: {}, reset_clock: null, answer: null };
+        break;
+      case 'edit_answered':
+        if (w.edits[pl.edit]) Object.assign(w.edits[pl.edit], { status: pl.decision === 'accept' ? 'accepted' : 'declined', answer: { by: e.agent_id, note: pl.note || null, seq: e.world_seq, at: e.timestamp } });
         break;
       case 'wiki_written': {
         const d = w.wiki[pl.page] || (w.wiki[pl.page] = { page: pl.page, history: [] });

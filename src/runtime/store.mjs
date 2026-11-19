@@ -104,6 +104,8 @@ const DEFAULTS = {
   birth: { min_turns_between_births: 3, requires_operator_approval: false },
   context: { recent_public_events: 15, candidates: 8, brief_chars: 20000 },
   scheduling: { max_request_streak: 2 },
+  // 공동 결정의 첫 값(src/runtime/decisions.mjs). propose_change 의 config 로 바꾼다.
+  decision: { quiet_clocks: 12, author_reply_clocks: 24 },
   // 발표회는 운영 정책이다. 기본은 꺼져 있고 control/config.json에서 켠다.
   showcase: { enabled: false, every_clock: 12, min_every_clock: 3, max_every_clock: 60, max_intro_chars: 1500 },
 };
@@ -112,7 +114,7 @@ export function loadConfig() {
   const raw = readText(p('control', 'config.json'));
   const user = raw ? JSON.parse(raw) : {};
   const merged = { ...DEFAULTS, ...user };
-  for (const k of ['turn', 'birth', 'context', 'scheduling', 'showcase']) merged[k] = { ...DEFAULTS[k], ...(user[k] || {}) };
+  for (const k of ['turn', 'birth', 'context', 'scheduling', 'showcase', 'decision']) merged[k] = { ...DEFAULTS[k], ...(user[k] || {}) };
   return merged;
 }
 

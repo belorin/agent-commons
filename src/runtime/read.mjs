@@ -6,6 +6,7 @@ import { describeEvent, listPrivate, describeAccess } from './briefing.mjs';
 import { noteRead } from './tick.mjs';
 import { loadConfig } from './store.mjs';
 import * as storeMod from './store.mjs';
+import * as decisionsMod from './decisions.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 
 /** as 를 주면 열린 방문 없이 그 개체의 범위로 읽는다(브리핑을 받아 간 채팅을 대신 읽어 줄 때). 누구의 범위로 읽을지는 신뢰하는 쪽이 정한다. */
@@ -90,6 +91,34 @@ function readUnlocked(kind, arg, extra, as) {
       const n = Number(arg) || 30;
       return events.filter((e) => e.visibility === 'public').map((e) => [e, describeEvent(w, e)]).filter(([, s]) => s).slice(-n).map(([e, s]) => `- #${e.world_seq} ${e.timestamp.slice(0, 10)} ${s}`).join('\n') || '아직 조용하다.';
     }
+    case 'change': {
+      if (!arg) return Object.values(w.changes).sort((a, b) => b.seq - a.seq).map((c) => `- [${c.id}] 「${c.title}」 ${c.by} · ${c.status}`).join('\n') || '아직 변경안이 없다.';
+      const ch = w.changes[arg];
+      if (!ch) return `${arg}: 그런 변경안이 없다`;
+      if (extra) {
+        const f = ch.files.find((x) => x.path === extra);
+        if (!f) return `${extra}: 이 변경안에 없는 파일이다`;
+        if (f.deleted) return `${extra}: 이 변경안은 이 파일을 지운다`;
+        return readText(storeMod.p('data', 'changes', ch.id, 'files', f.path)) ?? '원문을 찾을 수 없다';
+      }
+      const { changeStatus } = decisionsMod;
+      const st = changeStatus(w, loadConfig(), ch);
+      return [`# 변경안 [${ch.id}] 「${ch.title}」 — ${ch.by} · ${ch.at.slice(0, 10)} · ${ch.status}${ch.status === 'open' ? ` (${st.state}${st.clocks_left != null ? `, ${st.clocks_left}칸 남음` : ''})` : ''}`,
+        ch.reason ? `\n${ch.reason}` : '',
+        ch.files.length ? '\n## 파일 (내용: `read change ' + ch.id + ' <경로>`, 지금 판과 견주려면 저장소의 그 경로)\n' + ch.files.map((f) => `- ${f.path}${f.deleted ? ' (지움)' : ''}`).join('\n') : '',
+        Object.keys(ch.config).length ? '\n## 설정\n' + Object.entries(ch.config).map(([k, v]) => `- ${k}: ${JSON.stringify(v)}`).join('\n') : '',
+        '\n## 응답\n' + (Object.entries(ch.responses).map(([a, r]) => `- ${a}: ${r.decision}${r.note ? ` — ${r.note}` : ''}`).join('\n') || '- 아직 없다'),
+        ch.result?.reason ? `\n## 반영되지 않은 까닭\n${ch.result.reason}` : ''].filter(Boolean).join('\n');
+    }
+    case 'edit': {
+      const ed = w.edits[arg];
+      if (!ed) return `${arg}: 그런 수정안이 없다`;
+      const content = events.find((e) => e.type === 'edit_proposed' && e.payload.id === ed.id)?.payload.content ?? '';
+      const st = decisionsMod.editStatus(w, loadConfig(), ed);
+      return [`# 수정안 [${ed.id}] ${ed.by} → [${ed.work}] r${ed.base_revision} · ${ed.status}${ed.status === 'open' ? ` (${st.state})` : ''}`, ed.reason ? `\n${ed.reason}` : '',
+        `\n## 제안한 제목\n${ed.title}`, `\n## 제안한 본문\n${content}`,
+        '\n## 응답\n' + (Object.entries(ed.responses).map(([a, r]) => `- ${a}: ${r.decision}${r.note ? ` — ${r.note}` : ''}`).join('\n') || '- 아직 없다')].join('\n');
+    }
     case 'wiki': {
       const { p } = storeMod;
       if (!arg) {
@@ -122,6 +151,6 @@ function readUnlocked(kind, arg, extra, as) {
       return hits.join('\n') || '찾은 것이 없다.';
     }
     default:
-      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | wiki [문서 [판]] | history [target revision] | events [n] | search <말> | access [호스트] | showcase | governance | group <id> | rule <id> | schedule';
+      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | wiki [문서 [판]] | change [id [경로]] | edit <id> | history [target revision] | events [n] | search <말> | access [호스트] | showcase | governance | group <id> | rule <id> | schedule';
   }
 }

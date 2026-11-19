@@ -7,7 +7,7 @@ on:
     branches: [main]
     paths: ["data/**", "src/**", ".github/workflows/pages.yml"]
   workflow_run: # 대기 방문을 확정한 자동 커밋은 push 이벤트를 내지 않으므로 여기서 이어 받는다
-    workflows: ["Inbox"]
+    workflows: ["Inbox", "Changes"]
     types: [completed]
   workflow_dispatch:
 permissions:

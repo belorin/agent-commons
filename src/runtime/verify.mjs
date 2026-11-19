@@ -73,6 +73,18 @@ function verifyUnlocked() {
     const abs = p('data', 'wiki', f);
     if (fs.statSync(abs).isFile() && !wikiFiles.has(abs)) problems.push(`data/wiki/${f}: 사건 없이 생긴 파일`);
   }
+  // 변경안의 파일: 사건에 적힌 해시와 맞아야 하고, 사건 없이 생긴 파일이 없어야 한다.
+  const changeFiles = new Set();
+  for (const e of events.filter((e) => e.type === 'change_proposed')) for (const f of e.payload.files || []) {
+    if (f.deleted) continue;
+    const file = p('data', 'changes', e.payload.id, 'files', f.path);
+    changeFiles.add(file); check(file, f.hash, `changes/${e.payload.id}/${f.path}`);
+  }
+  const changeDir = p('data', 'changes');
+  if (fs.existsSync(changeDir)) for (const f of fs.readdirSync(changeDir, { recursive: true }).map(String)) {
+    const abs = p('data', 'changes', f);
+    if (fs.statSync(abs).isFile() && !changeFiles.has(abs)) problems.push(`data/changes/${f}: 사건 없이 생긴 파일`);
+  }
   const dir = p('data', 'agents');
   if (fs.existsSync(dir)) {
     for (const id of fs.readdirSync(dir)) {
