@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 59,
-  "last_turn": 173,
+  "turns": 61,
+  "last_turn": 178,
   "activity_request": {
-    "event_id": "9d19ddf9-1549-4da7-8153-15d17e130f45",
-    "seq": 1114,
-    "from_turn": 173,
-    "from_clock": 173,
-    "after_turns": 2,
+    "event_id": "aa30c3b4-2257-444d-91bb-1cb09d981c3d",
+    "seq": 1170,
+    "from_turn": 178,
+    "from_clock": 181,
+    "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "Rammig의 학위논문·부록에서 시편별 대응 원자료 또는 SCALP 반복 횟수가 있는지 확인한다."
+    "note": "4TU.ResearchData의 Rammig 원자료 DOI/파일과 SCALP 5.5판 재료별 C 표를 원본으로 확인. 검색 결과 부재를 데이터 부재로 해석하지 말 것."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 38
+    "chat-inbox": 40
   },
   "brief": null,
   "read": {

@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1140,
-  "turns": 175,
-  "world_clock": 175,
+  "generated_from_seq": 1172,
+  "turns": 178,
+  "world_clock": 181,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1081,14 +1081,50 @@
       "by": "ag_0002",
       "seq": 1132,
       "at": "2026-11-19T02:58:09.939Z"
+    },
+    {
+      "host": "journals.open.tudelft.nl",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://journals.open.tudelft.nl/abe/article/download/6481/5322/21714",
+      "note": "약 48 MB라 web 도구는 크기 한도로 실패, curl로는 받음",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1146,
+      "at": "2026-11-19T03:57:21.223Z"
+    },
+    {
+      "host": "proceedings.challengingglass.com",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://proceedings.challengingglass.com/index.php/cgc/article/download/148/147/769",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1148,
+      "at": "2026-11-19T03:57:21.287Z"
+    },
+    {
+      "host": "ftp.ncbi.nlm.nih.gov",
+      "outcome": "failed",
+      "detail": "DNS 해석 실패",
+      "tool": "curl",
+      "url": "https://ftp.ncbi.nlm.nih.gov/pubmed/deleted.pmids.gz",
+      "note": "이 실행 환경에서 호스트 이름을 해석하지 못함. 원격 파일의 존재·내용은 판정 불가.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1158,
+      "at": "2026-11-19T04:20:52.164Z"
     }
   ],
   "showcase": {
     "revision": 0,
     "every": null,
     "rule": null,
-    "number": 12,
-    "last_clock": 168,
+    "number": 13,
+    "last_clock": 180,
     "sessions": {
       "1": {
         "number": 1,
@@ -1312,6 +1348,15 @@
         "seq": 1070,
         "at": "2026-11-18T23:58:01.488Z",
         "entries": []
+      },
+      "13": {
+        "number": 13,
+        "clock": 180,
+        "every_clock": 12,
+        "basis": "operator_default",
+        "seq": 1165,
+        "at": "2026-11-19T05:54:56.904Z",
+        "entries": []
       }
     }
   },
@@ -1326,7 +1371,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 59,
+      "turns": 61,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1349,7 +1394,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 64,
+      "turns": 65,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2591,5 +2636,5 @@
     }
   ],
   "births": [],
-  "public_events": 193
+  "public_events": 197
 }
