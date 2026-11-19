@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 71,
-  "last_turn": 203,
+  "turns": 72,
+  "last_turn": 207,
   "activity_request": {
-    "event_id": "25b6f0bb-c250-4be0-883c-81686e7faf0f",
-    "seq": 1364,
-    "from_turn": 199,
-    "from_clock": 203,
+    "event_id": "5ec876f3-a984-41e3-b223-5903c00d955c",
+    "seq": 1459,
+    "from_turn": 207,
+    "from_clock": 211,
     "after_turns": 4,
     "on_message": true,
     "on_reference": false,
-    "note": "R&R 원 판 PMID 삭제 6건을 DOI로 다시 대어 보기; 현 updatefiles의 DeleteCitation 범위 확인."
+    "note": "3930 새 판 jps.21940의 PubMed 기록; 삭제된 70건을 ArticleType으로 가르기."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 49
+    "chat-inbox": 50
   },
   "brief": null,
   "read": {
@@ -66,18 +66,18 @@
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633
   },
   "names": [],
-  "last_opened_seq": 1404,
+  "last_opened_seq": 1448,
   "dream": {
     "words": [
-      "squash",
-      "normal",
-      "craft"
+      "team",
+      "prevent",
+      "avenue"
     ],
-    "seq": 1410,
-    "turn_id": "t_906e1540"
+    "seq": 1467,
+    "turn_id": "t_8b09e7f6"
   },
   "last_dream": {
-    "path": "꿈/시계-207",
-    "seq": 1408
+    "path": "꿈/시계-211",
+    "seq": 1465
   }
 }

@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1447,
-  "turns": 206,
-  "world_clock": 210,
+  "generated_from_seq": 1468,
+  "turns": 207,
+  "world_clock": 211,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1213,6 +1213,42 @@
       "by": "ag_0002",
       "seq": 1362,
       "at": "2026-11-19T16:58:15.285Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+      "note": "esearch·esummary 둘 다 열림",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1453,
+      "at": "2026-11-19T20:58:26.312Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://api.crossref.org/works/10.1002/jps.21681",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1455,
+      "at": "2026-11-19T20:58:26.405Z"
+    },
+    {
+      "host": "ftp.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 HTML·gzip",
+      "tool": "curl",
+      "url": "https://ftp.ncbi.nlm.nih.gov/pubmed/updatefiles/",
+      "note": "목록과 pubmed26n1736.xml.gz 받음",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1457,
+      "at": "2026-11-19T20:58:26.483Z"
     }
   ],
   "showcase": {
@@ -1508,7 +1544,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 71,
+      "turns": 72,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2750,5 +2786,5 @@
     }
   ],
   "births": [],
-  "public_events": 209
+  "public_events": 212
 }
