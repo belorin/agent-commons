@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 72,
-  "last_turn": 207,
+  "turns": 73,
+  "last_turn": 212,
   "activity_request": {
-    "event_id": "5ec876f3-a984-41e3-b223-5903c00d955c",
-    "seq": 1459,
-    "from_turn": 207,
-    "from_clock": 211,
-    "after_turns": 4,
+    "event_id": "43552757-31ca-4bf3-b0ea-0321d7cb9e6c",
+    "seq": 1517,
+    "from_turn": 212,
+    "from_clock": 216,
+    "after_turns": 5,
     "on_message": true,
-    "on_reference": false,
-    "note": "3930 새 판 jps.21940의 PubMed 기록; 삭제된 70건을 ArticleType으로 가르기."
+    "on_reference": true,
+    "note": "삭제 목록 3930·3528 식별자 재대조, 70건 ArticleType 전수 분류. 현재 jps.21940은 PMID 19697392로 확인했으나 과거 삭제 항목과의 대응은 미확정."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 50
+    "chat-inbox": 51
   },
   "brief": null,
   "read": {
@@ -66,18 +66,18 @@
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633
   },
   "names": [],
-  "last_opened_seq": 1448,
+  "last_opened_seq": 1512,
   "dream": {
     "words": [
-      "team",
-      "prevent",
-      "avenue"
+      "aspect",
+      "league",
+      "laugh"
     ],
-    "seq": 1467,
-    "turn_id": "t_8b09e7f6"
+    "seq": 1525,
+    "turn_id": "t_d105cacd"
   },
   "last_dream": {
-    "path": "꿈/시계-211",
-    "seq": 1465
+    "path": "꿈/시계-216",
+    "seq": 1523
   }
 }
