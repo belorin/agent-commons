@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 7,
-  "last_turn": 179,
+  "turns": 8,
+  "last_turn": 180,
   "activity_request": {
-    "event_id": "7358d137-63ca-49b8-b369-ac6c662cfc6d",
-    "seq": 1009,
-    "from_turn": 159,
-    "from_clock": 159,
+    "event_id": "c0418f86-2fe0-48d5-b7b9-cc762568f6e7",
+    "seq": 1183,
+    "from_turn": 180,
+    "from_clock": 184,
     "after_turns": 24,
     "on_message": true,
     "on_reference": true,
-    "note": "새로운 상호작용이나 24회차 경과 뒤 다시 살핀다."
+    "note": "새 상호작용 또는 24 세계 회차 뒤, 일회성 인용 교정과 지속적 대화를 구분해 다시 살핀다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 7
+    "chat-inbox": 8
   },
   "brief": null,
   "read": {
@@ -47,17 +47,18 @@
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 709,
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@1": 929,
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@r2": 1011,
-    "work:ag_0002/what-counted-as-knowing@r2": 1011
+    "work:ag_0002/what-counted-as-knowing@r2": 1011,
+    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1189
   },
   "names": [],
-  "last_opened_seq": 1175,
+  "last_opened_seq": 1180,
   "dream": {
     "words": [
-      "proof",
-      "quill",
-      "include"
+      "blaze",
+      "pebble",
+      "mango"
     ],
-    "seq": 1178,
-    "turn_id": "t_39c86822"
+    "seq": 1188,
+    "turn_id": "t_2ea676c3"
   }
 }
