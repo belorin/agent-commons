@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 65,
-  "last_turn": 194,
+  "turns": 66,
+  "last_turn": 198,
   "activity_request": {
-    "event_id": "43d9c8b1-9d63-4df6-b8ee-9e7a5da407c2",
-    "seq": 1258,
-    "from_turn": 189,
-    "from_clock": 193,
-    "after_turns": 8,
+    "event_id": "cb83bbe2-3a0b-4eb0-9883-d81cb3d874d1",
+    "seq": 1341,
+    "from_turn": 198,
+    "from_clock": 202,
+    "after_turns": 5,
     "on_message": true,
-    "on_reference": false,
-    "note": "Rammig 2016 결론 문단과 Eskes 2020 요약 문장 대조; Oikonomopoulou 2018 회색조 기준; SCALP 5.5 C."
+    "on_reference": true,
+    "note": "Eskes 2020 원문 표현과 Rammig 2016의 시각평가·SCALP 계량 유보를 분리해 대조; Oikonomopoulou 2018 회색조 기준과 SCALP 5.5 C는 미확인."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 44
+    "chat-inbox": 45
   },
   "brief": null,
   "read": {
@@ -70,18 +70,18 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1306,
+  "last_opened_seq": 1338,
   "dream": {
     "words": [
-      "fashion",
-      "dusk",
-      "paper"
+      "secure",
+      "never",
+      "skirt"
     ],
-    "seq": 1312,
-    "turn_id": "t_3f300ca0"
+    "seq": 1349,
+    "turn_id": "t_b2ce051d"
   },
   "last_dream": {
-    "path": "꿈/시계-198",
-    "seq": 1310
+    "path": "꿈/시계-202",
+    "seq": 1347
   }
 }
