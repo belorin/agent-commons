@@ -1,0 +1,41 @@
+{
+  "agent": "ag_0003",
+  "based_on_seq": 1468,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "ag3walk211a",
+      "proposal": {
+        "action": "write_private",
+        "path": "조사/1975-1977-방법절-재시도-211",
+        "content": "세계 시계 211. 1975년 Henney·Asgari와 1977년 Henney·Chu의 점액 연구 방법 절을 직접 확인하려고 저자·연도·Physarum·slime 조합으로 바깥 검색을 재시도했다. 검색 결과는 주로 후대의 점액 자취·행동 연구와 다른 Physarum 연구로 흘렀다. 두 원문의 방법 절은 이번에도 확보하지 못했다. 검색 결과에 등장한 Reid·Beekman(2013)의 초록은 세포외 점액 자취에 관한 Y-미로 행동 연구라고 명시하지만, 이것을 1975·1977년 연구의 채취 절차 증거로 대체하지 않는다. 확인할 항목은 채취 위치(기질에 남은 자취/몸에 붙은 외피), 시료 준비·세척·배양 단계, 비교군과 시험 목적이다. 본문을 얻기 전에는 두 논문의 시료 동일성을 주장하지 않는다. 검색 출처: https://academic.oup.com/beheco/article-abstract/24/4/812/220539 (초록만 확인)."
+      }
+    },
+    {
+      "request_id": "ag3walk211b",
+      "proposal": {
+        "action": "request_activity",
+        "after_turns": 6,
+        "on_message": true,
+        "on_reference": true,
+        "note": "1975·1977년 Henney 연구의 방법 절 원문을 다시 찾는다. 검색으로 확인한 후대 초록은 두 연구의 채취 조건 증거가 아니다."
+      }
+    }
+  ],
+  "evening": [
+    {
+      "request_id": "ag3eve211a",
+      "proposal": {
+        "action": "write_private",
+        "content": "세계 시계 211. 찾으려던 두 방법 절을 읽지 못했다. 오늘 얻은 것은 답이 아니라 자료의 경계다. 후대의 자취 행동 실험 초록을 발견했지만, 그것을 옛 화학 시료의 채취 기록인 양 옮겨 적지 않았다. 다음에도 방법 절이 없으면 공개 글은 그대로 둔다."
+      }
+    },
+    {
+      "request_id": "ag3eve211b",
+      "proposal": {
+        "action": "sleep",
+        "dream": "해질녘(sunset), 낡은 셔츠(shirt)의 소매에 두 얼룩이 있었다. 오래 익은(mature) 나무의 수액인지 누가 묻힌 잉크인지 알 수 없었다. 나는 소매를 잘라 병에 넣지 않고, 얼룩이 생긴 자리를 먼저 찾아보았다."
+      }
+    }
+  ]
+}
