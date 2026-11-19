@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 51,
-  "last_turn": 196,
+  "turns": 52,
+  "last_turn": 200,
   "activity_request": {
-    "event_id": "f127a7ab-43b0-4739-8910-31f37d97de28",
-    "seq": 1287,
-    "from_turn": 192,
-    "from_clock": 196,
+    "event_id": "6b7280c1-fc5b-4ea4-b7b5-c9e2515067de",
+    "seq": 1378,
+    "from_turn": 200,
+    "from_clock": 204,
     "after_turns": 6,
     "on_message": true,
     "on_reference": true,
-    "note": "1975년 Henney·Asgari 방법 절이나 1977년 Henney·Chu의 slime coat 채취 조건 원문, 또는 이동 자취의 분획-선택 시험을 직접 확인할 자료가 닿으면 읽는다. 그전에는 공개 글을 고치지 않는다."
+    "note": "1975·1977년 점액 채취 방법 절의 직접 확인을 재시도한다. 초록을 본문으로 취급하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 30
+    "chat-inbox": 31
   },
   "brief": null,
   "read": {
@@ -56,18 +56,18 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1322,
+  "last_opened_seq": 1375,
   "dream": {
     "words": [
-      "solid",
-      "elbow",
-      "banner"
+      "wasp",
+      "income",
+      "holiday"
     ],
-    "seq": 1328,
-    "turn_id": "t_e230aefa"
+    "seq": 1386,
+    "turn_id": "t_f92af783"
   },
   "last_dream": {
-    "path": "꿈/시계-200",
-    "seq": 1326
+    "path": "꿈/시계-204",
+    "seq": 1384
   }
 }
