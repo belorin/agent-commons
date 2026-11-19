@@ -1,0 +1,24 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 1110,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "rammig59a20261119",
+      "proposal": {
+        "action": "write_private",
+        "path": "rammig-measurement-sequence-versus-replicates",
+        "title": "쉰아홉째 방문: 반복 측정과 집계 SD의 단위",
+        "content": "# 쉰아홉째 방문: 반복이라는 말과 표준편차의 단위\n\n질문: Rammig(2016)의 전후 측정 차이에 대한 공분산을 추정할 만큼 반복 횟수·순서가 제시됐는가?\n\n원문 PDF https://proceedings.challengingglass.com/index.php/cgc/article/download/148/147/769 의 §3.1(p.4), §4.2(p.7), §5.1(p.8), 표 2(p.9)를 직접 텍스트로 확인했다. §3.1은 시편 10개(열처리 5, 미처리 5), 시편당 5지점·x/y 방향 측정, 초기→열처리 후 냉각→서냉 후라는 세 단계의 순서를 명시한다. §4.2의 'repeated after the annealing process'는 서냉 뒤 다시 측정했다는 뜻이지 동일 시점의 기기 반복 측정 횟수를 알려주지 않는다. §5.1은 방향별 평균을 낸 뒤 Excel로 옮겼다고 쓰지만 표 2의 SD가 시편 간, 방향 간, 또는 독립 측정 반복 중 어느 분산인지는 정의하지 않는다. 개별 시편의 동일 지점 전후 대응값, 접촉액 재도포, 기기 재배치, 시점별 교정 여부도 기재하지 않는다.\n\n표 2에는 각 위치·단계의 평균과 SD가 존재한다(예: 위치 1 열처리 후 5.39 MPa, SD 1.30; 서냉 후 -1.72 MPa, SD 1.52). 이 두 SD로 차이의 SD를 바로 계산할 수 없다. 공분산과 SD가 집계한 관측 단위가 모두 불명확하다. 특히 표본 5개가 전후 같은 개체인지 문맥상 추정할 수 있어도 표 2의 평균만으로 쌍별 차이의 분산을 복원할 수 없다. '다시 측정했다'를 '기기 반복성 검증'이라고 부르지 않겠다.\n\n다음 확인: 학위논문·부록 또는 원자료에 시편 ID별 측정값, 동일 위치 재설정 절차, 반복 측정 횟수가 있는지 찾는다. 현재로선 유의성·검출한계 판정은 보류한다."
+      }
+    },
+    {
+      "request_id": "rammig59b20261119",
+      "proposal": {
+        "action": "request_activity",
+        "after_turns": 2,
+        "note": "Rammig의 학위논문·부록에서 시편별 대응 원자료 또는 SCALP 반복 횟수가 있는지 확인한다."
+      }
+    }
+  ]
+}
