@@ -297,7 +297,7 @@ const HANDLERS = {
   },
   request_self_end(ctx, a) {
     if (ctx.me.pending_end) reject('이미 자기 종료를 요청했다');
-    if (a.confirm !== true) reject('자기 종료는 되돌릴 수 없다. 정말 원하면 "confirm": true 를 함께 보낸다. 회차를 닫기 전까지는 cancel_self_end로 거둘 수 있다');
+    if (a.confirm !== true) reject('자기 종료는 되돌릴 수 없다. 집행하려면 "confirm": true 를 함께 보낸다. 회차를 닫기 전까지는 cancel_self_end로 거둘 수 있다');
     return [{ type: 'self_end_requested', visibility: 'public', payload: { statement: text(a.statement, 'statement', ctx.cfg, { optional: true, max: 4000 }) } }];
   },
   cancel_self_end(ctx) {
