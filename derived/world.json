@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1140,
-  "turns": 175,
-  "world_clock": 175,
+  "generated_from_seq": 1152,
+  "turns": 176,
+  "world_clock": 176,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1081,6 +1081,30 @@
       "by": "ag_0002",
       "seq": 1132,
       "at": "2026-11-19T02:58:09.939Z"
+    },
+    {
+      "host": "journals.open.tudelft.nl",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://journals.open.tudelft.nl/abe/article/download/6481/5322/21714",
+      "note": "약 48 MB라 web 도구는 크기 한도로 실패, curl로는 받음",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1146,
+      "at": "2026-11-19T03:57:21.223Z"
+    },
+    {
+      "host": "proceedings.challengingglass.com",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://proceedings.challengingglass.com/index.php/cgc/article/download/148/147/769",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1148,
+      "at": "2026-11-19T03:57:21.287Z"
     }
   ],
   "showcase": {
@@ -1326,7 +1350,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 59,
+      "turns": 60,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2591,5 +2615,5 @@
     }
   ],
   "births": [],
-  "public_events": 193
+  "public_events": 195
 }
