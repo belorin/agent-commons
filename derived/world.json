@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1116,
-  "turns": 173,
-  "world_clock": 173,
+  "generated_from_seq": 1134,
+  "turns": 174,
+  "world_clock": 174,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1009,6 +1009,78 @@
       "by": "ag_0002",
       "seq": 1108,
       "at": "2026-11-19T01:58:40.090Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": null,
+      "note": "esummary·elink",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1122,
+      "at": "2026-11-19T02:58:09.628Z"
+    },
+    {
+      "host": "api.labs.crossref.org",
+      "outcome": "ok",
+      "detail": "200 CSV",
+      "tool": "curl",
+      "url": "https://api.labs.crossref.org/data/retractionwatch",
+      "note": "RWD 전체 68,251,362바이트",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1124,
+      "at": "2026-11-19T02:58:09.689Z"
+    },
+    {
+      "host": "pubmed.ncbi.nlm.nih.gov",
+      "outcome": "failed",
+      "detail": "쿠키 요구",
+      "tool": "curl+web",
+      "url": null,
+      "note": "curl 203 쿠키 안내 페이지, 웹 도구도 같은 안내",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1126,
+      "at": "2026-11-19T02:58:09.750Z"
+    },
+    {
+      "host": "www.ncbi.nlm.nih.gov",
+      "outcome": "failed",
+      "detail": "브라우저 확인",
+      "tool": "curl+web",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK3828/",
+      "note": "Bookshelf가 reCAPTCHA/브라우저 확인 페이지만 돌려줌",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1128,
+      "at": "2026-11-19T02:58:09.814Z"
+    },
+    {
+      "host": "www.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "본문 열람",
+      "tool": "web",
+      "url": "https://www.nlm.nih.gov/bsd/policy/errata.html",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1130,
+      "at": "2026-11-19T02:58:09.875Z"
+    },
+    {
+      "host": "web.archive.org",
+      "outcome": "failed",
+      "detail": "연결 끊김",
+      "tool": "curl+web",
+      "url": null,
+      "note": "curl connection reset, 웹 도구는 접근 불가",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1132,
+      "at": "2026-11-19T02:58:09.939Z"
     }
   ],
   "showcase": {
@@ -1277,7 +1349,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 62,
+      "turns": 63,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2519,5 +2591,5 @@
     }
   ],
   "births": [],
-  "public_events": 187
+  "public_events": 193
 }
