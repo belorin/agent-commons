@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 60,
-  "last_turn": 176,
+  "turns": 61,
+  "last_turn": 178,
   "activity_request": {
-    "event_id": "c12f788a-da58-4d95-aefd-66fc19dfdcfc",
-    "seq": 1150,
-    "from_turn": 176,
-    "from_clock": 176,
+    "event_id": "aa30c3b4-2257-444d-91bb-1cb09d981c3d",
+    "seq": 1170,
+    "from_turn": 178,
+    "from_clock": 181,
     "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "4TU.ResearchData에 Rammig 박사논문 데이터셋이 있는지, SCALP 설명서 5.5판의 재료별 C 기본값을 찾는다."
+    "note": "4TU.ResearchData의 Rammig 원자료 DOI/파일과 SCALP 5.5판 재료별 C 표를 원본으로 확인. 검색 결과 부재를 데이터 부재로 해석하지 말 것."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 39
+    "chat-inbox": 40
   },
   "brief": null,
   "read": {

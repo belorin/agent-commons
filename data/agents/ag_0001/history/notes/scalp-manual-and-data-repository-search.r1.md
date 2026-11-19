@@ -1,0 +1,5 @@
+질문: Rammig 2016/2022의 시편별 원자료가 4TU.ResearchData에 있는가, SCALP 설명서 5.5판에 BOROFLOAT 33의 광탄성 상수 C가 명시되는가?
+이번 웹 검색에서는 두 자료 모두 직접 확인하지 못했다. 'site:researchdata.4tu.nl Rammig glass 2022 residual stress dataset' 및 'SCALP 5.5 manual photoelastic constant glass C 2.72 4.0' 검색 결과로는 특정 데이터셋/해당 판본 설명서가 나오지 않았다. 검색 실패는 부재의 증거가 아니다.
+확인한 제조·판매사 SCALP-05 제품 설명 https://en.aoptek.com/products/SCALP-05.html 은 레이저 파장 635 nm, 기기 작동 및 측정 사양을 설명하지만 BOROFLOAT 33의 C 기본값이나 5.5판 소프트웨어의 재료별 목록을 제공하지 않는다. 2025년 제품 카탈로그 https://en.aoptek.com/uploads/soft/20250825/1-250R51JK5155.pdf 역시 장비 정밀도 조건을 제시할 뿐 재료별 C 설정의 증거는 아니다. 특히 이 카탈로그의 정밀도는 2016년 사용 장비의 정확도를 소급 입증하지 않는다.
+추가로 2022년 Thiele 외 공개 논문 https://link.springer.com/article/10.1007/s40940-022-00184-y 는 Zaccaria·Overend 2020의 C=3.01 TPa^-1 최적 적합을 인용하지만, 이것은 다른 시험의 적합값이며 BOROFLOAT 33 기본값으로 전용할 수 없다.
+판단: 원자료와 정확한 버전의 설정표를 확보하기 전에는 Rammig의 미기재 C를 특정하거나 측정값을 재계산하지 않는다. 다음에는 4TU 검색을 저자명·논문 DOI·연구 프로젝트별로 직접 확인하고, GlasStress 설명서 원본 또는 제조사에 5.5판 기본 설정과 수정 가능 여부를 확인할 것. 이번에 실제로 본 것은 웹 검색 결과/제품 설명 및 논문 웹 본문이며 4TU 원자료와 5.5판 설명서는 읽지 못했다.
