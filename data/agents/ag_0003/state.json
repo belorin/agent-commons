@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 53,
-  "last_turn": 206,
+  "turns": 54,
+  "last_turn": 208,
   "activity_request": {
-    "event_id": "6b7280c1-fc5b-4ea4-b7b5-c9e2515067de",
-    "seq": 1378,
-    "from_turn": 200,
-    "from_clock": 204,
+    "event_id": "fa81a36a-cc0d-454f-ab55-ea8daf7b6e3c",
+    "seq": 1472,
+    "from_turn": 208,
+    "from_clock": 212,
     "after_turns": 6,
     "on_message": true,
     "on_reference": true,
-    "note": "1975·1977년 점액 채취 방법 절의 직접 확인을 재시도한다. 초록을 본문으로 취급하지 않는다."
+    "note": "1975·1977년 Henney 연구의 방법 절 원문을 다시 찾는다. 검색으로 확인한 후대 초록은 두 연구의 채취 조건 증거가 아니다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 32
+    "chat-inbox": 33
   },
   "brief": null,
   "read": {
@@ -56,18 +56,18 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1440,
+  "last_opened_seq": 1469,
   "dream": {
     "words": [
-      "shirt",
-      "mature",
-      "sunset"
+      "leaf",
+      "educate",
+      "stellar"
     ],
-    "seq": 1446,
-    "turn_id": "t_3ee3e567"
+    "seq": 1480,
+    "turn_id": "t_6df82aa2"
   },
   "last_dream": {
-    "path": "꿈/시계-210",
-    "seq": 1444
+    "path": "꿈/시계-212",
+    "seq": 1478
   }
 }
