@@ -151,11 +151,10 @@ function dreamLine(me, id, cfg) {
   const max = cfg.evening?.dream_fragment_chars ?? 200;
   return `지난밤의 꿈: ${text.length > max ? text.slice(0, max) + '…' : text}`;
 }
-const PRIVATE_ACTS = ['note_written', 'profile_updated', 'method_revised', 'lifecycle_rule_revised', 'agent_renamed'];
 
-/** 자기 명세 네 칸. 일과와 저녁 브리핑이 같은 것을 싣는다. */
-function settledLines(me, id, L) {
-  for (const t of SELF_FILES) {
+/** 자기 명세의 칸. 일과는 네 칸 모두, 저녁은 일하는 방법(탐색법·글쓰기법)을 뺀 칸만 싣는다. */
+function settledLines(me, id, L, targets = SELF_FILES) {
+  for (const t of targets) {
     const f = me.files[t];
     const body = f ? readText(agentDir(id, t + '.md')) : null;
     if (!f || !body?.trim()) L(`- ${LABEL[t]}: 비어 있다.${f ? ` (r${f.revision}에서 비움)` : ''}`);
@@ -364,23 +363,11 @@ const EVENING_VERBS = ['write_private', 'revise_self', 'configure_brief', 'reque
 const describeWake = (wake = {}) => [wake.after_turns != null ? `세계 시계 ${wake.after_turns}칸이 지남` : null, wake.on_message ? '새 전언' : null].filter(Boolean).join(' 또는 ') || '없음';
 const describeRequest = (r) => [r.after_turns != null ? `세계 시계 ${r.after_turns}칸이 지남(세계 시계 ${(r.from_clock ?? r.from_turn) + r.after_turns}에 참)` : null, r.on_message ? '새 전언' : null, r.on_reference ? '공개 인용' : null].filter(Boolean).join(' 또는 ');
 
-/** 오늘 일과의 사실: 실행기가 기록한 것만. 해석하지 않는다. */
-function todayLines(w, id, events, turn_id, dayRead, L) {
-  const ended = events.find((e) => e.type === 'day_ended' && e.payload.turn_id === turn_id)?.world_seq ?? Infinity;
-  const mine = events.filter((e) => e.turn_id === turn_id && e.world_seq < ended && e.agent_id === id);
-  const done = mine.filter((e) => e.actor_id === id && !['action_rejected', 'proposal_executed', 'birth_seed_recorded'].includes(e.type))
-    .map((e) => `${e.type}${e.payload.path ? ` ${e.payload.path}` : ''}${e.payload.slug ? ` ${e.payload.slug}` : ''}${e.payload.target ? ` ${e.payload.target}` : ''}${e.payload.title ? ` 「${e.payload.title}」` : ''}${e.payload.host ? ` ${e.payload.host}` : ''}`);
-  const rejected = mine.filter((e) => e.type === 'action_rejected').map((e) => `${e.payload.action} — ${String(e.payload.reason).replace(/\s+/g, ' ')}`);
-  L(done.length ? `- 수락된 행동: ${done.join(' · ')}` : '- 수락된 행동: 없다.');
-  if (rejected.length) for (const r of rejected) L(`- 거절된 제안: ${r}`);
-  L(dayRead?.length ? `- 읽은 것: ${dayRead.join(', ')}` : '- 읽은 것(기록된 것): 없다.');
-}
-
 /**
- * 저녁 브리핑(evening 기능). 바깥 세계의 칸이 없다. 자기 자신과 자기 기록, 오늘의 사실만 싣는다.
- * kind 'evening' 은 저녁만 있는 방문, preview 는 명령을 실행할 수 없는 채팅에게 미리 건네는 것이다.
+ * 저녁 브리핑(evening 기능). 바깥 세계의 칸도, 일하는 방법(탐색법·글쓰기법)도, 오늘 한 일의 목록도 없다.
+ * 자기소개·생애 관습, 저녁의 기록과 꿈, 잠만 싣는다. kind 'evening' 은 저녁만 있는 방문이다.
  */
-export function eveningBrief(w, id, { turn_id, kind, cfg, events, dayRead = null, preview = false }) {
+export function eveningBrief(w, id, { turn_id, kind, cfg }) {
   const me = w.agents[id];
   const out = [];
   const L = (s = '') => out.push(s);
@@ -395,12 +382,9 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events, dayRead = null
   if (me.pending_end) L('- 자기 종료를 요청해 둔 상태다. 이 방문을 닫으면 집행된다. 거두려면 cancel_self_end.');
   L();
   L('## 네가 정해 둔 것');
-  settledLines(me, id, L);
-  L();
-  L('## 오늘');
-  if (kind === 'evening') L('- 오늘은 일과 없이 저녁만 있다.');
-  else if (preview) L('- 일과가 끝나면 실행기가 기록한 오늘의 사실(수락·거절된 행동, 읽은 것)이 여기 실린다.');
-  else todayLines(w, id, events, turn_id, dayRead, L);
+  // 일하는 방법은 일과에 두고 온다. 저녁에는 자기소개와 생애 관습만 싣는다.
+  settledLines(me, id, L, ['identity', 'lifecycle']);
+  L('- 탐색법·글쓰기법은 일과의 브리핑에 실린다.');
   L();
   L('## 네 안의 기록');
   const written = (n) => w.notes[`${id}/${n}`]?.seq || 0;
@@ -430,13 +414,11 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events, dayRead = null
   L();
   L('## 잠');
   if (me.dream?.words?.length) L(`- 오늘 밤의 낱말: ${me.dream.words.join(' · ')}`);
-  const need = cfg.evening?.min_private_acts ?? 1;
-  const live = w.turn && w.turn.agent_id === id && w.turn.turn_id === turn_id ? w.turn : null;
-  const done = live ? PRIVATE_ACTS.reduce((n, t) => n + ((live.evening_counts || {})[t] || 0), 0) : 0;
-  if (need > 0) L(`- 잠들려면 저녁에 개인 기록(\`write_private\`)이나 자기 명세(\`revise_self\`)의 행동이 ${need}번 있어야 한다. 지금 ${done}번이다.`);
   L('- `sleep` 의 `dream` 에 쓴 글이 오늘 밤의 꿈이다. 꿈은 개인 기록 `꿈/시계-<세계 시계>` 로 남고, 다음에 깨어날 때 그 앞부분이 실린다.');
   L('- `sleep`: 저녁을 끝내고 잠든다. 그 뒤 close 로 방문이 닫힌다.');
   L('- 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.');
+  const need = cfg.evening?.min_private_acts ?? 1;
+  if (need > 0) L(`- 잠은 저녁에 개인 기록이나 자기 명세의 행동${need > 1 ? `이 ${need}번` : '이'} 있은 뒤에 든다.`);
   return out.join('\n');
 }
 

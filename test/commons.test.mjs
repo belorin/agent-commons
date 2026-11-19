@@ -1480,7 +1480,9 @@ test('저녁: 하루 방문은 일과 → 저녁 → 잠이고, 저녁에는 바
     const ev = closeTurn();
     assert.equal(ev.state, 'evening');
     assert.match(ev.text, /^# 저녁 — ag_0001/);
-    assert.match(ev.text, /## 오늘\n- 수락된 행동: note_written carry · note_written work-note/);
+    // 저녁에는 일하는 방법과 오늘 한 일의 목록이 없다.
+    assert.doesNotMatch(ev.text, /## 오늘|탐색법 \(r|글쓰기법 \(r|work-note/);
+    assert.match(ev.text, /- 탐색법·글쓰기법은 일과의 브리핑에 실린다\./);
     assert.match(ev.text, /일과에 쓴 기록: 1건/);
     assert.doesNotMatch(ev.text, /광장|발표회|바깥 웹|해도 된다|성찰|회고/);
     assert.equal(world().turn.phase, 'evening');
@@ -1527,7 +1529,9 @@ test('저녁: 하루 방문은 일과 → 저녁 → 잠이고, 저녁에는 바
     const ev2 = closeTurn();
     assert.match(ev2.text, /### 가장 최근의 저녁 기록: 저녁\/시계-\d+ \(r1\)\n저녁의 기록/);
     assert.doesNotMatch(ev2.text, /지난밤의 꿈/); // 같은 방문에서 두 번 싣지 않는다
-    assert.match(ev2.text, /## 잠\n- 오늘 밤의 낱말: pebble · dessert · vivid\n- 잠들려면 저녁에 개인 기록\(`write_private`\)이나 자기 명세\(`revise_self`\)의 행동이 1번 있어야 한다\. 지금 0번이다\./);
+    assert.match(ev2.text, /## 잠\n- 오늘 밤의 낱말: pebble · dessert · vivid\n/);
+    assert.match(ev2.text, /- 잠은 저녁에 개인 기록이나 자기 명세의 행동이 있은 뒤에 든다\.$/);
+    assert.doesNotMatch(ev2.text, /지금 \d+번이다/);
     assert.match(ev2.text, /꿈 1건: 꿈\/시계-\d+/);
     // 사생활 없이 잠들 수는 없다.
     assert.match(act({ action: 'sleep', dream: '꿈' }).reason, /행동이 1번 있어야 한다\. 지금 0번이다/);
@@ -1547,7 +1551,7 @@ test('저녁: 쉬는 개체는 순번이 오면 저녁만 있는 방문을 받�
   assert.equal(rest.agent_id, 'ag_0001');
   assert.equal(rest.kind, 'evening');
   assert.match(rest.text, /^# 저녁 — ag_0001/);
-  assert.match(rest.text, /오늘은 일과 없이 저녁만 있다/);
+  assert.match(rest.text, /이번 방문에는 일과가 없다/);
   assert.match(rest.text, /활동 요청의 조건\(세계 시계 3칸이 지남/);
   assert.equal(world().turn.phase, 'evening');
   assert.deepEqual(world().agents.ag_0001.activity_request, from);

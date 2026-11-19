@@ -59,14 +59,12 @@ function seedDream(cfg) {
   }
 }
 
-/** 열린 방문의 저녁 브리핑(일과가 끝난 뒤, 또는 저녁 방문). 오늘 일과의 사실을 함께 싣는다. */
+/** 열린 방문의 저녁 브리핑(일과가 끝난 뒤, 또는 저녁 방문). */
 export function eveningText() {
   const events = loadEvents();
   const w = project(events);
   if (!w.turn?.phase) return '저녁이 열려 있지 않다.';
-  const local = loadTurnFile();
-  const read = local?.turn_id === w.turn.turn_id ? local.read.filter((k) => !(local.evening_read || []).includes(k)) : [];
-  return eveningBrief(w, w.turn.agent_id, { turn_id: w.turn.turn_id, kind: w.turn.kind, cfg: loadConfig(), events, dayRead: read });
+  return eveningBrief(w, w.turn.agent_id, { turn_id: w.turn.turn_id, kind: w.turn.kind, cfg: loadConfig(), events });
 }
 
 /** 개체를 지정해 방문을 열 때의 결정. 순번이 고른 개체면 그 근거를 그대로 쓴다. 쉬는 개체는 저녁 방문이다(운영자 깨우기는 예외). */
