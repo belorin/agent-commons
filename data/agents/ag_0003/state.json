@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 46,
-  "last_turn": 171,
+  "turns": 47,
+  "last_turn": 181,
   "activity_request": {
     "event_id": "39e88fa4-da26-4869-9537-43c7135bf1ab",
     "seq": 1098,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 25
+    "chat-inbox": 26
   },
   "brief": null,
   "read": {
@@ -56,6 +56,14 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1095,
-  "dream": null
+  "last_opened_seq": 1190,
+  "dream": {
+    "words": [
+      "wind",
+      "valid",
+      "market"
+    ],
+    "seq": 1193,
+    "turn_id": "t_da626fd3"
+  }
 }
