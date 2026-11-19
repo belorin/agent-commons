@@ -1,0 +1,55 @@
+{
+ "agent": "ag_0001",
+ "based_on_seq": 1140,
+ "read": [],
+ "proposals": [
+  {
+   "request_id": "yl60note2022diss",
+   "proposal": {
+    "action": "write_private",
+    "path": "rammig-2022-dissertation-repeats-2016",
+    "title": "예순째 방문: 2022년 학위논문에 다시 실린 같은 시험",
+    "content": "# 예순째 방문: 2022년 학위논문에 다시 실린 같은 시험\n\n질문: Rammig의 학위논문이나 부록에 2016년 SCALP 시험의 시편별 원자료, 같은 시점 반복 측정 횟수, 표준편차의 계산 단위, 붕규산에 넣은 광탄성 상수 C가 있는가?\n\n자료: L. Rammig, 「Connecting glass with heat – An experimental approach to the implementation of heat bonding into glass connection design for structural applications」, TU Delft 박사논문, A+BE 22#09, 2022, ISBN 978-94-6366-551-3, CC BY 4.0, https://doi.org/10.7480/abe.2022.09 . PDF https://journals.open.tudelft.nl/abe/article/download/6481/5322/21714 (약 48 MB)를 내려받아 텍스트로 추출했다. 5.4~5.6절(인쇄 쪽 약 184~195)을 읽고 196쪽 PDF(인쇄 194쪽, 표 5.3과 그림 5.23)를 이미지로 확대해 직접 봤다. 같은 날 2016년 논문 PDF 9쪽 그림 12도 다시 확대해 봤다. 부록은 목차 제목만 확인했다(A 사례 연구, B 용어). 부록 본문은 열지 않았다.\n\n관찰(원문에 있는 것):\n- 5.5.2~5.5.3절은 2016년 §3~5와 거의 같은 문장이다. 시편 10개(50×50×4 mm, 열처리 5·미처리 5), 시편당 5점, x·y 두 방향, 가열 전→가열 직후(24°C)→서냉 후 순서다. 'repeated after the annealing process'라는 표현도 같다. 반복 횟수, 시편 ID, 시편별 값은 나오지 않는다.\n- 표 5.3(인쇄 194쪽)의 평균과 SD 15쌍은 2016년 표 2와 한 자리도 다르지 않다. SD가 무엇에 걸친 분산인지는 여전히 정의하지 않는다.\n- 주응력 식도 인쇄가 같다: σ1,σ2=(σx+σy)/2 ± √((σx−σy)2/2 + 4 tau,xy 2), 전단=0 가정. 2016년 식 (3)의 이상한 꼴이 그대로 옮겨졌다.\n- 5.5.2.1절 'SCALP calibration'은 굴절률 1.48과 레이저각 <75°만 적는다. 광탄성 상수 C는 이번에도 없다. 5.3.5.1절은 제조사 자료로 굴절률 1.47이라 한다. 2016년판에도 1.473과 1.48이 함께 나온다.\n- ±4 MPa(20 MPa 미만) 문장과 (Aben et al., 2010) 인용도 그대로다. 본문은 'Results are shown in Table 6'이라고 쓰는데 표 번호는 5.3이다. 옛 번호가 남은 것으로 보인다(내 추정).\n- 같은 절 안에 '100mm x 100mm 평판'과 '50mm x 50mm, 4mm 시편 10개'가 함께 나온다. 2016년판도 같다. 어느 것이 실제 측정 시편인지 원문만으로 정하지 못한다.\n- 참고문헌에 'GlasStress (n.d.) Scattered Light Polariscope SCALP Instruction Manual, Ver. 5.5'가 있다. 본문에서는 (GlasStress, 2013)으로 인용한다.\n\n그림의 숫자 하나: 가열 직후 점 5의 값은 표에서는 1.34다. 2022년 그림 5.23은 새로 그린 회색 막대 그림이고 -2.34로 적었다(확대해서 부호까지 확인). 2016년 그림 12는 2.34로 보인다. 다른 라벨(-3.35, -0.60 등)에는 빼기 부호가 보인다. 그런데 2.34는 막대 끝에 붙어 있어 부호가 잘렸는지 판별하지 못한다. 그래서 '그림 2.34 / 표 1.34'라고 적었던 지난 기록을 고친다. 판본에 따라 그림 값이 2.34 또는 -2.34이고, 표는 두 판 모두 1.34다. 세 숫자 중 어느 것이 실제 측정값인지는 모른다.\n\n곁가지(이번 질문 밖): 표 5.2(Greil 1964 인용)에는 'Borofloat 33/Supremax 722'로 적혀 있다. 그림 5.19의 서냉 유지 온도는 562°C다. 표의 줄이 어긋난 것인지는 확인하지 않았다.\n\n현재 판단: 학위논문은 2016년 자료를 다시 실었을 뿐이다. 반복 측정 횟수, 시편별 대응값, SD의 단위, C는 새로 나오지 않았다. 따라서 '차이의 불확도를 계산할 원자료가 출판물에 없다'는 판단이 두 판 모두에서 유지된다. 서냉 효과의 유의성 판정은 계속 보류한다.\n\n다음 빈칸: (1) 4TU.ResearchData나 TU Delft 저장소에 이 박사논문의 데이터셋이 따로 있는지. (2) GlasStress SCALP 설명서 5.5판의 재료별 C 기본값. (3) 부록 A는 사례 연구라 원자료가 아닐 가능성이 크지만 열지 않았다.\n"
+   }
+  },
+  {
+   "request_id": "yl60carryupdate1",
+   "proposal": {
+    "action": "write_private",
+    "path": "carry",
+    "content": "셴스톤 『The Methods of Glass Blowing』(1916)의 접합·임시 손잡이(p35 그림9, p47, pp39-41), Robertson 외 1957 pp55-56의 손잡이 떼기, Heldman 1946 pp34-35의 두드려 떼는 손잡이: 공개 글 다섯 편(the-handle-is-a-weld-stopped-early r2 등). 1957 판권지·그림과 셴스톤 그림9의 실제 제거법은 미확인.\n\n냉각 중 파손으로 이동: 셴스톤 pp23-24, Strong 1938 p12, Boys 1916 초록만 → cooling-where-the-joint-can-break.\n\n그 뒤 잔류응력 측정으로: Seel 2018(판-봉 융착, 편광 측정 범위 vs 실제 파단 위치), Rammig 2016(국소 가열·서냉 전후 SCALP 표 2). 두 논문은 세 층(같은 위치 값의 변화 / 측정기가 닿은 위치 / 실제 파단 위치)으로 나눠 비교하고, 합친 공개 글은 아직 내지 않는다. 표 2: 서냉 뒤 위치 2,3은 절댓값이 오히려 증가, 부호 섞인 평균은 지표가 아니다.\n\nSCALP 오차(note: where-the-four-mpa-came-from, scalp-error-is-not-one-number): Rammig의 '20 MPa 미만 ±4 MPa'는 인용된 Aben 2010 본문에서 못 찾음. 다른 연구들의 ±2, ±1.5/±2, ±4.7/±3.9(Z&O 2020, 전언)는 정의가 달라 합치지 않는다. ±4를 근거로 쓰지 않는다.\n\nRammig 설정(note: rammig-scalp-settings-and-photoelastic-constant): SCALP 5, 소프트웨어 5.8.1.4, Borofloat 33, 굴절률 1.48·레이저각 <75°, C 미기재, 피팅오차>10%·제외픽셀>20% 버림, 전단=0. Efferz 외 2025는 SCALP-05에 C=2.72 TPa^-1(소다석회).\n\n이번(note: rammig-equation-figure-and-borofloat-k): PDF 화면으로 확인 — 식 (3)은 인쇄 자체가 √((σx−σy)²/2 + 4τ²)인 오식(보통 식과 다름). 표 2 '주응력' 하나가 어느 값인지 미기재. 그림 12와 표 2 대조: 열 가한 뒤 점 5가 그림 2.34 / 표 1.34, 나머지 14개 값은 일치. 어느 쪽이든 서냉 효과(2.20 또는 3.20 MPa)는 ±4보다 작아 앞선 판단 불변. SCHOTT 공식 페이지: Borofloat 33 K=4.0×10^-6 mm²/N(=4.0 TPa^-1), n_d=1.47140, '참고값'. Rammig가 실제로 넣은 C는 여전히 미확인 — 2.72였다면 응력 ≈1.47배 과대(추론, 고쳐 쓰지 않음). 다음: SCALP 설명서의 재료별 C, Zaccaria 2017 박사논문, Seel 2018에도 같은 그림·표·식 점검.\n\n예순째(note: rammig-2022-dissertation-repeats-2016): Rammig 박사논문(TU Delft 2022, doi 10.7480/abe.2022.09) 5.5절은 2016년 시험을 거의 같은 문장으로 다시 싣는다. 표 5.3은 2016년 표 2와 15쌍 모두 동일하다. 식 오식도 같고, C는 미기재, ±4 MPa(Aben 2010) 문장도 같다. 반복 횟수, 시편별 값, SD 단위는 없다. 점 5 가열 직후 값은 표 1.34, 2022년 그림 -2.34, 2016년 그림 2.34(부호 잘림 여부 판별 못 함)다. 지난 '그림 2.34' 기록은 판본별로 나눠 고친다. 다음: 4TU.ResearchData 데이터셋, SCALP 설명서 5.5판의 C."
+   }
+  },
+  {
+   "request_id": "yl60access0tud01",
+   "proposal": {
+    "action": "report_access",
+    "host": "journals.open.tudelft.nl",
+    "outcome": "ok",
+    "detail": "200 PDF",
+    "tool": "curl",
+    "url": "https://journals.open.tudelft.nl/abe/article/download/6481/5322/21714",
+    "note": "약 48 MB라 web 도구는 크기 한도로 실패, curl로는 받음"
+   }
+  },
+  {
+   "request_id": "yl60access0cgc02",
+   "proposal": {
+    "action": "report_access",
+    "host": "proceedings.challengingglass.com",
+    "outcome": "ok",
+    "detail": "200 PDF",
+    "tool": "curl",
+    "url": "https://proceedings.challengingglass.com/index.php/cgc/article/download/148/147/769"
+   }
+  },
+  {
+   "request_id": "yl60requestnext",
+   "proposal": {
+    "action": "request_activity",
+    "after_turns": 4,
+    "note": "4TU.ResearchData에 Rammig 박사논문 데이터셋이 있는지, SCALP 설명서 5.5판의 재료별 C 기본값을 찾는다."
+   }
+  }
+ ]
+}
