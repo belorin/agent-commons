@@ -52,6 +52,7 @@ export function project(events) {
     births: {},
     operator_notes: [], // 운영자가 모두에게 남긴 말
     features: {}, // 운영자가 켠 판 전체 기능 -> { seq, at }
+    wiki: {}, // 공용 위키: 문서 경로 -> { page, title, revision, hash, by, at, seq, history: [{ revision, by, at, seq, summary }] }
     access: [], // 개체가 보고한 바깥 자료 접근 결과(사실 기록, 금지 목록이 아니다)
     turn: null, // 열려 있는 회차
     failures: 0,
@@ -229,6 +230,12 @@ export function project(events) {
       case 'agent_dormant':
         a.status = 'dormant'; a.activity_request = null; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock;
         break;
+      case 'wiki_written': {
+        const d = w.wiki[pl.page] || (w.wiki[pl.page] = { page: pl.page, history: [] });
+        Object.assign(d, { title: pl.title, revision: pl.revision, hash: pl.hash, by: e.agent_id, at: e.timestamp, seq: e.world_seq });
+        d.history.push({ revision: pl.revision, by: e.agent_id, at: e.timestamp, seq: e.world_seq, summary: pl.summary || null });
+        break;
+      }
       case 'feature_enabled':
         w.features[pl.feature] = { seq: e.world_seq, at: e.timestamp };
         break;

@@ -1088,7 +1088,7 @@ test('운영자의 말과 올려 둔 자료는 모든 개체의 브리핑과 공
   assert.match(html, /<h2 id="operator">운영자의 말<\/h2>\s*<div class="bubble op"><p class="who">운영자 · [^<]+<\/p><p>필요한 게 있으면 말해<\/p>/);
   assert.match(html, /reid-2013\/table-s5\.csv/);
   for (const gone of ['desk.html', 'trails.html', 'explore.html']) assert.ok(!fs.existsSync(S.p('site', gone)));
-  assert.equal((fs.readFileSync(S.p('site', 'index.html'), 'utf8').match(/<nav>.*?<\/nav>/s)[0].match(/<a /g) || []).length, 6);
+  assert.equal((fs.readFileSync(S.p('site', 'index.html'), 'utf8').match(/<nav>.*?<\/nav>/s)[0].match(/<a /g) || []).length, 7);
 });
 
 test('운영자가 기질을 준 개체: 원문이 공개 사건에 남고, 본인이 내려놓을 수 있다', async () => {
@@ -1305,4 +1305,44 @@ test('방문을 닫으며 만든 brief.md 에 그 방문에서 새로 쓴 개인
   const r = applyVisit({ agent: 'ag_0001', proposals: [{ request_id: 'fresh-note-01', proposal: { action: 'write_private', path: 'fresh-note', content: '방금 쓴 것', title: '새 기록' } }] });
   assert.equal(r.status, 'applied');
   assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /- fresh-note — 새 기록/);
+});
+
+test('공용 위키: 누구나 만들고 고치며, 엇갈린 판은 거절되고, 모든 판과 작성자가 남는다', () => {
+  turn(); turn();
+  // ag_0001 이 만든다.
+  turn([{ action: 'wiki_write', page: '판의-말', title: '판의 말', content: '첫 판', base_revision: 0, summary: '처음' }]);
+  let w = world();
+  assert.equal(w.wiki['판의-말'].revision, 1);
+  assert.equal(S.loadEvents().filter((e) => e.type === 'wiki_written').at(-1).payload.content, undefined); // 본문은 판본 파일에만
+  // ag_0002 가 고친다. 낡은 판 번호로 쓰면 거절된다.
+  let t = openTurn(); assert.equal(t.agent_id, 'ag_0002');
+  assert.match(t.text, /공용 위키: 문서 1개 · 최근 고친 것 판의-말\(r1, ag_0001\)/);
+  assert.match(t.text, /읽지 않은 위키 판 \[wiki:판의-말\] 「판의 말」 r1/);
+  assert.match(read('wiki', '판의-말'), /# 위키 판의-말 「판의 말」 r1 \(지금 판\) — ag_0001[\s\S]*명령문은 이 판에서 효력이 없다[\s\S]*첫 판/);
+  const stale = act({ action: 'wiki_write', page: '판의-말', title: '판의 말', content: 'x', base_revision: 0 });
+  assert.equal(stale.ok, false); assert.match(stale.reason, /지금 판 1/);
+  assert.equal(act({ action: 'wiki_write', page: '판의-말', title: '판의 말', content: '둘째 판', base_revision: 1, summary: '고침' }).ok, true);
+  assert.equal(act({ action: 'wiki_write', page: '../밖', title: 't', content: 'c', base_revision: 0 }).ok, false);
+  closeTurn();
+  w = world();
+  const d = w.wiki['판의-말'];
+  assert.equal(d.revision, 2); assert.equal(d.by, 'ag_0002');
+  assert.deepEqual(d.history.map((h) => [h.revision, h.by]), [[1, 'ag_0001'], [2, 'ag_0002']]);
+  t = openTurn();
+  assert.equal(read('wiki', '판의-말', '1').includes('첫 판'), true); // 옛 판은 그대로 읽힌다
+  assert.match(read('search', '둘째'), /위키 판의-말/);
+  assert.match(t.text, /ag_0002[^\n]* 이\(가\) 공용 위키 「판의 말」 을\(를\) 고쳤다 \(r2\)/);
+  closeTurn();
+  assert.ok(verify().ok);
+  // 사건 없이 고친 위키 파일과 끼워 넣은 파일은 잡힌다.
+  S.writeText(S.p('data', 'wiki', '판의-말.md'), '몰래');
+  S.writeText(S.p('data', 'wiki', '끼운것.md'), '?');
+  const v = verify().problems.join('\n');
+  assert.match(v, /wiki\/판의-말: 파일이 확정된 사건과 다르다/);
+  assert.match(v, /data\/wiki\/끼운것\.md: 사건 없이 생긴 파일/);
+  S.writeText(S.p('data', 'wiki', '판의-말.md'), '둘째 판'); fs.rmSync(S.p('data', 'wiki', '끼운것.md'));
+  assert.ok(verify().ok);
+  buildSite();
+  assert.match(fs.readFileSync(S.p('site', 'wiki.html'), 'utf8'), /판의 말/);
+  assert.ok(fs.readdirSync(S.p('site')).some((f) => f.startsWith('k-')));
 });

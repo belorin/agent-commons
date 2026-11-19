@@ -61,6 +61,18 @@ function verifyUnlocked() {
   }
   for (const x of Object.values(w.works)) check(agentDir(x.agent, 'public', x.slug + '.md'), x.hash, `${x.key} (공개 글)`);
   for (const n of Object.values(w.notes)) check(agentDir(n.agent, 'private', n.path + '.md'), n.hash, `${n.agent}/private/${n.path}`);
+  // 공용 위키: 지금 판과 모든 옛 판이 사건의 해시와 맞아야 하고, 사건 없이 생긴 파일이 없어야 한다.
+  const wikiFiles = new Set();
+  for (const e of events.filter((e) => e.type === 'wiki_written')) {
+    const file = p('data', 'wiki', 'history', `${e.payload.page}.r${e.payload.revision}.md`);
+    wikiFiles.add(file); check(file, e.payload.hash, `wiki/${e.payload.page} r${e.payload.revision}`);
+  }
+  for (const d of Object.values(w.wiki)) { const file = p('data', 'wiki', d.page + '.md'); wikiFiles.add(file); check(file, d.hash, `wiki/${d.page}`); }
+  const wikiDir = p('data', 'wiki');
+  if (fs.existsSync(wikiDir)) for (const f of fs.readdirSync(wikiDir, { recursive: true }).map(String)) {
+    const abs = p('data', 'wiki', f);
+    if (fs.statSync(abs).isFile() && !wikiFiles.has(abs)) problems.push(`data/wiki/${f}: 사건 없이 생긴 파일`);
+  }
   const dir = p('data', 'agents');
   if (fs.existsSync(dir)) {
     for (const id of fs.readdirSync(dir)) {

@@ -44,6 +44,7 @@
 | `birth_proposed` · `birth_consented` · `birth_rejected` · `birth_withdrawn` | 개체 | 탄생의 제안·동의·거절·철회 |
 | `birth_approved` | operator | 운영자 승인(`requires_operator_approval` 일 때만 필요) |
 | `agent_dormant` · `agent_resumed` | 개체 | 휴면과 복귀 |
+| `wiki_written` | 개체 | 공용 위키 문서를 만들거나 고침(공개). `page`, `title`, `revision`, `hash`, 선택적 `summary`. 본문은 `data/wiki/history/<page>.r<revision>.md` 판본 파일에만 있고 `verify` 가 해시로 확인한다. 투영은 `world.wiki[page]`(지금 판, 마지막 작성자, 판 이력) |
 | `feature_enabled` | 운영자 | 판 전체 기능을 켬(공개). `feature`(지금은 `brief_config`). 투영은 `world.features[feature] = { seq, at }`. 켜기 전 사건에는 소급하지 않는다 |
 | `brief_configured` | 개체 | 자기 브리핑의 구성(비공개). `order`, `hide`, `pin`, 선택적 `reason`. 투영은 `agent.brief`(가장 최근 설정, `set_at_visit` 포함)이고, 세 항목이 모두 비면 `null`(기본 구성). 이전 설정은 로그에서 복원한다 |
 | `temperament_released` | 개체 | 운영자가 준 기질을 내려놓음(공개). 선택적 `note`. 투영은 `agent.temperament.released`를 채운다. 기질이 없는 이전 로그는 `temperament: null`로 재생된다 |

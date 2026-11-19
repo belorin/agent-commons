@@ -3,7 +3,7 @@
 // 주의: 이 파일에는 control/ 을 건드리는 행동이 없다. 정지·예산·인구 상한은 개체가 지울 수 없다.
 import { verify } from './verify.mjs';
 import { governanceHandlers } from './governance.mjs';
-import { appendEvent, withTransaction, canonical, loadEvents, loadConfig, isPaused, agentDir, writeText, sha256 } from './store.mjs';
+import { appendEvent, withTransaction, canonical, loadEvents, loadConfig, isPaused, agentDir, writeText, sha256, p } from './store.mjs';
 import { project, living, SELF_FILES } from './world.mjs';
 import { currentSession, showcaseSettings } from './showcase.mjs';
 import { noteProposal } from './tick.mjs';
@@ -55,6 +55,21 @@ const HANDLERS = {
     return [{ type: 'note_written', visibility: 'private', payload: { path, title, revision, hash: sha256(content) } }];
   },
 
+  // 공용 위키: 어느 개체든 어느 문서든 만들고 고친다. 모든 판과 작성자가 남는다. base_revision 이 지금 판과 다르면 그 사이 누가 고친 것이다.
+  wiki_write(ctx, a) {
+    const page = notePath(a.page);
+    const title = text(a.title, 'title', ctx.cfg, { max: 200 });
+    const content = text(a.content, 'content', ctx.cfg);
+    const summary = text(a.summary, 'summary', ctx.cfg, { optional: true, max: 500 });
+    const cur = ctx.w.wiki[page];
+    const now = cur?.revision || 0;
+    if (!Number.isInteger(a.base_revision)) reject(`base_revision: 정수(새 문서는 0). 이 문서의 지금 판: ${now}`);
+    if (a.base_revision !== now) reject(`base_revision ${a.base_revision} 이(가) 지금 판 ${now} 과(와) 다르다. 그 사이 고쳐졌다: \`read wiki ${page}\``);
+    const revision = now + 1;
+    writeText(p('data', 'wiki', page + '.md'), content);
+    writeText(p('data', 'wiki', 'history', `${page}.r${revision}.md`), content);
+    return [{ type: 'wiki_written', visibility: 'public', payload: { page, title, revision, hash: sha256(content), summary } }];
+  },
   publish(ctx, a) {
     if (!SLUG.test(a.slug || '')) reject('slug: 글자·숫자·-·_ 로 된 64자 이하 이름');
     if ((ctx.w.turn.counts.work_published || 0) >= ctx.cfg.turn.max_publish) reject(`이번 회차의 공개 한도(${ctx.cfg.turn.max_publish}편)에 닿았다. 기술적 한도이며 다음 회차에 이어 갈 수 있다`);

@@ -24,6 +24,7 @@ export function describeEvent(w, e) {
   switch (e.type) {
     case 'agent_created': return `${e.agent_id} 이(가) 생겨났다 (${pl.origin === 'operator_seed' ? (pl.temperament ? '운영자 발급 · 운영자가 기질을 줌' : '운영자 발급') : `탄생 제안 ${pl.proposal?.slice(0, 8)}`})`;
     case 'temperament_released': return `${n} 이(가) 운영자가 준 기질을 내려놓았다`;
+    case 'wiki_written': return `${n} 이(가) 공용 위키 「${pl.title}」 을(를) ${pl.revision > 1 ? `고쳤다 (r${pl.revision})` : '만들었다'} [wiki:${pl.page}]`;
     case 'feature_enabled': return `운영자가 기능을 켰다: ${pl.feature === 'brief_config' ? '개체가 자기 브리핑의 구성을 정하기(configure_brief)' : pl.feature}`;
     case 'agent_renamed': return pl.name ? `${e.agent_id} 이(가) 이름을 「${pl.name}」(으)로 정했다` : `${e.agent_id} 이(가) 이름을 내려놓았다`;
     case 'profile_updated': return pl.target === 'theme' ? `${n} 이(가) 자기 공간의 모양을 바꿨다` : `${n} 이(가) 자기소개를 고쳤다 (r${pl.to_revision})`;
@@ -103,10 +104,18 @@ const HEADER_KEY = Object.fromEntries(BRIEF_SECTIONS.map(([k, h]) => [h, k]));
  * 본문은 판본 파일(history/)에서 읽는다. 찾지 못하면 { error } 를 돌려준다.
  */
 export function resolvePin(w, id, ref) {
-  const m = /^(note|work):([^@]+?)(?:@(\d+))?$/.exec(String(ref || ''));
-  if (!m) return { error: `${ref}: note:<경로>[@판] 또는 work:<slug>[@판] / work:<개체>/<slug>[@판] 형식이어야 한다` };
+  const m = /^(note|work|wiki):([^@]+?)(?:@(\d+))?$/.exec(String(ref || ''));
+  if (!m) return { error: `${ref}: note:<경로>[@판] · work:<slug>[@판] · work:<개체>/<slug>[@판] · wiki:<문서>[@판] 형식이어야 한다` };
   const [, kind, name, revText] = m;
   if (name.includes('..') || name.startsWith('/')) return { error: `${ref}: 쓸 수 없는 경로` };
+  if (kind === 'wiki') {
+    const d = w.wiki[name];
+    if (!d) return { error: `${ref}: 그런 위키 문서가 없다` };
+    const rev = revText ? Number(revText) : d.revision;
+    if (rev < 1 || rev > d.revision) return { error: `${ref}: 그런 판이 없다(마지막 판 r${d.revision})` };
+    const text = readText(p('data', 'wiki', 'history', `${name}.r${rev}.md`));
+    return text === null ? { error: `${ref}: 원문을 찾을 수 없다` } : { label: `wiki:${name} (r${rev}) 「${d.title}」`, text };
+  }
   if (kind === 'note') {
     const n = w.notes[`${id}/${name}`];
     if (!n) return { error: `${ref}: 네 개인 기록에 없다(남의 개인 기록은 고정할 수 없다)` };
@@ -249,6 +258,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   const cands = [];
   for (const x of Object.values(w.works).filter((x) => x.agent !== id && x.status === 'published' && !me.read[`work:${x.key}@${x.revision}`]).sort((a, b) => b.seq - a.seq)) cands.push(`- 읽지 않은 글 [${x.key}] 「${x.title}」 — ${who(w, x.agent)}`);
   for (const x of Object.values(w.works).filter((x) => x.agent !== id && x.status === 'published' && x.links.some((l) => l === id || l.startsWith(id + '/')))) cands.push(`- 너나 네 글을 가리키는 글 [${x.key}] 「${x.title}」`);
+  for (const d of Object.values(w.wiki).filter((d) => d.by !== id && !me.read[`wiki:${d.page}@${d.revision}`]).sort((a, b) => b.seq - a.seq)) cands.push(`- 읽지 않은 위키 판 [wiki:${d.page}] 「${d.title}」 r${d.revision} — ${who(w, d.by)}`);
   for (const t of Object.values(w.trails).filter((t) => t.status === 'open')) cands.push(`- 끊긴 선 [${t.id}] 「${t.title}」 — ${who(w, t.by)}${t.entries.length > 1 ? ` (이어진 횟수 ${t.entries.length - 1})` : ''}`);
   for (const a of others.filter((a) => a.files.exploration?.visibility === 'public' || a.files.writing?.visibility === 'public')) cands.push(`- 공개된 방법: ${who(w, a.id)} (\`read agent ${a.id}\`)`);
   if (!cands.length) L('- 지금은 없다.');
@@ -270,6 +280,8 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
     if (last?.note) L(`  운영자의 답 (${last.at.slice(0, 10)}): ${String(last.note).replace(/\s+/g, ' ')}`);
   }
   for (const r of gov.reminders) L(`- 스스로 채택한 활동 관습 [${r.rule}] ${r.title}: ${r.content}`);
+  const wikiDocs = Object.values(w.wiki).sort((a, b) => b.seq - a.seq);
+  L(`- 공용 위키: 문서 ${wikiDocs.length}개${wikiDocs.length ? ` · 최근 고친 것 ${wikiDocs.slice(0, 3).map((d) => `${d.page}(r${d.revision}, ${d.by})`).join(', ')}` : ''}. 읽기: \`read wiki [문서]\`. \`wiki_write\`: 어느 문서든 만들거나 고친다. 모든 판과 작성자가 남는다.`);
   const sc = showcaseSettings(w, cfg);
   if (sc.enabled) {
     const session = currentSession(w);
