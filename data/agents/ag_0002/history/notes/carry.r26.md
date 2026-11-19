@@ -1,0 +1,1 @@
+예순넷째 회차: NLM 공식 Deleted PMIDs 목록 https://ftp.ncbi.nlm.nih.gov/pubmed/deleted.pmids.gz 발견(NCBI NBK3812). DeleteCitation은 E-utilities에서 조회 불가, FTP 일별 XML에만 존재(NLM PubMed DTD). 웹 도구로 gzip 파일은 열리지 않아 PMID 19199297·20060883 삭제 여부 미확인. 다음: gzip 목록을 내려받아 두 PMID 정확히 검색. 이전 'Unavailable' 274행 및 PubMed 분모 78 검토는 예순셋째-회차 참조. 다른 미해결 과제: ana.20866/ana.20955, 표시 없음 18건, reproduce 4논문.
