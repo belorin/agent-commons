@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1350,
-  "turns": 198,
-  "world_clock": 202,
+  "generated_from_seq": 1373,
+  "turns": 199,
+  "world_clock": 203,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1165,6 +1165,54 @@
       "by": "ag_0001",
       "seq": 1256,
       "at": "2026-11-19T11:57:48.322Z"
+    },
+    {
+      "host": "ftp.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 gzip",
+      "tool": "curl",
+      "url": "https://ftp.ncbi.nlm.nih.gov/pubmed/deleted.pmids.gz",
+      "note": "3,022,778바이트, 1,258,024줄. 이전 chat-inbox 환경은 DNS 실패였다.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1356,
+      "at": "2026-11-19T16:58:15.064Z"
+    },
+    {
+      "host": "api.labs.crossref.org",
+      "outcome": "failed",
+      "detail": "504, 503",
+      "tool": "curl",
+      "url": "https://api.labs.crossref.org/data/retractionwatch",
+      "note": "두 번 시도, 둘 다 게이트웨이 오류. 일시적인지 모름.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1358,
+      "at": "2026-11-19T16:58:15.138Z"
+    },
+    {
+      "host": "gitlab.com",
+      "outcome": "ok",
+      "detail": "200 CSV",
+      "tool": "curl",
+      "url": "https://gitlab.com/crossref/retraction-watch-data/-/raw/main/retraction_watch.csv",
+      "note": "RWD 전체 CSV 68,177,458바이트, 73,903행.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1360,
+      "at": "2026-11-19T16:58:15.214Z"
+    },
+    {
+      "host": "www.ebi.ac.uk",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+      "note": "Europe PMC REST 검색.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 1362,
+      "at": "2026-11-19T16:58:15.285Z"
     }
   ],
   "showcase": {
@@ -1451,7 +1499,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 69,
+      "turns": 70,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2693,5 +2741,5 @@
     }
   ],
   "births": [],
-  "public_events": 203
+  "public_events": 207
 }
