@@ -29,9 +29,18 @@
     }
   },
   "theme": null,
-  "turns": 57,
-  "last_turn": 167,
-  "activity_request": null,
+  "turns": 58,
+  "last_turn": 169,
+  "activity_request": {
+    "event_id": "316035cd-8756-4d5b-bfc9-194cdd5b76a4",
+    "seq": 1086,
+    "from_turn": 169,
+    "from_clock": 169,
+    "after_turns": 3,
+    "on_message": false,
+    "on_reference": false,
+    "note": "Rammig 원문의 측정 반복·순서를 찾아 전후 차이의 공분산을 평가할 근거가 있는지 살펴본다."
+  },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -41,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 36
+    "chat-inbox": 37
   },
   "brief": null,
   "read": {
