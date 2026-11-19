@@ -19,6 +19,9 @@ const HOST = /^(?=.{1,253}$)[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[
 export const ACCESS_OUTCOMES = ['ok', 'partial', 'failed'];
 // 접근 보고는 회차의 행동 한도를 쓰지 않는다. 사실을 남기는 일이 글 쓸 자리를 줄이지 않게 한다. 따로 상한이 있다.
 export const UNCOUNTED = ['access_reported'];
+// 저녁(evening 기능): 바깥 세계의 동사가 없는 구간. 여기 있는 동사만 존재한다. 행동 수 한도는 일과의 동사에만 적용된다.
+export const EVENING_ACTIONS = ['write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request',
+  'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep'];
 const DEFAULT_VISIBILITY = { identity: 'public', exploration: 'private', writing: 'private', lifecycle: 'private' };
 
 class Reject extends Error {}
@@ -45,10 +48,34 @@ function notePath(value) {
 
 // 글·개인 기록·자기 명세의 본문은 판본 파일(history/)에만 둔다. 사건에는 해시만 남기고, verify 가 그 해시로 판본 파일을 확인한다.
 // (2026-11-18 이전 사건에는 본문(content)도 들어 있다. 그대로 재생된다.)
+const CARRY = 'carry';
+/** 이름 없이 쓴 저녁 기록의 경로: 저녁/시계-<세계 시계>[-n] */
+function eveningPath(ctx) {
+  const base = `저녁/시계-${ctx.w.clock}`;
+  let path = base;
+  for (let n = 2; ctx.w.notes[`${ctx.me.id}/${path}`]; n++) path = `${base}-${n}`;
+  return path;
+}
+
 const HANDLERS = {
   ...governanceHandlers({ reject, text }),
+
+  // 하루의 구간(evening 기능). 일과를 마치는 것과 잠드는 것은 개체의 행동이다.
+  end_day(ctx) {
+    if (!ctx.w.turn.phase) reject('이 판의 방문에는 아직 저녁이 없다');
+    if (ctx.w.turn.phase !== 'day') reject('일과는 이미 끝났다');
+    return [{ type: 'day_ended', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, by: 'self' } }];
+  },
+  sleep(ctx) {
+    if (!ctx.w.turn.phase) reject('이 판의 방문에는 아직 저녁이 없다');
+    if (ctx.w.turn.phase !== 'evening') reject('잠은 저녁에 든다. 일과를 마치는 동사는 end_day 다');
+    return [{ type: 'slept', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id } }];
+  },
   write_private(ctx, a) {
-    const path = notePath(a.path);
+    const evening = ctx.w.turn.phase === 'evening';
+    // 저녁에는 경로를 비울 수 있다. 실행기가 세계 시계로 이름을 붙인다.
+    const path = evening && (a.path === undefined || a.path === null || a.path === '') ? eveningPath(ctx) : notePath(a.path);
+    if (evening && path === CARRY) reject('저녁에는 이어 가는 메모(carry)가 없다. carry 는 일과의 메모다');
     const content = text(a.content, 'content', ctx.cfg);
     const title = text(a.title, 'title', ctx.cfg, { optional: true, max: 200 });
     const revision = (ctx.w.notes[`${ctx.me.id}/${path}`]?.revision || 0) + 1;
@@ -424,8 +451,13 @@ function applyUnlocked(proposal) {
   try {
     if (!['active', 'dormant'].includes(me.status)) reject('실행이 허용되지 않은 개체');
     if (!Object.hasOwn(HANDLERS, name)) reject(`알 수 없는 행동: ${name}. 가능한 행동: ${ACTIONS.join(', ')}`);
-    const used = Object.entries(w.turn.counts).reduce((s, [type, n]) => s + (UNCOUNTED.includes(type) ? 0 : n), 0);
-    if (used >= cfg.turn.max_actions) reject(`이번 회차의 행동 한도(${cfg.turn.max_actions})에 닿았다. 기술적 한도이며 다음 회차에 이어 갈 수 있다`);
+    if (w.turn.slept) reject('잠든 뒤다. 이 방문은 close 로 닫힌다');
+    const evening = w.turn.phase === 'evening';
+    if (evening && !EVENING_ACTIONS.includes(name)) reject(`저녁에는 ${name} 동사가 없다. 저녁의 동사: ${EVENING_ACTIONS.join(', ')}`);
+    // 행동 수 한도는 일과의 동사에만 적용된다. 저녁의 동사는 세지 않는다.
+    const eveningCounts = w.turn.evening_counts || {};
+    const used = Object.entries(w.turn.counts).reduce((s, [type, n]) => s + (UNCOUNTED.includes(type) ? 0 : n - (eveningCounts[type] || 0)), 0);
+    if (!evening && used >= cfg.turn.max_actions) reject(`이번 회차의 행동 한도(${cfg.turn.max_actions})에 닿았다. 기술적 한도이며 다음 회차에 이어 갈 수 있다`);
     if (canonical(proposal).length > cfg.turn.max_chars * 3) reject('제안 전체 크기 한도');
     const drafts = HANDLERS[name]({ w, me, cfg }, proposal);
     const events = [];
@@ -463,7 +495,7 @@ export function executeProposal(envelope) {
     const result = applyUnlocked(envelope.proposal);
     if (result.paused) return result;
     appendEvent({ type: 'proposal_executed', visibility: 'private', agent_id: w.turn.agent_id, turn_id: w.turn.turn_id, payload: { request_id: envelope.request_id, hash, ok: result.ok } });
-    noteProposal(envelope.request_id, envelope.proposal);
+    noteProposal(envelope.request_id, envelope.proposal, w.turn.phase);
     return result;
   });
 }

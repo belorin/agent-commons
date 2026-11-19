@@ -1,13 +1,14 @@
 // 회차: 실행 기회를 한 개체에게 건네고, 닫을 때 확정한다.
 // 실행기는 기회를 줄 뿐이다. 무엇을 읽고 쓸지, 아무것도 하지 않을지는 개체가 정한다.
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { verify } from './verify.mjs';
 import crypto from 'node:crypto';
 import { appendEvent, withTransaction, loadEvents, loadConfig, isPaused, p, agentDir, writeText, readText, sha256 } from './store.mjs';
 import { project, living } from './world.mjs';
-import { decide, activityDue, nextVisit } from './schedule.mjs';
+import { decide, activityDue, nextVisit, resting } from './schedule.mjs';
 export { decide, activityDue, nextVisit };
-import { briefing } from './briefing.mjs';
+import { briefing, eveningBrief } from './briefing.mjs';
 import { regenerate } from './derive.mjs';
 import { executeProposal } from './actions.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
@@ -18,17 +19,63 @@ const turnFile = () => p('data', 'runtime', 'turn.json');
 const lastVisitFile = () => p('data', 'runtime', 'last-visit.json');
 export const loadTurnFile = () => JSON.parse(readText(turnFile()) || 'null');
 export const loadLastVisit = () => JSON.parse(readText(lastVisitFile()) || 'null');
-export function noteProposal(request_id, proposal) {
+export function noteProposal(request_id, proposal, phase) {
   const t = loadTurnFile();
   if (!t) return;
-  t.proposals.push({ request_id, proposal });
+  t.proposals.push({ request_id, proposal, ...(phase ? { phase } : {}) });
   writeText(turnFile(), JSON.stringify(t, null, 2));
 }
-export function noteRead(key) {
+export function noteRead(key, phase) {
   const t = loadTurnFile();
   if (!t) return;
   if (!t.read.includes(key)) t.read.push(key);
+  if (phase === 'evening') { t.evening_read ??= []; if (!t.evening_read.includes(key)) t.evening_read.push(key); }
   writeText(turnFile(), JSON.stringify(t, null, 2));
+}
+
+// ── 잠의 낱말(evening 기능) ─────────────────────────────────────────────
+// 잠들면 실행기가 바깥(설정 dream.url)에서 무작위 낱말을 받아 dream_seeded 사건에 그대로 남긴다.
+// 받은 값이 사건에 있으므로 재생은 언제나 같다. 실패는 기술적 사실로만 남는다. 시험은 setDreamSource 로 바꿔 끼운다.
+let dreamSource = null;
+export const setDreamSource = (fn) => { dreamSource = fn; };
+function parseWords(raw) {
+  const j = JSON.parse(raw);
+  const arr = Array.isArray(j) ? j : j?.results;
+  if (!Array.isArray(arr)) return [];
+  return arr.filter((x) => typeof x === 'string').map((x) => x.trim()).filter((x) => x.length >= 1 && x.length <= 40 && !/[\r\n]/.test(x)).slice(0, 5);
+}
+function seedDream(cfg) {
+  const d = cfg.dream;
+  if (!d?.enabled || !d.url) return null;
+  let source;
+  try { source = new URL(d.url).host; } catch { return { words: [], failed: 'dream.url 을 읽을 수 없다' }; }
+  try {
+    const seconds = String(Math.max(1, Math.ceil((d.timeout_ms || 5000) / 1000)));
+    const raw = dreamSource ? dreamSource(d.url) : execFileSync('curl', ['-sS', '--fail', '-m', seconds, d.url], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+    const words = parseWords(raw);
+    return words.length ? { words, source } : { words: [], source, failed: '응답에 낱말이 없다' };
+  } catch (e) {
+    return { words: [], source, failed: String(e.stderr || e.message || e).trim().slice(0, 200) || '호출 실패' };
+  }
+}
+
+/** 열린 방문의 저녁 브리핑(일과가 끝난 뒤, 또는 저녁 방문). 오늘 일과의 사실을 함께 싣는다. */
+export function eveningText() {
+  const events = loadEvents();
+  const w = project(events);
+  if (!w.turn?.phase) return '저녁이 열려 있지 않다.';
+  const local = loadTurnFile();
+  const read = local?.turn_id === w.turn.turn_id ? local.read.filter((k) => !(local.evening_read || []).includes(k)) : [];
+  return eveningBrief(w, w.turn.agent_id, { turn_id: w.turn.turn_id, kind: w.turn.kind, cfg: loadConfig(), events, dayRead: read });
+}
+
+/** 개체를 지정해 방문을 열 때의 결정. 순번이 고른 개체면 그 근거를 그대로 쓴다. 쉬는 개체는 저녁 방문이다(운영자 깨우기는 예외). */
+function chooseFor(w, cfg, d, agent, operator_wake) {
+  const a = w.agents[agent];
+  if (!a || !['active', 'dormant'].includes(a.status)) return null;
+  if (['walk', 'evening'].includes(d.kind) && d.agent.id === agent && !operator_wake) return d;
+  if (w.features?.evening && !operator_wake && resting(w, a)) return { kind: 'evening', agent: a, selection: 'visit' };
+  return { kind: 'walk', agent: a, selection: 'visit', operator_wake: operator_wake || undefined };
 }
 
 const pad = (n) => String(n).padStart(4, '0');
@@ -60,10 +107,9 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   }
   let d = decide(w, cfg);
   if (agent) {
-    const a = w.agents[agent];
-    if (!a || !['active', 'dormant'].includes(a.status)) return { status: 'error', text: `${agent}: 방문을 열 수 있는 개체가 아니다` };
     // 지정한 개체가 마침 순번이 고른 개체라면(채팅이 derived/next.json 을 따랐을 때) 순번의 근거를 그대로 남긴다.
-    d = d.kind === 'walk' && d.agent.id === agent && !operator_wake ? d : { kind: 'walk', agent: a, selection: 'visit', operator_wake: operator_wake || undefined };
+    d = chooseFor(w, cfg, d, agent, operator_wake);
+    if (!d) return { status: 'error', text: `${agent}: 방문을 열 수 있는 개체가 아니다` };
   }
   if (d.kind === 'idle') {
     openShowcaseIfDue(w, cfg);
@@ -76,12 +122,18 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   const agentId = d.kind === 'birth' ? createAgent(w, d, turn_id) : d.agent.id;
 
   // 브리핑을 미리 받아 간 방문(based_on_seq)은 그 브리핑에 실렸던 전언만 도착한 것으로 친다.
-  const delivered = w.messages.filter((m) => m.to === agentId && !m.delivered && (based_on_seq == null || m.seq <= based_on_seq)).map((m) => m.event_id);
+  // 전언은 일과의 것이다. 저녁 방문은 전언을 건네지 않는다.
+  const delivered = d.kind === 'evening' ? [] : w.messages.filter((m) => m.to === agentId && !m.delivered && (based_on_seq == null || m.seq <= based_on_seq)).map((m) => m.event_id);
+  // evening 기능이 켜진 뒤의 방문은 구간을 갖는다. 하루 방문은 일과, 저녁 방문은 저녁에서 시작한다.
+  const phase = w.features?.evening ? (d.kind === 'evening' ? 'evening' : 'day') : undefined;
   openShowcaseIfDue(w, cfg);
   const before = project(loadEvents());
-  appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, manual: manual || undefined, based_on_seq: based_on_seq ?? undefined, delivered, adapter, model } });
+  appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, phase, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, manual: manual || undefined, based_on_seq: based_on_seq ?? undefined, delivered, adapter, model } });
   writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, kind: d.kind, adapter, model, read: [], proposals: [] }, null, 2));
-  return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text: briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents(), adapter }) };
+  const text = d.kind === 'evening'
+    ? eveningBrief(before, agentId, { turn_id, kind: 'evening', cfg, events: loadEvents() })
+    : briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents(), adapter });
+  return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text };
 }
 
 /** 새 개체를 발급한다. 탄생 회차(turn_id 있음)에서도, 회차 밖의 세계 흘리기(turn_id 없음)에서도 같은 사건을 남긴다. */
@@ -128,20 +180,46 @@ function advanceUnlocked() {
   return `방문 없이 세계 시계가 한 칸 흘렀다: ${d.reason}`;
 }
 
-function closeUnlocked() {
-  const w = project(loadEvents());
+/**
+ * 방문을 닫는다. 구간이 있는 방문(evening 기능)은 하루의 모양을 따른다:
+ * 일과 중이면 일과를 끝내고 저녁 브리핑을 돌려준다(state: evening). 저녁에 아직 잠들지 않았으면 닫지 않는다(state: awake).
+ * 잠든 뒤에만 낱말을 받고(dream_seeded) 방문을 닫는다. dream 을 주면(충돌 뒤 재적용) 바깥 호출 대신 그 값을 쓴다.
+ */
+function closeUnlocked({ by = 'close', dream } = {}) {
+  let w = project(loadEvents());
   if (!w.turn) return { ok: false, text: '열려 있는 회차가 없다.' };
   const { turn_id, agent_id } = w.turn;
-  const me = w.agents[agent_id];
   const base = { agent_id, turn_id };
+  if (w.turn.phase === 'day') {
+    appendEvent({ ...base, type: 'day_ended', actor_id: 'runtime', visibility: 'private', payload: { turn_id, by } });
+    return { ok: false, state: 'evening', turn_id, agent_id, text: eveningText() };
+  }
+  if (w.turn.phase === 'evening' && !w.turn.slept) {
+    return { ok: false, state: 'awake', turn_id, agent_id, text: `아직 잠들지 않았다. 저녁은 개체의 \`sleep\` 으로 끝나고, 그 뒤 close 로 방문이 닫힌다. 저녁 브리핑: \`read evening\`` };
+  }
+  const me = w.agents[agent_id];
+  const local = loadTurnFile();
+  let ended = false;
   if (me.pending_end && !isPaused() && me.status !== 'suspended') {
     // 요청(개체의 주장)과 실행(실행기의 집행)은 서로 다른 사건이다.
     appendEvent({ ...base, type: 'agent_ended', actor_id: agent_id, visibility: 'public', caused_by: [me.pending_end], payload: { by: 'self', request: me.pending_end } });
+    ended = true;
+  }
+  if (w.turn.slept && !ended) {
+    const seeded = dream ?? seedDream(loadConfig());
+    if (seeded) {
+      appendEvent({ ...base, type: 'dream_seeded', actor_id: 'runtime', visibility: 'private', payload: { turn_id, words: seeded.words || [], source: seeded.source ?? undefined, failed: seeded.failed ?? undefined } });
+      if (local?.turn_id === turn_id) local.dream = seeded;
+    }
   }
   const actions = Object.values(w.turn.counts).reduce((s, n) => s + n, 0);
-  const local = loadTurnFile();
   const read = local?.turn_id === turn_id ? local.read : [];
-  appendEvent({ ...base, type: 'turn_closed', visibility: 'private', payload: { turn_id, actions, counts: w.turn.counts, read, silent: actions === 0, paused_at_close: isPaused() || undefined } });
+  let evening;
+  if (w.turn.phase) {
+    const counts = w.turn.evening_counts || {};
+    evening = { actions: Object.values(counts).reduce((s, n) => s + n, 0), counts, read: local?.turn_id === turn_id ? local.evening_read || [] : [], day_ended_by: w.turn.day_ended_by || undefined };
+  }
+  appendEvent({ ...base, type: 'turn_closed', visibility: 'private', payload: { turn_id, actions, counts: w.turn.counts, read, silent: actions === 0, evening, paused_at_close: isPaused() || undefined } });
   if (local?.turn_id === turn_id) writeText(lastVisitFile(), JSON.stringify(local, null, 2));
   fs.rmSync(turnFile(), { force: true });
   const report = regenerate();
@@ -188,17 +266,31 @@ export const failTurn = (reason) => withTransaction(() => failUnlocked(reason));
  * 일반 채팅이 돌려준 제안 묶음도, 푸시 충돌 뒤의 다시 적용도 이 함수 하나를 쓴다.
  * 이미 확정된 request_id 는 건너뛴다. 유효하지 않게 된 제안은 고치지 않고 거절로 남긴다.
  */
-export function applyVisit({ agent, proposals = [], read = [], based_on_seq = null, adapter, model } = {}) {
+export function applyVisit({ agent, proposals = [], evening = [], read = [], based_on_seq = null, adapter, model, dream } = {}) {
   return withTransaction(() => {
     if (typeof agent !== 'string') throw new Error('agent: 방문할 개체 ID가 필요하다');
-    if (!Array.isArray(proposals) || proposals.some((x) => !x || typeof x.request_id !== 'string' || typeof x.proposal !== 'object')) throw new Error('proposals: [{ request_id, proposal }] 의 배열');
+    const shape = (list) => Array.isArray(list) && !list.some((x) => !x || typeof x.request_id !== 'string' || typeof x.proposal !== 'object');
+    if (!shape(proposals)) throw new Error('proposals: [{ request_id, proposal }] 의 배열');
+    if (evening == null) evening = [];
+    if (!shape(evening)) throw new Error('evening: [{ request_id, proposal }] 의 배열');
+    const all = [...proposals, ...evening];
     const done = new Set(loadEvents().filter((e) => e.type === 'proposal_executed').map((e) => e.payload.request_id));
-    if (proposals.length && proposals.every((x) => done.has(x.request_id))) return { status: 'duplicate', text: '이미 확정된 방문이다. 아무것도 더하지 않았다.', results: [] };
+    if (all.length && all.every((x) => done.has(x.request_id))) return { status: 'duplicate', text: '이미 확정된 방문이다. 아무것도 더하지 않았다.', results: [] };
+    // 하루의 모양은 열기 전에 검사한다. 저녁은 잠으로 끝나야 하고, 저녁 방문에는 일과의 제안이 없다.
+    const w = project(loadEvents());
+    if (w.features?.evening) {
+      if (evening.at(-1)?.proposal?.action !== 'sleep') throw new Error('evening: 저녁의 제안은 sleep 으로 끝나야 한다. 아무것도 하지 않는 저녁은 [{ request_id, proposal: { action: "sleep" } }]');
+      const d = w.turn ? null : chooseFor(w, loadConfig(), decide(w, loadConfig()), agent, false);
+      if (d?.kind === 'evening' && proposals.length) throw new Error('proposals: 이번 방문은 저녁만 있는 방문이다. 제안은 evening 에 둔다');
+    } else if (evening.length) throw new Error('evening: 이 판의 방문에는 아직 저녁이 없다');
     const t = openUnlocked({ agent, based_on_seq, ...(adapter ? { adapter } : {}), ...(model ? { model } : {}) });
     if (t.status !== 'open') return { ...t, results: [] };
     const results = proposals.map((x) => ({ request_id: x.request_id, ...executeProposal(x) }));
     for (const key of Array.isArray(read) ? read : []) noteRead(String(key));
-    const closed = closeUnlocked();
+    if (project(loadEvents()).turn?.phase === 'day') closeUnlocked({ by: 'apply' }); // 일과가 끝나고 저녁이 된다
+    results.push(...evening.map((x) => ({ request_id: x.request_id, ...executeProposal(x) })));
+    let closed = closeUnlocked({ dream });
+    if (!closed.ok && closed.state === 'awake') closed = failUnlocked('저녁의 sleep 이 확정되지 않아 방문을 닫을 수 없었다');
     return { status: 'applied', turn_id: t.turn_id, agent_id: t.agent_id, actions: closed.actions, results, text: closed.text };
   });
 }
@@ -221,15 +313,15 @@ export function processInbox() {
         fs.rmSync(file);
         continue;
       }
-      const { agent, proposals, read, based_on_seq } = visit;
+      const { agent, proposals, evening, read, based_on_seq } = visit;
       // 순번은 실행기가 정한다. 이미 확정된 방문(다시 적용)이 아니면, 지금 순번이 고른 개체의 방문만 받는다.
       const done = new Set(loadEvents().filter((e) => e.type === 'proposal_executed').map((e) => e.payload.request_id));
       const replay = Array.isArray(proposals) && proposals.length > 0 && proposals.every((x) => done.has(x?.request_id));
       if (!replay) {
         const next = nextVisit(project(loadEvents()), loadConfig());
-        if (next.kind !== 'walk' || next.agent !== agent) throw new Error(`순번이 아니다: 지금 차례는 ${next.kind === 'walk' ? next.agent : `방문이 아니라 세계 흘리기(${next.kind})`}다. derived/next.json 을 따른다`);
+        if (!['walk', 'evening'].includes(next.kind) || next.agent !== agent) throw new Error(`순번이 아니다: 지금 차례는 ${['walk', 'evening'].includes(next.kind) ? next.agent : `방문이 아니라 세계 흘리기(${next.kind})`}다. derived/next.json 을 따른다`);
       }
-      const r = applyVisit({ agent, proposals, read, based_on_seq });
+      const r = applyVisit({ agent, proposals, evening, read, based_on_seq });
       if (!['applied', 'duplicate'].includes(r.status)) throw new Error(r.text);
       out.push(`${name}: ${r.status === 'duplicate' ? '이미 확정됨' : `${r.agent_id} 방문 ${r.turn_id}, 수락 ${r.results.filter((x) => x.ok).length}/${r.results.length}`}`);
       fs.rmSync(file);

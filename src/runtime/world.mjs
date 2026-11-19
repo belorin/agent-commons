@@ -3,6 +3,8 @@ import { projectGovernance } from './governance.mjs';
 // 이 함수는 순수하다. 파일·시계·난수를 보지 않는다. 같은 로그는 언제나 같은 세계를 낸다.
 
 export const SELF_FILES = ['identity', 'exploration', 'writing', 'lifecycle'];
+/** 하루의 경계를 나타내는 사건. 행동 수로 세지 않는다. */
+export const PHASE_EVENTS = ['day_ended', 'slept', 'dream_seeded'];
 
 function blankAgent(id, e) {
   return {
@@ -29,6 +31,8 @@ function blankAgent(id, e) {
     brief: null, // 개체가 정한 자기 브리핑 구성(가장 최근 설정). 없으면 기본 구성
     read: {}, // 읽은 것의 키 -> world_seq
     names: [],
+    last_opened_seq: 0, // 이 개체의 마지막 turn_opened 순번
+    dream: null, // 마지막 잠에서 받은 낱말 { words, seq, turn_id } (evening 기능)
   };
 }
 
@@ -80,9 +84,13 @@ export function project(events) {
         w.clock += 1;
         const day = e.timestamp.slice(0, 10);
         if (!pl.manual) w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1; // 수동 회차는 예약 실행의 하루 상한에 세지 않는다
-        w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, adapter: pl.adapter || null, opened_seq: e.world_seq, number: w.turns, counts: {} };
+        w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, adapter: pl.adapter || null, opened_seq: e.world_seq, number: w.turns, counts: {},
+          // evening 기능이 켜진 뒤의 방문만 구간을 가진다. 하루 방문은 일과에서, 저녁 방문은 저녁에서 시작한다.
+          ...(pl.phase ? { phase: pl.phase, evening_counts: {}, day_ended_by: null, slept: false } : {}) };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
-        if (a) { a.turns += 1; a.last_turn = w.turns; a.activity_request = null; if (pl.adapter) a.adapters[pl.adapter] = (a.adapters[pl.adapter] || 0) + 1; if (a.status === 'dormant') { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
+        // 저녁 방문은 쉬는 상태(활동 요청, 휴면과 그 기준 시계)를 건드리지 않는다.
+        const rest = pl.kind === 'evening';
+        if (a) { a.turns += 1; a.last_turn = w.turns; a.last_opened_seq = e.world_seq; if (!rest) a.activity_request = null; if (pl.adapter) a.adapters[pl.adapter] = (a.adapters[pl.adapter] || 0) + 1; if (a.status === 'dormant' && !rest) { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
         for (const id of pl.delivered || []) {
           const m = w.messages.find((x) => x.event_id === id);
           if (m) m.delivered = true;
@@ -96,6 +104,15 @@ export function project(events) {
         break;
       case 'world_idle':
         w.clock += 1;
+        break;
+      case 'day_ended':
+        if (w.turn?.phase && w.turn.turn_id === pl.turn_id) { w.turn.phase = 'evening'; w.turn.day_ended_by = pl.by || null; }
+        break;
+      case 'slept':
+        if (w.turn?.phase && w.turn.turn_id === pl.turn_id) w.turn.slept = true;
+        break;
+      case 'dream_seeded':
+        if (a) a.dream = { words: pl.words || [], seq: e.world_seq, turn_id: pl.turn_id || null };
         break;
       case 'showcase_opened':
         w.showcase.number = pl.number;
@@ -135,7 +152,9 @@ export function project(events) {
         a.files.lifecycle = { revision: pl.to_revision, hash: pl.hash, visibility: pl.visibility };
         break;
       case 'note_written':
-        w.notes[`${e.agent_id}/${pl.path}`] = { agent: e.agent_id, path: pl.path, revision: pl.revision || 1, title: pl.title || null, hash: pl.hash, seq: e.world_seq, at: e.timestamp };
+        // 어느 구간에서 썼는지는 사건 순서로 도출한다. 구간이 없던 방문과 회차 밖의 기록은 일과의 것이다.
+        w.notes[`${e.agent_id}/${pl.path}`] = { agent: e.agent_id, path: pl.path, revision: pl.revision || 1, title: pl.title || null, hash: pl.hash, seq: e.world_seq, at: e.timestamp,
+          phase: w.turn && e.turn_id === w.turn.turn_id && w.turn.phase === 'evening' ? 'evening' : 'day' };
         break;
       case 'operator_note':
         w.operator_notes.push({ content: pl.content, seq: e.world_seq, at: e.timestamp });
@@ -294,8 +313,9 @@ export function project(events) {
       default:
         break; // action_rejected, run_budget_exhausted, world_idle 등은 상태를 바꾸지 않는다
     }
-    if (w.turn && e.turn_id === w.turn.turn_id && e.actor_id === w.turn.agent_id && !['action_rejected', 'birth_seed_recorded'].includes(e.type)) {
+    if (w.turn && e.turn_id === w.turn.turn_id && e.actor_id === w.turn.agent_id && !['action_rejected', 'birth_seed_recorded', ...PHASE_EVENTS].includes(e.type)) {
       w.turn.counts[e.type] = (w.turn.counts[e.type] || 0) + 1;
+      if (w.turn.phase === 'evening') w.turn.evening_counts[e.type] = (w.turn.evening_counts[e.type] || 0) + 1;
     }
   }
   return w;

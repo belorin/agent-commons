@@ -5,7 +5,7 @@ import crypto from 'node:crypto';
 import { recoverTransaction } from './runtime/transaction.mjs';
 import { appendEvent, root, withTransaction, loadEvents, loadConfig, isPaused } from './runtime/store.mjs';
 import { project, living, displayName } from './runtime/world.mjs';
-import { openTurn, closeTurn, failTurn, applyVisit, processInbox, decide, seedAgent } from './runtime/tick.mjs';
+import { openTurn, closeTurn, failTurn, applyVisit, processInbox, decide, seedAgent, eveningText } from './runtime/tick.mjs';
 import { standingBrief } from './runtime/briefing.mjs';
 import { executeProposal } from './runtime/actions.mjs';
 import { read } from './runtime/read.mjs';
@@ -66,6 +66,7 @@ function run() {
       if (Array.isArray(proposal)) throw new Error('제안은 하나씩 낸다');
       const r = executeProposal({ request_id: crypto.randomUUID(), proposal });
       say(r.ok ? `수락: ${(r.events || []).map((e) => `${e.type} #${e.world_seq}`).join(', ')}` : `거절: ${r.reason}`);
+      if (r.ok && proposal.action === 'end_day') say('\n' + eveningText()); // 일과가 끝났다: 저녁 브리핑
       process.exitCode = r.ok ? 0 : 3; break;
     }
     case 'read': {
@@ -78,7 +79,12 @@ function run() {
       requireRole('COMMONS_EXECUTOR');
       withTransaction(() => {
         ownTurn(validWorld());
-        say(cmd === 'close' ? closeTurn().text : failTurn(args.slice(1).join(' ')).text);
+        if (cmd === 'fail') { say(failTurn(args.slice(1).join(' ')).text); return; }
+        const r = closeTurn();
+        say(r.text);
+        // 5: 일과가 끝나고 저녁이 시작됐다(방문은 열려 있다). 6: 저녁에 아직 잠들지 않았다.
+        if (r.state === 'evening') process.exitCode = 5;
+        else if (r.state === 'awake') process.exitCode = 6;
       });
       break;
     }
@@ -90,7 +96,7 @@ function run() {
       const sc = showcaseSettings(w, cfg);
       if (sc.enabled) say(`발표회: ${w.showcase.number}회 열림 · 간격 ${sc.every} (${sc.basis === 'operator_default' ? '운영자 기본값' : '규칙 ' + sc.basis}) · 다음은 세계 시계 ${nextShowcaseClock(w, cfg)}`);
       say(`열린 방문: ${w.turn ? `${w.turn.turn_id} (${w.turn.agent_id}) — 닫기 전에는 새로 열지 않는다` : '없음'}`);
-      if (!w.turn) say(`다음 tick: ${d.kind === 'birth' ? `새 개체 (${d.origin})` : d.kind === 'walk' ? `${d.agent.id} (${d.selection === 'requested' ? `본인 요청: ${d.request_reason}` : '기본 순번'})` : d.reason}`);
+      if (!w.turn) say(`다음 tick: ${d.kind === 'birth' ? `새 개체 (${d.origin})` : d.kind === 'walk' ? `${d.agent.id} (${d.selection === 'requested' ? `본인 요청: ${d.request_reason}` : '기본 순번'})` : d.kind === 'evening' ? `${d.agent.id} (쉬는 중: 저녁만 있는 방문)` : d.reason}`);
     }); break;
     case 'verify': {
       const v = verify(); say(v.ok ? `이상 없음: 사건 ${v.events}, 개체 ${v.agents}` : '무결성 문제:\n- ' + v.problems.join('\n- '));
@@ -119,7 +125,7 @@ function run() {
     }
     case 'enable-feature': { // 판 전체 기능을 켠다. 날짜가 찍힌 공개 운영자 사건으로 남고, 그 전의 기록에는 소급하지 않는다.
       requireRole('COMMONS_OPERATOR');
-      const FEATURES = ['brief_config'];
+      const FEATURES = ['brief_config', 'evening'];
       withTransaction(() => {
         const w = validWorld();
         if (!FEATURES.includes(args[0])) throw new Error(`enable-feature <${FEATURES.join(' | ')}>`);

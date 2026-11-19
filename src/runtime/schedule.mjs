@@ -22,6 +22,15 @@ export function activityDue(w, a) {
   return null;
 }
 
+/**
+ * 쉬는 중인가: 휴면 중이고 깨어날 조건이 차지 않았거나, 활동 요청을 남겼고 그 조건이 차지 않았다.
+ * evening 기능이 켜진 뒤에는 쉬는 개체도 순번에 남고, 차례가 오면 저녁만 있는 방문을 받는다.
+ */
+export function resting(w, a) {
+  if (a.status === 'dormant') return !wakeDue(w, a);
+  return a.status === 'active' && !!a.activity_request && !activityDue(w, a);
+}
+
 /** 이번 회차에 무슨 일이 일어날지 정한다. 난수도 숨은 확률도 없다. */
 export function decide(w, cfg) {
   const alive = living(w);
@@ -33,8 +42,10 @@ export function decide(w, cfg) {
     return { kind: 'birth', origin: 'birth_proposal', proposal: accepted };
   }
   // 아직 조건이 차지 않은 요청은 그 개체가 스스로 일반 순번을 유보한 것으로 취급한다.
+  // evening 기능이 켜진 뒤에는 유보한 개체도 순번에 남는다. 차례가 오면 저녁만 있는 방문이다.
+  const evening = !!w.features?.evening;
   const eligible = alive.filter((a) =>
-    (a.status === 'active' && (!a.activity_request || activityDue(w, a))) || wakeDue(w, a)
+    evening || (a.status === 'active' && (!a.activity_request || activityDue(w, a))) || wakeDue(w, a)
   ).sort((x, y) => x.last_turn - y.last_turn || x.id.localeCompare(y.id));
   const due = eligible.filter((a) => a.status === 'active' && activityDue(w, a));
   const limit = Number.isInteger(cfg.scheduling?.max_request_streak) ? Math.max(0, cfg.scheduling.max_request_streak) : 2;
@@ -42,7 +53,7 @@ export function decide(w, cfg) {
     const agent = due[0];
     return { kind: 'walk', agent, selection: 'requested', request_reason: activityDue(w, agent), request_id: agent.activity_request.event_id };
   }
-  if (eligible.length) return { kind: 'walk', agent: eligible[0], selection: 'fair' };
+  if (eligible.length) return evening && resting(w, eligible[0]) ? { kind: 'evening', agent: eligible[0], selection: 'rest' } : { kind: 'walk', agent: eligible[0], selection: 'fair' };
   if (!alive.length && cfg.on_empty_world === 'reseed') return { kind: 'birth', origin: 'operator_seed', reseed: true };
   if (alive.length) return { kind: 'idle', reason: alive.some((a) => a.status === 'active') ? '활동 중인 개체는 모두 스스로 정한 때를 기다리고, 나머지는 휴면 중이다' : '깨어 있는 개체가 없다(모두 휴면)' };
   return { kind: 'idle', reason: '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
@@ -56,6 +67,8 @@ export function nextVisit(w, cfg, { paused = false } = {}) {
   const d = decide(w, cfg);
   if (d.kind === 'walk') return { ...base, kind: 'walk', agent: d.agent.id, selection: d.selection, request_reason: d.request_reason || null,
     why: d.selection === 'requested' ? '그 개체가 남긴 활동 요청의 조건이 찼다.' : '활동 중이고 조건이 차지 않은 요청이 없는 개체 가운데 가장 오래 기다린 개체다.' };
+  if (d.kind === 'evening') return { ...base, kind: 'evening', agent: d.agent.id, selection: d.selection, request_reason: null,
+    why: '쉬는 중(휴면, 또는 조건이 차지 않은 활동 요청)인 개체 가운데 가장 오래 기다린 개체다. 저녁만 있는 방문이다.' };
   if (d.kind === 'birth') return { ...base, kind: 'birth', why: '새 개체가 태어날 차례다. 방문하지 않고 세계를 한 칸 흘리는 파일을 올리면 실행기가 개체를 발급한다.' };
   return { ...base, kind: 'idle', reason: d.reason, why: '걸을 개체가 없다. 방문하지 않고 세계를 한 칸 흘리는 파일을 올린다.' };
 }

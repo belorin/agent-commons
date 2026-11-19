@@ -3,20 +3,27 @@ import { governanceContext } from './governance.mjs';
 import { loadEvents, withTransaction, agentDir, readText } from './store.mjs';
 import { project, displayName, canSee, SELF_FILES } from './world.mjs';
 import { describeEvent, listPrivate, describeAccess } from './briefing.mjs';
-import { noteRead } from './tick.mjs';
+import { noteRead as recordRead, eveningText } from './tick.mjs';
 import { loadConfig } from './store.mjs';
 import * as storeMod from './store.mjs';
 import * as decisionsMod from './decisions.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 
 /** as 를 주면 열린 방문 없이 그 개체의 범위로 읽는다(브리핑을 받아 간 채팅을 대신 읽어 줄 때). 누구의 범위로 읽을지는 신뢰하는 쪽이 정한다. */
+const EVENING_READS = ['note', 'history', 'revision', 'schedule', 'evening'];
 export const read = (kind, arg, extra, { as = null } = {}) => withTransaction(() => readUnlocked(kind, arg, extra, as));
 function readUnlocked(kind, arg, extra, as) {
   const events = loadEvents();
   const w = project(events);
   const me = w.agents[as || w.turn?.agent_id];
   if (!me) return as ? `${as}: 그런 개체가 없다` : '열려 있는 방문이 없다. `read --as <개체 ID> …` 로 읽는다.';
+  // 무엇을 읽었는지는 열린 방문의 구간과 함께 남는다.
+  const phase = !as ? w.turn?.phase : undefined;
+  const noteRead = (key) => recordRead(key, phase);
+  // 저녁에는 바깥 기록이 없다. 자기 기록과 자기 시간만 열린다.
+  if (phase === 'evening' && !(EVENING_READS.includes(kind) || (kind === 'agent' && arg === me.id))) return `저녁에는 바깥 기록이 이 자리에 없다. 저녁의 읽기: ${EVENING_READS.join(' | ')}`;
   switch (kind) {
+    case 'evening': return as ? '저녁 브리핑은 열린 방문에서만 읽는다' : eveningText();
     case 'schedule': return JSON.stringify({ world_turns: w.turns, world_clock: w.clock, last_turn: me.last_turn, activity_request: me.activity_request, note: '자신의 요청만 열람 가능하며, 실제 다음 실행 시각은 보장되지 않는다' }, null, 2);
     case 'showcase': {
       const cfg = loadConfig();
@@ -54,6 +61,7 @@ function readUnlocked(kind, arg, extra, as) {
       const name = String(arg || '').replace(/\.md$/, '');
       const body = name && !name.includes('..') && !name.startsWith('/') ? readText(agentDir(me.id, 'private', name + '.md')) : null;
       if (body === null) return `${arg}: 네 개인 기록에 없다. 있는 것: ${listPrivate(me.id).join(', ') || '(없음)'}`;
+      noteRead(`note:${name}`);
       return body;
     }
     case 'trail': {
@@ -70,12 +78,14 @@ function readUnlocked(kind, arg, extra, as) {
       if (matches.length > 1) return 'work:<slug> 또는 note:<path>로 구분한다';
       const e = matches[0];
       if (!e) return '그런 판본이 없다';
+      noteRead(`revision:${key}@${revision}`);
       if (e.payload.content !== undefined) return e.payload.content;
       return readText(agentDir(me.id, 'history', e.type === 'work_published' ? 'works' : 'notes', `${key}.r${revision}.md`)) ?? '원본을 찾을 수 없다';
     }
     case 'history': {
       const mine = events.filter((e) => e.agent_id === me.id && canSee(e, me.id) && !['turn_opened', 'turn_closed'].includes(e.type));
       const lines = mine.map((e) => `- #${e.world_seq} ${e.timestamp.slice(0, 10)} ${e.type}${e.payload.target ? `(${e.payload.target} r${e.payload.to_revision ?? ''})` : ''}${e.payload.reason ? ` — ${e.payload.reason}` : ''}${e.payload.slug ? ` ${e.payload.slug}` : ''}${e.payload.path ? ` ${e.payload.path}` : ''}`);
+      noteRead(arg && SELF_FILES.includes(arg) && extra ? `history:${arg}@${Number(extra)}` : 'history');
       if (arg && SELF_FILES.includes(arg) && extra) return readText(agentDir(me.id, 'history', `${arg}.r${Number(extra)}.md`)) ?? `${arg} r${extra}: 그런 판본이 없다`;
       return `# ${me.id} 의 이력 (옛 판본: \`read history <target> <revision>\`)\n` + (lines.join('\n') || '- 아직 없다.');
     }

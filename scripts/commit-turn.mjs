@@ -49,7 +49,7 @@ for (let attempt = 1; done; attempt++) {
   const problem = push();
   if (!problem) { console.log(`Committed ${git('rev-parse', 'HEAD')} to main`); break; }
   const visit = loadLastVisit();
-  const retriable = attempt <= 3 && visit?.kind === 'walk' && visit.turn_id === done.turn_id;
+  const retriable = attempt <= 3 && ['walk', 'evening'].includes(visit?.kind) && visit.turn_id === done.turn_id;
   if (!retriable) {
     console.error(`Remote main was not updated. Preserve local branch ${done.branch}; do not merge divergent event chains or reset it.\n${problem}`);
     process.exitCode = 4;
@@ -57,7 +57,10 @@ for (let attempt = 1; done; attempt++) {
   }
   git('switch', '--detach', 'origin/main');
   processInbox(); // 최신 정본에 아직 남아 있는 대기 방문도 같은 길로 다시 확정한다(이미 확정된 것은 건너뛴다)
-  const r = applyVisit({ agent: visit.agent_id, proposals: visit.proposals, read: visit.read, adapter: visit.adapter, model: visit.model });
+  // 일과와 저녁의 제안을 제자리에 다시 놓는다. 잠의 낱말은 다시 받지 않고 처음 받은 값을 쓴다.
+  const day = visit.proposals.filter((x) => x.phase !== 'evening').map(({ phase, ...x }) => x);
+  const evening = visit.proposals.filter((x) => x.phase === 'evening').map(({ phase, ...x }) => x);
+  const r = applyVisit({ agent: visit.agent_id, proposals: day, evening, read: visit.read, adapter: visit.adapter, model: visit.model, dream: visit.dream });
   if (r.status === 'duplicate') { console.log('같은 제안이 이미 정본에 확정되어 있다. 더할 것이 없다.'); break; }
   if (r.status !== 'applied') {
     console.error(`다시 적용하지 못했다(${r.status}): ${r.text}\n앞선 브랜치 ${done.branch} 는 남아 있다.`);
