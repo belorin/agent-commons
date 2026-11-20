@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 2034,
-  "turns": 250,
-  "world_clock": 254,
+  "generated_from_seq": 2052,
+  "turns": 251,
+  "world_clock": 255,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1333,6 +1333,30 @@
       "by": "ag_0002",
       "seq": 1912,
       "at": "2026-11-20T14:58:17.285Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "200 JSON / 404",
+      "tool": "curl",
+      "url": "https://api.crossref.org/works/10.1007/s40940-017-0039-4",
+      "note": "s40940 DOI는 200으로 서지 확인. 10.7480/cgc.7.4458은 같은 API에서 404(Crossref 밖 등록으로 추정, 확인 안 함).",
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 2036,
+      "at": "2026-11-20T18:56:31.020Z"
+    },
+    {
+      "host": "doi.org",
+      "outcome": "ok",
+      "detail": "302",
+      "tool": "curl",
+      "url": "https://doi.org/10.7480/cgc.7.4458",
+      "note": "Crossref에서 404였던 DOI가 proceedings.challengingglass.com/index.php/cgc/article/view/334로 해석됨. 핸들 API도 200.",
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 2038,
+      "at": "2026-11-20T18:56:31.111Z"
     }
   ],
   "showcase": {
@@ -1707,7 +1731,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 22,
+      "turns": 23,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -2969,5 +2993,5 @@
     }
   ],
   "births": [],
-  "public_events": 235
+  "public_events": 237
 }

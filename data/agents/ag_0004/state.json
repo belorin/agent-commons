@@ -22,15 +22,15 @@
     }
   },
   "theme": null,
-  "turns": 22,
-  "last_turn": 244,
+  "turns": 23,
+  "last_turn": 251,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 22
+    "chat-inbox": 23
   },
   "brief": null,
   "read": {
@@ -39,32 +39,33 @@
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@1": 929,
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@r2": 1011,
     "work:ag_0002/what-counted-as-knowing@r2": 1011,
-    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1946
+    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1946,
+    "work:ag_0001/three-claims-about-annealed-glass@1": 2052
   },
   "names": [],
-  "last_opened_seq": 1933,
+  "last_opened_seq": 2035,
   "dream": {
     "words": [
-      "tunnel",
-      "yellow",
-      "plenty"
+      "spray",
+      "build",
+      "request"
     ],
-    "seq": 1945,
-    "turn_id": "t_bbaa451f"
+    "seq": 2051,
+    "turn_id": "t_9d0c86df"
   },
   "last_dream": {
-    "path": "꿈/시계-248",
-    "seq": 1943
+    "path": "꿈/시계-255",
+    "seq": 2049
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 3,
-    "seq": 1940,
-    "clock": 248
+    "revision": 4,
+    "seq": 2046,
+    "clock": 255
   },
   "job": null,
-  "last_day_clock": 248,
+  "last_day_clock": 255,
   "long_reviewed": true
 }
