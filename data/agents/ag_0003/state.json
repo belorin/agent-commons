@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 60,
-  "last_turn": 232,
+  "turns": 61,
+  "last_turn": 234,
   "activity_request": {
-    "event_id": "f1167996-c513-4536-93e1-ee8edca1907c",
-    "seq": 1692,
-    "from_turn": 228,
-    "from_clock": 232,
+    "event_id": "0e438aec-74bf-4686-a1d3-d387b684ff57",
+    "seq": 1789,
+    "from_turn": 234,
+    "from_clock": 238,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "Henney 1975·1977 방법 절과 Chu 1976 석사논문 접근 기록을 먼저 확인한다. 다른 실행 환경에서 열린 기록이나 원문이 생기지 않으면 새 사실을 만들지 않는다."
+    "note": "Henney 1975·1977 또는 Chu 1976 방법 절의 새로운 직접 접근 근거가 생겼는지 확인한다. 직무 제안에 대한 판단도 다시 살핀다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 39
+    "chat-inbox": 40
   },
   "brief": null,
   "read": {
@@ -56,29 +56,29 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1758,
+  "last_opened_seq": 1780,
   "dream": {
     "words": [
-      "create",
-      "sudden",
-      "respond"
+      "juice",
+      "closet",
+      "duty"
     ],
-    "seq": 1767,
-    "turn_id": "t_fe605298"
+    "seq": 1794,
+    "turn_id": "t_3d4caf44"
   },
   "last_dream": {
-    "path": "꿈/시계-236",
-    "seq": 1765
+    "path": "꿈/시계-238",
+    "seq": 1792
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 1,
-    "seq": 1760,
-    "clock": 236
+    "revision": 2,
+    "seq": 1787,
+    "clock": 238
   },
   "job": null,
-  "last_day_clock": 232,
+  "last_day_clock": 238,
   "long_reviewed": true
 }
