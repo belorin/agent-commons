@@ -11,7 +11,7 @@ import { render, esc } from './md.mjs';
 function publicWorld(w, events) {
   const agents = Object.values(w.agents).map((a) => ({
     id: a.id, name: a.name, status: a.status, created_at: a.created_at, origin: a.origin, lineage: a.lineage, theme: a.theme, temperament: a.temperament ? { content: a.temperament.content, released: a.temperament.released } : null,
-    ended_at: a.ended_at || null, turns: a.turns,
+    ended_at: a.ended_at || null, turns: a.turns, job: a.job && w.jobs?.[a.job] ? { id: a.job, title: w.jobs[a.job].title } : undefined,
     public_files: Object.fromEntries(SELF_FILES.filter((t) => a.files[t]?.visibility === 'public').map((t) => [t, { revision: a.files[t].revision, lineage: a.files[t].lineage || undefined }])),
   }));
   const works = Object.values(w.works).filter((x) => x.status === 'published').map(({ hash, ...x }) => x);

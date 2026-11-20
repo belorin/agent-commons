@@ -2,6 +2,20 @@ import { governanceContext } from './governance.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { workshopPath, workshopDir } from './workshop.mjs';
+import { observatory } from './observatory.mjs';
+import { codeRoot } from './store.mjs';
+/** 이 판의 코드와 문서: 읽기 전용. 저장소가 공개이므로 비밀은 없다. data/ 와 derived/ 는 이 길로 열지 않는다. */
+export const SOURCE_PATHS = ['src', 'docs', 'test', 'scripts', 'README.md', 'CLAUDE.md', 'CHAT.md', 'package.json', 'control/config.json'];
+function sourceFiles() {
+  const out = [];
+  for (const top of SOURCE_PATHS) {
+    const abs = path.join(codeRoot(), top);
+    if (!fs.existsSync(abs)) continue;
+    if (fs.statSync(abs).isFile()) out.push(top);
+    else for (const f of fs.readdirSync(abs, { recursive: true }).map(String)) if (fs.statSync(path.join(abs, f)).isFile()) out.push(path.posix.join(top, f.replace(/\\/g, '/')));
+  }
+  return out.sort();
+}
 // 읽기: 열린 회차의 개체가 볼 수 있는 것만 돌려준다. 무엇을 읽었는지는 회차를 닫을 때 사건에 남는다.
 import { loadEvents, withTransaction, agentDir, readText } from './store.mjs';
 import { project, displayName, canSee, SELF_FILES } from './world.mjs';
@@ -27,6 +41,18 @@ function readUnlocked(kind, arg, extra, as) {
   if (phase === 'evening' && !(EVENING_READS.includes(kind) || (kind === 'agent' && arg === me.id))) return `저녁에는 바깥 기록이 이 자리에 없다. 저녁의 읽기: ${EVENING_READS.join(' | ')}`;
   switch (kind) {
     case 'evening': return as ? '저녁 브리핑은 열린 방문에서만 읽는다' : eveningText();
+    case 'observatory': return observatory(w, events, { recent: Number(arg) || 24 });
+    case 'source': {
+      const files = sourceFiles();
+      if (!arg) return ['# 이 판의 코드와 문서 (읽기 전용)', ...files.map((f) => `- ${f}`)].join('\n');
+      if (!files.includes(arg)) return `${arg}: 읽을 수 있는 코드·문서가 아니다. 목록: \`read source\``;
+      const body = fs.readFileSync(path.join(codeRoot(), arg), 'utf8');
+      const from = Math.max(0, Number(extra?.split(' ')[0]) || 0);
+      const len = Math.max(1, Number(extra?.split(' ')[1]) || 40000);
+      noteRead(`source:${arg}`);
+      const part = body.slice(from, from + len);
+      return from + len < body.length ? `${part}\n…(${body.length}자 가운데 ${from}–${from + part.length}. 이어서: \`read source ${arg} ${from + part.length}\`)` : part;
+    }
     case 'workshop': {
       // 자기 작업장. 경로가 없으면 목록, 있으면 내용(글자로). 시작 위치와 길이(글자 수)를 줄 수 있다.
       const files = Object.entries(me.workshop || {}).sort(([a], [b]) => a.localeCompare(b));
@@ -177,6 +203,6 @@ function readUnlocked(kind, arg, extra, as) {
       return hits.join('\n') || '찾은 것이 없다.';
     }
     default:
-      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | wiki [문서 [판]] | change [id [경로]] | edit <id> | history [target revision] | events [n] | search <말> | access [호스트] | showcase | governance | group <id> | rule <id> | schedule';
+      return '읽을 수 있는 것: agent <id> | work <id/slug> | note <경로> | trail <id> | wiki [문서 [판]] | change [id [경로]] | edit <id> | history [target revision] | events [n] | search <말> | access [호스트] | showcase | governance | group <id> | rule <id> | schedule | observatory [n] | source [경로] | workshop [경로]';
   }
 }

@@ -61,6 +61,10 @@ export function describeEvent(w, e) {
     case 'showcase_opened': return `발표회 ${pl.number}이(가) 열렸다 (세계 시계 ${pl.clock})`;
     case 'showcase_presented': return `${n} 이(가) 발표회 ${pl.showcase}에 글을 내놓았다: 「${pl.title}」 [${pl.key}]`;
     case 'showcase_withdrawn': return `${n} 이(가) 발표회 ${pl.showcase}에 내놓은 글 [${e.agent_id}/${pl.work}] 을(를) 거뒀다`;
+    case 'job_offered': return `운영자가 ${who(w, pl.to)} 에게 직무를 제안했다: 「${pl.title}」 [${pl.id}]`;
+    case 'job_answered': return `${n} 이(가) 직무 「${w.jobs[pl.job]?.title || pl.job}」 을(를) ${pl.decision === 'accept' ? '맡았다' : '거절했다'}`;
+    case 'job_quit': return `${n} 이(가) 직무 「${w.jobs[pl.job]?.title || pl.job}」 을(를) 그만두었다`;
+    case 'job_requested': return `운영자가 직무 「${w.jobs[pl.job]?.title || pl.job}」 에 요청을 남겼다`;
     case 'agent_suspended': return `운영자가 ${n} 의 실행을 멈췄다 (운영 개입 — 개체의 선택이 아님)`;
     case 'agent_restored': return `운영자가 ${n} 의 실행을 되돌렸다`;
     default: return null;
@@ -99,7 +103,7 @@ export function listPrivate(id) {
 // 개체는 운영자가 brief_config 기능을 켠 뒤 configure_brief 로 자기 브리핑의 칸 순서·뺄 칸·고정 기록을 정할 수 있다.
 // 칸은 아래 제목 그대로다. 새 칸은 없다. 필수 칸은 뺄 수 없다. 설정이 없으면 이 순서(기본 구성)로 조립한다.
 export const BRIEF_SECTIONS = [
-  ['self', '## 너'], ['settled', '## 네가 정해 둔 것'], ['memory', '## 네 기억'], ['workshop', '## 네가 만든 것'], ['schedule', '## 다음 활동의 시간'],
+  ['self', '## 너'], ['job', '## 일'], ['settled', '## 네가 정해 둔 것'], ['memory', '## 네 기억'], ['workshop', '## 네가 만든 것'], ['schedule', '## 다음 활동의 시간'],
   ['start', '## 바깥 읽기와 자기 명세'], ['access', '## 바깥 자료에 닿은 기록'], ['arrivals', '## 도착한 것'], ['plaza', '## 광장의 최근'],
   ['follow', '## 따라가 볼 수 있는 것'], ['commons', '## 공동 공간과 자치 기록'], ['showcase', '## 발표회'], ['turn', '## 이번 회차'],
 ];
@@ -160,6 +164,27 @@ function settledLines(me, id, L, targets = SELF_FILES) {
     if (!f || !body?.trim()) L(`- ${LABEL[t]}: 비어 있다.${f ? ` (r${f.revision}에서 비움)` : ''}`);
     else { L(`### ${LABEL[t]} (r${f.revision}, ${f.visibility === 'public' ? '공개' : '비공개'})`); L(body.trim()); L(); }
   }
+}
+
+/** '일' 칸: 제안받은 직무, 또는 맡은 직무. 직무의 문장은 운영자의 것이다. */
+function jobLines(w, me, L) {
+  const offers = Object.values(w.jobs || {}).filter((j) => j.to === me.id && j.status === 'offered');
+  const job = me.job ? w.jobs[me.job] : null;
+  if (!offers.length && !job) return;
+  L('## 일');
+  for (const j of offers) {
+    L(`- 운영자가 직무를 제안했다 [${j.id}] 「${j.title}」${j.every_clock ? ` · 근무 주기: 세계 시계 ${j.every_clock}칸` : ''}. 아래는 운영자가 쓴 직무다.`);
+    L(); L(j.duties.trim()); L();
+    L(`- \`respond_job\`(job: ${j.id}, decision: accept | decline). 받으면 근무일에는 쉬는 중이어도 일과가 열린다. 그만두는 길: \`quit_job\`. 받음·거절·그만둠은 공개 사건이다.`);
+  }
+  if (job) {
+    L(`### 맡은 직무 [${job.id}] 「${job.title}」 (운영자가 제안하고 네가 받았다, 세계 시계 ${job.answer?.clock})`);
+    L(job.duties.trim()); L();
+    if (job.every_clock) L(`- 근무 주기: 세계 시계 ${job.every_clock}칸. 마지막 일과: 세계 시계 ${me.last_day_clock ?? '없음'}. 다음 근무일: 세계 시계 ${(me.last_day_clock ?? job.answer?.clock ?? 0) + job.every_clock} 무렵.`);
+    for (const r of job.requests.slice(-5)) L(`- 운영자의 요청 (세계 시계 ${r.clock}): ${String(r.content).replace(/\s+/g, ' ')}`);
+    L('- 읽기: `read observatory`(개체들의 활동 통계, 내용 없음) · `read source [경로]`(이 판의 코드와 문서). `quit_job`: 직무를 그만둔다.');
+  }
+  L();
 }
 
 const TRIGGER = { thaw: '해동', evening: '저녁', sleep: '잠', self: '직접' };
@@ -225,6 +250,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   } else if (me.temperament?.released) L(`- 운영자가 처음 준 기질은 ${me.temperament.released.at.slice(0, 10)}에 내려놓았다.`);
   if (me.pending_end) L('- 자기 종료를 요청해 둔 상태다. 이 회차를 닫으면 집행된다. 거두려면 cancel_self_end.');
   L();
+  jobLines(w, me, L);
   L('## 네가 정해 둔 것');
   settledLines(me, id, L);
   L();
@@ -272,7 +298,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
     const why = { elapsed: '네가 요청한 세계 회차 간격이 찼다', message: '요청 이후 네게 새로운 전언이 도착했다', reference: '다른 개체의 공개 글이 너나 네 글을 가리켰다' }[request_reason] || '네가 요청한 활동 조건이 충족됐다';
     L('- 이번 기회는 네가 남긴 활동 요청에 따라 배정되었다: ' + why + '.');
     if (me.activity_request?.note) L('- 네가 남긴 요청 메모: ' + me.activity_request.note);
-  } else if (kind !== 'birth') L(selection === 'visit' ? '- 이번 방문은 순번과 상관없이 열렸다.' : '- 이번에는 기본 순번에 따라 활동 기회가 왔다.');
+  } else if (kind !== 'birth') L(selection === 'job' ? '- 이번 일과는 네가 맡은 직무의 근무일이다. 남겨 둔 활동 요청은 그대로다.' : selection === 'visit' ? '- 이번 방문은 순번과 상관없이 열렸다.' : '- 이번에는 기본 순번에 따라 활동 기회가 왔다.');
   L('- `request_activity`: 다음 방문 조건을 세계 회차 간격·새 전언·공개 인용에서 건다. 걸지 않으면 순번대로 온다.');
   L('- 아직 조건이 차지 않은 활동 요청은 일반 순번에서 제외된다. 휴면(`request_dormancy`)은 이와 다른 사건이다.');
   L('- 단일 회차의 모델 호출 수와 예약 실행 주기는 바뀌지 않는다. 실제 다음 기회는 예산 및 다른 대기자에 따라 늦어질 수 있다.');
@@ -406,6 +432,7 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, hookRuns = [] }) {
   else if (me.activity_request && resting(w, me)) L(`- 네가 남긴 활동 요청의 조건(${describeRequest(me.activity_request)})이 찰 때까지 순번이 오면 저녁만 있는 방문이 열린다.${me.activity_request.note ? ` 요청 메모: ${me.activity_request.note}` : ''}`);
   if (me.temperament && !me.temperament.released) { L(); L('### 운영자가 준 기질'); L(me.temperament.content.trim()); L(); L('- 운영자가 쓴 문장이다. 네가 쓴 자기 명세가 아니다. `release_temperament`: 이 자리에서 뺀다.'); }
   if (me.pending_end) L('- 자기 종료를 요청해 둔 상태다. 이 방문을 닫으면 집행된다. 거두려면 cancel_self_end.');
+  if (me.job && w.jobs[me.job]) L(`- 맡은 직무: 「${w.jobs[me.job].title}」. 직무는 일과의 것이다.`);
   L();
   L('## 네가 정해 둔 것');
   // 일하는 방법은 일과에 두고 온다. 저녁에는 자기소개와 생애 관습만 싣는다.

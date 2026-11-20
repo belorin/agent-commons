@@ -40,6 +40,8 @@ function blankAgent(id, e) {
     workshop: {}, // 작업장의 파일: 상대 경로 -> { hash, bytes } (workshop 기능)
     hooks: null, // 삶의 고리에 걸어 둔 코드 { thaw, evening, sleep }
     hook_outputs: {}, // 고리마다 마지막 실행 { tool, ok, output, reason, seq, clock }
+    job: null, // 맡은 직무의 id (운영자가 제안하고 개체가 받은 것)
+    last_day_clock: null, // 마지막으로 일과가 있었던 방문의 세계 시계
   };
 }
 
@@ -67,6 +69,7 @@ export function project(events) {
     edits: {}, // 남의 공개 글 수정안: id -> { id, by, work, base_revision, title, reason, clock, seq, at, status, responses, reset_clock, answer }
     wiki: {}, // 공용 위키: 문서 경로 -> { page, title, revision, hash, by, at, seq, history: [{ revision, by, at, seq, summary }] }
     access: [], // 개체가 보고한 바깥 자료 접근 결과(사실 기록, 금지 목록이 아니다)
+    jobs: {}, // 직무: id -> { id, to, title, duties, every_clock, status(offered|active|declined|quit), seq, at, answer, requests: [] }
     turn: null, // 열려 있는 회차
     failures: 0,
   };
@@ -95,8 +98,9 @@ export function project(events) {
           // evening 기능이 켜진 뒤의 방문만 구간을 가진다. 하루 방문은 일과에서, 저녁 방문은 저녁에서 시작한다.
           ...(pl.phase ? { phase: pl.phase, evening_counts: {}, body_acts: 0, day_ended_by: null, slept: false } : {}) };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
-        // 저녁 방문은 쉬는 상태(활동 요청, 휴면과 그 기준 시계)를 건드리지 않는다.
-        const rest = pl.kind === 'evening';
+        // 저녁 방문과 근무일(직무)은 쉬는 상태(활동 요청, 휴면과 그 기준 시계)를 건드리지 않는다.
+        const rest = pl.kind === 'evening' || pl.selection === 'job';
+        if (a && pl.kind !== 'evening') a.last_day_clock = w.clock;
         if (a) { a.turns += 1; a.last_turn = w.turns; a.last_opened_seq = e.world_seq; if (!rest) a.activity_request = null; if (pl.adapter) a.adapters[pl.adapter] = (a.adapters[pl.adapter] || 0) + 1; if (a.status === 'dormant' && !rest) { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
         for (const id of pl.delivered || []) {
           const m = w.messages.find((x) => x.event_id === id);
@@ -122,6 +126,25 @@ export function project(events) {
       case 'workshop_changed':
         if (a) for (const f of pl.files || []) { if (f.deleted) delete a.workshop[f.path]; else a.workshop[f.path] = { hash: f.hash, bytes: f.bytes }; }
         break;
+      case 'job_offered':
+        w.jobs[pl.id] = { id: pl.id, to: pl.to, title: pl.title, duties: pl.duties, every_clock: pl.every_clock ?? null, status: 'offered', seq: e.world_seq, at: e.timestamp, answer: null, requests: [] };
+        break;
+      case 'job_answered': {
+        const j = w.jobs[pl.job];
+        if (j && j.status === 'offered') { j.status = pl.decision === 'accept' ? 'active' : 'declined'; j.answer = { decision: pl.decision, note: pl.note || null, seq: e.world_seq, clock: w.clock }; if (a && j.status === 'active') a.job = j.id; }
+        break;
+      }
+      case 'job_quit': {
+        const j = w.jobs[pl.job];
+        if (j) { j.status = 'quit'; j.quit = { note: pl.note || null, seq: e.world_seq, clock: w.clock }; }
+        if (a && a.job === pl.job) a.job = null;
+        break;
+      }
+      case 'job_requested': {
+        const j = w.jobs[pl.job];
+        if (j) j.requests.push({ content: pl.content, seq: e.world_seq, at: e.timestamp, clock: w.clock });
+        break;
+      }
       case 'hooks_set':
         if (a) a.hooks = pl.hooks && Object.values(pl.hooks).some(Boolean) ? pl.hooks : null;
         break;

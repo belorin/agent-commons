@@ -1775,3 +1775,47 @@ test('몸의 조건과 책: 저녁·꿈 설정은 변경안으로 고치지 않�
   assert.match(act({ action: 'acquire_book', url: 'https://www.gutenberg.org/x.txt' }).reason, /저녁에는 acquire_book 동사가 없다/);
   bed(); closeTurn();
 });
+
+// ── 직무: 세계 개선직 (2026-11-20) ────────────────────────────────────────
+test('직무: 운영자가 제안하고 개체가 받으며, 근무일에는 쉬는 중이어도 일과가 열린다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_test0001', to: 'ag_0001', title: '세계 개선직', duties: '이 판을 살피고 낫게 한다.', every_clock: 3 } });
+  const t = openTurn(); // ag_0001
+  assert.match(t.text, /## 일\n- 운영자가 직무를 제안했다 \[job_test0001\] 「세계 개선직」 · 근무 주기: 세계 시계 3칸/);
+  assert.match(act({ action: 'respond_job', job: 'job_nope', decision: 'accept' }).reason, /직무 제안의 id/);
+  assert.equal(act({ action: 'respond_job', job: 'job_test0001', decision: 'accept', note: '해 보겠다' }).ok, true);
+  assert.equal(act({ action: 'request_activity', after_turns: 50, note: '오래 쉰다' }).ok, true);
+  closeTurn(); bed(); closeTurn(); // 시계 3
+  assert.equal(world().agents.ag_0001.job, 'job_test0001');
+  S.appendEvent({ type: 'job_requested', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { job: 'job_test0001', content: '저녁이 비는 문제를 봐 달라' } });
+  day(); // ag_0002 시계 4
+  const rest = openTurn(); // 시계 5: 쉬는 중, 아직 근무일 아님
+  assert.equal(rest.kind, 'evening');
+  assert.match(rest.text, /맡은 직무: 「세계 개선직」/);
+  bed(); closeTurn();
+  day(); // ag_0002 시계 6
+  const work = openTurn(); // 시계 7: 마지막 일과(3)에서 3칸 이상 → 근무일
+  assert.equal(work.agent_id, 'ag_0001');
+  assert.equal(work.kind, 'walk');
+  assert.equal(work.selection, 'job');
+  assert.match(work.text, /이번 일과는 네가 맡은 직무의 근무일이다/);
+  assert.match(work.text, /### 맡은 직무 \[job_test0001\] 「세계 개선직」/);
+  assert.match(work.text, /운영자의 요청 \(세계 시계 \d+\): 저녁이 비는 문제를 봐 달라/);
+  assert.ok(world().agents.ag_0001.activity_request); // 근무일은 쉬는 요청을 지우지 않는다
+  // 관측소와 코드 읽기
+  const obs = read('observatory');
+  assert.match(obs, /# 관측소 — 세계 시계 7/);
+  assert.match(obs, /### ag_0001 \(무명\) · active · 활동 요청 대기.*직무 「세계 개선직」/);
+  assert.match(obs, /저녁 기록 \d+건\(평균 \d+자\)/);
+  assert.doesNotMatch(obs, /저녁의 한 줄|물가의 꿈/); // 내용은 없다
+  assert.match(read('source'), /- src\/runtime\/tick\.mjs/);
+  assert.match(read('source', 'package.json'), /agent-commons/);
+  assert.match(read('source', '../data/events/log.jsonl'), /읽을 수 있는 코드·문서가 아니다/);
+  assert.equal(act({ action: 'quit_job', note: '그만둔다' }).ok, true);
+  assert.equal(world().jobs.job_test0001.status, 'quit');
+  closeTurn(); bed(); closeTurn();
+  assert.match(fs.readFileSync(S.p('derived', 'plaza.md'), 'utf8'), /직무 「세계 개선직」 을\(를\) 그만두었다/);
+  assert.ok(verify().ok, verify().problems.join('\n'));
+});

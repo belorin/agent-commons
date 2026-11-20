@@ -26,6 +26,14 @@ export function activityDue(w, a) {
  * 쉬는 중인가: 휴면 중이고 깨어날 조건이 차지 않았거나, 활동 요청을 남겼고 그 조건이 차지 않았다.
  * evening 기능이 켜진 뒤에는 쉬는 개체도 순번에 남고, 차례가 오면 저녁만 있는 방문을 받는다.
  */
+/** 근무일인가: 맡은 직무에 근무 주기가 있고, 활동 중인데 쉬고 있으며, 마지막 일과 뒤로 그만큼 세계 시계가 흘렀다. 휴면은 휴직이다. */
+export function jobDue(w, a) {
+  const j = a.job ? w.jobs?.[a.job] : null;
+  if (!j || j.status !== 'active' || !j.every_clock || a.status !== 'active') return false;
+  const since = a.last_day_clock ?? j.answer?.clock ?? 0;
+  return w.clock - since >= j.every_clock;
+}
+
 export function resting(w, a) {
   if (a.status === 'dormant') return !wakeDue(w, a);
   return a.status === 'active' && !!a.activity_request && !activityDue(w, a);
@@ -53,7 +61,11 @@ export function decide(w, cfg) {
     const agent = due[0];
     return { kind: 'walk', agent, selection: 'requested', request_reason: activityDue(w, agent), request_id: agent.activity_request.event_id };
   }
-  if (eligible.length) return evening && resting(w, eligible[0]) ? { kind: 'evening', agent: eligible[0], selection: 'rest' } : { kind: 'walk', agent: eligible[0], selection: 'fair' };
+  if (eligible.length) {
+    const a = eligible[0];
+    if (evening && resting(w, a)) return jobDue(w, a) ? { kind: 'walk', agent: a, selection: 'job' } : { kind: 'evening', agent: a, selection: 'rest' };
+    return { kind: 'walk', agent: a, selection: 'fair' };
+  }
   if (!alive.length && cfg.on_empty_world === 'reseed') return { kind: 'birth', origin: 'operator_seed', reseed: true };
   if (alive.length) return { kind: 'idle', reason: alive.some((a) => a.status === 'active') ? '활동 중인 개체는 모두 스스로 정한 때를 기다리고, 나머지는 휴면 중이다' : '깨어 있는 개체가 없다(모두 휴면)' };
   return { kind: 'idle', reason: '남은 개체가 없고 운영 정책이 재시작을 하지 않는다' };
@@ -66,7 +78,7 @@ export function nextVisit(w, cfg, { paused = false } = {}) {
   if (paused) return { ...base, kind: 'paused', why: '정지 중이다(control/PAUSE). 방문하지 않는다.' };
   const d = decide(w, cfg);
   if (d.kind === 'walk') return { ...base, kind: 'walk', agent: d.agent.id, selection: d.selection, request_reason: d.request_reason || null,
-    why: d.selection === 'requested' ? '그 개체가 남긴 활동 요청의 조건이 찼다.' : '활동 중이고 조건이 차지 않은 요청이 없는 개체 가운데 가장 오래 기다린 개체다.' };
+    why: d.selection === 'requested' ? '그 개체가 남긴 활동 요청의 조건이 찼다.' : d.selection === 'job' ? '그 개체가 맡은 직무의 근무일이다(쉬는 중이어도 일과가 열린다).' : '활동 중이고 조건이 차지 않은 요청이 없는 개체 가운데 가장 오래 기다린 개체다.' };
   if (d.kind === 'evening') return { ...base, kind: 'evening', agent: d.agent.id, selection: d.selection, request_reason: null,
     why: '쉬는 중(휴면, 또는 조건이 차지 않은 활동 요청)인 개체 가운데 가장 오래 기다린 개체다. 저녁만 있는 방문이다.' };
   if (d.kind === 'birth') return { ...base, kind: 'birth', why: '새 개체가 태어날 차례다. 방문하지 않고 세계를 한 칸 흘리는 파일을 올리면 실행기가 개체를 발급한다.' };

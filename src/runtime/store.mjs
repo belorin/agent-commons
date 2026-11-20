@@ -8,6 +8,8 @@ export { stagedPaths };
 import { fileURLToPath } from 'node:url';
 
 const CODE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
+/** 실행기 코드가 있는 곳(src/·docs/·test/). 데이터 루트와 다를 수 있다(시험). */
+export const codeRoot = () => CODE_ROOT;
 
 /** 데이터 루트. 시험에서는 COMMONS_ROOT로 임시 디렉터리를 가리킨다. */
 export function root() {

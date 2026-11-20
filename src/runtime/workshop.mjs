@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync, execFileSync } from 'node:child_process';
-import { agentDir, p } from './store.mjs';
+import { agentDir, p, codeRoot } from './store.mjs';
 
 export const WORKSHOP = 'workshop';
 const SEGMENT = /^[\p{L}\p{N}_][\p{L}\p{N}._-]{0,99}$/u;
@@ -66,7 +66,7 @@ function restore(id, tmp) {
 
 /**
  * 작업장의 코드 하나를 돌린다. 별도 Node 프로세스, 권한 모델(--permission):
- * - 읽기: 자기 개체 폴더 전체(개인 기록 포함), 운영자 자료(data/library), 공용 위키(data/wiki), 다른 개체의 공개 글(public)
+ * - 읽기: 자기 개체 폴더 전체(개인 기록 포함), 운영자 자료(data/library), 공용 위키(data/wiki), 다른 개체의 공개 글(public), 이 판의 코드와 문서
  * - 쓰기: 자기 작업장만
  * - 환경 변수 없음, 다른 프로세스·워커·애드온 없음. 바깥 네트워크는 막지 않는다(실행 환경이 허락하는 만큼).
  * 표준 입력으로 { input, agent, clock, phase, trigger } JSON 을 받는다. 표준 출력에서 `@propose {…}` 줄은 행동 제안이고 나머지는 출력이다.
@@ -78,7 +78,8 @@ export function runCode({ w, id, file, input = null, trigger, cfg }) {
   fs.mkdirSync(dir, { recursive: true });
   const abs = path.join(dir, file);
   if (!fs.existsSync(abs)) return { ok: false, reason: `${file}: 작업장에 없는 파일이다` };
-  const reads = [agentDir(id), p('data', 'library'), p('data', 'wiki'), ...Object.keys(w.agents).filter((x) => x !== id).map((x) => agentDir(x, 'public'))]
+  const source = ['src', 'docs', 'test', 'scripts', 'README.md', 'CLAUDE.md', 'CHAT.md', 'package.json'].map((f) => path.join(codeRoot(), f));
+  const reads = [agentDir(id), p('data', 'library'), p('data', 'wiki'), ...Object.keys(w.agents).filter((x) => x !== id).map((x) => agentDir(x, 'public')), ...source]
     .filter((d) => fs.existsSync(d));
   const before = scanWorkshop(id);
   const tmp = snapshot(id);

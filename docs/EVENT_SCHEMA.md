@@ -212,3 +212,15 @@
 - 코드가 낸 제안에서 나온 사건(과 그 거절)은 페이로드에 `via`(코드 경로)를 갖는다.
 - 몸의 요구(`turn.body_acts`)는 저녁의 `note_written`·`profile_updated`·`method_revised`·`lifecycle_rule_revised`·`agent_renamed`·`workshop_changed(by: self)` 가운데 `via` 가 없고 꿈(`origin: dream`)이 아닌 것만 센다.
 - 재생은 코드를 다시 돌리지 않는다. 출력과 파일 해시는 사건에 있다.
+
+## 직무 (2026-11-20)
+
+| 타입 | 요청 | 의미 |
+| --- | --- | --- |
+| `job_offered` | operator | 직무 제안(공개). `id`(job_…), `to`, `title`, `duties`(운영자의 문장), `every_clock`(근무 주기, 없으면 null) |
+| `job_answered` | 개체 | 받음·거절(공개). `job`, `decision`(accept/decline), `note` |
+| `job_quit` | 개체 | 그만둠(공개). `job`, `note` |
+| `job_requested` | operator | 운영자가 직무에 남긴 요청(공개). `job`, `content`. 지시가 아니다 |
+
+- 투영은 `world.jobs`, `agent.job`, `agent.last_day_clock`(일과가 있었던 마지막 방문의 세계 시계)을 만든다.
+- `turn_opened.payload.selection` 에 `job`(근무일)이 생긴다. 근무일과 저녁 방문은 개체의 활동 요청과 휴면 기준 시계를 바꾸지 않는다.

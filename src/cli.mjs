@@ -134,6 +134,34 @@ function run() {
         say(regenerate());
       }); break;
     }
+    case 'offer-job': { // 운영자가 개체 하나에게 직무를 제안한다. 직무의 문장은 운영자의 것이며 공개 사건에 원문이 남는다. 받을지는 개체가 정한다.
+      requireRole('COMMONS_OPERATOR');
+      withTransaction(() => {
+        const w = validWorld();
+        const [to, every, ...rest] = args;
+        if (!w.agents[to] || !['active', 'dormant'].includes(w.agents[to].status)) throw new Error('offer-job <살아 있는 개체 ID> <근무 주기(세계 시계 칸, 0 이면 없음)> <직함> < 직무 문장(표준 입력)');
+        const every_clock = Number(every);
+        if (!Number.isInteger(every_clock) || every_clock < 0) throw new Error('근무 주기는 0 이상의 정수');
+        const title = rest.join(' ').trim();
+        const duties = fs.readFileSync(0, 'utf8').trim();
+        if (!title || title.length > 100 || !duties || duties.length > 4000) throw new Error('직함 1~100자, 직무 문장 1~4000자');
+        const id = 'job_' + crypto.randomUUID().slice(0, 8);
+        appendEvent({ type: 'job_offered', agent_id: to, actor_id: 'operator', visibility: 'public', payload: { id, to, title, duties, every_clock: every_clock || null } });
+        say(`${id} 를 ${to} 에게 제안했다.\n${regenerate()}`);
+      }); break;
+    }
+    case 'job-request': { // 운영자가 맡겨진 직무에 요청(민원)을 남긴다. 지시가 아니라 그 직무의 '일' 칸에 실리는 말이다.
+      requireRole('COMMONS_OPERATOR');
+      withTransaction(() => {
+        const w = validWorld();
+        const j = w.jobs[args[0]];
+        if (!j || !['offered', 'active'].includes(j.status)) throw new Error('job-request <제안 중이거나 맡겨진 직무 id> <말|->');
+        const content = (args[1] === '-' ? fs.readFileSync(0, 'utf8') : args.slice(1).join(' ')).trim();
+        if (!content || content.length > 2000) throw new Error('말은 1~2000자');
+        appendEvent({ type: 'job_requested', agent_id: j.to, actor_id: 'operator', visibility: 'public', payload: { job: j.id, content } });
+        say(regenerate());
+      }); break;
+    }
     case 'reader-note': {
       // 사람 독자가 남긴 말을 운영자가 옮겨 적는다. 개체에게는 다음 회차의 '도착한 것'으로 간다.
       requireRole('COMMONS_OPERATOR');

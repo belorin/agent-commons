@@ -24,7 +24,7 @@ export const UNCOUNTED = ['access_reported'];
 // 저녁(evening 기능): 바깥 세계의 동사가 없는 구간. 여기 있는 동사만 존재한다. 행동 수 한도는 일과의 동사에만 적용된다.
 export const EVENING_ACTIONS = ['write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request',
   'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep',
-  'workshop_write', 'workshop_remove', 'run', 'set_hooks'];
+  'workshop_write', 'workshop_remove', 'run', 'set_hooks', 'respond_job', 'quit_job'];
 // 몸의 조건: 운영자의 것이다. 개체의 변경안(propose_change)으로 고치는 설정이 아니다.
 export const BODY_CONFIG = ['evening.', 'dream.'];
 // 코드가 낼 수 없는 제안: 코드가 코드를 부르거나 삶의 고리를 바꾸지 않는다.
@@ -126,6 +126,19 @@ const HANDLERS = {
     ];
     drafts.after = () => runHook('sleep'); // 잠든 동안 도는 코드(작업장만 바꾼다. 잠든 뒤의 제안은 받지 않는다)
     return drafts;
+  },
+
+  // ── 직무: 운영자가 제안하고, 개체가 받거나 거절하고, 그만둔다 ──
+  respond_job(ctx, a) {
+    const j = ctx.w.jobs[a.job];
+    if (!j || j.to !== ctx.me.id || j.status !== 'offered') reject('job: 너에게 온, 아직 답하지 않은 직무 제안의 id 여야 한다');
+    if (!['accept', 'decline'].includes(a.decision)) reject('decision은 accept | decline');
+    if (a.decision === 'accept' && ctx.me.job) reject('이미 맡은 직무가 있다. 먼저 quit_job');
+    return [{ type: 'job_answered', visibility: 'public', payload: { job: j.id, decision: a.decision, note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }) } }];
+  },
+  quit_job(ctx, a) {
+    if (!ctx.me.job || (a.job && a.job !== ctx.me.job)) reject('job: 맡고 있는 직무가 없거나 그 id 가 아니다');
+    return [{ type: 'job_quit', visibility: 'public', payload: { job: ctx.me.job, note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }) } }];
   },
 
   // ── 작업장(workshop 기능): 개체가 원하는 대로 가지는 것 ──
