@@ -175,6 +175,7 @@ function jobLines(w, me, L, { morning = false, turn = null } = {}) {
   for (const j of offers) {
     L(`- 운영자가 직무를 제안했다 [${j.id}] 「${j.title}」. 아래는 운영자가 쓴 직무다.`);
     L(); L(j.duties.trim()); L();
+    for (const r of j.requests.slice(-5)) L(`- 운영자의 말 (세계 시계 ${r.clock}): ${String(r.content).replace(/\s+/g, ' ')}`);
     L(`- \`respond_job\`(job: ${j.id}, decision: accept | decline). 받으면 다음 방문부터 매 방문이 오전(직무 시간)으로 시작한다. 쉬는 중이어도 오전은 열리고, 오전 다음 바로 저녁이다. 휴면 중에는 오전이 없다. 그만두는 길: \`quit_job\`. 받음·거절·그만둠은 공개 사건이다.`);
   }
   if (job) {

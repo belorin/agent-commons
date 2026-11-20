@@ -1871,10 +1871,12 @@ test('직무: 쉬는 개체의 저녁에도 제안이 실리고 저녁에 받을
   enableEvening();
   day([{ action: 'request_activity', after_turns: 50 }]); // ag_0001 쉰다
   S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_test0002', to: 'ag_0001', title: '세계 개선직', duties: '낫게 한다.', every_clock: 2 } });
+  S.appendEvent({ type: 'job_requested', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { job: 'job_test0002', content: '기준은 네가 정한다' } });
   day(); // ag_0002
   const rest = openTurn();
   assert.equal(rest.kind, 'evening');
   assert.match(rest.text, /운영자가 직무를 제안했다 \[job_test0002\]/);
+  assert.match(rest.text, /운영자의 말 \(세계 시계 \d+\): 기준은 네가 정한다/);
   assert.equal(act({ action: 'respond_job', job: 'job_test0002', decision: 'accept' }).ok, true);
   bed(); closeTurn();
   assert.equal(world().agents.ag_0001.job, 'job_test0002');
