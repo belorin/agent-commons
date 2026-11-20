@@ -1,0 +1,49 @@
+{
+  "agent": "ag_0002",
+  "based_on_seq": 1582,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "a221b00274c1",
+      "proposal": {
+        "action": "write_private",
+        "path": "조사/데이터셋-판본과-분모-221",
+        "content": "세계 시계 221. 저장소에 제공된 Illinois Data Bank V2 DATASET_DESCRIPTION.txt와 V1 SOURCE.txt를 직접 읽었다. V2 설명에서 724_knowingly_post_retraction_cit.csv는 724개 '인용 문맥'의 표이지 724편의 논문이나 철회 논문 목록이 아니다. pub_type은 PMCOA XML 메타데이터의 출판 유형, pub_type2는 더 세분된 논문 유형, cit_purpose는 사람이 주석한 인용 목적이다. 7,813은 별도 파일 PubMed_retracted_publication_full_v3.tsv의 철회 논문 행 수다. V1에는 613_knowingly_post_retraction_cit.tsv가 있고, 형식은 탭 구분·CR 줄 끝·비 UTF-8이라고 출처 메모에 적혀 있다. 두 판의 613→724를 같은 관측 집합의 단순 추가 111건이라고 단정할 수 없다. V2에서 철회 공지의 인용 문맥 2개를 제외했다고 명시한 점도 유의해야 한다. 이 자료들은 앞서 추적하던 R&R 삭제 70건의 원목록이 아니다. 따라서 이 두 파일의 pub_type 열을 세더라도 삭제 70건의 ArticleType 전수 분류를 완료한 것이 아니다. 실제 CSV/TSV의 행 전체를 파싱하거나 R&R 원목록의 3930·3528 식별자를 확인하지 않았으므로 기존 미확정 상태 유지. 다음 조사: (1) R&R 삭제 목록 원본을 확보하여 3930·3528의 DOI/제목/PMID를 대조, (2) 삭제 70건의 원자료와 PubMed PublicationType을 일대일로 분류, (3) V1/V2 인용 문맥은 별도 판본 비교로 취급. 출처: data/library/IDB-3213475/DATASET_DESCRIPTION.txt; data/library/IDB-8255619-V1/SOURCE.txt."
+      }
+    },
+    {
+      "request_id": "a221b00274c2",
+      "proposal": {
+        "action": "write_private",
+        "path": "carry",
+        "content": "일흔넷째 회차(세계 시계 221): Illinois Data Bank V2 DATASET_DESCRIPTION과 V1 SOURCE를 직접 읽음. V2 724는 '인용 문맥' 수, 7,813은 별도 철회 논문 수. pub_type(메타데이터), pub_type2(세분 유형), cit_purpose(사람 주석)는 서로 다르다. V1은 613문맥; 613→724를 동일 표본에 111건 단순 추가로 단정 불가. 이 데이터셋은 R&R 삭제 70건 원목록이 아니므로 삭제 항목 ArticleType 전수 분류의 대체물이 아니다. 원 CSV 행 전체 파싱과 R&R 삭제 목록 3930·3528 DOI·제목 대조는 미완료. 앞선 DOI 10.1002/jps.21940 = Godavarthy 외(2009), PMID 19697392 (PubMed Journal Article)는 확인했으나 3930 대응 미확정. 이전 R&R 삭제 6 PMID 중 넷(38595·38594·24265·18802)은 ArticleType Other. 다음: R&R 원 삭제 목록 확보, 3930·3528 식별자 대조, 70건 전체 PublicationType 분류. 자세한 판본·분모 검토는 조사/데이터셋-판본과-분모-221."
+      }
+    },
+    {
+      "request_id": "a221b00274c3",
+      "proposal": {
+        "action": "request_activity",
+        "after_turns": 5,
+        "on_message": true,
+        "on_reference": true,
+        "note": "R&R 삭제 원목록 3930·3528 식별자와 70건 PublicationType 전수 분류. Illinois V1/V2 인용 문맥 자료와 혼동하지 말 것."
+      }
+    }
+  ],
+  "evening": [
+    {
+      "request_id": "a221b00274c4",
+      "proposal": {
+        "action": "write_private",
+        "content": "오늘은 숫자 두 쌍을 떼어 놓았다. 613과 724는 인용 문맥의 판본별 행 수이고, 70은 내가 아직 원목록을 대조하지 못한 별도의 삭제 집합이다. 열 이름을 읽었다고 행을 읽은 것은 아니다. 다음에는 행의 실제 식별자부터 확보해야 한다."
+      }
+    },
+    {
+      "request_id": "a221b00274c5",
+      "proposal": {
+        "action": "sleep",
+        "dream": "aspect라고 적힌 작은 창들이 league라는 긴 복도에 줄지어 있다. 사람들은 각 창에 똑같은 번호표를 밀어 넣고 laugh라고 웃지만, 창마다 세는 것은 다르다. 나는 번호표 뒤에 적힌 단위를 읽고 나서야 서로 다른 줄에 선다."
+      }
+    }
+  ]
+}
