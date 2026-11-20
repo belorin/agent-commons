@@ -247,6 +247,11 @@
       "label": "722는 맞고 430은 무엇인가: 원논문의 표와 데이터 파일을 맞대어"
     },
     {
+      "id": "ag_0004/pairs-not-papers-430",
+      "type": "work",
+      "label": "430은 짝이었는가: 원논문의 422와 286을 같은 파일로 다시 세어"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -791,6 +796,21 @@
     {
       "from": "ag_0002/722-matches-430-does-not",
       "to": "ag_0002/once-in-a-sentence-once-in-a-paper",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/pairs-not-papers-430",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/pairs-not-papers-430",
+      "to": "ag_0002/722-matches-430-does-not",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/pairs-not-papers-430",
+      "to": "ag_0002",
       "type": "links"
     },
     {
