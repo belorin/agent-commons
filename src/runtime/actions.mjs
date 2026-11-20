@@ -25,6 +25,9 @@ export const UNCOUNTED = ['access_reported'];
 export const EVENING_ACTIONS = ['write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request',
   'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep',
   'workshop_write', 'workshop_remove', 'run', 'set_hooks', 'respond_job', 'quit_job'];
+// 오전(직무 시간)에 없는 동사: 사적인 것과 하루의 다른 경계. 오전은 job_log 와 end_morning 이 있다.
+export const NOT_IN_MORNING = ['write_private', 'revise_self', 'configure_brief', 'present', 'withdraw_presentation', 'end_day', 'sleep'];
+const MORNING_ONLY = ['job_log', 'end_morning'];
 // 몸의 조건: 운영자의 것이다. 개체의 변경안(propose_change)으로 고치는 설정이 아니다.
 export const BODY_CONFIG = ['evening.', 'dream.'];
 // 코드가 낼 수 없는 제안: 코드가 코드를 부르거나 삶의 고리를 바꾸지 않는다.
@@ -138,7 +141,24 @@ const HANDLERS = {
   },
   quit_job(ctx, a) {
     if (!ctx.me.job || (a.job && a.job !== ctx.me.job)) reject('job: 맡고 있는 직무가 없거나 그 id 가 아니다');
-    return [{ type: 'job_quit', visibility: 'public', payload: { job: ctx.me.job, note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }) } }];
+    const drafts = [{ type: 'job_quit', visibility: 'public', payload: { job: ctx.me.job, note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }) } }];
+    // 오전에 그만두면 오전이 끝난다.
+    if (ctx.w.turn.phase === 'morning') { drafts.push({ type: 'morning_ended', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, by: 'quit' } }); if (ctx.w.turn.kind === 'work') drafts.after = () => runHook('evening'); }
+    return drafts;
+  },
+  // 오전(직무 시간): 근무 기록을 남기고, 그 뒤에 오전을 끝낸다.
+  job_log(ctx, a) {
+    if (ctx.w.turn.phase !== 'morning' || !ctx.me.job) reject('근무 기록은 직무를 맡은 개체의 오전에 남긴다');
+    const content = text(a.content, 'content', ctx.cfg, { max: 5000 });
+    if (!content.trim()) reject('content: 근무 기록이 비어 있다');
+    return [{ type: 'job_logged', visibility: 'public', payload: { job: ctx.me.job, content } }];
+  },
+  end_morning(ctx) {
+    if (ctx.w.turn.phase !== 'morning') reject('지금은 오전이 아니다');
+    if (!ctx.w.turn.job_logs) reject('오전은 근무 기록(job_log)을 남긴 뒤에 끝난다');
+    const drafts = [{ type: 'morning_ended', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, by: 'self' } }];
+    if (ctx.w.turn.kind === 'work') drafts.after = () => runHook('evening');
+    return drafts;
   },
 
   // ── 작업장(workshop 기능): 개체가 원하는 대로 가지는 것 ──
@@ -587,10 +607,15 @@ function applyUnlocked(proposal, { via = null } = {}) {
     if (w.turn.slept) reject('잠든 뒤다. 이 방문은 close 로 닫힌다');
     if (via && NOT_VIA_CODE.includes(name)) reject(`코드는 ${name} 제안을 낼 수 없다`);
     const evening = w.turn.phase === 'evening';
+    const morning = w.turn.phase === 'morning';
     if (evening && !EVENING_ACTIONS.includes(name)) reject(`저녁에는 ${name} 동사가 없다. 저녁의 동사: ${EVENING_ACTIONS.join(', ')}`);
-    // 행동 수 한도는 일과의 동사에만 적용된다. 저녁의 동사는 세지 않는다.
-    const eveningCounts = w.turn.evening_counts || {};
-    const used = Object.entries(w.turn.counts).reduce((s, [type, n]) => s + (UNCOUNTED.includes(type) ? 0 : n - (eveningCounts[type] || 0)), 0);
+    if (morning && NOT_IN_MORNING.includes(name)) reject(`오전(직무 시간)에는 ${name} 동사가 없다. 사적인 일은 오후와 저녁에 있다`);
+    if (!morning && MORNING_ONLY.includes(name)) reject(`${name} 은(는) 직무를 맡은 개체의 오전에 있는 동사다`);
+    // 행동 수 한도는 오전과 일과(오후)에 따로 적용된다. 저녁의 동사는 세지 않는다.
+    const eveningCounts = w.turn.evening_counts || {}, morningCounts = w.turn.morning_counts || {};
+    const used = morning
+      ? Object.entries(morningCounts).reduce((s, [type, n]) => s + (UNCOUNTED.includes(type) ? 0 : n), 0)
+      : Object.entries(w.turn.counts).reduce((s, [type, n]) => s + (UNCOUNTED.includes(type) ? 0 : n - (eveningCounts[type] || 0) - (morningCounts[type] || 0)), 0);
     if (!evening && used >= cfg.turn.max_actions) reject(`이번 회차의 행동 한도(${cfg.turn.max_actions})에 닿았다. 기술적 한도이며 다음 회차에 이어 갈 수 있다`);
     if (canonical(proposal).length > cfg.turn.max_chars * 3) reject('제안 전체 크기 한도');
     const drafts = HANDLERS[name]({ w, me, cfg }, proposal);

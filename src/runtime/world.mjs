@@ -4,7 +4,7 @@ import { projectGovernance } from './governance.mjs';
 
 export const SELF_FILES = ['identity', 'exploration', 'writing', 'lifecycle'];
 /** 하루의 경계를 나타내는 사건. 행동 수로 세지 않는다. */
-export const PHASE_EVENTS = ['day_ended', 'slept', 'dream_seeded'];
+export const PHASE_EVENTS = ['day_ended', 'slept', 'dream_seeded', 'morning_ended'];
 /** 몸의 요구(잠들기 전의 사적 행동)로 세는 사건. 개체가 직접 한 것만 센다: 코드가 낸 제안(via)이나 코드가 바꾼 작업장은 대신해 주지 못한다. */
 export const BODY_ACTS = ['note_written', 'profile_updated', 'method_revised', 'lifecycle_rule_revised', 'agent_renamed', 'workshop_changed'];
 export const isBodyAct = (e) => BODY_ACTS.includes(e.type) && !e.payload?.via && !(e.type === 'workshop_changed' && e.payload?.by !== 'self') && e.payload?.origin !== 'dream';
@@ -96,10 +96,10 @@ export function project(events) {
         if (!pl.manual) w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1; // 수동 회차는 예약 실행의 하루 상한에 세지 않는다
         w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, adapter: pl.adapter || null, opened_seq: e.world_seq, number: w.turns, counts: {},
           // evening 기능이 켜진 뒤의 방문만 구간을 가진다. 하루 방문은 일과에서, 저녁 방문은 저녁에서 시작한다.
-          ...(pl.phase ? { phase: pl.phase, evening_counts: {}, body_acts: 0, day_ended_by: null, slept: false } : {}) };
+          ...(pl.phase ? { phase: pl.phase, evening_counts: {}, body_acts: 0, day_ended_by: null, slept: false, morning_counts: {}, job_logs: 0, morning_ended_by: null } : {}) };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
         // 저녁 방문과 근무일(직무)은 쉬는 상태(활동 요청, 휴면과 그 기준 시계)를 건드리지 않는다.
-        const rest = pl.kind === 'evening' || pl.selection === 'job';
+        const rest = pl.kind === 'evening' || pl.kind === 'work';
         if (a && pl.kind !== 'evening') a.last_day_clock = w.clock;
         if (a) { a.turns += 1; a.last_turn = w.turns; a.last_opened_seq = e.world_seq; if (!rest) a.activity_request = null; if (pl.adapter) a.adapters[pl.adapter] = (a.adapters[pl.adapter] || 0) + 1; if (a.status === 'dormant' && !rest) { a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock; } }
         for (const id of pl.delivered || []) {
@@ -116,6 +116,16 @@ export function project(events) {
       case 'world_idle':
         w.clock += 1;
         break;
+      case 'morning_ended':
+        // 오전(직무)이 끝났다. 쉬는 중인 직장인의 방문(work)은 오후 없이 저녁으로, 아니면 오후(자기 일과)로.
+        if (w.turn?.phase === 'morning' && w.turn.turn_id === pl.turn_id) { w.turn.phase = w.turn.kind === 'work' ? 'evening' : 'day'; w.turn.morning_ended_by = pl.by || null; }
+        break;
+      case 'job_logged': {
+        const j = w.jobs[pl.job];
+        if (j) (j.logs ??= []).push({ content: pl.content, seq: e.world_seq, at: e.timestamp, clock: w.clock });
+        if (w.turn && e.turn_id === w.turn.turn_id) w.turn.job_logs += 1;
+        break;
+      }
       case 'day_ended':
         if (w.turn?.phase && w.turn.turn_id === pl.turn_id) { w.turn.phase = 'evening'; w.turn.day_ended_by = pl.by || null; }
         break;
@@ -127,7 +137,7 @@ export function project(events) {
         if (a) for (const f of pl.files || []) { if (f.deleted) delete a.workshop[f.path]; else a.workshop[f.path] = { hash: f.hash, bytes: f.bytes }; }
         break;
       case 'job_offered':
-        w.jobs[pl.id] = { id: pl.id, to: pl.to, title: pl.title, duties: pl.duties, every_clock: pl.every_clock ?? null, status: 'offered', seq: e.world_seq, at: e.timestamp, answer: null, requests: [] };
+        w.jobs[pl.id] = { id: pl.id, to: pl.to, title: pl.title, duties: pl.duties, every_clock: pl.every_clock ?? null, status: 'offered', seq: e.world_seq, at: e.timestamp, answer: null, requests: [], logs: [] };
         break;
       case 'job_answered': {
         const j = w.jobs[pl.job];
@@ -355,6 +365,7 @@ export function project(events) {
     }
     if (w.turn && e.turn_id === w.turn.turn_id && e.actor_id === w.turn.agent_id && !['action_rejected', 'birth_seed_recorded', ...PHASE_EVENTS].includes(e.type)) {
       w.turn.counts[e.type] = (w.turn.counts[e.type] || 0) + 1;
+      if (w.turn.phase === 'morning') w.turn.morning_counts[e.type] = (w.turn.morning_counts[e.type] || 0) + 1;
       if (w.turn.phase === 'evening') { w.turn.evening_counts[e.type] = (w.turn.evening_counts[e.type] || 0) + 1; if (isBodyAct(e)) w.turn.body_acts += 1; }
     }
   }

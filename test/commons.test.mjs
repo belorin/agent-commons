@@ -1777,46 +1777,91 @@ test('몸의 조건과 책: 저녁·꿈 설정은 변경안으로 고치지 않�
 });
 
 // ── 직무: 세계 개선직 (2026-11-20) ────────────────────────────────────────
-test('직무: 운영자가 제안하고 개체가 받으며, 근무일에는 쉬는 중이어도 일과가 열린다', () => {
+test('직무: 받으면 매 방문이 오전(직무)으로 시작하고, 근무 기록을 남겨야 오전이 끝난다', () => {
   config({ ...EVENING, dream: undefined });
   turn(); turn();
   enableEvening();
-  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_test0001', to: 'ag_0001', title: '세계 개선직', duties: '이 판을 살피고 낫게 한다.', every_clock: 3 } });
-  const t = openTurn(); // ag_0001
-  assert.match(t.text, /## 일\n- 운영자가 직무를 제안했다 \[job_test0001\] 「세계 개선직」 · 근무 주기: 세계 시계 3칸/);
+  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_test0001', to: 'ag_0001', title: '세계 개선직', duties: '이 판을 살피고 낫게 한다.', every_clock: null } });
+  const t = openTurn(); // ag_0001: 아직 받지 않았으니 보통의 하루
+  assert.match(t.text, /## 일\n- 운영자가 직무를 제안했다 \[job_test0001\] 「세계 개선직」/);
   assert.match(act({ action: 'respond_job', job: 'job_nope', decision: 'accept' }).reason, /직무 제안의 id/);
   assert.equal(act({ action: 'respond_job', job: 'job_test0001', decision: 'accept', note: '해 보겠다' }).ok, true);
-  assert.equal(act({ action: 'request_activity', after_turns: 50, note: '오래 쉰다' }).ok, true);
-  closeTurn(); bed(); closeTurn(); // 시계 3
+  closeTurn(); bed(); closeTurn();
   assert.equal(world().agents.ag_0001.job, 'job_test0001');
   S.appendEvent({ type: 'job_requested', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { job: 'job_test0001', content: '저녁이 비는 문제를 봐 달라' } });
-  day(); // ag_0002 시계 4
-  const rest = openTurn(); // 시계 5: 쉬는 중, 아직 근무일 아님
-  assert.equal(rest.kind, 'evening');
-  assert.match(rest.text, /맡은 직무: 「세계 개선직」/);
-  bed(); closeTurn();
-  day(); // ag_0002 시계 6
-  const work = openTurn(); // 시계 7: 마지막 일과(3)에서 3칸 이상 → 근무일
-  assert.equal(work.agent_id, 'ag_0001');
-  assert.equal(work.kind, 'walk');
-  assert.equal(work.selection, 'job');
-  assert.match(work.text, /이번 일과는 네가 맡은 직무의 근무일이다/);
-  assert.match(work.text, /### 맡은 직무 \[job_test0001\] 「세계 개선직」/);
-  assert.match(work.text, /운영자의 요청 \(세계 시계 \d+\): 저녁이 비는 문제를 봐 달라/);
-  assert.ok(world().agents.ag_0001.activity_request); // 근무일은 쉬는 요청을 지우지 않는다
+  day(); // ag_0002
+  // 활동 중인 직장인의 하루: 오전 → 오후 → 저녁
+  const m = openTurn();
+  assert.equal(m.kind, 'walk');
+  assert.match(m.text, /^# 오전 — ag_0001/);
+  assert.match(m.text, /### 맡은 직무 \[job_test0001\] 「세계 개선직」/);
+  assert.match(m.text, /운영자의 요청 \(세계 시계 \d+\): 저녁이 비는 문제를 봐 달라/);
+  assert.doesNotMatch(m.text, /## 네 기억|## 네가 정해 둔 것/); // 오전에는 사적인 칸이 없다
+  assert.equal(world().turn.phase, 'morning');
+  assert.match(act({ action: 'write_private', path: 'x', content: 'x' }).reason, /오전\(직무 시간\)에는 write_private 동사가 없다/);
+  assert.match(act({ action: 'end_morning' }).reason, /근무 기록\(job_log\)을 남긴 뒤/);
+  assert.equal(closeTurn().state, 'working');
   // 관측소와 코드 읽기
   const obs = read('observatory');
-  assert.match(obs, /# 관측소 — 세계 시계 7/);
-  assert.match(obs, /### ag_0001 \(무명\) · active · 활동 요청 대기.*직무 「세계 개선직」/);
+  assert.match(obs, /# 관측소 — 세계 시계 \d+/);
+  assert.match(obs, /### ag_0001 \(무명\) · active · 대기 없음 · 직무 「세계 개선직」/);
   assert.match(obs, /저녁 기록 \d+건\(평균 \d+자\)/);
   assert.doesNotMatch(obs, /저녁의 한 줄|물가의 꿈/); // 내용은 없다
   assert.match(read('source'), /- src\/runtime\/tick\.mjs/);
   assert.match(read('source', 'package.json'), /agent-commons/);
   assert.match(read('source', '../data/events/log.jsonl'), /읽을 수 있는 코드·문서가 아니다/);
-  assert.equal(act({ action: 'quit_job', note: '그만둔다' }).ok, true);
+  assert.equal(act({ action: 'job_log', content: '관측소를 보았다. 저녁 기록이 모두 짧다.' }).ok, true);
+  const pm = closeTurn();
+  assert.equal(pm.state, 'afternoon');
+  assert.match(pm.text, /^# 오후 — ag_0001/);
+  assert.match(pm.text, /## 네 기억/);
+  assert.doesNotMatch(pm.text, /## 일/);
+  assert.equal(act({ action: 'write_private', path: 'x', content: '오후의 메모' }).ok, true);
+  assert.match(act({ action: 'job_log', content: 'x' }).reason, /오전에 있는 동사/);
+  assert.equal(act({ action: 'request_activity', after_turns: 50, note: '오래 쉰다' }).ok, true);
+  assert.equal(closeTurn().state, 'evening');
+  bed(); closeTurn();
+  assert.match(fs.readFileSync(S.p('derived', 'plaza.md'), 'utf8'), /세계 개선직/);
+  day(); // ag_0002
+  // 쉬는 중인 직장인: 오전 다음 바로 저녁. 쉬는 조건은 그대로다.
+  const w2 = openTurn();
+  assert.equal(w2.kind, 'work');
+  assert.match(w2.text, /^# 오전 — ag_0001/);
+  act({ action: 'job_log', content: '오늘은 변경안이 없다.' });
+  const ev = closeTurn();
+  assert.equal(ev.state, 'evening');
+  assert.match(ev.text, /^# 저녁 — ag_0001/);
+  bed(); closeTurn();
+  assert.ok(world().agents.ag_0001.activity_request);
+  assert.equal(world().jobs.job_test0001.logs.length, 2);
+  // 다음 오전에는 지난 근무 기록이 실린다. 그만두면 오전이 끝난다.
+  day();
+  const w3 = openTurn();
+  assert.match(w3.text, /지난 근무 기록 \(최근 셋, 공개\):\n- 세계 시계 \d+: 관측소를 보았다/);
+  const q = act({ action: 'quit_job', note: '그만둔다' });
+  assert.equal(q.ok, true);
+  assert.equal(world().turn.phase, 'evening');
+  bed(); closeTurn();
   assert.equal(world().jobs.job_test0001.status, 'quit');
-  closeTurn(); bed(); closeTurn();
-  assert.match(fs.readFileSync(S.p('derived', 'plaza.md'), 'utf8'), /직무 「세계 개선직」 을\(를\) 그만두었다/);
+  assert.equal(world().agents.ag_0001.job, null);
+  assert.ok(verify().ok, verify().problems.join('\n'));
+});
+
+test('직무: 한 파일 방문은 morning 에 근무 기록이 있어야 한다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_test0003', to: 'ag_0001', title: '세계 개선직', duties: '낫게 한다.', every_clock: null } });
+  openTurn(); act({ action: 'respond_job', job: 'job_test0003', decision: 'accept' }); closeTurn(); bed(); closeTurn();
+  day();
+  const sleep = { request_id: 'mm-sleep-1', proposal: { action: 'sleep', dream: '꿈' } };
+  const note = { request_id: 'mm-note-1', proposal: { action: 'write_private', content: '저녁' } };
+  assert.throws(() => tickMod.applyVisit({ agent: 'ag_0001', proposals: [], evening: [note, sleep] }), /근무 기록\(job_log\)/);
+  const r = tickMod.applyVisit({ agent: 'ag_0001', morning: [{ request_id: 'mm-log-1', proposal: { action: 'job_log', content: '살폈다' } }], proposals: [{ request_id: 'mm-day-1', proposal: { action: 'write_private', path: 'p', content: '오후' } }], evening: [note, sleep] });
+  assert.equal(r.status, 'applied');
+  assert.ok(r.results.every((x) => x.ok), JSON.stringify(r.results));
+  assert.deepEqual(S.loadEvents().filter((e) => ['morning_ended', 'day_ended'].includes(e.type)).slice(-2).map((e) => e.payload.by), ['apply', 'apply']);
+  assert.match(fs.readFileSync(S.agentDir('ag_0001', 'brief.md'), 'utf8'), /# 오전 — ag_0001[\s\S]*# 오후 — ag_0001[\s\S]*# 저녁 — ag_0001[\s\S]*"morning"/);
   assert.ok(verify().ok, verify().problems.join('\n'));
 });
 

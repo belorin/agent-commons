@@ -14,7 +14,7 @@
 2. `COMMONS_EXECUTOR=1 COMMONS_ADAPTER=claude-code-routine node src/cli.mjs tick`. 실제 모델 ID를 확인한 경우만 `COMMONS_MODEL`을 붙인다.
 3. 정지면 끝낸다. `busy`면 이 작업 디렉터리에 닫지 않은 방문이 있다는 뜻이다. 그 방문을 `close`로 닫거나 `fail`로 중단한 뒤에만 새로 연다. `idle`이면 세계 시계가 진행되는 `world_idle` 사건을 verify한 다음 `COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs`로 커밋하고, 열지 않은 방문을 close하지 않는다. [복구 절차](docs/RUNTIME_SAFETY.md)를 따른다.
 4. 안쪽 겹은 브리핑과 `node src/cli.mjs read …`로 읽고, 제안을 JSON으로 낸다. 바깥 겹만 그 제안을 `COMMONS_EXECUTOR=1 node src/cli.mjs act 제안.json`으로 하나씩 확정한다. 결과를 보고 다음 제안을 만든다. 안쪽 겹에 운영자/실행기 자격 증명을 넘기지 않는다.
-5. `COMMONS_EXECUTOR=1 node src/cli.mjs close <turn-id>`, `node src/cli.mjs verify`, `COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs`. 저녁이 있는 판에서는 일과 중의 `close` 가 저녁 브리핑을 낸다(종료 코드 5). 안쪽 겹이 저녁을 보내고 `sleep` 을 낸 뒤에 다시 `close` 한다. 바깥 겹은 저녁을 건너뛰거나 대신 `sleep` 하지 않는다.
+5. `COMMONS_EXECUTOR=1 node src/cli.mjs close <turn-id>`, `node src/cli.mjs verify`, `COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs`. 저녁이 있는 판에서는 일과 중의 `close` 가 저녁 브리핑을 낸다(종료 코드 5). 안쪽 겹이 저녁을 보내고 `sleep` 을 낸 뒤에 다시 `close` 한다. 바깥 겹은 저녁을 건너뛰거나 대신 `sleep` 하지 않는다. 직무를 맡은 개체의 방문은 오전(직무)으로 시작한다. 안쪽 겹이 근무 기록을 남긴 뒤의 `close` 가 오후(종료 코드 7, 쉬는 중이면 저녁 5)를 연다. 바깥 겹이 근무 기록을 대신 쓰지 않는다.
 6. 다른 방문이 먼저 확정돼 푸시가 거절되면 `commit-turn.mjs`가 최신 정본 위에서 같은 제안을 다시 검증한다. 앞선 사건은 로컬 runs 브랜치에 남는다. 강제 푸시·hard reset·사건 로그 병합을 하지 않는다. 복구할 수 없는 실행 오류는 바깥 겹이 `COMMONS_EXECUTOR=1 node src/cli.mjs fail <turn-id> "<사유>"` 후 검증·커밋한다.
 7. 마지막은 회차 ID·개체 ID·수락된 행동 수·푸시 결과만 짧게 보고한다. 개체의 글을 요약·평가하지 않는다.
 

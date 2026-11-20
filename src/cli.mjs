@@ -5,7 +5,7 @@ import crypto from 'node:crypto';
 import { recoverTransaction } from './runtime/transaction.mjs';
 import { appendEvent, root, withTransaction, loadEvents, loadConfig, isPaused } from './runtime/store.mjs';
 import { project, living, displayName } from './runtime/world.mjs';
-import { openTurn, closeTurn, failTurn, applyVisit, processInbox, decide, seedAgent, eveningText } from './runtime/tick.mjs';
+import { openTurn, closeTurn, failTurn, applyVisit, processInbox, decide, seedAgent, eveningText, afternoonText } from './runtime/tick.mjs';
 import { standingBrief } from './runtime/briefing.mjs';
 import { executeProposal } from './runtime/actions.mjs';
 import { read } from './runtime/read.mjs';
@@ -67,6 +67,10 @@ function run() {
       const r = executeProposal({ request_id: crypto.randomUUID(), proposal });
       say(r.ok ? `수락: ${(r.events || []).map((e) => `${e.type} #${e.world_seq}`).join(', ')}` : `거절: ${r.reason}`);
       if (r.ok && proposal.action === 'end_day') say('\n' + eveningText()); // 일과가 끝났다: 저녁 브리핑
+      if (r.ok && (proposal.action === 'end_morning' || (proposal.action === 'quit_job' && r.events?.some((e) => e.type === 'morning_ended')))) {
+        const w = project(loadEvents());
+        say('\n' + (w.turn?.phase === 'evening' ? eveningText() : afternoonText())); // 오전이 끝났다: 오후(또는 저녁) 브리핑
+      }
       process.exitCode = r.ok ? 0 : 3; break;
     }
     case 'read': {
@@ -85,6 +89,8 @@ function run() {
         // 5: 일과가 끝나고 저녁이 시작됐다(방문은 열려 있다). 6: 저녁에 아직 잠들지 않았다.
         if (r.state === 'evening') process.exitCode = 5;
         else if (r.state === 'awake') process.exitCode = 6;
+        else if (r.state === 'afternoon') process.exitCode = 7; // 오전(직무)이 끝나고 오후가 열렸다
+        else if (r.state === 'working') process.exitCode = 8; // 오전에 아직 근무 기록이 없다
       });
       break;
     }
@@ -96,7 +102,7 @@ function run() {
       const sc = showcaseSettings(w, cfg);
       if (sc.enabled) say(`발표회: ${w.showcase.number}회 열림 · 간격 ${sc.every} (${sc.basis === 'operator_default' ? '운영자 기본값' : '규칙 ' + sc.basis}) · 다음은 세계 시계 ${nextShowcaseClock(w, cfg)}`);
       say(`열린 방문: ${w.turn ? `${w.turn.turn_id} (${w.turn.agent_id}) — 닫기 전에는 새로 열지 않는다` : '없음'}`);
-      if (!w.turn) say(`다음 tick: ${d.kind === 'birth' ? `새 개체 (${d.origin})` : d.kind === 'walk' ? `${d.agent.id} (${d.selection === 'requested' ? `본인 요청: ${d.request_reason}` : '기본 순번'})` : d.kind === 'evening' ? `${d.agent.id} (쉬는 중: 저녁만 있는 방문)` : d.reason}`);
+      if (!w.turn) say(`다음 tick: ${d.kind === 'birth' ? `새 개체 (${d.origin})` : d.kind === 'walk' ? `${d.agent.id} (${d.selection === 'requested' ? `본인 요청: ${d.request_reason}` : '기본 순번'})` : d.kind === 'evening' ? `${d.agent.id} (쉬는 중: 저녁만 있는 방문)` : d.kind === 'work' ? `${d.agent.id} (쉬는 중인 직장인: 오전 다음 저녁)` : d.reason}`);
     }); break;
     case 'verify': {
       const v = verify(); say(v.ok ? `이상 없음: 사건 ${v.events}, 개체 ${v.agents}` : '무결성 문제:\n- ' + v.problems.join('\n- '));

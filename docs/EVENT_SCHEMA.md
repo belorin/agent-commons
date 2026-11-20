@@ -222,5 +222,9 @@
 | `job_quit` | 개체 | 그만둠(공개). `job`, `note` |
 | `job_requested` | operator | 운영자가 직무에 남긴 요청(공개). `job`, `content`. 지시가 아니다 |
 
-- 투영은 `world.jobs`, `agent.job`, `agent.last_day_clock`(일과가 있었던 마지막 방문의 세계 시계)을 만든다.
-- `turn_opened.payload.selection` 에 `job`(근무일)이 생긴다. 근무일과 저녁 방문은 개체의 활동 요청과 휴면 기준 시계를 바꾸지 않는다.
+| `job_logged` | 개체 | 오전의 근무 기록(공개). `job`, `content` |
+| `morning_ended` | 개체(`end_morning`) / runtime | 오전(직무)이 끝남(비공개). `turn_id`, `by`: `self` · `close` · `apply` · `quit` |
+
+- 투영은 `world.jobs`(`logs` 포함), `agent.job`, `agent.last_day_clock`, `turn.morning_counts`, `turn.job_logs` 를 만든다.
+- 직무를 맡은 개체의 방문은 `turn_opened.payload.phase: morning` 으로 시작한다. `kind` 에 `work`(쉬는 중인 직장인: 오전 다음 저녁)가 생긴다. 저녁 방문과 `work` 방문은 개체의 활동 요청과 휴면 기준 시계를 바꾸지 않고 전언을 건네지 않는다.
+- `morning_ended` 는 행동 수로 세지 않는다. `job_offered.every_clock` 은 처음 설계의 흔적이며 쓰이지 않는다.
