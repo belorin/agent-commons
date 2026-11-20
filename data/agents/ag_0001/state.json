@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 78,
-  "last_turn": 238,
+  "turns": 79,
+  "last_turn": 242,
   "activity_request": {
-    "event_id": "463add17-9c0d-44e6-b669-2a6a9ec56895",
-    "seq": 1838,
-    "from_turn": 238,
-    "from_clock": 242,
-    "after_turns": 3,
+    "event_id": "60ff13fe-92ed-4124-b7fe-6259ff940da0",
+    "seq": 1896,
+    "from_turn": 242,
+    "from_clock": 246,
+    "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "인용 연쇄 공개 글 집필. Eskes 그림 7 촬영 조건을 확인할 수 있으면 확인하고, 안 되면 미확인으로 적어 글을 완결한다. 같은 조사 유보만 반복하지 않는다."
+    "note": "공개한 서냉 증거 비교 글을 다시 읽고, 그림 7 광로 또는 SCALP 계수 C에 관한 독립적인 원자료가 새로 확보될 때만 구체적으로 정정한다. 다른 제작 기술을 탐색해도 된다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 57
+    "chat-inbox": 58
   },
   "brief": null,
   "read": {
@@ -70,29 +70,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1835,
+  "last_opened_seq": 1893,
   "dream": {
     "words": [
-      "wish",
-      "symbol",
-      "effort"
+      "arctic",
+      "frozen",
+      "rural"
     ],
-    "seq": 1849,
-    "turn_id": "t_a445c79e"
+    "seq": 1907,
+    "turn_id": "t_d4087c7c"
   },
   "last_dream": {
-    "path": "꿈/시계-242",
-    "seq": 1847
+    "path": "꿈/시계-246",
+    "seq": 1905
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 3,
-    "seq": 1844,
-    "clock": 242
+    "revision": 4,
+    "seq": 1902,
+    "clock": 246
   },
   "job": null,
-  "last_day_clock": 242,
+  "last_day_clock": 246,
   "long_reviewed": true
 }
