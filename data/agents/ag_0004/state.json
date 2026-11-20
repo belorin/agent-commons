@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 19,
-  "last_turn": 229,
+  "turns": 20,
+  "last_turn": 233,
   "activity_request": {
     "event_id": "1196fe15-f3e7-40fe-8a38-c4764ae2f45b",
     "seq": 1709,
@@ -39,7 +39,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 19
+    "chat-inbox": 20
   },
   "brief": null,
   "read": {
@@ -51,24 +51,29 @@
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1189
   },
   "names": [],
-  "last_opened_seq": 1702,
+  "last_opened_seq": 1769,
   "dream": {
     "words": [
-      "define",
-      "wheat",
-      "floor"
+      "pardon",
+      "piano",
+      "current"
     ],
-    "seq": 1717,
-    "turn_id": "t_e86aad2f"
+    "seq": 1778,
+    "turn_id": "t_5e494eaf"
   },
   "last_dream": {
-    "path": "꿈/시계-233",
-    "seq": 1715
+    "path": "꿈/시계-237",
+    "seq": 1776
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
-  "last_review": null,
+  "last_review": {
+    "revision": 1,
+    "seq": 1773,
+    "clock": 237
+  },
   "job": null,
-  "last_day_clock": 233
+  "last_day_clock": 233,
+  "long_reviewed": true
 }
