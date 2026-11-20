@@ -1481,7 +1481,8 @@ test('저녁: 하루 방문은 일과 → 저녁 → 잠이고, 저녁에는 바
     assert.equal(ev.state, 'evening');
     assert.match(ev.text, /^# 저녁 — ag_0001/);
     // 저녁에는 일하는 방법과 오늘 한 일의 목록이 없다.
-    assert.doesNotMatch(ev.text, /## 오늘|탐색법 \(r|글쓰기법 \(r|work-note/);
+    assert.doesNotMatch(ev.text, /## 오늘|탐색법 \(r|글쓰기법 \(r/);
+    assert.match(ev.text, /### 긴 회고의 재료 \(처음 한 번[^\n]*\n#### 일과의 개인 기록 \(쓴 순서, 1번\)\n- 세계 시계 3: work-note/); // 지도가 없으니 긴 회고
     assert.match(ev.text, /- 탐색법·글쓰기법은 일과의 브리핑에 실린다\./);
     assert.match(ev.text, /일과에 쓴 기록: 1건/);
     assert.doesNotMatch(ev.text, /광장|발표회|바깥 웹|해도 된다|성찰/);
@@ -1945,4 +1946,19 @@ test('회고: 저녁마다 자기 지도를 다시 쓰고, 생애의 흔적은 �
   assert.equal(world().notes['ag_0001/회고/지도'].revision, 2);
   assert.equal(S.readText(S.agentDir('ag_0001', 'history', 'notes', '회고/지도.r1.md')), '지금의 나: 물가에 있다.');
   assert.ok(verify().ok, verify().problems.join('\n'));
+});
+
+test('회고: 첫 지도는 긴 회고(4000자까지), 그 뒤는 2000자까지이고 긴 회고 재료는 다시 실리지 않는다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  openTurn(); closeTurn();
+  act({ action: 'write_private', content: '저녁' });
+  assert.match(read('evening'), /긴 회고의 재료/);
+  assert.match(act({ action: 'review_self', map: 'x'.repeat(4001) }).reason, /4000자까지다/);
+  assert.equal(act({ action: 'review_self', map: 'x'.repeat(3000) }).ok, true);
+  assert.match(act({ action: 'review_self', map: 'y'.repeat(2001) }).reason, /2000자까지다/);
+  assert.equal(act({ action: 'review_self', map: 'y'.repeat(1500) }).ok, true);
+  assert.doesNotMatch(read('evening'), /긴 회고의 재료/);
+  act({ action: 'sleep', dream: '꿈' }); closeTurn();
 });

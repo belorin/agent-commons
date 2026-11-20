@@ -70,3 +70,46 @@ export function selfMap(w, id) {
   const n = w.notes[`${id}/${MAP_PATH}`];
   return n ? { text: readText(agentDir(id, 'private', MAP_PATH + '.md')) || '', revision: n.revision, seq: n.seq } : null;
 }
+
+/**
+ * 긴 회고의 재료: 자기 지도가 아직 없을 때 한 번 펼쳐 주는 전 생애의 목록. 제목·시점·개체 자신의 문장만 옮긴다.
+ * 첫 지도가 생기면 다시 싣지 않는다. 옛 기록은 `read note` · `read revision` 으로 내려가 읽는다.
+ */
+export function lifeArchive(w, events, id) {
+  const all = withClock(events).filter(({ e }) => e.agent_id === id);
+  const out = [];
+  const L = (line) => out.push(line);
+  const works = all.filter(({ e }) => e.type === 'work_published');
+  if (works.length) {
+    L(`#### 공개한 글 (낸 순서, ${works.length}판)`);
+    for (const { e, clock } of works.slice(-40)) L(`- 세계 시계 ${clock}: 「${e.payload.title}」 [${e.payload.slug}] r${e.payload.revision}`);
+  }
+  const notes = all.filter(({ e }) => e.type === 'note_written' && !['dream', 'review'].includes(e.payload.origin) && e.payload.path !== 'carry' && !/^(저녁|꿈|회고)\//.test(e.payload.path));
+  if (notes.length) {
+    L(`#### 일과의 개인 기록 (쓴 순서, ${notes.length}번)`);
+    const pick = notes.length > 80 ? [...notes.slice(0, 20), null, ...notes.slice(-60)] : notes;
+    for (const x of pick) L(x ? `- 세계 시계 ${x.clock}: ${x.e.payload.path}${x.e.payload.title ? ` — ${x.e.payload.title}` : ''}` : `- …(가운데 ${notes.length - 80}번은 줄였다)`);
+  }
+  const requests = all.filter(({ e }) => e.type === 'activity_requested');
+  if (requests.length) {
+    L(`#### 다음 방문을 청하며 남긴 메모 (전부, ${requests.length}번)`);
+    for (const { e, clock } of requests.slice(-40)) L(`- 세계 시계 ${clock}: ${String(e.payload.note || '(메모 없음)').replace(/\s+/g, ' ').slice(0, 160)}`);
+  }
+  const carry = all.filter(({ e }) => e.type === 'note_written' && e.payload.path === 'carry');
+  if (carry.length) {
+    const first = readText(agentDir(id, 'history', 'notes', `carry.r${carry[0].e.payload.revision || 1}.md`)) ?? carry[0].e.payload.content ?? '';
+    L(`#### 이어 가는 메모의 처음 (r${carry[0].e.payload.revision || 1}, 세계 시계 ${carry[0].clock})`);
+    L(String(first).replace(/\s+/g, ' ').slice(0, 500));
+  }
+  const self = all.filter(({ e }) => ['profile_updated', 'method_revised', 'lifecycle_rule_revised', 'agent_renamed'].includes(e.type));
+  if (self.length) {
+    L('#### 자기 명세를 고친 때');
+    for (const { e, clock } of self) L(`- 세계 시계 ${clock}: ${e.type === 'agent_renamed' ? `이름 ${e.payload.name ? `「${e.payload.name}」` : '내려놓음'}` : `${e.payload.target} r${e.payload.to_revision}`}${e.payload.reason ? ` — ${String(e.payload.reason).replace(/\s+/g, ' ').slice(0, 120)}` : ''}`);
+  }
+  const social = all.filter(({ e }) => ['message_sent', 'response_recorded', 'trail_opened', 'trail_continued', 'wiki_written', 'job_answered'].includes(e.type));
+  if (social.length) {
+    L('#### 남과 오간 것');
+    for (const { e, clock } of social.slice(-20)) L(`- 세계 시계 ${clock}: ${e.type}${e.payload.to ? ` → ${e.payload.to}` : ''}${e.payload.title ? ` 「${e.payload.title}」` : ''}${e.payload.page ? ` [wiki:${e.payload.page}]` : ''}`);
+  }
+  return out;
+}

@@ -166,9 +166,12 @@ const HANDLERS = {
   // 매일 밤의 회고: 자기 지도(전 생애에 걸친 자기 정리)를 다시 쓴다. 판본이 쌓인다. 같은 내용을 다시 내도 회고로 남는다.
   review_self(ctx, a) {
     if (ctx.w.turn.phase !== 'evening') reject('회고는 저녁에 한다');
+    const prev = ctx.w.notes[`${ctx.me.id}/${MAP_PATH}`];
+    // 지도의 길이에는 상한이 있다. 실행기가 줄이지 않고, 개체가 그 안에서 전 생애를 다시 짠다. 첫 지도(긴 회고)는 넉넉하다.
+    const limit = prev ? (ctx.cfg.evening?.map_chars ?? 2000) : (ctx.cfg.evening?.first_map_chars ?? 4000);
     const map = text(a.map, 'map', ctx.cfg);
     if (!map.trim()) reject('map: 자기 지도가 비어 있다');
-    const prev = ctx.w.notes[`${ctx.me.id}/${MAP_PATH}`];
+    if (map.length > limit) reject(`map: 자기 지도는 ${limit}자까지다(지금 ${map.length}자). 줄이는 일은 네가 한다. 옛 판은 남는다`);
     const revision = (prev?.revision || 0) + 1;
     writeText(agentDir(ctx.me.id, 'private', MAP_PATH + '.md'), map);
     writeText(agentDir(ctx.me.id, 'history', 'notes', `${MAP_PATH}.r${revision}.md`), map);

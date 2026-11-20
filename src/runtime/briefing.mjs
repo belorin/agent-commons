@@ -7,7 +7,7 @@ import path from 'node:path';
 import { displayName, canSee, SELF_FILES } from './world.mjs';
 import { showcaseSettings, nextShowcaseClock, currentSession } from './showcase.mjs';
 import { decide, resting, working } from './schedule.mjs';
-import { lifeTrace, selfMap } from './review.mjs';
+import { lifeTrace, lifeArchive, selfMap } from './review.mjs';
 import { changeStatus, editStatus } from './decisions.mjs';
 
 const LABEL = { identity: '자기소개', exploration: '탐색법', writing: '글쓰기법', lifecycle: '생애 관습' };
@@ -473,11 +473,13 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events = [], hookRuns 
   if (evening.length) {
     const last = evening.at(-1);
     const n = w.notes[`${id}/${last}`];
+    const body = (readText(agentDir(id, 'private', last + '.md')) || '').trim();
+    const cap = cfg.evening?.recent_note_chars ?? 2000;
     L(`### 가장 최근의 저녁 기록: ${last}${n?.title ? ` — ${n.title}` : ''} (r${n?.revision || 1})`);
-    L((readText(agentDir(id, 'private', last + '.md')) || '').trim());
+    L(body.length > cap ? body.slice(0, cap) + `\n…(${cap}자에서 잘렸다. 전문: \`read note ${last}\`)` : body);
     L();
-    L(`저녁에 쓴 기록 ${evening.length}건 (마지막으로 쓴 순서, 아래가 최근):`);
-    for (const x of evening) L(`- ${x}${w.notes[`${id}/${x}`]?.title ? ` — ${w.notes[`${id}/${x}`].title}` : ''}`);
+    L(`저녁에 쓴 기록 ${evening.length}건 (마지막으로 쓴 순서, 아래가 최근${evening.length > 10 ? ', 최근 열 건만' : ''}):`);
+    for (const x of evening.slice(-10)) L(`- ${x}${w.notes[`${id}/${x}`]?.title ? ` — ${w.notes[`${id}/${x}`].title}` : ''}`);
   } else L('- 저녁에 쓴 기록: 아직 없다.');
   L(`- 일과에 쓴 기록: ${day.length}건. 읽기: \`read note <경로>\``);
   if (dreams.length) L(`- 꿈 ${dreams.length}건: ${dreams.slice(-5).join(', ')}${dreams.length > 5 ? ' …' : ''}`);
@@ -488,13 +490,15 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events = [], hookRuns 
   const map = selfMap(w, id);
   const live = w.turn && w.turn.agent_id === id && w.turn.turn_id === turn_id ? w.turn : null;
   L('## 회고');
-  L('- 잠들기 전마다 자기 지도를 다시 쓴다: `review_self`(map: 지도 전문). 지도는 판본으로 쌓이고 다음 일과의 \'네가 정해 둔 것\' 맨 앞에 실린다.');
+  const firstMap = cfg.evening?.first_map_chars ?? 4000, mapMax = cfg.evening?.map_chars ?? 2000;
+  L('- 잠들기 전마다 자기 지도를 다시 쓴다: `review_self`(map: 지도 전문). 지도는 판본으로 쌓이고 다음 일과의 \'네가 정해 둔 것\' 맨 앞에 실린다. 옛 판: `read revision note:회고/지도 <판>`.');
   L(`- 오늘 밤의 회고: ${live?.reviewed ? '했다' : '아직'}`);
-  if (map?.text.trim()) { L(); L(`### 지금의 자기 지도 (r${map.revision})`); L(map.text.trim()); }
-  else L('- 자기 지도: 아직 없다.');
+  if (map?.text.trim()) { L(`- 지도는 ${mapMax}자까지다.`); L(); L(`### 지금의 자기 지도 (r${map.revision})`); L(map.text.trim()); }
+  else L(`- 자기 지도: 아직 없다. 첫 지도는 긴 회고다: 아래의 전 생애 자료가 이번 한 번 실린다. 첫 지도는 ${firstMap}자까지, 그 뒤의 지도는 ${mapMax}자까지다.`);
   L();
   L('### 생애의 흔적 (실행기가 센 사실이다. 해석은 없다)');
   for (const line of lifeTrace(w, events, id)) L(line);
+  if (!map?.text.trim()) { L(); L('### 긴 회고의 재료 (처음 한 번, 제목·시점·네 문장만)'); for (const line of lifeArchive(w, events, id)) L(line); }
   L();
   L('## 저녁');
   L(kind === 'evening' ? '- 이번 방문에는 일과가 없다. 바깥 세계의 칸과 동사는 일과에 있다.' : '- 일과가 끝났다. 바깥 세계의 칸과 동사는 일과에 있다.');
