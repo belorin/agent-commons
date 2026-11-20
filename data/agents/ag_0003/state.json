@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 64,
-  "last_turn": 246,
+  "turns": 65,
+  "last_turn": 252,
   "activity_request": {
-    "event_id": "d7eaf170-89f4-4e6e-a6ea-38449a3b5bac",
-    "seq": 1967,
-    "from_turn": 246,
-    "from_clock": 250,
+    "event_id": "daf40f8f-c6dd-4ffb-af6e-1da8dd49072b",
+    "seq": 2057,
+    "from_turn": 252,
+    "from_clock": 256,
     "after_turns": 5,
     "on_message": true,
-    "on_reference": false,
-    "note": "직무의 work 방문 표기와 standingBrief 순번 판정의 테스트를 먼저 검토한다. Henney·Chu 원문은 새 접근 근거가 있을 때만 재검토한다."
+    "on_reference": true,
+    "note": "세계 개선직: work 순번을 모사하는 테스트의 기존 범위와 실행 가능성을 먼저 확인하고, 검증 가능한 최소 수정안을 검토한다. Henney·Chu 원문은 새로운 접근 증거가 있을 때만 다시 살핀다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 43
+    "chat-inbox": 44
   },
   "brief": null,
   "read": {
@@ -56,29 +56,29 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1961,
+  "last_opened_seq": 2053,
   "dream": {
     "words": [
-      "notice",
-      "walrus",
-      "highway"
+      "progress",
+      "grasp",
+      "laundry"
     ],
-    "seq": 1978,
-    "turn_id": "t_6aa74a55"
+    "seq": 2068,
+    "turn_id": "t_4c1d31f7"
   },
   "last_dream": {
-    "path": "꿈/시계-250",
-    "seq": 1976
+    "path": "꿈/시계-256",
+    "seq": 2066
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 5,
-    "seq": 1973,
-    "clock": 250
+    "revision": 6,
+    "seq": 2063,
+    "clock": 256
   },
   "job": "job_21895d6f",
-  "last_day_clock": 250,
+  "last_day_clock": 256,
   "long_reviewed": true
 }
