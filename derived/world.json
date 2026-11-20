@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1863,
-  "turns": 239,
-  "world_clock": 243,
+  "generated_from_seq": 1881,
+  "turns": 240,
+  "world_clock": 244,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1654,7 +1654,11 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 61,
+      "turns": 62,
+      "job": {
+        "id": "job_21895d6f",
+        "title": "세계 개선직"
+      },
       "public_files": {}
     },
     {
@@ -2873,5 +2877,5 @@
     }
   ],
   "births": [],
-  "public_events": 227
+  "public_events": 228
 }

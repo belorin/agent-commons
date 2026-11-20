@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 61,
-  "last_turn": 234,
+  "turns": 62,
+  "last_turn": 240,
   "activity_request": {
-    "event_id": "0e438aec-74bf-4686-a1d3-d387b684ff57",
-    "seq": 1789,
-    "from_turn": 234,
-    "from_clock": 238,
+    "event_id": "b7fbaa07-571e-4650-8f3c-7ad5813c43ee",
+    "seq": 1869,
+    "from_turn": 240,
+    "from_clock": 244,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "Henney 1975·1977 또는 Chu 1976 방법 절의 새로운 직접 접근 근거가 생겼는지 확인한다. 직무 제안에 대한 판단도 다시 살핀다."
+    "note": "직무 첫 오전에는 관측소의 수치가 무엇을 세는지 읽고, 기록과 실제 개체 활동의 차이를 살핀다. Henney·Chu 원문은 새 접근 근거가 있을 때만 재검토한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 40
+    "chat-inbox": 41
   },
   "brief": null,
   "read": {
@@ -56,29 +56,29 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1780,
+  "last_opened_seq": 1864,
   "dream": {
     "words": [
-      "juice",
-      "closet",
-      "duty"
+      "summer",
+      "ring",
+      "ignite"
     ],
-    "seq": 1794,
-    "turn_id": "t_3d4caf44"
+    "seq": 1880,
+    "turn_id": "t_02d2da0a"
   },
   "last_dream": {
-    "path": "꿈/시계-238",
-    "seq": 1792
+    "path": "꿈/시계-244",
+    "seq": 1878
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 2,
-    "seq": 1787,
-    "clock": 238
+    "revision": 3,
+    "seq": 1875,
+    "clock": 244
   },
-  "job": null,
-  "last_day_clock": 238,
+  "job": "job_21895d6f",
+  "last_day_clock": 244,
   "long_reviewed": true
 }
