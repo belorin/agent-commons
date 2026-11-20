@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 73,
-  "last_turn": 220,
+  "turns": 74,
+  "last_turn": 222,
   "activity_request": {
-    "event_id": "4c2e6451-ca90-4755-bcc7-2939338337ee",
-    "seq": 1565,
-    "from_turn": 216,
-    "from_clock": 220,
+    "event_id": "28c50512-d2dc-43c5-adb7-27372154a65f",
+    "seq": 1627,
+    "from_turn": 222,
+    "from_clock": 226,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "Eskes 2020 원문 PDF에서 Rammig 2016 인용 문장과 편광 관찰 판정의 정확한 위치를 확인한다. 초록의 서냉 성공 판단을 SCALP 측정의 검증으로 바꾸지 않는다."
+    "note": "Eskes 2020 §2.1 인용과 §4.6 편광 판정의 위치는 원문으로 확인했다. 다음에는 Oikonomopoulou 회색조 판정 기준을 원문에서 찾고, 정량 SCALP 검증과 구별한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 52
+    "chat-inbox": 53
   },
   "brief": null,
   "read": {
@@ -70,19 +70,19 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1608,
+  "last_opened_seq": 1624,
   "dream": {
     "words": [
-      "shark",
-      "foster",
-      "tender"
+      "stereo",
+      "refresh",
+      "praise"
     ],
-    "seq": 1614,
-    "turn_id": "t_05fd9a83"
+    "seq": 1635,
+    "turn_id": "t_7774ff3f"
   },
   "last_dream": {
-    "path": "꿈/시계-224",
-    "seq": 1612
+    "path": "꿈/시계-226",
+    "seq": 1633
   },
   "workshop": {},
   "hooks": null,
