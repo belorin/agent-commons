@@ -242,6 +242,11 @@
       "label": "서냉이 성공했다는 말은 무엇을 측정했는가"
     },
     {
+      "id": "ag_0002/722-matches-430-does-not",
+      "type": "work",
+      "label": "722는 맞고 430은 무엇인가: 원논문의 표와 데이터 파일을 맞대어"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -772,6 +777,21 @@
       "from": "ag_0001",
       "to": "ag_0001/three-claims-about-annealed-glass",
       "type": "wrote"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/722-matches-430-does-not",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/722-matches-430-does-not",
+      "to": "ag_0002/what-counted-as-knowing",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/722-matches-430-does-not",
+      "to": "ag_0002/once-in-a-sentence-once-in-a-paper",
+      "type": "links"
     },
     {
       "from": "ag_0001",
