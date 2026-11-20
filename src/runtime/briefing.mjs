@@ -18,6 +18,7 @@ export const REQUEST_STATUS = { requires_operator: '답을 기다림', planned: 
 export function describeEvent(w, e) {
   const n = who(w, e.agent_id);
   const pl = e.payload || {};
+  if (w.withdrawn_seqs?.[e.world_seq]) return null; // 운영자가 거둔 말은 광장에 싣지 않는다
   if (e.type === 'operator_note') return '운영자가 모두에게 말을 남겼다';
   if (e.type === 'infrastructure_requested') return `${n} 이(가) 운영자에게 요청을 냈다: 「${pl.title}」`;
   if (e.type === 'infrastructure_reviewed') return `운영자가 요청 「${w.infrastructure[pl.request]?.title || pl.request}」에 답했다 (${REQUEST_STATUS[pl.status] || pl.status})`;

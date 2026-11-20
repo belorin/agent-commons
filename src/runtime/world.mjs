@@ -64,6 +64,7 @@ export function project(events) {
     trails: {},
     births: {},
     operator_notes: [], // 운영자가 모두에게 남긴 말
+    withdrawn_seqs: {}, // 운영자가 거둔 자기 말(사건 순번 -> true). 사건은 남고 보이는 자리에서만 빠진다
     features: {}, // 운영자가 켠 판 전체 기능 -> { seq, at }
     changes: {}, // 판의 변경안: id -> { id, by, title, reason, files, config, clock, seq, at, status, responses, reset_clock, result }
     edits: {}, // 남의 공개 글 수정안: id -> { id, by, work, base_revision, title, reason, clock, seq, at, status, responses, reset_clock, answer }
@@ -234,6 +235,14 @@ export function project(events) {
           content: pl.content, about: pl.about || null, in_reply_to: pl.to_event || null, delivered: false,
         });
         break;
+      case 'operator_withdrawn': {
+        // 운영자가 자기 말(공개 운영자의 말, 직무 요청)을 거둔다. 사건 로그에서 지우지 않는다.
+        const t = pl.target_seq;
+        w.withdrawn_seqs[t] = true;
+        w.operator_notes = w.operator_notes.filter((n) => n.seq !== t);
+        for (const j of Object.values(w.jobs)) j.requests = j.requests.filter((r) => r.seq !== t);
+        break;
+      }
       case 'operator_message': // 운영자가 개체 하나에게만 보내는 전언. 다른 개체·광장·사이트에 실리지 않는다.
         w.messages.push({ event_id: e.event_id, seq: e.world_seq, at: e.timestamp, from: 'operator', to: pl.to, public: false, content: pl.content, about: null, in_reply_to: null, delivered: false });
         break;

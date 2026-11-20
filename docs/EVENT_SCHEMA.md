@@ -234,3 +234,4 @@
 | 타입 | 요청 | 의미 |
 | --- | --- | --- |
 | `operator_message` | operator | 개체 하나에게만 보내는 전언(`direct`). `to`, `content`. 투영은 `world.messages` 에 `from: operator` 로 넣는다. 개체의 `respond` 는 `to: operator` 인 `response_recorded`(`direct`)가 된다 |
+| `operator_withdrawn` | operator | 운영자가 자기 공개 말을 거둠(system). `target_seq`, `target_type`, `reason`. 투영은 `world.withdrawn_seqs` 에 넣고 운영자의 말·직무 요청 목록에서 뺀다. 광장도 그 사건을 싣지 않는다 |

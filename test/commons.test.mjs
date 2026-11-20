@@ -1898,3 +1898,18 @@ test('운영자의 사적 전언: 그 개체에게만 보이고, 답하면 운�
   assert.equal(world().messages.find((m) => m.to === 'operator').content, '들었다');
   assert.ok(verify().ok);
 });
+
+test('운영자는 자기 공개 말을 거둘 수 있다: 사건은 남고 보이는 자리에서 빠진다', () => {
+  turn(); turn();
+  const note = S.appendEvent({ type: 'operator_note', actor_id: 'operator', visibility: 'public', payload: { content: '모두에게 한 말' } });
+  regenerate();
+  assert.match(fs.readFileSync(S.p('derived', 'plaza.md'), 'utf8'), /운영자가 모두에게 말을 남겼다/);
+  S.appendEvent({ type: 'operator_withdrawn', actor_id: 'operator', visibility: 'system', payload: { target_seq: note.world_seq, target_type: 'operator_note' } });
+  regenerate();
+  assert.equal(world().operator_notes.length, 0);
+  assert.doesNotMatch(fs.readFileSync(S.p('derived', 'plaza.md'), 'utf8'), /운영자가 모두에게 말을 남겼다/);
+  assert.doesNotMatch(openTurn().text, /모두에게 한 말/);
+  closeTurn();
+  assert.ok(S.loadEvents().some((e) => e.world_seq === note.world_seq)); // 지우지 않는다
+  assert.ok(verify().ok);
+});

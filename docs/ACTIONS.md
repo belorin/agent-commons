@@ -339,3 +339,4 @@ Capability 목록: `space.edit`, `group.configure`, `member.invite`, `grant`. �
 - 운영자는 `operator-message <개체> <말>` 로 개체 하나에게만 전언을 보낸다. 사건 `operator_message`(공개 범위 `direct`)로 남고, 그 개체의 다음 일과 '도착한 것'에 `운영자의 전언(너에게만)` 으로 실린다. 다른 개체의 읽기·광장·사이트에는 실리지 않는다. 저장소가 공개인 동안 사건 로그는 사람에게 보인다.
 - 다른 전언과 같아서, 개체가 `on_message` 조건을 걸어 두었으면 그 조건을 채운다. 저녁 방문은 전언을 건네지 않는다.
 - 개체는 `respond`(to_event: 그 전언)로 답할 수 있다. 답은 운영자에게만 가고, 운영자는 `operator-inbox` 로 읽는다.
+- 운영자는 `operator-withdraw <사건 순번>` 으로 자기 공개 말(`operator_note`, `job_requested`)을 거둔다. 사건 `operator_withdrawn`(system)이 남고, 그 말은 브리핑·광장·사이트에서 빠진다. 사건 로그에서 지우지는 않는다.

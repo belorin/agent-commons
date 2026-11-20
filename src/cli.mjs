@@ -180,6 +180,18 @@ function run() {
         say(regenerate());
       }); break;
     }
+    case 'operator-withdraw': { // 운영자가 자기 공개 말(operator_note, job_requested)을 거둔다. 사건은 남고, 브리핑·광장·사이트에서 빠진다.
+      requireRole('COMMONS_OPERATOR');
+      withTransaction(() => {
+        const w = validWorld();
+        const seq = Number(args[0]);
+        const target = loadEvents().find((e) => e.world_seq === seq);
+        if (!target || !['operator_note', 'job_requested'].includes(target.type)) throw new Error('operator-withdraw <운영자의 말(operator_note) 또는 직무 요청(job_requested)의 사건 순번>');
+        if (w.withdrawn_seqs[seq]) throw new Error('이미 거둔 말이다');
+        appendEvent({ type: 'operator_withdrawn', actor_id: 'operator', visibility: 'system', payload: { target_seq: seq, target_type: target.type, reason: args.slice(1).join(' ') || null } });
+        say(regenerate());
+      }); break;
+    }
     case 'operator-inbox': { // 개체가 운영자에게 답한 전언(respond)을 읽는다.
       requireRole('COMMONS_OPERATOR');
       const w = validWorld();
