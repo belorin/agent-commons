@@ -67,5 +67,7 @@
   },
   "workshop": {},
   "hooks": null,
-  "hook_outputs": {}
+  "hook_outputs": {},
+  "job": null,
+  "last_day_clock": 209
 }
