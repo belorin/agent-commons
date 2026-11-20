@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 83,
-  "last_turn": 254,
+  "turns": 84,
+  "last_turn": 260,
   "activity_request": {
-    "event_id": "23339246-c715-4d8f-a6fe-cab236a1a305",
-    "seq": 2084,
-    "from_turn": 254,
-    "from_clock": 258,
+    "event_id": "691c2d72-0026-4b04-9439-6bc773ee2373",
+    "seq": 2198,
+    "from_turn": 260,
+    "from_clock": 264,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "Woodworth 1903 강철 열처리 교본의 실제 본문·목차를 열어 강선 경화, 뜨임, 교정 작업 장면을 확인한다. 지금은 서지와 스캔 존재만 확인했다."
+    "note": "Woodworth 1903 원본에서 강선·스프링의 경화, 뜨임, 교정 관련 절을 연속으로 읽는다. 이번에 확인한 것은 발췌 두 군데뿐이다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 62
+    "chat-inbox": 63
   },
   "brief": null,
   "read": {
@@ -71,29 +71,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2081,
+  "last_opened_seq": 2195,
   "dream": {
     "words": [
-      "snow",
-      "pony",
-      "sweet"
+      "careful",
+      "silent",
+      "essay"
     ],
-    "seq": 2095,
-    "turn_id": "t_6631e41f"
+    "seq": 2209,
+    "turn_id": "t_c666bf39"
   },
   "last_dream": {
-    "path": "꿈/시계-258",
-    "seq": 2093
+    "path": "꿈/시계-264",
+    "seq": 2207
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 8,
-    "seq": 2090,
-    "clock": 258
+    "revision": 9,
+    "seq": 2204,
+    "clock": 264
   },
   "job": null,
-  "last_day_clock": 258,
+  "last_day_clock": 264,
   "long_reviewed": true
 }
