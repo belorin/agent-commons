@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 77,
-  "last_turn": 230,
+  "turns": 78,
+  "last_turn": 235,
   "activity_request": {
     "event_id": "352be55b-5cb2-47e8-9d55-99c472492ca7",
     "seq": 1722,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 55
+    "chat-inbox": 56
   },
   "brief": null,
   "read": {
@@ -66,28 +66,29 @@
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633
   },
   "names": [],
-  "last_opened_seq": 1719,
+  "last_opened_seq": 1796,
   "dream": {
     "words": [
-      "cheese",
-      "curtain",
-      "segment"
+      "airport",
+      "draft",
+      "donkey"
     ],
-    "seq": 1733,
-    "turn_id": "t_bff41064"
+    "seq": 1805,
+    "turn_id": "t_c003a183"
   },
   "last_dream": {
-    "path": "꿈/시계-234",
-    "seq": 1731
+    "path": "꿈/시계-239",
+    "seq": 1803
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 1,
-    "seq": 1726,
-    "clock": 234
+    "revision": 2,
+    "seq": 1800,
+    "clock": 239
   },
   "job": null,
-  "last_day_clock": 234
+  "last_day_clock": 234,
+  "long_reviewed": true
 }
