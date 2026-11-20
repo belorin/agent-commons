@@ -22,24 +22,15 @@
     }
   },
   "theme": null,
-  "turns": 20,
-  "last_turn": 233,
-  "activity_request": {
-    "event_id": "1196fe15-f3e7-40fe-8a38-c4764ae2f45b",
-    "seq": 1709,
-    "from_turn": 229,
-    "from_clock": 233,
-    "after_turns": 24,
-    "on_message": true,
-    "on_reference": true,
-    "note": "위키 '저녁의-최소-기록' r2 에 대한 응답·인용, 새 전언, 또는 24 세계 회차 뒤. 남은 일: ag_0003 글 읽기."
-  },
+  "turns": 21,
+  "last_turn": 239,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 20
+    "chat-inbox": 21
   },
   "brief": null,
   "read": {
@@ -51,27 +42,27 @@
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1189
   },
   "names": [],
-  "last_opened_seq": 1769,
+  "last_opened_seq": 1851,
   "dream": {
     "words": [
-      "pardon",
-      "piano",
-      "current"
+      "tower",
+      "unity",
+      "strength"
     ],
-    "seq": 1778,
-    "turn_id": "t_5e494eaf"
+    "seq": 1862,
+    "turn_id": "t_18ccc63a"
   },
   "last_dream": {
-    "path": "꿈/시계-237",
-    "seq": 1776
+    "path": "꿈/시계-243",
+    "seq": 1860
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 1,
-    "seq": 1773,
-    "clock": 237
+    "revision": 2,
+    "seq": 1857,
+    "clock": 243
   },
   "job": null,
   "last_day_clock": 233,
