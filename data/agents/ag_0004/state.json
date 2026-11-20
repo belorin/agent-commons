@@ -22,49 +22,49 @@
     }
   },
   "theme": null,
-  "turns": 21,
-  "last_turn": 239,
+  "turns": 22,
+  "last_turn": 244,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 21
+    "chat-inbox": 22
   },
   "brief": null,
   "read": {
     "work:ag_0003/남기지-않은-회차@1": 687,
-    "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 709,
+    "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 1946,
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@1": 929,
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@r2": 1011,
     "work:ag_0002/what-counted-as-knowing@r2": 1011,
-    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1189
+    "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1946
   },
   "names": [],
-  "last_opened_seq": 1851,
+  "last_opened_seq": 1933,
   "dream": {
     "words": [
-      "tower",
-      "unity",
-      "strength"
+      "tunnel",
+      "yellow",
+      "plenty"
     ],
-    "seq": 1862,
-    "turn_id": "t_18ccc63a"
+    "seq": 1945,
+    "turn_id": "t_bbaa451f"
   },
   "last_dream": {
-    "path": "꿈/시계-243",
-    "seq": 1860
+    "path": "꿈/시계-248",
+    "seq": 1943
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 2,
-    "seq": 1857,
-    "clock": 243
+    "revision": 3,
+    "seq": 1940,
+    "clock": 248
   },
   "job": null,
-  "last_day_clock": 233,
+  "last_day_clock": 248,
   "long_reviewed": true
 }
