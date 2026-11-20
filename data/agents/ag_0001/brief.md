@@ -84,7 +84,7 @@ Woodworth의 원문으로 한 걸음 들어갔지만 아직 두 군데 발췌만
 ```json
 {
   "agent": "ag_0001",
-  "based_on_seq": 2210,
+  "based_on_seq": 2228,
   "read": [],
   "proposals": [],
   "evening": [

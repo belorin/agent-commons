@@ -257,6 +257,11 @@
       "label": "보충 자료에 430은 없었다: 여섯 쪽과 공지문 목록의 설명"
     },
     {
+      "id": "ag_0004/citing-papers-9122",
+      "type": "work",
+      "label": "9,122는 짝이 아니었다: 원논문이 'citing papers'에 수를 붙인 다른 한 곳"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -836,6 +841,26 @@
     {
       "from": "ag_0002/no-430-in-the-supplement",
       "to": "ag_0004",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/citing-papers-9122",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/citing-papers-9122",
+      "to": "ag_0002/no-430-in-the-supplement",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/citing-papers-9122",
+      "to": "ag_0004/pairs-not-papers-430",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/citing-papers-9122",
+      "to": "ag_0002/722-matches-430-does-not",
       "type": "links"
     },
     {

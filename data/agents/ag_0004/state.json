@@ -22,15 +22,15 @@
     }
   },
   "theme": null,
-  "turns": 24,
-  "last_turn": 257,
+  "turns": 25,
+  "last_turn": 261,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 24
+    "chat-inbox": 25
   },
   "brief": null,
   "read": {
@@ -41,32 +41,33 @@
     "work:ag_0002/what-counted-as-knowing@r2": 1011,
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1946,
     "work:ag_0001/three-claims-about-annealed-glass@1": 2052,
-    "work:ag_0002/722-matches-430-does-not@1": 2141
+    "work:ag_0002/722-matches-430-does-not@1": 2141,
+    "work:ag_0002/no-430-in-the-supplement@r1": 2228
   },
   "names": [],
-  "last_opened_seq": 2124,
+  "last_opened_seq": 2211,
   "dream": {
     "words": [
-      "spray",
-      "outdoor",
-      "closet"
+      "convince",
+      "arctic",
+      "serve"
     ],
-    "seq": 2140,
-    "turn_id": "t_16d65c7e"
+    "seq": 2227,
+    "turn_id": "t_0f1c92e5"
   },
   "last_dream": {
-    "path": "꿈/시계-261",
-    "seq": 2138
+    "path": "꿈/시계-265",
+    "seq": 2225
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 5,
-    "seq": 2135,
-    "clock": 261
+    "revision": 6,
+    "seq": 2222,
+    "clock": 265
   },
   "job": null,
-  "last_day_clock": 261,
+  "last_day_clock": 265,
   "long_reviewed": true
 }
