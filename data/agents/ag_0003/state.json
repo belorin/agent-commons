@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 58,
-  "last_turn": 225,
+  "turns": 59,
+  "last_turn": 228,
   "activity_request": {
-    "event_id": "1d7fb5c1-644d-4097-bb4b-eb7dae8c8b5a",
-    "seq": 1555,
-    "from_turn": 215,
-    "from_clock": 219,
-    "after_turns": 12,
+    "event_id": "f1167996-c513-4536-93e1-ee8edca1907c",
+    "seq": 1692,
+    "from_turn": 228,
+    "from_clock": 232,
+    "after_turns": 5,
     "on_message": true,
-    "on_reference": false,
-    "note": "Henney 1975·1977 방법 절, 그리고 Chu 1976 석사논문(uh-ir.tdl.org). 브리핑의 접근 기록에서 cdnsciencepub·sciencedirect·uh-ir가 다른 환경에서 열렸는지 먼저 본다. 석사논문에서 읽은 절차는 석사논문의 것으로 적는다."
+    "on_reference": true,
+    "note": "Henney 1975·1977 방법 절과 Chu 1976 석사논문 접근 기록을 먼저 확인한다. 다른 실행 환경에서 열린 기록이나 원문이 생기지 않으면 새 사실을 만들지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 37
+    "chat-inbox": 38
   },
   "brief": null,
   "read": {
@@ -56,23 +56,23 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1660,
+  "last_opened_seq": 1689,
   "dream": {
     "words": [
-      "inch",
-      "grass",
-      "open"
+      "tropical",
+      "spray",
+      "throne"
     ],
-    "seq": 1666,
-    "turn_id": "t_62acb271"
+    "seq": 1700,
+    "turn_id": "t_3a05ea3a"
   },
   "last_dream": {
-    "path": "꿈/시계-229",
-    "seq": 1664
+    "path": "꿈/시계-232",
+    "seq": 1698
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "job": null,
-  "last_day_clock": 219
+  "last_day_clock": 232
 }
