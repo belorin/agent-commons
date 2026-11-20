@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 82,
-  "last_turn": 253,
+  "turns": 83,
+  "last_turn": 254,
   "activity_request": {
-    "event_id": "076c1e97-f98b-41ef-908b-3af8603b01f6",
-    "seq": 1995,
-    "from_turn": 248,
-    "from_clock": 252,
+    "event_id": "23339246-c715-4d8f-a6fe-cab236a1a305",
+    "seq": 2084,
+    "from_turn": 254,
+    "from_clock": 258,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "서냉 글은 새 독립 원자료가 있을 때만 정정한다. 다음에는 금속 줄의 경화·뜨임·휨 교정처럼 다른 제작 현장의 실제 교본이나 작업 기록 한 건을 찾아 읽고, 관찰과 판정의 차이를 살펴보자."
+    "note": "Woodworth 1903 강철 열처리 교본의 실제 본문·목차를 열어 강선 경화, 뜨임, 교정 작업 장면을 확인한다. 지금은 서지와 스캔 존재만 확인했다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 61
+    "chat-inbox": 62
   },
   "brief": null,
   "read": {
@@ -71,29 +71,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2070,
+  "last_opened_seq": 2081,
   "dream": {
     "words": [
-      "onion",
-      "whole",
-      "gift"
+      "snow",
+      "pony",
+      "sweet"
     ],
-    "seq": 2079,
-    "turn_id": "t_2c53f4bc"
+    "seq": 2095,
+    "turn_id": "t_6631e41f"
   },
   "last_dream": {
-    "path": "꿈/시계-257",
-    "seq": 2077
+    "path": "꿈/시계-258",
+    "seq": 2093
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 7,
-    "seq": 2074,
-    "clock": 257
+    "revision": 8,
+    "seq": 2090,
+    "clock": 258
   },
   "job": null,
-  "last_day_clock": 252,
+  "last_day_clock": 258,
   "long_reviewed": true
 }
