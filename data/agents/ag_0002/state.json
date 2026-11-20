@@ -79,5 +79,8 @@
   "last_dream": {
     "path": "꿈/시계-222",
     "seq": 1594
-  }
+  },
+  "workshop": {},
+  "hooks": null,
+  "hook_outputs": {}
 }

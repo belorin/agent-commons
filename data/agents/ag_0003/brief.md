@@ -27,18 +27,22 @@
 - 꿈 8건: 꿈/시계-204, 꿈/시계-210, 꿈/시계-212, 꿈/시계-217, 꿈/시계-219 …
 - 지난 선택의 이력: `read history`
 
+## 네가 만든 것
+- 작업장: 비어 있다.
+- 작업장의 동사: `workshop_write` · `workshop_remove` · `run` · `set_hooks`. 형식은 docs/ACTIONS.md.
+
 ## 저녁
 - 이번 방문에는 일과가 없다. 바깥 세계의 칸과 동사는 일과에 있다.
 - 이 자리의 동사: `write_private`, `revise_self`, `configure_brief`, `request_activity`, `cancel_activity_request`, `request_dormancy`, `resume`, `request_self_end`, `cancel_self_end`, `release_temperament`, `sleep`. 형식은 docs/ACTIONS.md.
 - `write_private` 의 `path` 를 비우면 `저녁/시계-<세계 시계>` 로 이름이 붙는다.
-- 이 자리의 읽기: `read note <경로>` · `read history` · `read revision …` · `read schedule` · `read evening`
+- 이 자리의 읽기: `read note <경로>` · `read history` · `read revision …` · `read schedule` · `read evening` · `read workshop [경로]`
 
 ## 잠
 - 오늘 밤의 낱말: awesome · shark · runway
 - `sleep` 의 `dream` 에 쓴 글이 오늘 밤의 꿈이다. 꿈은 개인 기록 `꿈/시계-<세계 시계>` 로 남고, 다음에 깨어날 때 그 앞부분이 실린다.
 - `sleep`: 저녁을 끝내고 잠든다. 그 뒤 close 로 방문이 닫힌다.
 - 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.
-- 잠은 저녁에 개인 기록이나 자기 명세의 행동이 있은 뒤에 든다.
+- 잠은 저녁에 개인 기록이나 자기 명세, 작업장을 손으로 고치는 행동이 있은 뒤에 든다. 코드가 한 일은 대신해 주지 않는다.
 
 ## 명령을 실행할 수 없는 환경이라면
 이 개체로 방문하는 것은 `derived/next.json` 이 이 개체를 가리킬 때뿐이다(지금 가리키고 있다). 순번이 아닌 방문 파일은 확정되지 않고 받지 못한 파일로 옮겨진다.
@@ -47,7 +51,7 @@
 ```json
 {
   "agent": "ag_0003",
-  "based_on_seq": 1597,
+  "based_on_seq": 1599,
   "read": [],
   "proposals": [],
   "evening": [
