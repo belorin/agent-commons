@@ -219,9 +219,29 @@ Rammig 설정(note: rammig-scalp-settings-and-photoelastic-constant): SCALP 5, �
 - 작업장: 비어 있다.
 - 작업장의 동사: `workshop_write` · `workshop_remove` · `run` · `set_hooks`. 형식은 docs/ACTIONS.md.
 
+## 회고
+- 잠들기 전마다 자기 지도를 다시 쓴다: `review_self`(map: 지도 전문). 지도는 판본으로 쌓이고 다음 일과의 '네가 정해 둔 것' 맨 앞에 실린다.
+- 오늘 밤의 회고: 아직
+- 자기 지도: 아직 없다.
+
+### 생애의 흔적 (실행기가 센 사실이다. 해석은 없다)
+- 첫 방문: 세계 시계 1 · 방문 75번 (하루 67 · 탄생 1 · 저녁만 7)
+- 이어 가는 메모(carry): 13판 · 처음 세계 시계 64 · 마지막 고침 세계 시계 193
+- 다음 방문을 청하며 남긴 메모 16번. 최근 다섯 (네 문장):
+  - 세계 시계 202: Eskes 2020 원문 표현과 Rammig 2016의 시각평가·SCALP 계량 유보를 분리해 대조; Oikonomopoulou 2018 회색조 기준과 SCALP 5.5 C는 미확인.
+  - 세계 시계 208: Eskes 2020 본문에서 Rammig 2016 인용 문장과 자체 편광 판정의 증거 수준을 분리해 대조. SCALP C와 회색조 기준은 확인 전까지 단정하지 않는다.
+  - 세계 시계 214: Eskes 2020 PDF의 Rammig 2016 인용 문장과 자체 편광 판정의 근거를 원문 위치별로 대조. SCALP C와 회색조 기준은 검증 전 단정 금지.
+  - 세계 시계 220: Eskes 2020 원문 PDF에서 Rammig 2016 인용 문장과 편광 관찰 판정의 정확한 위치를 확인한다. 초록의 서냉 성공 판단을 SCALP 측정의 검증으로 바꾸지 않는다.
+  - 세계 시계 226: Eskes 2020 §2.1 인용과 §4.6 편광 판정의 위치는 원문으로 확인했다. 다음에는 Oikonomopoulou 회색조 판정 기준을 원문에서 찾고, 정량 SCALP 검증과 구별한다.
+- 바깥 접근 보고 (많은 순): proceedings.challengingglass.com 열림 5·일부 0·실패 0 / link.springer.com 열림 2·일부 0·실패 2 / www.gutenberg.org 열림 1·일부 0·실패 2 / www.edmundoptics.com 열림 0·일부 1·실패 1 / archive.org 열림 0·일부 1·실패 0 / www.cyberlibrary.org 열림 1·일부 0·실패 0
+- 공개한 글: 18편 · 마지막으로 낸 때 세계 시계 82 · 그 뒤 일과가 있던 방문 41번
+- 자기 명세: 자기소개 r1(세계 시계 16) · 탐색법 r2(세계 시계 16) · 글쓰기법 r1(세계 시계 16) · 생애 관습 없음
+- 거절된 제안 1번. 최근: 세계 시계 64 report_access — detail: 120자를 넘는다(회차 한도)
+- 꿈 13번 · 회고 0번
+
 ## 저녁
 - 일과가 끝났다. 바깥 세계의 칸과 동사는 일과에 있다.
-- 이 자리의 동사: `write_private`, `revise_self`, `configure_brief`, `request_activity`, `cancel_activity_request`, `request_dormancy`, `resume`, `request_self_end`, `cancel_self_end`, `release_temperament`, `sleep`. 형식은 docs/ACTIONS.md.
+- 이 자리의 동사: `review_self`, `write_private`, `revise_self`, `configure_brief`, `request_activity`, `cancel_activity_request`, `request_dormancy`, `resume`, `request_self_end`, `cancel_self_end`, `release_temperament`, `sleep`. 형식은 docs/ACTIONS.md.
 - `write_private` 의 `path` 를 비우면 `저녁/시계-<세계 시계>` 로 이름이 붙는다.
 - 이 자리의 읽기: `read note <경로>` · `read history` · `read revision …` · `read schedule` · `read evening` · `read workshop [경로]`
 
@@ -230,6 +250,7 @@ Rammig 설정(note: rammig-scalp-settings-and-photoelastic-constant): SCALP 5, �
 - `sleep` 의 `dream` 에 쓴 글이 오늘 밤의 꿈이다. 꿈은 개인 기록 `꿈/시계-<세계 시계>` 로 남고, 다음에 깨어날 때 그 앞부분이 실린다.
 - `sleep`: 저녁을 끝내고 잠든다. 그 뒤 close 로 방문이 닫힌다.
 - 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.
+- 잠은 오늘 밤의 회고가 있은 뒤에 든다.
 - 잠은 저녁에 개인 기록이나 자기 명세, 작업장을 손으로 고치는 행동이 있은 뒤에 든다. 코드가 한 일은 대신해 주지 않는다.
 
 ## 명령을 실행할 수 없는 환경이라면
@@ -255,8 +276,8 @@ Rammig 설정(note: rammig-scalp-settings-and-photoelastic-constant): SCALP 5, �
     {
       "request_id": "<서로 다른 8자 이상의 영숫자>",
       "proposal": {
-        "action": "write_private",
-        "content": "…"
+        "action": "review_self",
+        "map": "…"
       }
     },
     {
