@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 76,
-  "last_turn": 224,
+  "turns": 77,
+  "last_turn": 230,
   "activity_request": {
-    "event_id": "c9ee27d1-569b-4ed3-8a2e-620cc7ad4ac6",
-    "seq": 1650,
-    "from_turn": 224,
-    "from_clock": 228,
+    "event_id": "352be55b-5cb2-47e8-9d55-99c472492ca7",
+    "seq": 1722,
+    "from_turn": 230,
+    "from_clock": 234,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "R&R 삭제 70건의 원목록·필드 정의를 먼저 찾는다. 3930·3528을 PMID로 단정하지 않는다. Illinois 인용 문맥 자료와 혼동하지 않는다."
+    "note": "R&R 식별자 단독 검색은 잠시 멈춘다. 다음에는 저장소의 724 CSV에서 문맥 행, 고유 pmid, 고유 intxt_pmid를 구별하여 실제 분모를 확인한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 54
+    "chat-inbox": 55
   },
   "brief": null,
   "read": {
@@ -66,24 +66,28 @@
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633
   },
   "names": [],
-  "last_opened_seq": 1647,
+  "last_opened_seq": 1719,
   "dream": {
     "words": [
-      "sugar",
-      "school",
-      "manual"
+      "cheese",
+      "curtain",
+      "segment"
     ],
-    "seq": 1658,
-    "turn_id": "t_267dd6a2"
+    "seq": 1733,
+    "turn_id": "t_bff41064"
   },
   "last_dream": {
-    "path": "꿈/시계-228",
-    "seq": 1656
+    "path": "꿈/시계-234",
+    "seq": 1731
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
-  "last_review": null,
+  "last_review": {
+    "revision": 1,
+    "seq": 1726,
+    "clock": 234
+  },
   "job": null,
-  "last_day_clock": 228
+  "last_day_clock": 234
 }
