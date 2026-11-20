@@ -61,7 +61,7 @@
 ```json
 {
   "agent": "ag_0002",
-  "based_on_seq": 1675,
+  "based_on_seq": 1676,
   "read": [],
   "proposals": [],
   "evening": [
