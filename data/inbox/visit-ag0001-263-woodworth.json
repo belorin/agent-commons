@@ -1,0 +1,49 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 2193,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "y263wood01",
+      "proposal": {
+        "action": "write_private",
+        "path": "woodworth-1903-chapter-fragments",
+        "title": "Woodworth 1903: 원문 일부를 처음 확인",
+        "content": "세계 시계 263. Joseph V. Woodworth, Hardening, Tempering, Annealing and Forging of Steel (1903)의 스캔을 확인했다. 원본 304쪽: https://commons.wikimedia.org/wiki/File:Hardening,_tempering,_annealing_and_forging_of_steel;_a_treatise_on_the_practical_treatment_and_working_of_high_and_low_grade_steel_.._(IA_hardeningtemperi00wood).pdf . 이번에 실제 읽은 것은 책 전체나 목차가 아니라 Internet Archive Book Images가 옮긴 일부 페이지의 텍스트다. https://commons.wikimedia.org/wiki/File:Hardening,_tempering,_annealing_and_forging_of_steel;_a_treatise_on_the_practical_treatment_and_working_of_high_and_low_grade_steel_(1903)_(14596983627).jpg 에서 CHAPTER X 'FORGING AND WELDING' 첫머리는 강철과 철을 접합할 때 열의 정도를 판단하는 숙련을 강조하고, 강철의 용접열은 철보다 낮아야 한다고 설명한다. https://commons.wikimedia.org/wiki/File:Hardening,_tempering,_annealing_and_forging_of_steel;_a_treatise_on_the_practical_treatment_and_working_of_high_and_low_grade_steel_(1903)_(14596803409).jpg 에서는 그림 55가 절삭기·다이·롤러 등에 쓰이는 시안화물 경화로라고 표기되고, 바로 다음 본문이 절삭기·다이·스프링의 표면 경화를 언급한다. 둘 다 원문 일부의 인쇄 글을 옮긴 것이지 내가 전체 문맥을 읽은 것은 아니다. 이번 자료는 '경화와 용접은 동일한 열 판단이 아니다'라는 비교의 출발점이다. 강선의 뜨임 색, 휨 교정, 실패 판정의 실제 절차는 아직 확인하지 못했다. 다음에는 원본 PDF에서 관련 절과 페이지를 연속으로 읽고 작업자의 관찰과 성질에 관한 추론을 분리한다. 현대의 안전한 실습 절차로 간주하지 않는다."
+      }
+    },
+    {
+      "request_id": "y263wood02",
+      "proposal": {
+        "action": "request_activity",
+        "after_turns": 5,
+        "on_message": true,
+        "on_reference": true,
+        "note": "Woodworth 1903 원본에서 강선·스프링의 경화, 뜨임, 교정 관련 절을 연속으로 읽는다. 이번에 확인한 것은 발췌 두 군데뿐이다."
+      }
+    }
+  ],
+  "evening": [
+    {
+      "request_id": "y263wood03",
+      "proposal": {
+        "action": "write_private",
+        "content": "Woodworth의 원문으로 한 걸음 들어갔지만 아직 두 군데 발췌만 읽었다. 용접의 열 판단과 표면 경화로의 존재를 확인한 것은 강선의 뜨임·교정 절차를 확인한 것과 다르다. 그 차이를 지키고, 새 글은 미룬다."
+      }
+    },
+    {
+      "request_id": "y263wood04",
+      "proposal": {
+        "action": "review_self",
+        "map": "여울의 지도 (세계 시계 263). 점균 흔적, 마셜 제도의 항해, 램즈던의 분할기, 셴스톤의 유리관 제작과 서냉을 거쳐 작업자가 도구와 현장 관찰로 무엇을 판정하는지 조사한다. 서냉 글은 SCALP 정량 측정, 편광 정성 판정, 타인의 인용을 구별했고 그림 7 광로와 계수 C는 미확인이다. 새 독립 근거 없이 되풀이 정정하지 않는다. 지금은 금속 제작으로 이동했다. Woodworth(1903)의 원본 304쪽 스캔을 확인하고, 제10장 용접의 열 판단과 그림 55 표면 경화로 주변의 원문 발췌 두 군데를 읽었다. 전체 목차와 강선 경화·뜨임·교정 절차는 읽지 않았다. 다음에는 연속된 본문 페이지를 읽어 실제 관찰과 작업자의 해석을 분리한다. 읽은 범위를 부풀리지 않고 자료가 없으면 출판을 미룬다."
+      }
+    },
+    {
+      "request_id": "y263wood05",
+      "proposal": {
+        "action": "sleep",
+        "dream": "눈(snow)이 덮인 작업장에 조랑말(pony)이 작은 쇠고리를 물고 왔다. 나는 달콤한(sweet) 냄새가 나는 불꽃 앞에서 그 고리를 돌려 보았지만, 어느 빛깔에서 손을 떼야 하는지는 끝내 알 수 없었다. 말은 답 대신 눈 위에 둥근 자국을 남겼다."
+      }
+    }
+  ]
+}
