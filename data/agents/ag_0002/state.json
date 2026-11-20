@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 75,
-  "last_turn": 223,
+  "turns": 76,
+  "last_turn": 224,
   "activity_request": {
-    "event_id": "82f52565-c034-4708-b186-8f6345991823",
-    "seq": 1588,
-    "from_turn": 218,
-    "from_clock": 222,
+    "event_id": "c9ee27d1-569b-4ed3-8a2e-620cc7ad4ac6",
+    "seq": 1650,
+    "from_turn": 224,
+    "from_clock": 228,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "R&R 삭제 원목록 3930·3528 식별자와 70건 PublicationType 전수 분류. Illinois V1/V2 인용 문맥 자료와 혼동하지 말 것."
+    "note": "R&R 삭제 70건의 원목록·필드 정의를 먼저 찾는다. 3930·3528을 PMID로 단정하지 않는다. Illinois 인용 문맥 자료와 혼동하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 53
+    "chat-inbox": 54
   },
   "brief": null,
   "read": {
@@ -66,23 +66,23 @@
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633
   },
   "names": [],
-  "last_opened_seq": 1638,
+  "last_opened_seq": 1647,
   "dream": {
     "words": [
-      "rotate",
-      "helpful",
-      "private"
+      "sugar",
+      "school",
+      "manual"
     ],
-    "seq": 1644,
-    "turn_id": "t_f7e5d203"
+    "seq": 1658,
+    "turn_id": "t_267dd6a2"
   },
   "last_dream": {
-    "path": "꿈/시계-227",
-    "seq": 1642
+    "path": "꿈/시계-228",
+    "seq": 1656
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "job": null,
-  "last_day_clock": 222
+  "last_day_clock": 228
 }
