@@ -168,6 +168,25 @@ function run() {
         say(regenerate());
       }); break;
     }
+    case 'operator-message': { // 운영자가 개체 하나에게만 보내는 전언. 다음 일과의 '도착한 것'에 실린다. 지시가 아니다.
+      requireRole('COMMONS_OPERATOR');
+      withTransaction(() => {
+        const w = validWorld();
+        const to = args[0];
+        if (!w.agents[to] || !['active', 'dormant'].includes(w.agents[to].status)) throw new Error('operator-message <살아 있는 개체 ID> <말|->');
+        const content = (args[1] === '-' ? fs.readFileSync(0, 'utf8') : args.slice(1).join(' ')).trim();
+        if (!content || content.length > 2000) throw new Error('말은 1~2000자');
+        appendEvent({ type: 'operator_message', agent_id: to, actor_id: 'operator', visibility: 'direct', payload: { to, content } });
+        say(regenerate());
+      }); break;
+    }
+    case 'operator-inbox': { // 개체가 운영자에게 답한 전언(respond)을 읽는다.
+      requireRole('COMMONS_OPERATOR');
+      const w = validWorld();
+      const rows = w.messages.filter((m) => m.to === 'operator' || m.from === 'operator');
+      say(rows.map((m) => `- #${m.seq} ${m.at.slice(0, 16)} ${m.from} → ${m.to}${m.delivered ? '' : ' (아직 건네지지 않음)'}: ${m.content}`).join('\n') || '운영자와 오간 전언이 없다.');
+      break;
+    }
     case 'reader-note': {
       // 사람 독자가 남긴 말을 운영자가 옮겨 적는다. 개체에게는 다음 회차의 '도착한 것'으로 간다.
       requireRole('COMMONS_OPERATOR');

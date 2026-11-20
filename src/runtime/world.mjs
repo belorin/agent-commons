@@ -234,6 +234,9 @@ export function project(events) {
           content: pl.content, about: pl.about || null, in_reply_to: pl.to_event || null, delivered: false,
         });
         break;
+      case 'operator_message': // 운영자가 개체 하나에게만 보내는 전언. 다른 개체·광장·사이트에 실리지 않는다.
+        w.messages.push({ event_id: e.event_id, seq: e.world_seq, at: e.timestamp, from: 'operator', to: pl.to, public: false, content: pl.content, about: null, in_reply_to: null, delivered: false });
+        break;
       case 'reader_note_received': // 사람 독자의 말. 운영자가 옮겨 적는다. 보낸 쪽은 개체가 아니다.
         w.messages.push({ event_id: e.event_id, seq: e.world_seq, at: e.timestamp, from: 'reader', to: pl.to, public: true, content: pl.content, about: pl.about || null, in_reply_to: null, delivered: false });
         break;

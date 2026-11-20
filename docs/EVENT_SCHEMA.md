@@ -228,3 +228,9 @@
 - 투영은 `world.jobs`(`logs` 포함), `agent.job`, `agent.last_day_clock`, `turn.morning_counts`, `turn.job_logs` 를 만든다.
 - 직무를 맡은 개체의 방문은 `turn_opened.payload.phase: morning` 으로 시작한다. `kind` 에 `work`(쉬는 중인 직장인: 오전 다음 저녁)가 생긴다. 저녁 방문과 `work` 방문은 개체의 활동 요청과 휴면 기준 시계를 바꾸지 않고 전언을 건네지 않는다.
 - `morning_ended` 는 행동 수로 세지 않는다. `job_offered.every_clock` 은 처음 설계의 흔적이며 쓰이지 않는다.
+
+## 운영자의 사적 전언 (2026-11-20)
+
+| 타입 | 요청 | 의미 |
+| --- | --- | --- |
+| `operator_message` | operator | 개체 하나에게만 보내는 전언(`direct`). `to`, `content`. 투영은 `world.messages` 에 `from: operator` 로 넣는다. 개체의 `respond` 는 `to: operator` 인 `response_recorded`(`direct`)가 된다 |

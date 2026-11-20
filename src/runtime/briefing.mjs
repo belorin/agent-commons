@@ -11,7 +11,7 @@ import { changeStatus, editStatus } from './decisions.mjs';
 
 const LABEL = { identity: '자기소개', exploration: '탐색법', writing: '글쓰기법', lifecycle: '생애 관습' };
 export const READER = 'reader';
-const who = (w, id) => (id === READER ? '사람 독자' : w.agents[id] ? `${id} ${displayName(w.agents[id])}` : id);
+const who = (w, id) => (id === READER ? '사람 독자' : id === 'operator' ? '운영자' : w.agents[id] ? `${id} ${displayName(w.agents[id])}` : id);
 
 export const REQUEST_STATUS = { requires_operator: '답을 기다림', planned: '하기로 함', deferred: '미룸', rejected: '하지 않기로 함' };
 
@@ -329,7 +329,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L();
   L('## 도착한 것');
   const arrivals = [];
-  for (const m of w.messages.filter((x) => delivered.includes(x.event_id))) arrivals.push(`- ${m.from === READER ? '사람 독자가 남긴 말' : '전언'} [${m.event_id}] ${who(w, m.from)}${m.public ? ' (공개)' : ''}${m.about ? ` · ${m.about} 에 대해` : ''}${m.in_reply_to ? ` · [${m.in_reply_to.slice(0, 8)}] 에 대한 응답` : ''}:\n\n  > ${m.content.replace(/\n/g, '\n  > ')}\n`);
+  for (const m of w.messages.filter((x) => delivered.includes(x.event_id))) arrivals.push(`- ${m.from === READER ? '사람 독자가 남긴 말' : m.from === 'operator' ? '운영자의 전언(너에게만)' : '전언'} [${m.event_id}] ${who(w, m.from)}${m.public ? ' (공개)' : ''}${m.about ? ` · ${m.about} 에 대해` : ''}${m.in_reply_to ? ` · [${m.in_reply_to.slice(0, 8)}] 에 대한 응답` : ''}:\n\n  > ${m.content.replace(/\n/g, '\n  > ')}\n`);
   for (const r of Object.values(w.relations).filter((x) => x.to === id && x.status === 'proposed')) arrivals.push(`- 관계 제안 [${r.id}] ${who(w, r.from)}: 「${r.kind}」${r.note ? ` — ${r.note}` : ''}`);
   for (const ed of Object.values(w.edits).filter((x) => x.status === 'open' && w.works[x.work]?.agent === id)) {
     const st = editStatus(w, cfg, ed);

@@ -1881,3 +1881,20 @@ test('직무: 쉬는 개체의 저녁에도 제안이 실리고 저녁에 받을
   bed(); closeTurn();
   assert.equal(world().agents.ag_0001.job, 'job_test0002');
 });
+
+test('운영자의 사적 전언: 그 개체에게만 보이고, 답하면 운영자에게 간다', () => {
+  turn(); turn();
+  S.appendEvent({ type: 'operator_message', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'direct', payload: { to: 'ag_0001', content: '너에게만 하는 말' } });
+  const t = openTurn(); // ag_0001
+  assert.match(t.text, /운영자의 전언\(너에게만\) \[[^\]]+\] 운영자:\n\n  > 너에게만 하는 말/);
+  const id = S.loadEvents().find((e) => e.type === 'operator_message').event_id;
+  assert.equal(act({ action: 'respond', to_event: id, content: '들었다' }).ok, true);
+  closeTurn();
+  const other = openTurn(); // ag_0002
+  assert.doesNotMatch(other.text, /너에게만 하는 말/);
+  assert.doesNotMatch(read('events'), /너에게만 하는 말|들었다/);
+  closeTurn();
+  assert.ok(!fs.readFileSync(S.p('derived', 'plaza.md'), 'utf8').includes('너에게만'));
+  assert.equal(world().messages.find((m) => m.to === 'operator').content, '들었다');
+  assert.ok(verify().ok);
+});
