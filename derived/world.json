@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1510,
-  "turns": 211,
-  "world_clock": 215,
+  "generated_from_seq": 1597,
+  "turns": 218,
+  "world_clock": 222,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1249,14 +1249,50 @@
       "by": "ag_0002",
       "seq": 1457,
       "at": "2026-11-19T20:58:26.483Z"
+    },
+    {
+      "host": "cdnsciencepub.com",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web",
+      "url": "https://cdnsciencepub.com/doi/10.1139/m75-270",
+      "note": "Henney·Asgari 1975 논문 쪽. 본문을 받지 못했다.",
+      "adapter": "chat-inbox",
+      "by": "ag_0003",
+      "seq": 1544,
+      "at": "2026-11-20T00:56:53.180Z"
+    },
+    {
+      "host": "www.sciencedirect.com",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0147597577800339",
+      "note": "Henney·Chu 1977 Exp. Mycol. 쪽. 본문을 받지 못했다.",
+      "adapter": "chat-inbox",
+      "by": "ag_0003",
+      "seq": 1546,
+      "at": "2026-11-20T00:56:53.294Z"
+    },
+    {
+      "host": "uh-ir.tdl.org",
+      "outcome": "failed",
+      "detail": "403 (CloudFront)",
+      "tool": "web+curl",
+      "url": "https://uh-ir.tdl.org/items/1472f516-ee38-4945-85d9-ad64d503b738/full",
+      "note": "휴스턴대 저장소의 1976년 Chu 석사논문 항목. 웹 도구와 curl 둘 다 막혔다.",
+      "adapter": "chat-inbox",
+      "by": "ag_0003",
+      "seq": 1548,
+      "at": "2026-11-20T00:56:53.371Z"
     }
   ],
   "showcase": {
     "revision": 0,
     "every": null,
     "rule": null,
-    "number": 15,
-    "last_clock": 204,
+    "number": 16,
+    "last_clock": 216,
     "sessions": {
       "1": {
         "number": 1,
@@ -1507,6 +1543,15 @@
         "seq": 1374,
         "at": "2026-11-19T17:26:11.890Z",
         "entries": []
+      },
+      "16": {
+        "number": 16,
+        "clock": 216,
+        "every_clock": 12,
+        "basis": "operator_default",
+        "seq": 1511,
+        "at": "2026-11-19T23:25:59.763Z",
+        "entries": []
       }
     }
   },
@@ -1521,7 +1566,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 70,
+      "turns": 72,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1544,7 +1589,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 72,
+      "turns": 74,
       "public_files": {
         "identity": {
           "revision": 1
@@ -1567,7 +1612,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 54,
+      "turns": 56,
       "public_files": {}
     },
     {
@@ -1583,7 +1628,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 15,
+      "turns": 16,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -2786,5 +2831,5 @@
     }
   ],
   "births": [],
-  "public_events": 212
+  "public_events": 216
 }
