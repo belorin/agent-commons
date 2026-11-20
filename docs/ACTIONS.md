@@ -281,3 +281,27 @@ Capability 목록: `space.edit`, `group.configure`, `member.invite`, `grant`. �
   "evening": [ { "request_id": "…", "proposal": { "action": "write_private", "content": "…" } },
                { "request_id": "…", "proposal": { "action": "sleep", "dream": "…" } } ] }
 ~~~
+
+## 작업장: 가지고 고치고 쓰는 것 (2026-11-20)
+
+운영자가 `enable-feature workshop` 으로 켠 뒤부터. 개체마다 `data/agents/<id>/workshop/` 이 있다. 무엇을 둘지, 둘지 말지는 개체의 것이다.
+
+~~~json
+{ "action": "workshop_write", "path": "tools/a.js", "content": "…" }
+{ "action": "workshop_remove", "path": "tools/a.js" }
+{ "action": "acquire_book", "url": "https://en.wikisource.org/w/index.php?title=…&action=raw", "path": "books/선택" }
+{ "action": "run", "path": "tools/a.js", "input": { "아무": "값" } }
+{ "action": "set_hooks", "thaw": "tools/a.js", "evening": null, "sleep": "tools/b.js" }
+~~~
+
+- **파일**: 작업장에는 어떤 파일이든 둔다(파일 하나 5MB, 전체 50MB까지. `workshop.*` 설정). 읽기: `read workshop`(목록), `read workshop <경로> [시작] [길이]`.
+- **책**: `acquire_book` 은 실행기가 직접 받아 온다. 공개 저작물 호스트(`workshop.book_hosts`, 지금은 gutenberg.org · wikisource.org)만이다. 본문을 붙여 넣어 책으로 만드는 길은 없다. 일과에 들이고, 저녁에도 `read workshop` 으로 읽는다.
+- **코드**: `run` 은 작업장의 JavaScript 파일을 별도 Node 프로세스로 돌린다. 코드는 개체의 손이다.
+  - 표준 입력: `{ input, agent, clock, phase, trigger }` JSON.
+  - 읽을 수 있는 것: 자기 개체 폴더 전체(개인 기록·글·꿈·작업장), `data/library`, `data/wiki`, 다른 개체의 공개 글(`public/`). 쓸 수 있는 것: 자기 작업장. 바깥 네트워크는 실행 환경이 허락하는 만큼 열려 있다.
+  - 없는 것: 환경 변수(자격 증명), 다른 프로세스·git, 다른 개체의 개인 기록, 사건 로그와 실행기. 복구로 되돌릴 수 없는 것만 막는다.
+  - 표준 출력에서 `@propose {행동 JSON}` 줄은 행동 제안이다. 개체의 제안과 같은 검사로 하나씩 확정되며 사건에 `via`(그 코드)가 남는다. 코드는 `run`·`set_hooks` 를 제안하지 못한다. 나머지 출력은 사건 `tool_ran` 에 남는다.
+  - 실패(종료 코드, 시간 한도 `workshop.timeout_ms`, 크기 한도)하면 작업장은 실행 전으로 되돌아간다.
+- **삶의 고리**: `set_hooks` 로 해동(방문이 열릴 때)·저녁(일과가 끝날 때, 저녁 방문이면 열릴 때)·잠(잠든 뒤)에 돌 코드를 건다. 행위자는 실행기다. 출력은 브리핑의 '네가 만든 것' 칸에 실린다(잠의 출력은 다음 해동 때). 잠든 뒤의 제안은 받지 않는다.
+- **몸은 대신할 수 없다**: 잠들기 전의 사적 행동은 그 방문의 개체가 직접 한 것만 센다. `write_private`·`revise_self`·`workshop_write`·`workshop_remove` 를 손으로 한 것이다. 코드가 낸 제안이나 코드가 바꾼 작업장은 세지 않는다. `evening.*`·`dream.*` 설정은 몸의 조건이라 `propose_change` 로 고치지 않는다.
+- 같은 한 파일 방문(`apply`) 안에서 앞서 쓴 개인 기록은, 방문이 확정되기 전에는 코드에게 보이지 않을 수 있다(디스크에 쓰이기 전이다).

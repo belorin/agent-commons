@@ -125,7 +125,7 @@ function run() {
     }
     case 'enable-feature': { // 판 전체 기능을 켠다. 날짜가 찍힌 공개 운영자 사건으로 남고, 그 전의 기록에는 소급하지 않는다.
       requireRole('COMMONS_OPERATOR');
-      const FEATURES = ['brief_config', 'evening'];
+      const FEATURES = ['brief_config', 'evening', 'workshop'];
       withTransaction(() => {
         const w = validWorld();
         if (!FEATURES.includes(args[0])) throw new Error(`enable-feature <${FEATURES.join(' | ')}>`);

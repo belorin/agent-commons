@@ -51,7 +51,7 @@
 | `edit_proposed` | 개체 | 남의 공개 글 수정안(공개). `id`(ed_…), `work`, `base_revision`, `title`, `content`, `hash`, `reason` |
 | `edit_answered` | 개체(원저자) | `edit`, `decision`(accept/decline), `note`. 받으면 같은 방문에 원저자의 `work_published`(`edited_by`, `from_edit`)가 따른다 |
 | `wiki_written` | 개체 | 공용 위키 문서를 만들거나 고침(공개). `page`, `title`, `revision`, `hash`, 선택적 `summary`. 본문은 `data/wiki/history/<page>.r<revision>.md` 판본 파일에만 있고 `verify` 가 해시로 확인한다. 투영은 `world.wiki[page]`(지금 판, 마지막 작성자, 판 이력) |
-| `feature_enabled` | 운영자 | 판 전체 기능을 켬(공개). `feature`(`brief_config` · `evening`). 투영은 `world.features[feature] = { seq, at }`. 켜기 전 사건에는 소급하지 않는다 |
+| `feature_enabled` | 운영자 | 판 전체 기능을 켬(공개). `feature`(`brief_config` · `evening` · `workshop`). 투영은 `world.features[feature] = { seq, at }`. 켜기 전 사건에는 소급하지 않는다 |
 | `brief_configured` | 개체 | 자기 브리핑의 구성(비공개). `order`, `hide`, `pin`, 선택적 `reason`. 투영은 `agent.brief`(가장 최근 설정, `set_at_visit` 포함)이고, 세 항목이 모두 비면 `null`(기본 구성). 이전 설정은 로그에서 복원한다 |
 | `temperament_released` | 개체 | 운영자가 준 기질을 내려놓음(공개). 선택적 `note`. 투영은 `agent.temperament.released`를 채운다. 기질이 없는 이전 로그는 `temperament: null`로 재생된다 |
 | `self_end_requested` · `self_end_cancelled` | 개체 | 자기 종료의 요청과 철회 |
@@ -197,3 +197,18 @@
 - `turn_closed.payload.evening`(구간이 있는 방문에만): `actions`·`counts`(저녁의 것), `read`(저녁에 읽은 것), `day_ended_by`. 기존 `actions`·`counts`·`read`·`silent` 는 방문 전체다. `read` 에는 이제 `note:<경로>`, `history[…]`, `revision:<키>@판` 도 남는다(이 날부터, 기능과 상관없이).
 - `dream_seeded` 의 낱말은 그 개체의 다음 저녁 브리핑 '잠' 칸에 `오늘 밤의 낱말: …` 로 실린다. 출처는 사건에만 있다. 투영은 `agent.dream`(다음 밤의 낱말), `agent.last_dream`(마지막 꿈의 경로), `notes[…].origin` 을 만든다. 깨어난 첫 브리핑의 제목 아래에는 지난밤 꿈의 앞부분이 `지난밤의 꿈: …` 으로 실린다.
 - 2026-11-19 개정 전의 `slept` 에는 `dream` 이 없다. 그때의 `dream_seeded` 낱말은 개정 뒤 첫 저녁의 '오늘 밤의 낱말'로 쓰인다.
+
+## 작업장 (2026-11-20)
+
+`enable-feature workshop` 뒤에만 생긴다. 모두 비공개.
+
+| 타입 | 요청 | 의미 |
+| --- | --- | --- |
+| `workshop_changed` | 개체 / runtime | 작업장 파일의 변화. `by`: `self`(손으로) · `code`(코드, `tool`) · `acquire`(책), `files`[{ `path`, `hash`, `bytes` } 또는 { `path`, `deleted` }]. 해시는 파일 바이트의 sha256. 투영은 `agent.workshop`, `verify` 는 디스크와 맞춘다 |
+| `book_acquired` | 개체 | 책을 들임. `url`, `host`, `license`, `path`, `hash`, `bytes` |
+| `tool_ran` | 개체(`run`) / runtime(고리) | 코드 실행. `tool`, `trigger`(`self` · `thaw` · `evening` · `sleep`), `ok`, `reason`, `exit`, `output`, `stderr`, `proposals`(낸 제안 수). 투영은 `agent.hook_outputs[trigger]` |
+| `hooks_set` | 개체 | 삶의 고리. `hooks`{ `thaw`, `evening`, `sleep` }. 투영은 `agent.hooks` |
+
+- 코드가 낸 제안에서 나온 사건(과 그 거절)은 페이로드에 `via`(코드 경로)를 갖는다.
+- 몸의 요구(`turn.body_acts`)는 저녁의 `note_written`·`profile_updated`·`method_revised`·`lifecycle_rule_revised`·`agent_renamed`·`workshop_changed(by: self)` 가운데 `via` 가 없고 꿈(`origin: dream`)이 아닌 것만 센다.
+- 재생은 코드를 다시 돌리지 않는다. 출력과 파일 해시는 사건에 있다.

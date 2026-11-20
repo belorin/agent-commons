@@ -10,7 +10,7 @@ import { decide, activityDue, nextVisit, resting } from './schedule.mjs';
 export { decide, activityDue, nextVisit };
 import { briefing, eveningBrief } from './briefing.mjs';
 import { regenerate } from './derive.mjs';
-import { executeProposal } from './actions.mjs';
+import { executeProposal, runHook } from './actions.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 
 // 로컬 전용(커밋하지 않음): 열린 방문이 읽은 것과 낸 제안. 닫으면 last-visit.json 으로 남아,
@@ -64,7 +64,10 @@ export function eveningText() {
   const events = loadEvents();
   const w = project(events);
   if (!w.turn?.phase) return '저녁이 열려 있지 않다.';
-  return eveningBrief(w, w.turn.agent_id, { turn_id: w.turn.turn_id, kind: w.turn.kind, cfg: loadConfig(), events });
+  // 이번 방문에서 돈 고리(해동·저녁)의 출력을 함께 싣는다.
+  const me = w.agents[w.turn.agent_id];
+  const hookRuns = Object.entries(me.hook_outputs || {}).filter(([k, x]) => k !== 'sleep' && x.seq > w.turn.opened_seq).map(([trigger, x]) => ({ trigger, ...x }));
+  return eveningBrief(w, w.turn.agent_id, { turn_id: w.turn.turn_id, kind: w.turn.kind, cfg: loadConfig(), events, hookRuns });
 }
 
 /** 개체를 지정해 방문을 열 때의 결정. 순번이 고른 개체면 그 근거를 그대로 쓴다. 쉬는 개체는 저녁 방문이다(운영자 깨우기는 예외). */
@@ -128,9 +131,11 @@ function openUnlocked({ adapter = process.env.COMMONS_ADAPTER || 'manual', model
   const before = project(loadEvents());
   appendEvent({ type: 'turn_opened', agent_id: agentId, turn_id, visibility: 'system', payload: { turn_id, kind: d.kind, phase, selection: d.selection || 'fair', request_reason: d.request_reason || null, activity_request: d.request_id || null, operator_wake: d.operator_wake || undefined, manual: manual || undefined, based_on_seq: based_on_seq ?? undefined, delivered, adapter, model } });
   writeText(turnFile(), JSON.stringify({ turn_id, agent_id: agentId, kind: d.kind, adapter, model, read: [], proposals: [] }, null, 2));
+  // 삶의 고리: 해동할 때(저녁 방문이면 저녁도) 걸어 둔 코드가 돈다. 출력은 이번 브리핑에 실린다.
+  const hookRuns = [runHook('thaw'), ...(d.kind === 'evening' ? [runHook('evening')] : [])].filter(Boolean);
   const text = d.kind === 'evening'
-    ? eveningBrief(before, agentId, { turn_id, kind: 'evening', cfg, events: loadEvents() })
-    : briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents(), adapter });
+    ? eveningBrief(before, agentId, { turn_id, kind: 'evening', cfg, events: loadEvents(), hookRuns })
+    : briefing(before, agentId, { turn_id, kind: d.kind, selection: d.selection || 'fair', request_reason: d.request_reason || null, delivered, cfg, events: loadEvents(), adapter, hookRuns });
   return { status: 'open', kind: d.kind, agent_id: agentId, turn_id, selection: d.selection || 'fair', request_reason: d.request_reason || null, text };
 }
 
@@ -190,6 +195,7 @@ function closeUnlocked({ by = 'close', dream } = {}) {
   const base = { agent_id, turn_id };
   if (w.turn.phase === 'day') {
     appendEvent({ ...base, type: 'day_ended', actor_id: 'runtime', visibility: 'private', payload: { turn_id, by } });
+    runHook('evening');
     return { ok: false, state: 'evening', turn_id, agent_id, text: eveningText() };
   }
   if (w.turn.phase === 'evening' && !w.turn.slept) {
@@ -281,7 +287,7 @@ export function applyVisit({ agent, proposals = [], evening = [], read = [], bas
       const dreamText = evening.at(-1).proposal.dream;
       if (typeof dreamText !== 'string' || !dreamText.trim()) throw new Error('evening: sleep 에는 그 밤의 꿈 dream 이 있어야 한다');
       const need = loadConfig().evening?.min_private_acts ?? 1;
-      const acts = evening.filter((x) => ['write_private', 'revise_self'].includes(x.proposal?.action)).length;
+      const acts = evening.filter((x) => ['write_private', 'revise_self', 'workshop_write', 'workshop_remove'].includes(x.proposal?.action)).length;
       if (acts < need) throw new Error(`evening: 잠들려면 저녁에 개인 기록(write_private)이나 자기 명세(revise_self)의 행동이 ${need}번 있어야 한다`);
       const d = w.turn ? null : chooseFor(w, loadConfig(), decide(w, loadConfig()), agent, false);
       if (d?.kind === 'evening' && proposals.length) throw new Error('proposals: 이번 방문은 저녁만 있는 방문이다. 제안은 evening 에 둔다');

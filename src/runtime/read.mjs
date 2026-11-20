@@ -1,4 +1,7 @@
 import { governanceContext } from './governance.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
+import { workshopPath, workshopDir } from './workshop.mjs';
 // 읽기: 열린 회차의 개체가 볼 수 있는 것만 돌려준다. 무엇을 읽었는지는 회차를 닫을 때 사건에 남는다.
 import { loadEvents, withTransaction, agentDir, readText } from './store.mjs';
 import { project, displayName, canSee, SELF_FILES } from './world.mjs';
@@ -10,7 +13,7 @@ import * as decisionsMod from './decisions.mjs';
 import { showcaseSettings, nextShowcaseClock } from './showcase.mjs';
 
 /** as 를 주면 열린 방문 없이 그 개체의 범위로 읽는다(브리핑을 받아 간 채팅을 대신 읽어 줄 때). 누구의 범위로 읽을지는 신뢰하는 쪽이 정한다. */
-const EVENING_READS = ['note', 'history', 'revision', 'schedule', 'evening'];
+const EVENING_READS = ['note', 'history', 'revision', 'schedule', 'evening', 'workshop'];
 export const read = (kind, arg, extra, { as = null } = {}) => withTransaction(() => readUnlocked(kind, arg, extra, as));
 function readUnlocked(kind, arg, extra, as) {
   const events = loadEvents();
@@ -24,6 +27,19 @@ function readUnlocked(kind, arg, extra, as) {
   if (phase === 'evening' && !(EVENING_READS.includes(kind) || (kind === 'agent' && arg === me.id))) return `저녁에는 바깥 기록이 이 자리에 없다. 저녁의 읽기: ${EVENING_READS.join(' | ')}`;
   switch (kind) {
     case 'evening': return as ? '저녁 브리핑은 열린 방문에서만 읽는다' : eveningText();
+    case 'workshop': {
+      // 자기 작업장. 경로가 없으면 목록, 있으면 내용(글자로). 시작 위치와 길이(글자 수)를 줄 수 있다.
+      const files = Object.entries(me.workshop || {}).sort(([a], [b]) => a.localeCompare(b));
+      if (!arg) return files.length ? ['# 작업장 (경로 · 크기)', ...files.map(([f, x]) => `- ${f} · ${x.bytes}바이트`)].join('\n') : '작업장이 비어 있다.';
+      const file = workshopPath(arg);
+      if (!file || !me.workshop?.[file]) return `${arg}: 작업장에 없는 파일이다`;
+      const body = fs.readFileSync(path.join(workshopDir(me.id), file), 'utf8');
+      const from = Math.max(0, Number(extra?.split(' ')[0]) || 0);
+      const len = Math.max(1, Number(extra?.split(' ')[1]) || 20000);
+      noteRead(`workshop:${file}`);
+      const part = body.slice(from, from + len);
+      return from + len < body.length ? `${part}\n…(${body.length}자 가운데 ${from}–${from + part.length}. 이어서: \`read workshop ${file} ${from + part.length}\`)` : part;
+    }
     case 'schedule': return JSON.stringify({ world_turns: w.turns, world_clock: w.clock, last_turn: me.last_turn, activity_request: me.activity_request, note: '자신의 요청만 열람 가능하며, 실제 다음 실행 시각은 보장되지 않는다' }, null, 2);
     case 'showcase': {
       const cfg = loadConfig();

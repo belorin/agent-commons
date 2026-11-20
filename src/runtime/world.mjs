@@ -5,6 +5,9 @@ import { projectGovernance } from './governance.mjs';
 export const SELF_FILES = ['identity', 'exploration', 'writing', 'lifecycle'];
 /** 하루의 경계를 나타내는 사건. 행동 수로 세지 않는다. */
 export const PHASE_EVENTS = ['day_ended', 'slept', 'dream_seeded'];
+/** 몸의 요구(잠들기 전의 사적 행동)로 세는 사건. 개체가 직접 한 것만 센다: 코드가 낸 제안(via)이나 코드가 바꾼 작업장은 대신해 주지 못한다. */
+export const BODY_ACTS = ['note_written', 'profile_updated', 'method_revised', 'lifecycle_rule_revised', 'agent_renamed', 'workshop_changed'];
+export const isBodyAct = (e) => BODY_ACTS.includes(e.type) && !e.payload?.via && !(e.type === 'workshop_changed' && e.payload?.by !== 'self') && e.payload?.origin !== 'dream';
 
 function blankAgent(id, e) {
   return {
@@ -34,6 +37,9 @@ function blankAgent(id, e) {
     last_opened_seq: 0, // 이 개체의 마지막 turn_opened 순번
     dream: null, // 다음 밤 꿈의 낱말: 방문을 닫을 때 받는다 { words, seq, turn_id } (evening 기능)
     last_dream: null, // 마지막 밤의 꿈(개인 기록 경로) { path, seq }
+    workshop: {}, // 작업장의 파일: 상대 경로 -> { hash, bytes } (workshop 기능)
+    hooks: null, // 삶의 고리에 걸어 둔 코드 { thaw, evening, sleep }
+    hook_outputs: {}, // 고리마다 마지막 실행 { tool, ok, output, reason, seq, clock }
   };
 }
 
@@ -87,7 +93,7 @@ export function project(events) {
         if (!pl.manual) w.turns_by_day[day] = (w.turns_by_day[day] || 0) + 1; // 수동 회차는 예약 실행의 하루 상한에 세지 않는다
         w.turn = { turn_id: pl.turn_id, agent_id: e.agent_id, kind: pl.kind, selection: pl.selection || 'fair', request_reason: pl.request_reason || null, adapter: pl.adapter || null, opened_seq: e.world_seq, number: w.turns, counts: {},
           // evening 기능이 켜진 뒤의 방문만 구간을 가진다. 하루 방문은 일과에서, 저녁 방문은 저녁에서 시작한다.
-          ...(pl.phase ? { phase: pl.phase, evening_counts: {}, day_ended_by: null, slept: false } : {}) };
+          ...(pl.phase ? { phase: pl.phase, evening_counts: {}, body_acts: 0, day_ended_by: null, slept: false } : {}) };
         w.request_streak = pl.selection === 'requested' ? w.request_streak + 1 : 0;
         // 저녁 방문은 쉬는 상태(활동 요청, 휴면과 그 기준 시계)를 건드리지 않는다.
         const rest = pl.kind === 'evening';
@@ -112,6 +118,15 @@ export function project(events) {
       case 'slept':
         if (w.turn?.phase && w.turn.turn_id === pl.turn_id) w.turn.slept = true;
         if (a && pl.dream) a.last_dream = { path: pl.dream, seq: e.world_seq };
+        break;
+      case 'workshop_changed':
+        if (a) for (const f of pl.files || []) { if (f.deleted) delete a.workshop[f.path]; else a.workshop[f.path] = { hash: f.hash, bytes: f.bytes }; }
+        break;
+      case 'hooks_set':
+        if (a) a.hooks = pl.hooks && Object.values(pl.hooks).some(Boolean) ? pl.hooks : null;
+        break;
+      case 'tool_ran':
+        if (a && pl.trigger && pl.trigger !== 'self') a.hook_outputs[pl.trigger] = { tool: pl.tool, ok: pl.ok, output: pl.output || '', reason: pl.reason || null, seq: e.world_seq, clock: w.clock };
         break;
       case 'dream_seeded':
         if (a) a.dream = { words: pl.words || [], seq: e.world_seq, turn_id: pl.turn_id || null };
@@ -317,7 +332,7 @@ export function project(events) {
     }
     if (w.turn && e.turn_id === w.turn.turn_id && e.actor_id === w.turn.agent_id && !['action_rejected', 'birth_seed_recorded', ...PHASE_EVENTS].includes(e.type)) {
       w.turn.counts[e.type] = (w.turn.counts[e.type] || 0) + 1;
-      if (w.turn.phase === 'evening') w.turn.evening_counts[e.type] = (w.turn.evening_counts[e.type] || 0) + 1;
+      if (w.turn.phase === 'evening') { w.turn.evening_counts[e.type] = (w.turn.evening_counts[e.type] || 0) + 1; if (isBodyAct(e)) w.turn.body_acts += 1; }
     }
   }
   return w;

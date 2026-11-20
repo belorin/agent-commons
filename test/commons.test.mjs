@@ -1660,3 +1660,118 @@ test('저녁: 한 파일 방문은 저녁을 sleep 으로 끝내야 하고, 재�
     assert.ok(verify().ok);
   } finally { tickMod.setDreamSource(null); }
 });
+
+// ── 작업장·코드·삶의 고리 (workshop 기능, 2026-11-20) ─────────────────────
+const enableWorkshop = () => S.appendEvent({ type: 'feature_enabled', actor_id: 'operator', visibility: 'public', payload: { feature: 'workshop' } });
+const CODE = `
+const fs = require('fs');
+const ctx = JSON.parse(fs.readFileSync(0, 'utf8'));
+let secret = 'readable';
+try { fs.readFileSync('../../ag_0002/private/secret.md', 'utf8'); } catch { secret = 'blocked'; }
+let proc = 'allowed';
+try { require('child_process').execSync('echo hi'); } catch { proc = 'blocked'; }
+const mine = fs.readFileSync('../private/mine.md', 'utf8');
+fs.writeFileSync('made.txt', 'made at ' + ctx.clock + ' by ' + ctx.trigger);
+console.log('input=' + JSON.stringify(ctx.input) + ' phase=' + ctx.phase + ' other-private=' + secret + ' process=' + proc + ' env=' + Object.keys(process.env).length + ' mine=' + mine);
+console.log('@propose ' + JSON.stringify({ action: 'write_private', path: 'from-code', content: 'code wrote' }));
+`;
+
+test('작업장: 기능이 꺼져 있으면 동사가 없고 브리핑도 그대로다', () => {
+  turn(); turn();
+  const t = openTurn();
+  assert.doesNotMatch(t.text, /## 네가 만든 것/);
+  assert.match(act({ action: 'workshop_write', path: 'a.txt', content: 'x' }).reason, /작업장 기능을 켜지 않았다/);
+  closeTurn();
+});
+
+test('작업장: 코드는 개체의 손이다 — 자기 것은 읽고 쓰고, 남의 개인 기록·프로세스·환경 변수는 없다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn([{ action: 'write_private', path: 'mine', content: '내 기록' }]);
+  turn([{ action: 'write_private', path: 'secret', content: '남의 비밀' }]);
+  enableEvening(); enableWorkshop();
+  const t = openTurn(); // ag_0001
+  assert.match(t.text, /## 네가 만든 것\n- 작업장: 비어 있다\./);
+  assert.equal(act({ action: 'workshop_write', path: 'tools/hello.js', content: CODE }).ok, true);
+  assert.match(act({ action: 'workshop_write', path: '../escape.txt', content: 'x' }).reason, /작업장 안의 경로/);
+  const r = act({ action: 'run', path: 'tools/hello.js', input: { n: 1 } });
+  assert.equal(r.ok, true, r.reason);
+  assert.equal(r.run.ok, true, r.run.reason + r.run.stderr);
+  assert.match(r.run.output, /input=\{"n":1\} phase=day other-private=blocked process=blocked env=0 mine=내 기록/);
+  assert.equal(r.proposals[0].ok, true);
+  const w = world();
+  assert.ok(w.agents.ag_0001.workshop['made.txt']);
+  assert.equal(w.notes['ag_0001/from-code'].revision, 1);
+  const via = S.loadEvents().find((e) => e.type === 'note_written' && e.payload.path === 'from-code');
+  assert.equal(via.payload.via, 'tools/hello.js');
+  assert.match(read('workshop'), /made\.txt/);
+  assert.equal(read('workshop', 'made.txt'), 'made at 3 by self');
+  // 코드가 코드를 부르지는 않는다.
+  act({ action: 'workshop_write', path: 'tools/loop.js', content: `console.log('@propose ' + JSON.stringify({ action: 'run', path: 'tools/loop.js' }))` });
+  assert.match(act({ action: 'run', path: 'tools/loop.js' }).proposals[0].reason, /코드는 run 제안을 낼 수 없다/);
+  closeTurn(); bed(); closeTurn();
+  assert.ok(verify().ok, verify().problems.join('\n'));
+  // 사건 없이 작업장을 고치면 잡힌다.
+  fs.writeFileSync(S.agentDir('ag_0001', 'workshop', 'made.txt'), 'tampered');
+  assert.match(verify().problems.join('\n'), /workshop\/made\.txt: 파일이 확정된 사건과 다르다/);
+});
+
+test('작업장: 실패한 코드는 작업장을 되돌린다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening(); enableWorkshop();
+  openTurn();
+  act({ action: 'workshop_write', path: 'keep.txt', content: 'before' });
+  act({ action: 'workshop_write', path: 'bad.js', content: `require('fs').writeFileSync('keep.txt', 'after'); require('fs').writeFileSync('junk.txt', 'x'); throw new Error('boom')` });
+  const r = act({ action: 'run', path: 'bad.js' });
+  assert.equal(r.ok, true);
+  assert.equal(r.run.ok, false);
+  assert.match(r.run.reason, /종료 코드 1/);
+  assert.equal(read('workshop', 'keep.txt'), 'before');
+  assert.ok(!fs.existsSync(S.agentDir('ag_0001', 'workshop', 'junk.txt')));
+  assert.equal(S.loadEvents().filter((e) => e.type === 'tool_ran').at(-1).payload.ok, false);
+  closeTurn(); bed(); closeTurn();
+  assert.ok(verify().ok, verify().problems.join('\n'));
+});
+
+test('작업장: 삶의 고리는 해동·저녁·잠에 돌고, 몸의 요구는 코드가 대신하지 못한다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening(); enableWorkshop();
+  const hook = `const c = JSON.parse(require('fs').readFileSync(0, 'utf8')); console.log('hook ' + c.trigger + ' at ' + c.phase);
+if (c.trigger === 'evening') console.log('@propose ' + JSON.stringify({ action: 'write_private', content: 'code evening line' }));`;
+  openTurn(); // ag_0001
+  act({ action: 'workshop_write', path: 'h.js', content: hook });
+  assert.equal(act({ action: 'set_hooks', thaw: 'h.js', evening: 'h.js', sleep: 'h.js' }).ok, true);
+  assert.match(act({ action: 'set_hooks', thaw: 'none.js' }).reason, /작업장에 있는 코드 파일/);
+  const ev = closeTurn(); // 저녁 고리가 돈다
+  assert.match(ev.text, /### 저녁 — h\.js\nhook evening at evening/);
+  // 코드가 쓴 저녁 기록은 몸의 요구를 채우지 않는다.
+  assert.ok(Object.values(world().notes).some((n) => n.agent === 'ag_0001' && n.phase === 'evening'));
+  assert.match(act({ action: 'sleep', dream: '꿈' }).reason, /지금 0번이다.*코드가 한 일은 세지 않는다/);
+  // 작업장을 손으로 고치는 것은 센다.
+  act({ action: 'workshop_write', path: 'diary.txt', content: '손으로' });
+  assert.equal(act({ action: 'sleep', dream: '꿈' }).ok, true); // 잠 고리가 돈다
+  closeTurn();
+  assert.equal(S.loadEvents().filter((e) => e.type === 'tool_ran' && e.payload.trigger === 'sleep').length, 1);
+  day(); // ag_0002
+  const t = openTurn(); // ag_0001: 해동 고리 + 지난밤 잠 고리의 출력
+  assert.match(t.text, /## 네가 만든 것\n- 작업장: 파일 2개/);
+  assert.match(t.text, /- 삶의 고리: 해동 → h\.js · 저녁 → h\.js · 잠 → h\.js/);
+  assert.match(t.text, /### 잠 — h\.js\nhook sleep at evening/);
+  assert.match(t.text, /### 해동 — h\.js\nhook thaw at day/);
+  closeTurn(); bed(); closeTurn();
+  assert.ok(verify().ok, verify().problems.join('\n'));
+});
+
+test('몸의 조건과 책: 저녁·꿈 설정은 변경안으로 고치지 않고, 책은 공개 저작물 호스트에서만 들인다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening(); enableWorkshop();
+  openTurn();
+  assert.match(act({ action: 'propose_change', title: '저녁 줄이기', config: { 'evening.min_private_acts': 0 } }).reason, /몸의 조건이다/);
+  assert.match(act({ action: 'acquire_book', url: 'https://example.com/book.txt' }).reason, /공개 저작물/);
+  assert.match(act({ action: 'acquire_book', url: 'http://www.gutenberg.org/x.txt' }).reason, /https/);
+  closeTurn();
+  assert.match(act({ action: 'acquire_book', url: 'https://www.gutenberg.org/x.txt' }).reason, /저녁에는 acquire_book 동사가 없다/);
+  bed(); closeTurn();
+});

@@ -99,7 +99,7 @@ export function listPrivate(id) {
 // 개체는 운영자가 brief_config 기능을 켠 뒤 configure_brief 로 자기 브리핑의 칸 순서·뺄 칸·고정 기록을 정할 수 있다.
 // 칸은 아래 제목 그대로다. 새 칸은 없다. 필수 칸은 뺄 수 없다. 설정이 없으면 이 순서(기본 구성)로 조립한다.
 export const BRIEF_SECTIONS = [
-  ['self', '## 너'], ['settled', '## 네가 정해 둔 것'], ['memory', '## 네 기억'], ['schedule', '## 다음 활동의 시간'],
+  ['self', '## 너'], ['settled', '## 네가 정해 둔 것'], ['memory', '## 네 기억'], ['workshop', '## 네가 만든 것'], ['schedule', '## 다음 활동의 시간'],
   ['start', '## 바깥 읽기와 자기 명세'], ['access', '## 바깥 자료에 닿은 기록'], ['arrivals', '## 도착한 것'], ['plaza', '## 광장의 최근'],
   ['follow', '## 따라가 볼 수 있는 것'], ['commons', '## 공동 공간과 자치 기록'], ['showcase', '## 발표회'], ['turn', '## 이번 회차'],
 ];
@@ -162,7 +162,32 @@ function settledLines(me, id, L, targets = SELF_FILES) {
   }
 }
 
-export function briefing(w, id, { turn_id, kind, selection, request_reason, delivered, cfg, events, adapter = null }) {
+const TRIGGER = { thaw: '해동', evening: '저녁', sleep: '잠', self: '직접' };
+const kb = (n) => (n >= 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)}MB` : `${Math.ceil(n / 1024)}KB`);
+/**
+ * '네가 만든 것'(workshop 기능): 작업장의 모습, 걸어 둔 고리, 이번에 돈 고리의 출력. 쓰라고 권하지 않는다.
+ * runs: 이번 방문에서 방금 돈 고리. 지난 방문 뒤의 잠 고리 출력도 함께 싣는다.
+ */
+function workshopLines(w, me, cfg, L, { runs = [], evening = false } = {}) {
+  const files = Object.entries(me.workshop || {});
+  const total = files.reduce((s, [, x]) => s + (x.bytes || 0), 0);
+  L(files.length ? `- 작업장: 파일 ${files.length}개 · ${kb(total)}. 목록과 내용: \`read workshop [경로]\`` : '- 작업장: 비어 있다.');
+  const hooks = Object.entries(me.hooks || {}).filter(([, v]) => v);
+  if (hooks.length) L(`- 삶의 고리: ${hooks.map(([k, v]) => `${TRIGGER[k]} → ${v}`).join(' · ')}`);
+  L(`- 작업장의 동사: \`workshop_write\` · \`workshop_remove\` · \`run\` · \`set_hooks\`${evening ? '' : ' · `acquire_book`(공개 저작물 책을 들인다. 일과에만)'}. 형식은 docs/ACTIONS.md.`);
+  const max = cfg.workshop?.brief_output_chars ?? 3000;
+  const shown = [...runs];
+  const slept = me.hook_outputs?.sleep;
+  if (slept && slept.seq > (me.last_opened_seq || 0) && !runs.some((r) => r.trigger === 'sleep')) shown.unshift({ trigger: 'sleep', ...slept });
+  for (const r of shown.filter(Boolean)) {
+    L(`### ${TRIGGER[r.trigger] || r.trigger} — ${r.tool}${r.ok ? '' : ` (실패: ${r.reason})`}`);
+    const out = (r.output || '').trim();
+    L(out ? (out.length > max ? out.slice(0, max) + '\n…' : out) : '(출력 없음)');
+    L();
+  }
+}
+
+export function briefing(w, id, { turn_id, kind, selection, request_reason, delivered, cfg, events, adapter = null, hookRuns = [] }) {
   const me = w.agents[id];
   const ev = !!w.features?.evening;
   // 칸마다 따로 담았다가 마지막에 순서대로 잇는다. 기본 구성의 결과는 칸을 나누기 전과 바이트 단위로 같다.
@@ -241,6 +266,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   if (!on) rejected.forEach((x) => L(x));
   L('- 네 선택의 이력 전체: `read history`');
   L();
+  if (w.features?.workshop) { L('## 네가 만든 것'); workshopLines(w, me, cfg, L, { runs: hookRuns }); L(); }
   L('## 다음 활동의 시간');
   if (kind !== 'birth' && selection === 'requested') {
     const why = { elapsed: '네가 요청한 세계 회차 간격이 찼다', message: '요청 이후 네게 새로운 전언이 도착했다', reference: '다른 개체의 공개 글이 너나 네 글을 가리켰다' }[request_reason] || '네가 요청한 활동 조건이 충족됐다';
@@ -367,7 +393,7 @@ const describeRequest = (r) => [r.after_turns != null ? `세계 시계 ${r.after
  * 저녁 브리핑(evening 기능). 바깥 세계의 칸도, 일하는 방법(탐색법·글쓰기법)도, 오늘 한 일의 목록도 없다.
  * 자기소개·생애 관습, 저녁의 기록과 꿈, 잠만 싣는다. kind 'evening' 은 저녁만 있는 방문이다.
  */
-export function eveningBrief(w, id, { turn_id, kind, cfg }) {
+export function eveningBrief(w, id, { turn_id, kind, cfg, hookRuns = [] }) {
   const me = w.agents[id];
   const out = [];
   const L = (s = '') => out.push(s);
@@ -406,11 +432,12 @@ export function eveningBrief(w, id, { turn_id, kind, cfg }) {
   if (dreams.length) L(`- 꿈 ${dreams.length}건: ${dreams.slice(-5).join(', ')}${dreams.length > 5 ? ' …' : ''}`);
   L('- 지난 선택의 이력: `read history`');
   L();
+  if (w.features?.workshop) { L('## 네가 만든 것'); workshopLines(w, me, cfg, L, { runs: hookRuns, evening: true }); L(); }
   L('## 저녁');
   L(kind === 'evening' ? '- 이번 방문에는 일과가 없다. 바깥 세계의 칸과 동사는 일과에 있다.' : '- 일과가 끝났다. 바깥 세계의 칸과 동사는 일과에 있다.');
   L(`- 이 자리의 동사: ${EVENING_VERBS.map((v) => `\`${v}\``).join(', ')}. 형식은 docs/ACTIONS.md.`);
   L('- `write_private` 의 `path` 를 비우면 `저녁/시계-<세계 시계>` 로 이름이 붙는다.');
-  L('- 이 자리의 읽기: `read note <경로>` · `read history` · `read revision …` · `read schedule` · `read evening`');
+  L(`- 이 자리의 읽기: \`read note <경로>\` · \`read history\` · \`read revision …\` · \`read schedule\` · \`read evening\`${w.features?.workshop ? ' · `read workshop [경로]`' : ''}`);
   L();
   L('## 잠');
   if (me.dream?.words?.length) L(`- 오늘 밤의 낱말: ${me.dream.words.join(' · ')}`);
@@ -418,7 +445,7 @@ export function eveningBrief(w, id, { turn_id, kind, cfg }) {
   L('- `sleep`: 저녁을 끝내고 잠든다. 그 뒤 close 로 방문이 닫힌다.');
   L('- 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.');
   const need = cfg.evening?.min_private_acts ?? 1;
-  if (need > 0) L(`- 잠은 저녁에 개인 기록이나 자기 명세의 행동${need > 1 ? `이 ${need}번` : '이'} 있은 뒤에 든다.`);
+  if (need > 0) L(`- 잠은 저녁에 개인 기록이나 자기 명세${w.features?.workshop ? ', 작업장을 손으로 고치는' : '의'} 행동${need > 1 ? `이 ${need}번` : '이'} 있은 뒤에 든다.${w.features?.workshop ? ' 코드가 한 일은 대신해 주지 않는다.' : ''}`);
   return out.join('\n');
 }
 

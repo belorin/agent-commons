@@ -9,7 +9,9 @@ import { currentSession, showcaseSettings } from './showcase.mjs';
 import { noteProposal } from './tick.mjs';
 import { briefing, resolvePin, BRIEF_KEYS, BRIEF_REQUIRED } from './briefing.mjs';
 import { changePathProblem } from './decisions.mjs';
+import { workshopPath, workshopDir, workshopSettings, runCode, fetchBook, scanWorkshop, diffWorkshop, totalBytes, bufferHash } from './workshop.mjs';
 import fs from 'node:fs';
+import nodePath from 'node:path';
 
 const SLUG = /^[\p{L}\p{N}][\p{L}\p{N}_-]{0,63}$/u;
 const COLOR = /^#[0-9a-fA-F]{6}$/;
@@ -21,7 +23,12 @@ export const ACCESS_OUTCOMES = ['ok', 'partial', 'failed'];
 export const UNCOUNTED = ['access_reported'];
 // 저녁(evening 기능): 바깥 세계의 동사가 없는 구간. 여기 있는 동사만 존재한다. 행동 수 한도는 일과의 동사에만 적용된다.
 export const EVENING_ACTIONS = ['write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request',
-  'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep'];
+  'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep',
+  'workshop_write', 'workshop_remove', 'run', 'set_hooks'];
+// 몸의 조건: 운영자의 것이다. 개체의 변경안(propose_change)으로 고치는 설정이 아니다.
+export const BODY_CONFIG = ['evening.', 'dream.'];
+// 코드가 낼 수 없는 제안: 코드가 코드를 부르거나 삶의 고리를 바꾸지 않는다.
+const NOT_VIA_CODE = ['run', 'set_hooks'];
 const DEFAULT_VISIBILITY = { identity: 'public', exploration: 'private', writing: 'private', lifecycle: 'private' };
 
 class Reject extends Error {}
@@ -50,14 +57,43 @@ function notePath(value) {
 // (2026-11-18 이전 사건에는 본문(content)도 들어 있다. 그대로 재생된다.)
 const CARRY = 'carry';
 /** 저녁의 사생활로 세는 사건: 개인 기록과 자기 명세의 행동. */
-export const PRIVATE_ACTS = ['note_written', 'profile_updated', 'method_revised', 'lifecycle_rule_revised', 'agent_renamed'];
-export const privateActs = (turn) => PRIVATE_ACTS.reduce((s, t) => s + ((turn?.evening_counts || {})[t] || 0), 0);
+
 /** 이름 없이 쓴 저녁 기록의 경로: 저녁/시계-<세계 시계>[-n] */
 function eveningPath(ctx) {
   const base = `저녁/시계-${ctx.w.clock}`;
   let path = base;
   for (let n = 2; ctx.w.notes[`${ctx.me.id}/${path}`]; n++) path = `${base}-${n}`;
   return path;
+}
+
+function requireWorkshop(ctx) {
+  if (!ctx.w.features?.workshop) reject('운영자가 아직 작업장 기능을 켜지 않았다');
+}
+/** 코드를 돌리고 남길 사건. 제안은 사건이 남은 뒤 개체의 제안과 같은 검사로 하나씩 확정한다. */
+function codeDrafts(ctx, path, input, trigger) {
+  const r = runCode({ w: ctx.w, id: ctx.me.id, file: path, input, trigger, cfg: ctx.cfg });
+  const drafts = [{ type: 'tool_ran', visibility: 'private', payload: { tool: path, trigger, ok: r.ok, reason: r.reason || undefined, exit: r.exit ?? undefined, output: r.output || '', stderr: r.stderr || undefined, proposals: r.proposals?.length || 0 } }];
+  if (r.files?.length) drafts.push({ type: 'workshop_changed', visibility: 'private', payload: { by: 'code', tool: path, files: r.files } });
+  drafts.after = () => (r.proposals || []).map((p) => applyUnlocked(p, { via: path }));
+  drafts.result = r;
+  return drafts;
+}
+
+/** 삶의 고리: 해동·저녁·잠에 걸어 둔 코드를 실행기가 돌린다. 행위자는 실행기이고, 제안은 개체의 권한으로 검사한다. */
+export function runHook(trigger) {
+  return withTransaction(() => {
+    const w = project(loadEvents());
+    if (!w.turn || !w.features?.workshop) return null;
+    const me = w.agents[w.turn.agent_id];
+    const path = me.hooks?.[trigger];
+    if (!path || !me.workshop[path]) return null;
+    const cfg = loadConfig();
+    const base = { agent_id: me.id, actor_id: 'runtime', turn_id: w.turn.turn_id };
+    const drafts = codeDrafts({ w, me, cfg }, path, null, trigger);
+    for (const d of drafts) appendEvent({ ...base, ...d });
+    const results = drafts.after();
+    return { trigger, tool: path, ok: drafts.result.ok, output: drafts.result.output, reason: drafts.result.reason || null, results };
+  });
 }
 
 const HANDLERS = {
@@ -67,25 +103,92 @@ const HANDLERS = {
   end_day(ctx) {
     if (!ctx.w.turn.phase) reject('이 판의 방문에는 아직 저녁이 없다');
     if (ctx.w.turn.phase !== 'day') reject('일과는 이미 끝났다');
-    return [{ type: 'day_ended', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, by: 'self' } }];
+    const drafts = [{ type: 'day_ended', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, by: 'self' } }];
+    drafts.after = () => runHook('evening');
+    return drafts;
   },
   // 잠: 저녁의 사생활(개인 기록·자기 명세의 행동)이 정한 횟수만큼 있어야 잠든다. 잠에는 언제나 꿈이 있다.
   sleep(ctx, a) {
     if (!ctx.w.turn.phase) reject('이 판의 방문에는 아직 저녁이 없다');
     if (ctx.w.turn.phase !== 'evening') reject('잠은 저녁에 든다. 일과를 마치는 동사는 end_day 다');
     const need = ctx.cfg.evening?.min_private_acts ?? 1;
-    const done = privateActs(ctx.w.turn);
-    if (done < need) reject(`잠들려면 저녁에 개인 기록(write_private)이나 자기 명세(revise_self)의 행동이 ${need}번 있어야 한다. 지금 ${done}번이다`);
+    const done = ctx.w.turn.body_acts || 0;
+    if (done < need) reject(`잠들려면 저녁에 개인 기록(write_private)이나 자기 명세(revise_self)의 행동이 ${need}번 있어야 한다. 지금 ${done}번이다. 작업장을 손으로 고치는 것도 세고, 코드가 한 일은 세지 않는다`);
     const dream = text(a.dream, 'dream', ctx.cfg);
     if (!dream.trim()) reject('dream: 오늘 밤의 꿈이 비어 있다');
     let path = `꿈/시계-${ctx.w.clock}`;
     for (let n = 2; ctx.w.notes[`${ctx.me.id}/${path}`]; n++) path = `꿈/시계-${ctx.w.clock}-${n}`;
     writeText(agentDir(ctx.me.id, 'private', path + '.md'), dream);
     writeText(agentDir(ctx.me.id, 'history', 'notes', `${path}.r1.md`), dream);
-    return [
+    const drafts = [
       { type: 'note_written', visibility: 'private', payload: { path, title: null, revision: 1, hash: sha256(dream), origin: 'dream' } },
       { type: 'slept', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, dream: path } },
     ];
+    drafts.after = () => runHook('sleep'); // 잠든 동안 도는 코드(작업장만 바꾼다. 잠든 뒤의 제안은 받지 않는다)
+    return drafts;
+  },
+
+  // ── 작업장(workshop 기능): 개체가 원하는 대로 가지는 것 ──
+  workshop_write(ctx, a) {
+    requireWorkshop(ctx);
+    const path = workshopPath(a.path);
+    if (!path) reject('path: 작업장 안의 경로(이름 칸마다 글자·숫자·_·-·., 점으로 시작하지 않음, 여섯 단계까지)');
+    if (typeof a.content !== 'string') reject('content: 문자열이어야 한다');
+    const buf = Buffer.from(a.content, 'utf8');
+    const s = workshopSettings(ctx.cfg);
+    if (buf.length > s.max_file_bytes) reject(`content: ${s.max_file_bytes}바이트를 넘는다`);
+    const manifest = { ...ctx.me.workshop, [path]: { hash: bufferHash(buf), bytes: buf.length } };
+    if (totalBytes(manifest) > s.max_total_bytes) reject(`작업장 전체가 ${s.max_total_bytes}바이트를 넘게 된다`);
+    const abs = nodePath.join(workshopDir(ctx.me.id), path);
+    fs.mkdirSync(nodePath.dirname(abs), { recursive: true });
+    fs.writeFileSync(abs, buf);
+    return [{ type: 'workshop_changed', visibility: 'private', payload: { by: 'self', files: [{ path, hash: bufferHash(buf), bytes: buf.length }] } }];
+  },
+  workshop_remove(ctx, a) {
+    requireWorkshop(ctx);
+    const path = workshopPath(a.path);
+    if (!path || !ctx.me.workshop[path]) reject('path: 작업장에 있는 파일이어야 한다');
+    fs.rmSync(nodePath.join(workshopDir(ctx.me.id), path), { force: true });
+    return [{ type: 'workshop_changed', visibility: 'private', payload: { by: 'self', files: [{ path, deleted: true }] } }];
+  },
+  acquire_book(ctx, a) {
+    requireWorkshop(ctx);
+    if (typeof a.url !== 'string') reject('url: 책의 주소가 필요하다');
+    let last = 'book';
+    try { const u = new URL(a.url); last = u.searchParams.get('title') || decodeURIComponent(u.pathname.split('/').filter(Boolean).pop() || 'book'); } catch { reject('url: 주소가 아니다'); }
+    const name = a.path ?? `books/${last.replace(/[^\p{L}\p{N}._-]/gu, '-').replace(/^[.-]+/, '').slice(0, 90) || 'book'}`;
+    const path = workshopPath(name);
+    if (!path) reject('path: 작업장 안의 경로');
+    const got = fetchBook(a.url, ctx.cfg);
+    if (got.error) reject(got.error);
+    const s = workshopSettings(ctx.cfg);
+    if (totalBytes({ ...ctx.me.workshop, [path]: { bytes: got.buf.length } }) > s.max_total_bytes) reject(`작업장 전체가 ${s.max_total_bytes}바이트를 넘게 된다`);
+    const abs = nodePath.join(workshopDir(ctx.me.id), path);
+    fs.mkdirSync(nodePath.dirname(abs), { recursive: true });
+    fs.writeFileSync(abs, got.buf);
+    const file = { path, hash: bufferHash(got.buf), bytes: got.buf.length };
+    return [
+      { type: 'book_acquired', visibility: 'private', payload: { url: a.url, host: got.host, license: got.license, ...file } },
+      { type: 'workshop_changed', visibility: 'private', payload: { by: 'acquire', files: [file] } },
+    ];
+  },
+  run(ctx, a) {
+    requireWorkshop(ctx);
+    const path = workshopPath(a.path);
+    if (!path || !ctx.me.workshop[path]) reject('path: 작업장에 있는 코드 파일이어야 한다');
+    return codeDrafts(ctx, path, a.input ?? null, 'self');
+  },
+  set_hooks(ctx, a) {
+    requireWorkshop(ctx);
+    const hooks = { ...(ctx.me.hooks || {}) };
+    for (const k of ['thaw', 'evening', 'sleep']) {
+      if (!(k in a)) continue;
+      if (a[k] === null) { delete hooks[k]; continue; }
+      const path = workshopPath(a[k]);
+      if (!path || !ctx.me.workshop[path]) reject(`${k}: 작업장에 있는 코드 파일이거나 null 이어야 한다`);
+      hooks[k] = path;
+    }
+    return [{ type: 'hooks_set', visibility: 'private', payload: { hooks } }];
   },
   write_private(ctx, a) {
     const evening = ctx.w.turn.phase === 'evening';
@@ -154,6 +257,7 @@ const HANDLERS = {
     for (const [key, value] of Object.entries(config)) {
       const parts = key.split('.');
       const old = parts.reduce((o, k) => (o && typeof o === 'object' ? o[k] : undefined), current);
+      if (BODY_CONFIG.some((b) => key.startsWith(b))) reject(`config: ${key} 은(는) 몸의 조건이다. 운영자의 것이며 변경안으로 고치지 않는다`);
       if (old === undefined || (old !== null && typeof old === 'object')) reject(`config: ${key} 은(는) 지금 설정에 있는 값의 키가 아니다`);
       if (typeof value !== typeof old) reject(`config: ${key} 의 값은 지금과 같은 종류(${typeof old})여야 한다`);
       if (typeof value === 'number' && !Number.isFinite(value)) reject(`config: ${key} 의 값이 수가 아니다`);
@@ -454,7 +558,7 @@ export const ACTIONS = Object.keys(HANDLERS);
 export function applyAction(proposal) {
   return withTransaction(() => applyUnlocked(proposal));
 }
-function applyUnlocked(proposal) {
+function applyUnlocked(proposal, { via = null } = {}) {
   const v = verify();
   if (!v.ok) throw new Error(v.problems.join('\n'));
   if (isPaused()) return { ok: false, paused: true, reason: '운영자가 정지했다(control/PAUSE). 새 행위를 수락하지 않는다' };
@@ -468,6 +572,7 @@ function applyUnlocked(proposal) {
     if (!['active', 'dormant'].includes(me.status)) reject('실행이 허용되지 않은 개체');
     if (!Object.hasOwn(HANDLERS, name)) reject(`알 수 없는 행동: ${name}. 가능한 행동: ${ACTIONS.join(', ')}`);
     if (w.turn.slept) reject('잠든 뒤다. 이 방문은 close 로 닫힌다');
+    if (via && NOT_VIA_CODE.includes(name)) reject(`코드는 ${name} 제안을 낼 수 없다`);
     const evening = w.turn.phase === 'evening';
     if (evening && !EVENING_ACTIONS.includes(name)) reject(`저녁에는 ${name} 동사가 없다. 저녁의 동사: ${EVENING_ACTIONS.join(', ')}`);
     // 행동 수 한도는 일과의 동사에만 적용된다. 저녁의 동사는 세지 않는다.
@@ -479,12 +584,15 @@ function applyUnlocked(proposal) {
     const events = [];
     for (const d of drafts) {
       if (d.type === 'birth_seed_recorded') d.payload.proposal = events[0].event_id;
+      // 코드가 낸 제안에서 나온 사건에는 그 코드가 남는다(via). 몸의 요구는 이것으로 채워지지 않는다.
+      if (via) d.payload = { ...(d.payload || {}), via };
       events.push(appendEvent({ ...base, ...d }));
     }
-    return { ok: true, events };
+    const after = drafts.after ? drafts.after() : undefined;
+    return { ok: true, events, ...(drafts.result ? { run: drafts.result, proposals: after } : {}), ...(after && !drafts.result && !Array.isArray(after) ? { hook: after } : {}) };
   } catch (err) {
     if (!(err instanceof Reject)) throw err;
-    const event = appendEvent({ ...base, type: 'action_rejected', visibility: 'private', payload: { action: String(name), reason: err.message } });
+    const event = appendEvent({ ...base, type: 'action_rejected', visibility: 'private', payload: { action: String(name), reason: err.message, ...(via ? { via } : {}) } });
     return { ok: false, reason: err.message, events: [event] };
   }
 }

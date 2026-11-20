@@ -1,4 +1,5 @@
 // 무결성 검사: 사건 사슬, 순번, 그리고 디스크의 파일이 확정된 사건과 일치하는지.
+import { scanWorkshop } from './workshop.mjs';
 import fs from 'node:fs';
 import { loadEvents, withTransaction, eventHash, agentDir, readText, sha256, p } from './store.mjs';
 import { project, SELF_FILES } from './world.mjs';
@@ -99,6 +100,16 @@ function verifyUnlocked() {
         }
       }
     }
+  }
+  // 작업장: 디스크의 파일이 사건에 남은 목록과 같아야 한다(사건 없이 생기거나 고쳐진 파일이 없다).
+  for (const a of Object.values(w.agents)) {
+    const disk = scanWorkshop(a.id, { removeLinks: false });
+    const known = a.workshop || {};
+    for (const [f, x] of Object.entries(disk)) {
+      if (!known[f]) problems.push(`data/agents/${a.id}/workshop/${f}: 사건 없이 생긴 파일`);
+      else if (known[f].hash !== x.hash) problems.push(`data/agents/${a.id}/workshop/${f}: 파일이 확정된 사건과 다르다`);
+    }
+    for (const f of Object.keys(known)) if (!disk[f]) problems.push(`data/agents/${a.id}/workshop/${f}: 파일이 없다`);
   }
   return { ok: problems.length === 0, problems, events: events.length, agents: Object.keys(w.agents).length };
 }
