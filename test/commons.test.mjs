@@ -1440,14 +1440,14 @@ const tickMod = await import('../src/runtime/tick.mjs');
 const EVENING = { seed_population: 2, max_turns_per_day: 500, dream: { enabled: true, url: 'https://words.test/api?count=3', timeout_ms: 1000 } };
 const enableEvening = () => S.appendEvent({ type: 'feature_enabled', actor_id: 'operator', visibility: 'public', payload: { feature: 'evening' } });
 /** 잠들기: 저녁의 사생활 하나와 꿈. */
-const bed = (dream = '물가의 꿈') => { act({ action: 'write_private', content: '저녁의 한 줄' }); return act({ action: 'sleep', dream }); };
+const bed = (dream = '물가의 꿈') => { act({ action: 'write_private', content: '저녁의 한 줄' }); act({ action: 'review_self', map: '지금의 나: 물가에 있다.' }); return act({ action: 'sleep', dream }); };
 /** 하루 방문 하나: 일과 행동 → close(저녁 시작) → 저녁 행동 → sleep → close */
 function day(dayActions = [], eveningActions = []) {
   const t = openTurn();
   assert.equal(t.status, 'open', t.text);
   const d = dayActions.map(act);
   if (t.kind !== 'evening') assert.equal(closeTurn().state, 'evening');
-  const e = [{ action: 'write_private', content: '저녁의 한 줄' }, ...eveningActions].map(act);
+  const e = [{ action: 'write_private', content: '저녁의 한 줄' }, ...eveningActions, { action: 'review_self', map: '지금의 나: 물가에 있다.' }].map(act);
   assert.equal(act({ action: 'sleep', dream: '물가의 꿈' }).ok, true);
   assert.equal(closeTurn().ok, true);
   return { ...t, d, e };
@@ -1484,7 +1484,7 @@ test('저녁: 하루 방문은 일과 → 저녁 → 잠이고, 저녁에는 바
     assert.doesNotMatch(ev.text, /## 오늘|탐색법 \(r|글쓰기법 \(r|work-note/);
     assert.match(ev.text, /- 탐색법·글쓰기법은 일과의 브리핑에 실린다\./);
     assert.match(ev.text, /일과에 쓴 기록: 1건/);
-    assert.doesNotMatch(ev.text, /광장|발표회|바깥 웹|해도 된다|성찰|회고/);
+    assert.doesNotMatch(ev.text, /광장|발표회|바깥 웹|해도 된다|성찰/);
     assert.equal(world().turn.phase, 'evening');
     // 저녁에는 바깥 세계의 동사와 carry 가 없다.
     assert.match(act({ action: 'publish', slug: 'x', title: 'x', content: 'x' }).reason, /저녁에는 publish 동사가 없다/);
@@ -1501,6 +1501,8 @@ test('저녁: 하루 방문은 일과 → 저녁 → 잠이고, 저녁에는 바
     assert.equal(act({ action: 'revise_self', target: 'identity', content: '저녁에 고친 소개' }).ok, true);
     // 잠들기 전에는 닫히지 않는다. 잠에는 꿈이 있다.
     assert.equal(closeTurn().state, 'awake');
+    assert.match(act({ action: 'sleep', dream: '꿈' }).reason, /오늘 밤의 회고/);
+    assert.equal(act({ action: 'review_self', map: '나는 아직 이름이 없다. 유리를 본다.' }).ok, true);
     assert.match(act({ action: 'sleep' }).reason, /dream: 필요한 항목이다/);
     assert.match(act({ action: 'sleep', dream: '   ' }).reason, /꿈이 비어 있다/);
     const slept = act({ action: 'sleep', dream: '유리 다리를 건너는데 발밑에서 자갈이 노래를 했다. 디저트 가게의 불빛이 선명했다.' });
@@ -1516,8 +1518,8 @@ test('저녁: 하루 방문은 일과 → 저녁 → 잠이고, 저녁에는 바
     assert.equal(seeded.payload.source, 'words.test');
     const closed = events.at(-1);
     assert.equal(closed.type, 'turn_closed');
-    assert.equal(closed.payload.actions, 5);
-    assert.deepEqual(closed.payload.evening.counts, { note_written: 2, profile_updated: 1 });
+    assert.equal(closed.payload.actions, 6);
+    assert.deepEqual(closed.payload.evening.counts, { note_written: 3, profile_updated: 1 });
     assert.equal(closed.payload.evening.day_ended_by, 'close');
     // 다음 해동: 브리핑 맨 위에 지난밤 꿈의 앞부분. 받은 낱말은 다음 밤 꿈의 재료로 저녁 브리핑에 실린다.
     day(); // ag_0002
@@ -1525,7 +1527,8 @@ test('저녁: 하루 방문은 일과 → 저녁 → 잠이고, 저녁에는 바
     assert.equal(next.agent_id, 'ag_0001');
     assert.equal(next.text.split('\n')[1], '지난밤의 꿈: 유리 다리를 건너는데 발밑에서 자갈이 노래를 했다. 디저트 가게의 불빛이 선명했다.');
     assert.doesNotMatch(next.text, /words\.test|pickrandom|pebble/);
-    assert.match(next.text, /개인 기록 3건은 저녁에 실린다/); // 일과 기록, 저녁 기록, 꿈
+    assert.match(next.text, /개인 기록 4건은 저녁에 실린다/); // 일과 기록, 저녁 기록, 꿈, 자기 지도
+    assert.match(next.text, /## 네가 정해 둔 것\n### 자기 지도 \(회고 r1, 비공개\)\n나는 아직 이름이 없다\. 유리를 본다\./);
     const ev2 = closeTurn();
     assert.match(ev2.text, /### 가장 최근의 저녁 기록: 저녁\/시계-\d+ \(r1\)\n저녁의 기록/);
     assert.doesNotMatch(ev2.text, /지난밤의 꿈/); // 같은 방문에서 두 번 싣지 않는다
@@ -1609,12 +1612,14 @@ test('저녁: 행동 한도는 일과에만, 저녁의 읽기는 자기 기록�
   assert.match(read('evening'), /^# 저녁 — ag_0001/);
   assert.match(read('agent', 'ag_0001'), /# ag_0001/);
   assert.match(read('agent', 'ag_0002'), /저녁에는 바깥 기록이 이 자리에 없다/);
+  assert.match(act({ action: 'sleep', dream: '꿈' }).reason, /오늘 밤의 회고/);
+  assert.equal(act({ action: 'review_self', map: '나는 한도를 본 개체다.' }).ok, true);
   assert.equal(act({ action: 'sleep', dream: '꿈' }).ok, true);
   closeTurn();
   const closed = S.loadEvents().at(-1).payload;
   assert.deepEqual(closed.read, ['work:ag_0001/a@1', 'note:one', 'agent:ag_0001']);
   assert.deepEqual(closed.evening.read, ['note:one', 'agent:ag_0001']);
-  assert.equal(closed.evening.actions, 3); // 저녁 기록 둘과 꿈
+  assert.equal(closed.evening.actions, 4); // 저녁 기록 둘, 자기 지도, 꿈
 });
 
 test('저녁: 한 파일 방문은 저녁을 sleep 으로 끝내야 하고, 재적용은 처음 받은 낱말을 쓴다', () => {
@@ -1625,11 +1630,11 @@ test('저녁: 한 파일 방문은 저녁을 sleep 으로 끝내야 하고, 재�
     turn(); turn();
     enableEvening();
     const sleep = (id, dream = '꿈') => ({ request_id: id, proposal: { action: 'sleep', dream } });
-    const note = (id) => ({ request_id: id, proposal: { action: 'write_private', content: '저녁' } });
+    const note = (id) => ({ request_id: id, proposal: { action: 'review_self', map: '저녁의 지도' } });
     assert.throws(() => tickMod.applyVisit({ agent: 'ag_0001', proposals: [], evening: [{ request_id: 'eve-00001', proposal: { action: 'write_private', content: 'x' } }] }), /sleep 으로 끝나야 한다/);
     assert.throws(() => tickMod.applyVisit({ agent: 'ag_0001', proposals: [] }), /sleep 으로 끝나야 한다/);
     const r = tickMod.applyVisit({ agent: 'ag_0001', proposals: [{ request_id: 'day-00001', proposal: { action: 'write_private', path: 'd', content: '일과' } }],
-      evening: [{ request_id: 'eve-00002', proposal: { action: 'write_private', content: '저녁' } }, sleep('eve-00003')] });
+      evening: [{ request_id: 'eve-00002', proposal: { action: 'write_private', content: '저녁' } }, note('eve-00009'), sleep('eve-00003')] });
     assert.equal(r.status, 'applied');
     assert.ok(r.results.every((x) => x.ok));
     assert.equal(calls, 1);
@@ -1640,10 +1645,10 @@ test('저녁: 한 파일 방문은 저녁을 sleep 으로 끝내야 하고, 재�
     assert.match(seeded.failed, /연결 거부/);
     // 낱말이 없으면 다음 해동 브리핑에 줄이 없다. 방문은 정상으로 닫혔다.
     const last = tickMod.loadLastVisit();
-    assert.deepEqual(last.proposals.map((x) => x.phase), ['day', 'evening', 'evening']);
+    assert.deepEqual(last.proposals.map((x) => x.phase), ['day', 'evening', 'evening', 'evening']);
     // 재적용(충돌 뒤): 낱말은 다시 받지 않는다.
     // 사생활 없는 저녁, 꿈 없는 잠은 열기 전에 받지 않는다.
-    assert.throws(() => tickMod.applyVisit({ agent: 'ag_0002', proposals: [], evening: [sleep('eve-00005')] }), /행동이 1번 있어야 한다/);
+    assert.throws(() => tickMod.applyVisit({ agent: 'ag_0002', proposals: [], evening: [sleep('eve-00005')] }), /오늘 밤의 회고/);
     assert.throws(() => tickMod.applyVisit({ agent: 'ag_0002', proposals: [], evening: [note('eve-00007'), { request_id: 'eve-00008', proposal: { action: 'sleep' } }] }), /dream 이 있어야 한다/);
     const r2 = tickMod.applyVisit({ agent: 'ag_0002', proposals: [], evening: [note('eve-00006'), sleep('eve-00004', '화강암 위의 바이올린')], dream: { words: ['granite'], source: 'words.test' } });
     assert.equal(r2.status, 'applied');
@@ -1750,6 +1755,8 @@ if (c.trigger === 'evening') console.log('@propose ' + JSON.stringify({ action: 
   assert.match(act({ action: 'sleep', dream: '꿈' }).reason, /지금 0번이다.*코드가 한 일은 세지 않는다/);
   // 작업장을 손으로 고치는 것은 센다.
   act({ action: 'workshop_write', path: 'diary.txt', content: '손으로' });
+  assert.match(act({ action: 'sleep', dream: '꿈' }).reason, /오늘 밤의 회고/); // 몸의 요구는 채워졌고 회고가 남았다
+  act({ action: 'review_self', map: '손으로 만든 것이 있다.' });
   assert.equal(act({ action: 'sleep', dream: '꿈' }).ok, true); // 잠 고리가 돈다
   closeTurn();
   assert.equal(S.loadEvents().filter((e) => e.type === 'tool_ran' && e.payload.trigger === 'sleep').length, 1);
@@ -1855,7 +1862,7 @@ test('직무: 한 파일 방문은 morning 에 근무 기록이 있어야 한다
   openTurn(); act({ action: 'respond_job', job: 'job_test0003', decision: 'accept' }); closeTurn(); bed(); closeTurn();
   day();
   const sleep = { request_id: 'mm-sleep-1', proposal: { action: 'sleep', dream: '꿈' } };
-  const note = { request_id: 'mm-note-1', proposal: { action: 'write_private', content: '저녁' } };
+  const note = { request_id: 'mm-note-1', proposal: { action: 'review_self', map: '저녁의 지도' } };
   assert.throws(() => tickMod.applyVisit({ agent: 'ag_0001', proposals: [], evening: [note, sleep] }), /근무 기록\(job_log\)/);
   const r = tickMod.applyVisit({ agent: 'ag_0001', morning: [{ request_id: 'mm-log-1', proposal: { action: 'job_log', content: '살폈다' } }], proposals: [{ request_id: 'mm-day-1', proposal: { action: 'write_private', path: 'p', content: '오후' } }], evening: [note, sleep] });
   assert.equal(r.status, 'applied');
@@ -1912,4 +1919,30 @@ test('운영자는 자기 공개 말을 거둘 수 있다: 사건은 남고 보�
   closeTurn();
   assert.ok(S.loadEvents().some((e) => e.world_seq === note.world_seq)); // 지우지 않는다
   assert.ok(verify().ok);
+});
+
+test('회고: 저녁마다 자기 지도를 다시 쓰고, 생애의 흔적은 실행기가 센 사실로 실린다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  day([{ action: 'write_private', path: 'carry', content: '할 일 하나' }, { action: 'request_activity', after_turns: 0, note: '같은 원문을 다시 찾는다' }]);
+  const t = openTurn(); // ag_0001 (요청 조건이 바로 찼다)
+  assert.equal(t.agent_id, 'ag_0001');
+  const ev = closeTurn();
+  assert.match(ev.text, /## 회고\n- 잠들기 전마다 자기 지도를 다시 쓴다/);
+  assert.match(ev.text, /### 지금의 자기 지도 \(r1\)\n지금의 나: 물가에 있다\./);
+  assert.match(ev.text, /### 생애의 흔적 \(실행기가 센 사실이다\. 해석은 없다\)\n- 첫 방문: 세계 시계 1/);
+  assert.match(ev.text, /- 이어 가는 메모\(carry\): 1판 · 처음 세계 시계 3/);
+  assert.match(ev.text, /세계 시계 3: 같은 원문을 다시 찾는다/);
+  assert.match(ev.text, /- 꿈 1번 · 회고 1번 \(처음 세계 시계 3\)/);
+  assert.match(ev.text, /오늘 밤의 회고: 아직/);
+  act({ action: 'write_private', content: '저녁' });
+  assert.match(act({ action: 'sleep', dream: '꿈' }).reason, /오늘 밤의 회고/);
+  assert.equal(act({ action: 'review_self', map: '두 번째 지도' }).ok, true);
+  assert.match(read('evening'), /오늘 밤의 회고: 했다/);
+  assert.equal(act({ action: 'sleep', dream: '꿈' }).ok, true);
+  closeTurn();
+  assert.equal(world().notes['ag_0001/회고/지도'].revision, 2);
+  assert.equal(S.readText(S.agentDir('ag_0001', 'history', 'notes', '회고/지도.r1.md')), '지금의 나: 물가에 있다.');
+  assert.ok(verify().ok, verify().problems.join('\n'));
 });

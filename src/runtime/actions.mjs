@@ -9,6 +9,7 @@ import { currentSession, showcaseSettings } from './showcase.mjs';
 import { noteProposal } from './tick.mjs';
 import { briefing, resolvePin, BRIEF_KEYS, BRIEF_REQUIRED } from './briefing.mjs';
 import { changePathProblem } from './decisions.mjs';
+import { MAP_PATH } from './review.mjs';
 import { workshopPath, workshopDir, workshopSettings, runCode, fetchBook, scanWorkshop, diffWorkshop, totalBytes, bufferHash } from './workshop.mjs';
 import fs from 'node:fs';
 import nodePath from 'node:path';
@@ -24,7 +25,7 @@ export const UNCOUNTED = ['access_reported'];
 // 저녁(evening 기능): 바깥 세계의 동사가 없는 구간. 여기 있는 동사만 존재한다. 행동 수 한도는 일과의 동사에만 적용된다.
 export const EVENING_ACTIONS = ['write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request',
   'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep',
-  'workshop_write', 'workshop_remove', 'run', 'set_hooks', 'respond_job', 'quit_job'];
+  'workshop_write', 'workshop_remove', 'run', 'set_hooks', 'respond_job', 'quit_job', 'review_self'];
 // 오전(직무 시간)에 없는 동사: 사적인 것과 하루의 다른 경계. 오전은 job_log 와 end_morning 이 있다.
 export const NOT_IN_MORNING = ['write_private', 'revise_self', 'configure_brief', 'present', 'withdraw_presentation', 'end_day', 'sleep'];
 const MORNING_ONLY = ['job_log', 'end_morning'];
@@ -117,6 +118,7 @@ const HANDLERS = {
     const need = ctx.cfg.evening?.min_private_acts ?? 1;
     const done = ctx.w.turn.body_acts || 0;
     if (done < need) reject(`잠들려면 저녁에 개인 기록(write_private)이나 자기 명세(revise_self)의 행동이 ${need}번 있어야 한다. 지금 ${done}번이다. 작업장을 손으로 고치는 것도 세고, 코드가 한 일은 세지 않는다`);
+    if ((ctx.cfg.evening?.require_review ?? true) && !ctx.w.turn.reviewed) reject('잠들려면 오늘 밤의 회고가 있어야 한다: review_self(map: 자기 지도 전문)');
     const dream = text(a.dream, 'dream', ctx.cfg);
     if (!dream.trim()) reject('dream: 오늘 밤의 꿈이 비어 있다');
     let path = `꿈/시계-${ctx.w.clock}`;
@@ -159,6 +161,22 @@ const HANDLERS = {
     const drafts = [{ type: 'morning_ended', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, by: 'self' } }];
     if (ctx.w.turn.kind === 'work') drafts.after = () => runHook('evening');
     return drafts;
+  },
+
+  // 매일 밤의 회고: 자기 지도(전 생애에 걸친 자기 정리)를 다시 쓴다. 판본이 쌓인다. 같은 내용을 다시 내도 회고로 남는다.
+  review_self(ctx, a) {
+    if (ctx.w.turn.phase !== 'evening') reject('회고는 저녁에 한다');
+    const map = text(a.map, 'map', ctx.cfg);
+    if (!map.trim()) reject('map: 자기 지도가 비어 있다');
+    const prev = ctx.w.notes[`${ctx.me.id}/${MAP_PATH}`];
+    const revision = (prev?.revision || 0) + 1;
+    writeText(agentDir(ctx.me.id, 'private', MAP_PATH + '.md'), map);
+    writeText(agentDir(ctx.me.id, 'history', 'notes', `${MAP_PATH}.r${revision}.md`), map);
+    const hash = sha256(map);
+    return [
+      { type: 'note_written', visibility: 'private', payload: { path: MAP_PATH, title: '자기 지도', revision, hash, origin: 'review' } },
+      { type: 'self_reviewed', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, revision, chars: map.length, changed: prev ? prev.hash !== hash : true } },
+    ];
   },
 
   // ── 작업장(workshop 기능): 개체가 원하는 대로 가지는 것 ──

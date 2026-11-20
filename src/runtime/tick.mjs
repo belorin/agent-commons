@@ -303,10 +303,11 @@ export function applyVisit({ agent, morning = [], proposals = [], evening = [], 
     const w = project(loadEvents());
     if (w.features?.evening) {
       if (evening.at(-1)?.proposal?.action !== 'sleep') throw new Error('evening: 저녁의 제안은 sleep 으로 끝나야 한다');
+      if ((loadConfig().evening?.require_review ?? true) && !evening.some((x) => x.proposal?.action === 'review_self')) throw new Error('evening: 잠들려면 오늘 밤의 회고(review_self, map: 자기 지도 전문)가 있어야 한다');
       const dreamText = evening.at(-1).proposal.dream;
       if (typeof dreamText !== 'string' || !dreamText.trim()) throw new Error('evening: sleep 에는 그 밤의 꿈 dream 이 있어야 한다');
       const need = loadConfig().evening?.min_private_acts ?? 1;
-      const acts = evening.filter((x) => ['write_private', 'revise_self', 'workshop_write', 'workshop_remove'].includes(x.proposal?.action)).length;
+      const acts = evening.filter((x) => ['write_private', 'revise_self', 'workshop_write', 'workshop_remove', 'review_self'].includes(x.proposal?.action)).length;
       if (acts < need) throw new Error(`evening: 잠들려면 저녁에 개인 기록(write_private)이나 자기 명세(revise_self)의 행동이 ${need}번 있어야 한다`);
       const d = w.turn ? null : chooseFor(w, loadConfig(), decide(w, loadConfig()), agent, false);
       if (['evening', 'work'].includes(d?.kind) && proposals.length) throw new Error(`proposals: 이번 방문에는 오후(자기 일과)가 없다(${d.kind === 'work' ? '오전 다음 바로 저녁' : '저녁만'}). 제안은 ${d.kind === 'work' ? 'morning·' : ''}evening 에 둔다`);

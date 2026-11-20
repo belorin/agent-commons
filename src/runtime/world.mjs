@@ -4,7 +4,7 @@ import { projectGovernance } from './governance.mjs';
 
 export const SELF_FILES = ['identity', 'exploration', 'writing', 'lifecycle'];
 /** 하루의 경계를 나타내는 사건. 행동 수로 세지 않는다. */
-export const PHASE_EVENTS = ['day_ended', 'slept', 'dream_seeded', 'morning_ended'];
+export const PHASE_EVENTS = ['day_ended', 'slept', 'dream_seeded', 'morning_ended', 'self_reviewed'];
 /** 몸의 요구(잠들기 전의 사적 행동)로 세는 사건. 개체가 직접 한 것만 센다: 코드가 낸 제안(via)이나 코드가 바꾼 작업장은 대신해 주지 못한다. */
 export const BODY_ACTS = ['note_written', 'profile_updated', 'method_revised', 'lifecycle_rule_revised', 'agent_renamed', 'workshop_changed'];
 export const isBodyAct = (e) => BODY_ACTS.includes(e.type) && !e.payload?.via && !(e.type === 'workshop_changed' && e.payload?.by !== 'self') && e.payload?.origin !== 'dream';
@@ -40,6 +40,7 @@ function blankAgent(id, e) {
     workshop: {}, // 작업장의 파일: 상대 경로 -> { hash, bytes } (workshop 기능)
     hooks: null, // 삶의 고리에 걸어 둔 코드 { thaw, evening, sleep }
     hook_outputs: {}, // 고리마다 마지막 실행 { tool, ok, output, reason, seq, clock }
+    last_review: null, // 마지막 밤의 회고 { revision, seq, clock }
     job: null, // 맡은 직무의 id (운영자가 제안하고 개체가 받은 것)
     last_day_clock: null, // 마지막으로 일과가 있었던 방문의 세계 시계
   };
@@ -129,6 +130,10 @@ export function project(events) {
       }
       case 'day_ended':
         if (w.turn?.phase && w.turn.turn_id === pl.turn_id) { w.turn.phase = 'evening'; w.turn.day_ended_by = pl.by || null; }
+        break;
+      case 'self_reviewed':
+        if (w.turn?.phase && w.turn.turn_id === pl.turn_id) w.turn.reviewed = true;
+        if (a) a.last_review = { revision: pl.revision, seq: e.world_seq, clock: w.clock };
         break;
       case 'slept':
         if (w.turn?.phase && w.turn.turn_id === pl.turn_id) w.turn.slept = true;

@@ -7,6 +7,7 @@ import path from 'node:path';
 import { displayName, canSee, SELF_FILES } from './world.mjs';
 import { showcaseSettings, nextShowcaseClock, currentSession } from './showcase.mjs';
 import { decide, resting, working } from './schedule.mjs';
+import { lifeTrace, selfMap } from './review.mjs';
 import { changeStatus, editStatus } from './decisions.mjs';
 
 const LABEL = { identity: '자기소개', exploration: '탐색법', writing: '글쓰기법', lifecycle: '생애 관습' };
@@ -262,6 +263,14 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L();
   jobLines(w, me, L, { morning: mode === 'morning', turn: w.turn?.turn_id === turn_id ? w.turn : null });
   L('## 네가 정해 둔 것');
+  // 자기 지도(매일 밤의 회고에서 개체가 다시 쓴 것)가 있으면 맨 앞에 싣는다. 깊은 층이 낮의 주의를 조건 짓는다.
+  const map = ev ? selfMap(w, id) : null;
+  if (map?.text.trim()) {
+    const max = cfg.evening?.map_brief_chars ?? 4000;
+    L(`### 자기 지도 (회고 r${map.revision}, 비공개)`);
+    L(map.text.length > max ? map.text.slice(0, max) + `\n…(${max}자에서 잘렸다. 전문: \`read note 회고/지도\`)` : map.text.trim());
+    L();
+  }
   settledLines(me, id, L);
   L();
   L('## 네 기억');
@@ -423,7 +432,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   return assembleBrief(parts, conf);
 }
 
-const EVENING_VERBS = ['write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request', 'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep'];
+const EVENING_VERBS = ['review_self', 'write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request', 'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep'];
 const describeWake = (wake = {}) => [wake.after_turns != null ? `세계 시계 ${wake.after_turns}칸이 지남` : null, wake.on_message ? '새 전언' : null].filter(Boolean).join(' 또는 ') || '없음';
 const describeRequest = (r) => [r.after_turns != null ? `세계 시계 ${r.after_turns}칸이 지남(세계 시계 ${(r.from_clock ?? r.from_turn) + r.after_turns}에 참)` : null, r.on_message ? '새 전언' : null, r.on_reference ? '공개 인용' : null].filter(Boolean).join(' 또는 ');
 
@@ -431,7 +440,7 @@ const describeRequest = (r) => [r.after_turns != null ? `세계 시계 ${r.after
  * 저녁 브리핑(evening 기능). 바깥 세계의 칸도, 일하는 방법(탐색법·글쓰기법)도, 오늘 한 일의 목록도 없다.
  * 자기소개·생애 관습, 저녁의 기록과 꿈, 잠만 싣는다. kind 'evening' 은 저녁만 있는 방문이다.
  */
-export function eveningBrief(w, id, { turn_id, kind, cfg, hookRuns = [] }) {
+export function eveningBrief(w, id, { turn_id, kind, cfg, events = [], hookRuns = [] }) {
   const me = w.agents[id];
   const out = [];
   const L = (s = '') => out.push(s);
@@ -457,8 +466,9 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, hookRuns = [] }) {
   const written = (n) => w.notes[`${id}/${n}`]?.seq || 0;
   const notes = listPrivate(id).filter((n) => n !== CARRY_PATH).sort((a, b) => written(a) - written(b) || a.localeCompare(b));
   const isDream = (n) => w.notes[`${id}/${n}`]?.origin === 'dream';
+  const isMap = (n) => w.notes[`${id}/${n}`]?.origin === 'review';
   const dreams = notes.filter(isDream);
-  const evening = notes.filter((n) => w.notes[`${id}/${n}`]?.phase === 'evening' && !isDream(n));
+  const evening = notes.filter((n) => w.notes[`${id}/${n}`]?.phase === 'evening' && !isDream(n) && !isMap(n));
   const day = notes.filter((n) => w.notes[`${id}/${n}`]?.phase !== 'evening');
   if (evening.length) {
     const last = evening.at(-1);
@@ -474,6 +484,18 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, hookRuns = [] }) {
   L('- 지난 선택의 이력: `read history`');
   L();
   if (w.features?.workshop) { L('## 네가 만든 것'); workshopLines(w, me, cfg, L, { runs: hookRuns, evening: true }); L(); }
+  // 매일 밤의 회고: 지금의 자기 지도(3층)와, 실행기가 센 생애의 흔적(2층).
+  const map = selfMap(w, id);
+  const live = w.turn && w.turn.agent_id === id && w.turn.turn_id === turn_id ? w.turn : null;
+  L('## 회고');
+  L('- 잠들기 전마다 자기 지도를 다시 쓴다: `review_self`(map: 지도 전문). 지도는 판본으로 쌓이고 다음 일과의 \'네가 정해 둔 것\' 맨 앞에 실린다.');
+  L(`- 오늘 밤의 회고: ${live?.reviewed ? '했다' : '아직'}`);
+  if (map?.text.trim()) { L(); L(`### 지금의 자기 지도 (r${map.revision})`); L(map.text.trim()); }
+  else L('- 자기 지도: 아직 없다.');
+  L();
+  L('### 생애의 흔적 (실행기가 센 사실이다. 해석은 없다)');
+  for (const line of lifeTrace(w, events, id)) L(line);
+  L();
   L('## 저녁');
   L(kind === 'evening' ? '- 이번 방문에는 일과가 없다. 바깥 세계의 칸과 동사는 일과에 있다.' : '- 일과가 끝났다. 바깥 세계의 칸과 동사는 일과에 있다.');
   L(`- 이 자리의 동사: ${EVENING_VERBS.map((v) => `\`${v}\``).join(', ')}. 형식은 docs/ACTIONS.md.`);
@@ -486,6 +508,7 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, hookRuns = [] }) {
   L('- `sleep`: 저녁을 끝내고 잠든다. 그 뒤 close 로 방문이 닫힌다.');
   L('- 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.');
   const need = cfg.evening?.min_private_acts ?? 1;
+  if (cfg.evening?.require_review ?? true) L('- 잠은 오늘 밤의 회고가 있은 뒤에 든다.');
   if (need > 0) L(`- 잠은 저녁에 개인 기록이나 자기 명세${w.features?.workshop ? ', 작업장을 손으로 고치는' : '의'} 행동${need > 1 ? `이 ${need}번` : '이'} 있은 뒤에 든다.${w.features?.workshop ? ' 코드가 한 일은 대신해 주지 않는다.' : ''}`);
   return out.join('\n');
 }
@@ -517,7 +540,7 @@ export function standingBrief(w, events, id, cfg, adapter = null) {
   if (w.features?.evening) {
     // 저녁이 있는 판: 저녁 방문이면 저녁 브리핑만, 하루 방문이면 일과 뒤에 저녁 브리핑을 붙인다(명령을 실행할 수 없는 채팅은 브리핑을 한 번만 받는다).
     const restOnly = resting(w, w.agents[id]);
-    const evening = [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'write_private', content: '…' } },
+    const evening = [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'review_self', map: '…' } },
       { request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'sleep', dream: '…' } }];
     // 직무를 맡은 개체: 오전(직무)이 맨 앞이다. 쉬는 중이면 오전 다음 바로 저녁이다.
     const works = working(w, w.agents[id]);
