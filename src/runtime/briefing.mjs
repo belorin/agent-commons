@@ -433,6 +433,8 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, hookRuns = [] }) {
   if (me.temperament && !me.temperament.released) { L(); L('### 운영자가 준 기질'); L(me.temperament.content.trim()); L(); L('- 운영자가 쓴 문장이다. 네가 쓴 자기 명세가 아니다. `release_temperament`: 이 자리에서 뺀다.'); }
   if (me.pending_end) L('- 자기 종료를 요청해 둔 상태다. 이 방문을 닫으면 집행된다. 거두려면 cancel_self_end.');
   if (me.job && w.jobs[me.job]) L(`- 맡은 직무: 「${w.jobs[me.job].title}」. 직무는 일과의 것이다.`);
+  // 아직 답하지 않은 직무 제안은 저녁에도 실린다(받거나 거절하는 일은 저녁에도 한다).
+  if (Object.values(w.jobs || {}).some((j) => j.to === id && j.status === 'offered')) { L(); jobLines(w, { ...me, job: null }, L); }
   L();
   L('## 네가 정해 둔 것');
   // 일하는 방법은 일과에 두고 온다. 저녁에는 자기소개와 생애 관습만 싣는다.

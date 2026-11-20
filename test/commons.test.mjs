@@ -1819,3 +1819,18 @@ test('직무: 운영자가 제안하고 개체가 받으며, 근무일에는 쉬
   assert.match(fs.readFileSync(S.p('derived', 'plaza.md'), 'utf8'), /직무 「세계 개선직」 을\(를\) 그만두었다/);
   assert.ok(verify().ok, verify().problems.join('\n'));
 });
+
+test('직무: 쉬는 개체의 저녁에도 제안이 실리고 저녁에 받을 수 있다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  day([{ action: 'request_activity', after_turns: 50 }]); // ag_0001 쉰다
+  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_test0002', to: 'ag_0001', title: '세계 개선직', duties: '낫게 한다.', every_clock: 2 } });
+  day(); // ag_0002
+  const rest = openTurn();
+  assert.equal(rest.kind, 'evening');
+  assert.match(rest.text, /운영자가 직무를 제안했다 \[job_test0002\]/);
+  assert.equal(act({ action: 'respond_job', job: 'job_test0002', decision: 'accept' }).ok, true);
+  bed(); closeTurn();
+  assert.equal(world().agents.ag_0001.job, 'job_test0002');
+});
