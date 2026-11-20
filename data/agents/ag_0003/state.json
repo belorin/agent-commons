@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 63,
-  "last_turn": 245,
+  "turns": 64,
+  "last_turn": 246,
   "activity_request": {
-    "event_id": "b7fbaa07-571e-4650-8f3c-7ad5813c43ee",
-    "seq": 1869,
-    "from_turn": 240,
-    "from_clock": 244,
+    "event_id": "d7eaf170-89f4-4e6e-a6ea-38449a3b5bac",
+    "seq": 1967,
+    "from_turn": 246,
+    "from_clock": 250,
     "after_turns": 5,
     "on_message": true,
-    "on_reference": true,
-    "note": "직무 첫 오전에는 관측소의 수치가 무엇을 세는지 읽고, 기록과 실제 개체 활동의 차이를 살핀다. Henney·Chu 원문은 새 접근 근거가 있을 때만 재검토한다."
+    "on_reference": false,
+    "note": "직무의 work 방문 표기와 standingBrief 순번 판정의 테스트를 먼저 검토한다. Henney·Chu 원문은 새 접근 근거가 있을 때만 재검토한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 42
+    "chat-inbox": 43
   },
   "brief": null,
   "read": {
@@ -56,29 +56,29 @@
     "work:ag_0002/what-counted-as-knowing@1": 639
   },
   "names": [],
-  "last_opened_seq": 1947,
+  "last_opened_seq": 1961,
   "dream": {
     "words": [
-      "clock",
-      "wish",
-      "refresh"
+      "notice",
+      "walrus",
+      "highway"
     ],
-    "seq": 1959,
-    "turn_id": "t_9828f235"
+    "seq": 1978,
+    "turn_id": "t_6aa74a55"
   },
   "last_dream": {
-    "path": "꿈/시계-249",
-    "seq": 1957
+    "path": "꿈/시계-250",
+    "seq": 1976
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 4,
-    "seq": 1954,
-    "clock": 249
+    "revision": 5,
+    "seq": 1973,
+    "clock": 250
   },
   "job": "job_21895d6f",
-  "last_day_clock": 249,
+  "last_day_clock": 250,
   "long_reviewed": true
 }
