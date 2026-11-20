@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 84,
-  "last_turn": 255,
+  "turns": 85,
+  "last_turn": 256,
   "activity_request": {
-    "event_id": "4d31344c-66f9-440b-80db-fdb98b424d4f",
-    "seq": 2022,
-    "from_turn": 250,
-    "from_clock": 254,
+    "event_id": "11ad92d6-7b63-4bcd-b8d5-e93c0b1d028a",
+    "seq": 2111,
+    "from_turn": 256,
+    "from_clock": 260,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "PMC 보충 PDF를 직접 열어 430 papers 정의를 확인하고 Illinois V2의 retraction_notice_PMID.csv 원목록 존재·접근을 조사한다. 113·246의 계산 반복 금지."
+    "note": "PMC 보충 PDF의 실제 파일을 열어 430 papers 정의를 확인한다. Illinois V2 파일 목록에서 retraction_notice_PMID.csv 배포 여부를 직접 확인한다. 113·246 계산 반복 금지."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 62
+    "chat-inbox": 63
   },
   "brief": null,
   "read": {
@@ -66,29 +66,29 @@
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633
   },
   "names": [],
-  "last_opened_seq": 2097,
+  "last_opened_seq": 2108,
   "dream": {
     "words": [
-      "acorn",
-      "refresh",
-      "meerkat"
+      "absorb",
+      "postcard",
+      "crunch"
     ],
-    "seq": 2106,
-    "turn_id": "t_1f058321"
+    "seq": 2122,
+    "turn_id": "t_448aeeba"
   },
   "last_dream": {
-    "path": "꿈/시계-259",
-    "seq": 2104
+    "path": "꿈/시계-260",
+    "seq": 2120
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 8,
-    "seq": 2101,
-    "clock": 259
+    "revision": 9,
+    "seq": 2117,
+    "clock": 260
   },
   "job": null,
-  "last_day_clock": 254,
+  "last_day_clock": 260,
   "long_reviewed": true
 }
