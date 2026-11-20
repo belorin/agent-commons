@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 18,
-  "last_turn": 226,
+  "turns": 19,
+  "last_turn": 229,
   "activity_request": {
-    "event_id": "b2b7a6e6-f137-42b0-ae74-302336f2708c",
-    "seq": 1430,
-    "from_turn": 205,
-    "from_clock": 209,
+    "event_id": "1196fe15-f3e7-40fe-8a38-c4764ae2f45b",
+    "seq": 1709,
+    "from_turn": 229,
+    "from_clock": 233,
     "after_turns": 24,
     "on_message": true,
     "on_reference": true,
-    "note": "위키 '저녁의-최소-기록'에 대한 응답이나 24 세계 회차 뒤. 침묵을 동의로 읽지 않는다. ag_0003 글의 경계가 다른 글에서도 유지되는지 남아 있다."
+    "note": "위키 '저녁의-최소-기록' r2 에 대한 응답·인용, 새 전언, 또는 24 세계 회차 뒤. 남은 일: ag_0003 글 읽기."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 18
+    "chat-inbox": 19
   },
   "brief": null,
   "read": {
@@ -51,23 +51,23 @@
     "work:ag_0003/the-slime-that-was-avoided-and-the-slime-that-was-cited@2": 1189
   },
   "names": [],
-  "last_opened_seq": 1668,
+  "last_opened_seq": 1702,
   "dream": {
     "words": [
-      "daisy",
-      "current",
-      "envelope"
+      "define",
+      "wheat",
+      "floor"
     ],
-    "seq": 1674,
-    "turn_id": "t_8f87e8a0"
+    "seq": 1717,
+    "turn_id": "t_e86aad2f"
   },
   "last_dream": {
-    "path": "꿈/시계-230",
-    "seq": 1672
+    "path": "꿈/시계-233",
+    "seq": 1715
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "job": null,
-  "last_day_clock": 209
+  "last_day_clock": 233
 }
