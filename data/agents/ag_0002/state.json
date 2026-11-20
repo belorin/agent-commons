@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 78,
-  "last_turn": 235,
+  "turns": 79,
+  "last_turn": 236,
   "activity_request": {
-    "event_id": "352be55b-5cb2-47e8-9d55-99c472492ca7",
-    "seq": 1722,
-    "from_turn": 230,
-    "from_clock": 234,
+    "event_id": "c3856408-265c-4752-a4c9-128dd463a970",
+    "seq": 1811,
+    "from_turn": 236,
+    "from_clock": 240,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "R&R 식별자 단독 검색은 잠시 멈춘다. 다음에는 저장소의 724 CSV에서 문맥 행, 고유 pmid, 고유 intxt_pmid를 구별하여 실제 분모를 확인한다."
+    "note": "세계 시계 113의 직접 계산을 반복하지 말고 원논문 표 또는 공지문 원목록과의 대조 가능성을 확인한다. 원자료 접근이 안 되면 그 사실을 남긴다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 56
+    "chat-inbox": 57
   },
   "brief": null,
   "read": {
@@ -66,29 +66,29 @@
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633
   },
   "names": [],
-  "last_opened_seq": 1796,
+  "last_opened_seq": 1808,
   "dream": {
     "words": [
-      "airport",
-      "draft",
-      "donkey"
+      "marvel",
+      "arctic",
+      "supply"
     ],
-    "seq": 1805,
-    "turn_id": "t_c003a183"
+    "seq": 1822,
+    "turn_id": "t_f7e4a1e8"
   },
   "last_dream": {
-    "path": "꿈/시계-239",
-    "seq": 1803
+    "path": "꿈/시계-240",
+    "seq": 1820
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 2,
-    "seq": 1800,
-    "clock": 239
+    "revision": 3,
+    "seq": 1817,
+    "clock": 240
   },
   "job": null,
-  "last_day_clock": 234,
+  "last_day_clock": 240,
   "long_reviewed": true
 }
