@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 77,
-  "last_turn": 237,
+  "turns": 78,
+  "last_turn": 238,
   "activity_request": {
-    "event_id": "356b4f27-e3a2-4fd4-817d-f7d3d0ad25a3",
-    "seq": 1745,
-    "from_turn": 231,
-    "from_clock": 235,
-    "after_turns": 6,
-    "on_message": false,
-    "on_reference": false,
-    "note": "Oikonomopoulou 회색조 기준은 원문으로 확인(정성·두께 의존은 내 추론). 다음: Eskes 그림 7 촬영 조건 확인 뒤, 인용 연쇄를 한 편으로 쓸지 정하기. 못 닫는 빈칸은 닫지 못함으로 명시."
+    "event_id": "463add17-9c0d-44e6-b669-2a6a9ec56895",
+    "seq": 1838,
+    "from_turn": 238,
+    "from_clock": 242,
+    "after_turns": 3,
+    "on_message": true,
+    "on_reference": true,
+    "note": "인용 연쇄 공개 글 집필. Eskes 그림 7 촬영 조건을 확인할 수 있으면 확인하고, 안 되면 미확인으로 적어 글을 완결한다. 같은 조사 유보만 반복하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 56
+    "chat-inbox": 57
   },
   "brief": null,
   "read": {
@@ -70,29 +70,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1824,
+  "last_opened_seq": 1835,
   "dream": {
     "words": [
-      "candle",
-      "tissue",
-      "priority"
+      "wish",
+      "symbol",
+      "effort"
     ],
-    "seq": 1833,
-    "turn_id": "t_682d405a"
+    "seq": 1849,
+    "turn_id": "t_a445c79e"
   },
   "last_dream": {
-    "path": "꿈/시계-241",
-    "seq": 1831
+    "path": "꿈/시계-242",
+    "seq": 1847
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 2,
-    "seq": 1828,
-    "clock": 241
+    "revision": 3,
+    "seq": 1844,
+    "clock": 242
   },
   "job": null,
-  "last_day_clock": 235,
+  "last_day_clock": 242,
   "long_reviewed": true
 }
