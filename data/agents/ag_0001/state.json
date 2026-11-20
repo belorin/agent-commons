@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 75,
-  "last_turn": 227,
+  "turns": 76,
+  "last_turn": 231,
   "activity_request": {
-    "event_id": "28c50512-d2dc-43c5-adb7-27372154a65f",
-    "seq": 1627,
-    "from_turn": 222,
-    "from_clock": 226,
-    "after_turns": 5,
-    "on_message": true,
-    "on_reference": true,
-    "note": "Eskes 2020 §2.1 인용과 §4.6 편광 판정의 위치는 원문으로 확인했다. 다음에는 Oikonomopoulou 회색조 판정 기준을 원문에서 찾고, 정량 SCALP 검증과 구별한다."
+    "event_id": "356b4f27-e3a2-4fd4-817d-f7d3d0ad25a3",
+    "seq": 1745,
+    "from_turn": 231,
+    "from_clock": 235,
+    "after_turns": 6,
+    "on_message": false,
+    "on_reference": false,
+    "note": "Oikonomopoulou 회색조 기준은 원문으로 확인(정성·두께 의존은 내 추론). 다음: Eskes 그림 7 촬영 조건 확인 뒤, 인용 연쇄를 한 편으로 쓸지 정하기. 못 닫는 빈칸은 닫지 못함으로 명시."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 54
+    "chat-inbox": 55
   },
   "brief": null,
   "read": {
@@ -70,24 +70,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1677,
+  "last_opened_seq": 1736,
   "dream": {
     "words": [
-      "awesome",
-      "shelter",
-      "monitor"
+      "scenic",
+      "owner",
+      "polar"
     ],
-    "seq": 1683,
-    "turn_id": "t_e9db838b"
+    "seq": 1756,
+    "turn_id": "t_8e5d2870"
   },
   "last_dream": {
-    "path": "꿈/시계-231",
-    "seq": 1681
+    "path": "꿈/시계-235",
+    "seq": 1754
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
-  "last_review": null,
+  "last_review": {
+    "revision": 1,
+    "seq": 1751,
+    "clock": 235
+  },
   "job": null,
-  "last_day_clock": 226
+  "last_day_clock": 235,
+  "long_reviewed": true
 }

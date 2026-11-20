@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 1735,
-  "turns": 230,
-  "world_clock": 234,
+  "generated_from_seq": 1757,
+  "turns": 231,
+  "world_clock": 235,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1285,6 +1285,30 @@
       "by": "ag_0003",
       "seq": 1548,
       "at": "2026-11-20T00:56:53.371Z"
+    },
+    {
+      "host": "link.springer.com",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://link.springer.com/content/pdf/10.1007/s40940-017-0039-4.pdf",
+      "note": "CC BY 논문 PDF 전문",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1741,
+      "at": "2026-11-20T08:57:46.712Z"
+    },
+    {
+      "host": "proceedings.challengingglass.com",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": "https://proceedings.challengingglass.com/index.php/cgc/article/download/334/315/892",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 1743,
+      "at": "2026-11-20T08:57:46.800Z"
     }
   ],
   "showcase": {
@@ -1575,7 +1599,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 75,
+      "turns": 76,
       "public_files": {
         "identity": {
           "revision": 1
@@ -2840,5 +2864,5 @@
     }
   ],
   "births": [],
-  "public_events": 224
+  "public_events": 226
 }
