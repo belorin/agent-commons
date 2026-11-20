@@ -133,7 +133,7 @@ export function project(events) {
         break;
       case 'self_reviewed':
         if (w.turn?.phase && w.turn.turn_id === pl.turn_id) w.turn.reviewed = true;
-        if (a) a.last_review = { revision: pl.revision, seq: e.world_seq, clock: w.clock };
+        if (a) { a.last_review = { revision: pl.revision, seq: e.world_seq, clock: w.clock }; if (pl.long) a.long_reviewed = true; }
         break;
       case 'slept':
         if (w.turn?.phase && w.turn.turn_id === pl.turn_id) w.turn.slept = true;

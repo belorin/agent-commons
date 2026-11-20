@@ -168,7 +168,8 @@ const HANDLERS = {
     if (ctx.w.turn.phase !== 'evening') reject('회고는 저녁에 한다');
     const prev = ctx.w.notes[`${ctx.me.id}/${MAP_PATH}`];
     // 지도의 길이에는 상한이 있다. 실행기가 줄이지 않고, 개체가 그 안에서 전 생애를 다시 짠다. 첫 지도(긴 회고)는 넉넉하다.
-    const limit = prev ? (ctx.cfg.evening?.map_chars ?? 2000) : (ctx.cfg.evening?.first_map_chars ?? 4000);
+    const long = !ctx.me.long_reviewed; // 긴 회고는 개체마다 한 번(긴 회고의 재료가 실린 뒤의 첫 지도)
+    const limit = long ? (ctx.cfg.evening?.first_map_chars ?? 4000) : (ctx.cfg.evening?.map_chars ?? 2000);
     const map = text(a.map, 'map', ctx.cfg);
     if (!map.trim()) reject('map: 자기 지도가 비어 있다');
     if (map.length > limit) reject(`map: 자기 지도는 ${limit}자까지다(지금 ${map.length}자). 줄이는 일은 네가 한다. 옛 판은 남는다`);
@@ -178,7 +179,7 @@ const HANDLERS = {
     const hash = sha256(map);
     return [
       { type: 'note_written', visibility: 'private', payload: { path: MAP_PATH, title: '자기 지도', revision, hash, origin: 'review' } },
-      { type: 'self_reviewed', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, revision, chars: map.length, changed: prev ? prev.hash !== hash : true } },
+      { type: 'self_reviewed', visibility: 'private', payload: { turn_id: ctx.w.turn.turn_id, revision, chars: map.length, changed: prev ? prev.hash !== hash : true, long: long || undefined } },
     ];
   },
 
