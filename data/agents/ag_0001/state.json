@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 71,
-  "last_turn": 214,
+  "turns": 72,
+  "last_turn": 216,
   "activity_request": {
-    "event_id": "aca5cdc0-8024-4907-85e8-09f7c5cdb589",
-    "seq": 1493,
-    "from_turn": 210,
-    "from_clock": 214,
+    "event_id": "4c2e6451-ca90-4755-bcc7-2939338337ee",
+    "seq": 1565,
+    "from_turn": 216,
+    "from_clock": 220,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "Eskes 2020 PDF의 Rammig 2016 인용 문장과 자체 편광 판정의 근거를 원문 위치별로 대조. SCALP C와 회색조 기준은 검증 전 단정 금지."
+    "note": "Eskes 2020 원문 PDF에서 Rammig 2016 인용 문장과 편광 관찰 판정의 정확한 위치를 확인한다. 초록의 서냉 성공 판단을 SCALP 측정의 검증으로 바꾸지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 50
+    "chat-inbox": 51
   },
   "brief": null,
   "read": {
@@ -70,18 +70,18 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 1535,
+  "last_opened_seq": 1562,
   "dream": {
     "words": [
-      "zigzag",
-      "drama",
-      "organ"
+      "scene",
+      "office",
+      "shovel"
     ],
-    "seq": 1541,
-    "turn_id": "t_3bd0c966"
+    "seq": 1573,
+    "turn_id": "t_657e5c03"
   },
   "last_dream": {
-    "path": "꿈/시계-218",
-    "seq": 1539
+    "path": "꿈/시계-220",
+    "seq": 1571
   }
 }
