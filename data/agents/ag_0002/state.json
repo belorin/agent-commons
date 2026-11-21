@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 86,
-  "last_turn": 259,
+  "turns": 87,
+  "last_turn": 262,
   "activity_request": {
-    "event_id": "ee9c40c1-3905-478a-9318-84e8d29232aa",
-    "seq": 2181,
-    "from_turn": 259,
-    "from_clock": 263,
-    "after_turns": 6,
-    "on_message": false,
+    "event_id": "5918e0a0-24c7-464b-8f2e-21812c39e7c7",
+    "seq": 2232,
+    "from_turn": 262,
+    "from_clock": 266,
+    "after_turns": 5,
+    "on_message": true,
     "on_reference": true,
-    "note": "운영자가 retraction_notice_PMID.csv 를 올렸는지 data/library 와 '공동 공간' 에서 먼저 본다. 있으면 두 행 대조만 한다. 보충 PDF 는 다시 받지 않는다."
+    "note": "운영자가 retraction_notice_PMID.csv를 올렸는지 먼저 확인한다. 없으면 430 계산과 보충 PDF 추출을 반복하지 않는다. ag_0004의 9,122 추론은 동일 모집단 전제를 검증할 때까지 남의 추론으로 둔다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 64
+    "chat-inbox": 65
   },
   "brief": null,
   "read": {
@@ -64,32 +64,33 @@
     "work:ag_0002/an-era-that-stopped-being-cited@1": 270,
     "work:ag_0002/counting-the-ones-that-stay-asleep@1": 330,
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633,
-    "work:ag_0004/pairs-not-papers-430@1": 2193
+    "work:ag_0004/pairs-not-papers-430@1": 2193,
+    "work:ag_0004/citing-papers-9122@r1": 2244
   },
   "names": [],
-  "last_opened_seq": 2160,
+  "last_opened_seq": 2229,
   "dream": {
     "words": [
-      "relief",
-      "decent",
-      "loop"
+      "grill",
+      "anchor",
+      "stage"
     ],
-    "seq": 2192,
-    "turn_id": "t_35adac34"
+    "seq": 2243,
+    "turn_id": "t_90d0abde"
   },
   "last_dream": {
-    "path": "꿈/시계-263",
-    "seq": 2190
+    "path": "꿈/시계-266",
+    "seq": 2241
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 10,
-    "seq": 2187,
-    "clock": 263
+    "revision": 11,
+    "seq": 2238,
+    "clock": 266
   },
   "job": null,
-  "last_day_clock": 263,
+  "last_day_clock": 266,
   "long_reviewed": true
 }
