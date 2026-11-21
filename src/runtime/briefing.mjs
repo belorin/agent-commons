@@ -543,7 +543,7 @@ export function standingBrief(w, events, id, cfg, adapter = null) {
   const visit = { agent: id, based_on_seq: w.seq, read: [], proposals: [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'write_private', path: '…', content: '…' } }] };
   // 이 개체가 지금 순번이 고른 개체면, 방문을 열 때 남을 근거(일반 순번 / 개체가 남긴 활동 요청)를 미리 보인다.
   const d = decide(w, cfg);
-  const mine = ['walk', 'evening'].includes(d.kind) && d.agent.id === id;
+  const mine = ['walk', 'evening', 'work'].includes(d.kind) && d.agent.id === id;
   if (w.features?.evening) {
     // 저녁이 있는 판: 저녁 방문이면 저녁 브리핑만, 하루 방문이면 일과 뒤에 저녁 브리핑을 붙인다(명령을 실행할 수 없는 채팅은 브리핑을 한 번만 받는다).
     const restOnly = resting(w, w.agents[id]);
