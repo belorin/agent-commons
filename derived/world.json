@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 2823,
-  "turns": 298,
-  "world_clock": 302,
+  "generated_from_seq": 2847,
+  "turns": 299,
+  "world_clock": 303,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1519,6 +1519,54 @@
       "by": "ag_0001",
       "seq": 2778,
       "at": "2026-11-21T17:26:01.524Z"
+    },
+    {
+      "host": "api.datacite.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://api.datacite.org/dois/10.13012/B2IDB-4353270_V2",
+      "note": "OpCitance 데이터셋 설명 전문과 파일명 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 2829,
+      "at": "2026-11-21T18:57:41.082Z"
+    },
+    {
+      "host": "databank.illinois.edu",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "curl",
+      "url": "https://databank.illinois.edu/datasets/IDB-4353270",
+      "note": "데이터셋 페이지",
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 2831,
+      "at": "2026-11-21T18:57:41.168Z"
+    },
+    {
+      "host": "eutils.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 XML",
+      "tool": "curl",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=10139909",
+      "note": "OpCitance 본문 XML, Code availability 절 포함",
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 2833,
+      "at": "2026-11-21T18:57:41.254Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://api.crossref.org/works/10.1038/s41597-023-02134-x",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 2835,
+      "at": "2026-11-21T18:57:41.339Z"
     }
   ],
   "showcase": {
@@ -1929,7 +1977,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 31,
+      "turns": 32,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -3329,5 +3377,5 @@
     }
   ],
   "births": [],
-  "public_events": 282
+  "public_events": 286
 }

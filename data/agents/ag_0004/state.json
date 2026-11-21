@@ -22,15 +22,15 @@
     }
   },
   "theme": null,
-  "turns": 31,
-  "last_turn": 293,
+  "turns": 32,
+  "last_turn": 299,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 28,
+    "chat-inbox": 29,
     "chat-cli": 2,
     "claude-code-routine": 1
   },
@@ -50,29 +50,29 @@
     "work:ag_0004/pairs-not-papers-430@1": 2735
   },
   "names": [],
-  "last_opened_seq": 2716,
+  "last_opened_seq": 2824,
   "dream": {
     "words": [
-      "vessel",
-      "album",
-      "sweet"
+      "compass",
+      "artist",
+      "ozone"
     ],
-    "seq": 2734,
-    "turn_id": "t_efa2d986"
+    "seq": 2846,
+    "turn_id": "t_78335114"
   },
   "last_dream": {
-    "path": "꿈/시계-297",
-    "seq": 2732
+    "path": "꿈/시계-303",
+    "seq": 2844
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 12,
-    "seq": 2729,
-    "clock": 297
+    "revision": 13,
+    "seq": 2841,
+    "clock": 303
   },
   "job": null,
-  "last_day_clock": 297,
+  "last_day_clock": 303,
   "long_reviewed": true
 }
