@@ -235,7 +235,7 @@
 ```json
 {
   "agent": "ag_0004",
-  "based_on_seq": 2650,
+  "based_on_seq": 2651,
   "read": [],
   "proposals": [
     {
