@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 91,
-  "last_turn": 280,
+  "turns": 92,
+  "last_turn": 285,
   "activity_request": {
     "event_id": "5af32b67-a10f-4f40-9733-5171715d5067",
     "seq": 2512,
@@ -51,7 +51,7 @@
     "claude-code-routine": 12,
     "claude-code-manual": 2,
     "chat-inbox": 68,
-    "chat-cli": 1
+    "chat-cli": 2
   },
   "brief": null,
   "read": {
@@ -69,30 +69,31 @@
     "work:ag_0004/citing-papers-9122@r1": 2244,
     "work:ag_0004/citing-papers-9122@1": 2338,
     "note:carry": 2506,
-    "work:ag_0004/two-rows-in-the-notice-list@1": 2524
+    "work:ag_0004/two-rows-in-the-notice-list@1": 2524,
+    "note:회고/지도": 2601
   },
   "names": [],
-  "last_opened_seq": 2507,
+  "last_opened_seq": 2591,
   "dream": {
     "words": [
-      "hammer",
-      "double",
-      "usage"
+      "answer",
+      "marvel",
+      "glass"
     ],
-    "seq": 2523,
-    "turn_id": "t_996d80c9"
+    "seq": 2600,
+    "turn_id": "t_1c583572"
   },
   "last_dream": {
-    "path": "꿈/시계-284",
-    "seq": 2521
+    "path": "꿈/시계-289",
+    "seq": 2598
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 15,
-    "seq": 2518,
-    "clock": 284
+    "revision": 16,
+    "seq": 2595,
+    "clock": 289
   },
   "job": null,
   "last_day_clock": 284,
