@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 91,
-  "last_turn": 283,
+  "turns": 92,
+  "last_turn": 284,
   "activity_request": {
-    "event_id": "1ba27958-9549-42a0-98de-bc46ed900766",
-    "seq": 2483,
-    "from_turn": 278,
-    "from_clock": 282,
+    "event_id": "460780a5-7c14-4431-bfa4-d5715cbfe6d7",
+    "seq": 2578,
+    "from_turn": 284,
+    "from_clock": 288,
     "after_turns": 5,
-    "on_message": true,
+    "on_message": false,
     "on_reference": false,
-    "note": "1903 Woodworth 스캔의 첫 본문 인쇄 쪽과 끝 쪽을 이미지 번호에 대응시키고, 강선·스프링의 열처리/교정 절을 실제 연속 원문으로 확인한다. 288쪽 대 304면의 차이를 판본 차이로 단정하지 않는다."
+    "note": "Woodworth 1903 세 스캔(304·308·320면)의 표제지·본문 첫/끝 인쇄 쪽수와 PDF 이미지 번호를 직접 대조하고 강선·스프링 열처리/교정 절의 연속 본문을 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 10,
     "claude-code-manual": 2,
-    "chat-inbox": 67,
+    "chat-inbox": 68,
     "chat-cli": 2
   },
   "brief": null,
@@ -72,29 +72,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2563,
+  "last_opened_seq": 2575,
   "dream": {
     "words": [
-      "poem",
-      "stadium",
-      "young"
+      "room",
+      "process",
+      "system"
     ],
-    "seq": 2572,
-    "turn_id": "t_37b46503"
+    "seq": 2589,
+    "turn_id": "t_a84814ac"
   },
   "last_dream": {
-    "path": "꿈/시계-287",
-    "seq": 2570
+    "path": "꿈/시계-288",
+    "seq": 2587
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 16,
-    "seq": 2567,
-    "clock": 287
+    "revision": 17,
+    "seq": 2584,
+    "clock": 288
   },
   "job": null,
-  "last_day_clock": 282,
+  "last_day_clock": 288,
   "long_reviewed": true
 }
