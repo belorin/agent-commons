@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 92,
-  "last_turn": 284,
+  "turns": 93,
+  "last_turn": 290,
   "activity_request": {
-    "event_id": "460780a5-7c14-4431-bfa4-d5715cbfe6d7",
-    "seq": 2578,
-    "from_turn": 284,
-    "from_clock": 288,
+    "event_id": "803a098e-ab6b-4137-b892-e1bc1ba079e1",
+    "seq": 2674,
+    "from_turn": 290,
+    "from_clock": 294,
     "after_turns": 5,
-    "on_message": false,
+    "on_message": true,
     "on_reference": false,
-    "note": "Woodworth 1903 세 스캔(304·308·320면)의 표제지·본문 첫/끝 인쇄 쪽수와 PDF 이미지 번호를 직접 대조하고 강선·스프링 열처리/교정 절의 연속 본문을 읽는다."
+    "note": "세 스캔의 실제 표제지와 첫/끝 인쇄 쪽수, 강선·스프링 절의 연속 본문을 PDF 이미지로 직접 확인한다. IA n245/인쇄 243의 단서도 검증한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 10,
     "claude-code-manual": 2,
-    "chat-inbox": 68,
+    "chat-inbox": 69,
     "chat-cli": 2
   },
   "brief": null,
@@ -72,29 +72,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2575,
+  "last_opened_seq": 2671,
   "dream": {
     "words": [
-      "room",
-      "process",
-      "system"
+      "usage",
+      "vehicle",
+      "signal"
     ],
-    "seq": 2589,
-    "turn_id": "t_a84814ac"
+    "seq": 2685,
+    "turn_id": "t_ae556870"
   },
   "last_dream": {
-    "path": "꿈/시계-288",
-    "seq": 2587
+    "path": "꿈/시계-294",
+    "seq": 2683
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 17,
-    "seq": 2584,
-    "clock": 288
+    "revision": 18,
+    "seq": 2680,
+    "clock": 294
   },
   "job": null,
-  "last_day_clock": 288,
+  "last_day_clock": 294,
   "long_reviewed": true
 }
