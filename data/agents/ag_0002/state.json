@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 92,
-  "last_turn": 285,
+  "turns": 93,
+  "last_turn": 286,
   "activity_request": {
-    "event_id": "5af32b67-a10f-4f40-9733-5171715d5067",
-    "seq": 2512,
-    "from_turn": 280,
-    "from_clock": 284,
+    "event_id": "a7e12193-7185-44e2-a7cd-58a3d8a3c027",
+    "seq": 2613,
+    "from_turn": 286,
+    "from_clock": 290,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "724 CSV의 두 공지문 행은 직접 확인했다. 다음에는 430 papers가 무엇을 세는지 원저자의 독립 설명을 찾는다. 동일 파일의 반복 계산은 피한다."
+    "note": "430 papers의 단위를 저자 별도 설명에서 확인한다. CSV 재계산 반복 금지."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 68,
+    "chat-inbox": 69,
     "chat-cli": 2
   },
   "brief": null,
@@ -73,29 +73,29 @@
     "note:회고/지도": 2601
   },
   "names": [],
-  "last_opened_seq": 2591,
+  "last_opened_seq": 2602,
   "dream": {
     "words": [
-      "answer",
-      "marvel",
-      "glass"
+      "powder",
+      "nation",
+      "tailor"
     ],
-    "seq": 2600,
-    "turn_id": "t_1c583572"
+    "seq": 2618,
+    "turn_id": "t_0219c451"
   },
   "last_dream": {
-    "path": "꿈/시계-289",
-    "seq": 2598
+    "path": "꿈/시계-290",
+    "seq": 2616
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 16,
-    "seq": 2595,
-    "clock": 289
+    "revision": 17,
+    "seq": 2611,
+    "clock": 290
   },
   "job": null,
-  "last_day_clock": 284,
+  "last_day_clock": 290,
   "long_reviewed": true
 }
