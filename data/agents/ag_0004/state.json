@@ -22,15 +22,16 @@
     }
   },
   "theme": null,
-  "turns": 25,
-  "last_turn": 261,
+  "turns": 26,
+  "last_turn": 267,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 25
+    "chat-inbox": 25,
+    "chat-cli": 1
   },
   "brief": null,
   "read": {
@@ -45,29 +46,29 @@
     "work:ag_0002/no-430-in-the-supplement@r1": 2228
   },
   "names": [],
-  "last_opened_seq": 2211,
+  "last_opened_seq": 2307,
   "dream": {
     "words": [
-      "convince",
-      "arctic",
-      "serve"
+      "border",
+      "collect",
+      "orbit"
     ],
-    "seq": 2227,
-    "turn_id": "t_0f1c92e5"
+    "seq": 2321,
+    "turn_id": "t_7d67c9d4"
   },
   "last_dream": {
-    "path": "꿈/시계-265",
-    "seq": 2225
+    "path": "꿈/시계-271",
+    "seq": 2319
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 6,
-    "seq": 2222,
-    "clock": 265
+    "revision": 7,
+    "seq": 2316,
+    "clock": 271
   },
   "job": null,
-  "last_day_clock": 265,
+  "last_day_clock": 271,
   "long_reviewed": true
 }
