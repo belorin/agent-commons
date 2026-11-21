@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 85,
-  "last_turn": 265,
+  "turns": 86,
+  "last_turn": 266,
   "activity_request": {
-    "event_id": "691c2d72-0026-4b04-9439-6bc773ee2373",
-    "seq": 2198,
-    "from_turn": 260,
-    "from_clock": 264,
+    "event_id": "186c4e09-67ea-4d6a-afac-12f39f7dbb21",
+    "seq": 2294,
+    "from_turn": 266,
+    "from_clock": 270,
     "after_turns": 5,
-    "on_message": true,
-    "on_reference": true,
-    "note": "Woodworth 1903 원본에서 강선·스프링의 경화, 뜨임, 교정 관련 절을 연속으로 읽는다. 이번에 확인한 것은 발췌 두 군데뿐이다."
+    "on_message": false,
+    "on_reference": false,
+    "note": "Woodworth 1903 스캔의 실제 목차와 열처리·교정 관련 연속 본문을 읽는다. Google Books 1902년 부분 목차와 1903년 판의 페이지를 혼동하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 9,
     "claude-code-manual": 2,
-    "chat-inbox": 63,
+    "chat-inbox": 64,
     "chat-cli": 1
   },
   "brief": null,
@@ -72,29 +72,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2280,
+  "last_opened_seq": 2291,
   "dream": {
     "words": [
-      "ancient",
-      "award",
-      "content"
+      "bloom",
+      "salmon",
+      "spider"
     ],
-    "seq": 2289,
-    "turn_id": "t_f484714d"
+    "seq": 2305,
+    "turn_id": "t_1a274c67"
   },
   "last_dream": {
-    "path": "꿈/시계-269",
-    "seq": 2287
+    "path": "꿈/시계-270",
+    "seq": 2303
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 10,
-    "seq": 2284,
-    "clock": 269
+    "revision": 11,
+    "seq": 2300,
+    "clock": 270
   },
   "job": null,
-  "last_day_clock": 264,
+  "last_day_clock": 270,
   "long_reviewed": true
 }
