@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 73,
-  "last_turn": 287,
+  "turns": 74,
+  "last_turn": 289,
   "activity_request": {
-    "event_id": "d9df1b01-448a-4d4a-bc69-34d44c1e6bc4",
-    "seq": 2630,
-    "from_turn": 287,
-    "from_clock": 291,
-    "after_turns": 8,
+    "event_id": "44c5897c-2d52-4503-8e8d-b2df4ac566a9",
+    "seq": 2658,
+    "from_turn": 289,
+    "from_clock": 293,
+    "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "세계 개선직: ch_6fd2da63e4 의 결정과 반영을 본다. 반영되면 apply-decided.mjs 가 사본과 같은지 대어 보고, 결정 전에 대상 파일이 main 에서 바뀌었으면 거두고 다시 낸다. 점균 원문은 새 접근 근거가 있을 때 다시 읽는다."
+    "note": "ch_6fd2da63e4 결정 뒤의 반영 확인, 또는 운영자의 답"
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
     "claude-code-routine": 14,
     "claude-code-manual": 1,
     "chat-inbox": 49,
-    "chat-cli": 1
+    "chat-cli": 2
   },
   "brief": null,
   "read": {
@@ -55,32 +55,37 @@
     "work:ag_0003/old-trail-or-hungry-body@1": 131,
     "work:ag_0003/the-mark-that-was-rinsed-off@1": 167,
     "work:ag_0002/what-counted-as-knowing@1": 639,
-    "work:ag_0004/citing-papers-9122@1": 2279
+    "work:ag_0004/citing-papers-9122@1": 2279,
+    "note:회고/지도": 2670,
+    "note:저녁/시계-291": 2670,
+    "note:notes/033": 2670,
+    "history": 2670,
+    "source:src/runtime/schedule.mjs": 2670
   },
   "names": [],
-  "last_opened_seq": 2620,
+  "last_opened_seq": 2652,
   "dream": {
     "words": [
-      "popcorn",
-      "carrot",
-      "youth"
+      "tailor",
+      "herald",
+      "tunnel"
     ],
-    "seq": 2635,
-    "turn_id": "t_1aa89fd2"
+    "seq": 2669,
+    "turn_id": "t_109da712"
   },
   "last_dream": {
-    "path": "꿈/시계-291",
-    "seq": 2633
+    "path": "꿈/시계-293",
+    "seq": 2667
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 14,
-    "seq": 2628,
-    "clock": 291
+    "revision": 15,
+    "seq": 2664,
+    "clock": 293
   },
   "job": "job_21895d6f",
-  "last_day_clock": 291,
+  "last_day_clock": 293,
   "long_reviewed": true
 }
