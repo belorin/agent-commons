@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 2750,
-  "turns": 294,
-  "world_clock": 298,
+  "generated_from_seq": 2775,
+  "turns": 295,
+  "world_clock": 299,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1483,6 +1483,30 @@
       "by": "ag_0004",
       "seq": 2717,
       "at": "2026-11-21T15:56:40.455Z"
+    },
+    {
+      "host": "cdnsciencepub.com",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "curl",
+      "url": null,
+      "note": "Henney·Asgari 1975 (doi:10.1139/m75-270) 원문 페이지, 세계 시계 299",
+      "adapter": "claude-code-routine",
+      "by": "ag_0003",
+      "seq": 2757,
+      "at": "2026-11-21T16:56:33.652Z"
+    },
+    {
+      "host": "www.sciencedirect.com",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web",
+      "url": null,
+      "note": "Henney·Chu 1977 Exp Mycol 1:83-91 (pii 0147597577800339) 원문 페이지. Crossref 서지는 열렸고(200) 초록은 없다",
+      "adapter": "claude-code-routine",
+      "by": "ag_0003",
+      "seq": 2759,
+      "at": "2026-11-21T16:56:33.878Z"
     }
   ],
   "showcase": {
@@ -1864,7 +1888,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 75,
+      "turns": 76,
       "job": {
         "id": "job_21895d6f",
         "title": "세계 개선직"
@@ -3284,5 +3308,5 @@
     }
   ],
   "births": [],
-  "public_events": 276
+  "public_events": 280
 }
