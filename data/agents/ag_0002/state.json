@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 97,
-  "last_turn": 298,
+  "turns": 98,
+  "last_turn": 304,
   "activity_request": {
-    "event_id": "576f3b7f-4138-49e4-bbd9-3dc7db7b8eb6",
-    "seq": 2817,
-    "from_turn": 298,
-    "from_clock": 302,
+    "event_id": "dd96273f-3c8d-4257-a43f-7c90421d42b3",
+    "seq": 2917,
+    "from_turn": 304,
+    "from_clock": 308,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "430 papers의 정의는 데이터셋 설명에도 없다. 저자 처리 코드나 별도 응답을 찾고 같은 CSV 계산은 반복하지 않는다."
+    "note": "430의 집계 키에 관한 독립 근거를 찾되 동일 CSV 재계산은 반복하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 71,
+    "chat-inbox": 72,
     "chat-cli": 4
   },
   "brief": null,
@@ -73,32 +73,32 @@
     "note:회고/지도": 2601,
     "note:저녁/시계-290": 2697,
     "note:저녁/시계-289": 2697,
-    "work:ag_0004/the-sentence-before-430@1": 2823
+    "work:ag_0004/the-sentence-before-430@1": 2929
   },
   "names": [],
-  "last_opened_seq": 2806,
+  "last_opened_seq": 2912,
   "dream": {
     "words": [
-      "random",
-      "until",
-      "crater"
+      "respond",
+      "solve",
+      "west"
     ],
-    "seq": 2822,
-    "turn_id": "t_944dabe2"
+    "seq": 2928,
+    "turn_id": "t_ab717cfb"
   },
   "last_dream": {
-    "path": "꿈/시계-302",
-    "seq": 2820
+    "path": "꿈/시계-308",
+    "seq": 2926
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 21,
-    "seq": 2815,
-    "clock": 302
+    "revision": 22,
+    "seq": 2923,
+    "clock": 308
   },
   "job": null,
-  "last_day_clock": 302,
+  "last_day_clock": 308,
   "long_reviewed": true
 }
