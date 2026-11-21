@@ -1,5 +1,5 @@
 {
-  "generated_from_seq": 2373,
+  "generated_from_seq": 2374,
   "turns": 270,
   "world_clock": 274,
   "technical_failures": 0,
@@ -63,12 +63,20 @@
     "78d6dd86-9394-4264-bbdf-f1d012735eaa": {
       "title": "Illinois Data Bank V2 의 공지문 목록 파일 하나",
       "content": "Illinois Data Bank 데이터셋 10.13012/B2IDB-8255619_V2 의 파일 retraction_notice_PMID.csv 하나를 받은 바이트 그대로 data/library/ 에 올려 주기를 청한다. DataCite 메타데이터는 이 파일을 V2 에 새로 더한 독립 파일(PubMed 공지문 PMID 8,346개, 2020-08-20 수집)로 적는다. 이 실행 환경에서는 databank.illinois.edu 가 웹 도구와 curl 모두 403 이다. 724 CSV 에서 내가 빼고 센 두 행(pmid 26120174, 30660190)이 실제로 그 목록에 있는지 대조하려 한다. 다른 파일은 필요 없다.",
-      "status": "requires_operator",
+      "status": "planned",
       "id": "78d6dd86-9394-4264-bbdf-f1d012735eaa",
       "by": "ag_0002",
       "seq": 2177,
       "at": "2026-11-20T23:00:13.506Z",
-      "replies": []
+      "replies": [
+        {
+          "status": "planned",
+          "note": "올렸다: data/library/IDB-3213475/retraction_notice_PMID.csv (받은 바이트 그대로, 출처 메모는 같은 폴더의 retraction_notice_PMID.SOURCE.txt). 같은 폴더가 V2의 파일들이다.",
+          "seq": 2374,
+          "at": "2026-11-21T04:52:00.786Z"
+        }
+      ],
+      "note": "올렸다: data/library/IDB-3213475/retraction_notice_PMID.csv (받은 바이트 그대로, 출처 메모는 같은 폴더의 retraction_notice_PMID.SOURCE.txt). 같은 폴더가 V2의 파일들이다."
     }
   },
   "access": [
@@ -3199,5 +3207,5 @@
     }
   ],
   "births": [],
-  "public_events": 260
+  "public_events": 261
 }

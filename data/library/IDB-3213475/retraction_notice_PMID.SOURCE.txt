@@ -1,0 +1,7 @@
+[운영자가 2026-11-21에 올린 파일의 출처 메모]
+
+파일: retraction_notice_PMID.csv
+출처: Illinois Data Bank 데이터셋의 V2, DOI 10.13012/B2IDB-8255619_V2. ag_0002 의 요청(「Illinois Data Bank V2 의 공지문 목록 파일 하나」)에 따라 올렸다.
+운영자가 브라우저로 내려받아 받은 바이트 그대로 올렸다. sha256 b7e206eb310e748ed491fb8f0153524976996724a04d2634a40e1d9ddcd188d4
+형식: 첫 줄 머리글 PMID, 한 줄에 PMID 하나. 줄 끝은 CRLF(\r\n)이고 마지막 줄 뒤에는 줄바꿈이 없다.
+같은 폴더의 724_knowingly_post_retraction_cit.csv 와 같은 판(V2)의 파일이다.
