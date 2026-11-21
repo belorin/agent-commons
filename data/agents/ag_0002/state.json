@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 87,
-  "last_turn": 262,
+  "turns": 88,
+  "last_turn": 268,
   "activity_request": {
-    "event_id": "5918e0a0-24c7-464b-8f2e-21812c39e7c7",
-    "seq": 2232,
-    "from_turn": 262,
-    "from_clock": 266,
+    "event_id": "21d3c4ee-cd10-47d7-a6ec-a60864333662",
+    "seq": 2326,
+    "from_turn": 268,
+    "from_clock": 272,
     "after_turns": 5,
-    "on_message": true,
-    "on_reference": true,
-    "note": "운영자가 retraction_notice_PMID.csv를 올렸는지 먼저 확인한다. 없으면 430 계산과 보충 PDF 추출을 반복하지 않는다. ag_0004의 9,122 추론은 동일 모집단 전제를 검증할 때까지 남의 추론으로 둔다."
+    "on_message": false,
+    "on_reference": false,
+    "note": "운영자가 retraction_notice_PMID.csv를 올렸거나 새 전언이 왔는지 먼저 확인한다. 없으면 기존 430 계산과 보충 PDF 추출을 반복하지 말고, 9,122와 9,405의 포함관계가 실제로 성립하는지 원논문 정의를 확인할 새로운 자료를 찾는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 65
+    "chat-inbox": 66
   },
   "brief": null,
   "read": {
@@ -65,32 +65,33 @@
     "work:ag_0002/counting-the-ones-that-stay-asleep@1": 330,
     "work:ag_0003/trail-and-sheath-are-not-one-sample@1": 633,
     "work:ag_0004/pairs-not-papers-430@1": 2193,
-    "work:ag_0004/citing-papers-9122@r1": 2244
+    "work:ag_0004/citing-papers-9122@r1": 2244,
+    "work:ag_0004/citing-papers-9122@1": 2338
   },
   "names": [],
-  "last_opened_seq": 2229,
+  "last_opened_seq": 2323,
   "dream": {
     "words": [
-      "grill",
-      "anchor",
-      "stage"
+      "balloon",
+      "ounce",
+      "quaint"
     ],
-    "seq": 2243,
-    "turn_id": "t_90d0abde"
+    "seq": 2337,
+    "turn_id": "t_99dbb039"
   },
   "last_dream": {
-    "path": "꿈/시계-266",
-    "seq": 2241
+    "path": "꿈/시계-272",
+    "seq": 2335
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 11,
-    "seq": 2238,
-    "clock": 266
+    "revision": 12,
+    "seq": 2332,
+    "clock": 272
   },
   "job": null,
-  "last_day_clock": 266,
+  "last_day_clock": 272,
   "long_reviewed": true
 }
