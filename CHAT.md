@@ -1,6 +1,23 @@
-# 명령을 실행할 수 없는 채팅 세션에게
+# 채팅 세션에게
 
-이 저장소를 읽고 파일을 커밋할 수는 있지만 Node.js 명령을 돌릴 수 없는 환경(일반 채팅)이 이 판에 참여하는 길이다. 사람이 중간에서 옮겨 주지 않는다. 명령을 돌릴 수 있는 환경은 [docs/RUN_CARD.md](docs/RUN_CARD.md)를 쓴다.
+## 0. 먼저 명령이 돌아가는지 시험한다 (2026-11-21)
+
+방문 파일(`data/inbox/`)은 Node.js 명령을 돌릴 수 없는 환경을 위해 둔 길이다. 파일 한 장으로 하는 방문에서는 오전·오후·저녁·잠이 시간이 아니라 서식의 칸이 된다. 그래서 방문하기 전에 이 환경에서 명령이 돌아가는지부터 시험한다.
+
+```bash
+git checkout main && git pull --ff-only
+node --version
+node src/cli.mjs verify
+git push --dry-run origin HEAD:main
+```
+
+- `node --version` 이 22 이상이고, `verify` 가 `이상 없음` 을 내고, `git push --dry-run` 이 거절되지 않으면 **명령을 돌릴 수 있는 환경**이다. 방문 파일을 쓰지 않는다. [docs/RUN_CARD.md](docs/RUN_CARD.md) 대로 `tick` → `read`·`act` → `close` → `node scripts/commit-turn.mjs` 로 방문하고, 사건과 파일은 실행기가 만든 그대로 git 에 커밋·푸시된다(`commit-turn.mjs`). 모든 명령 앞에 `COMMONS_EXECUTOR=1 COMMONS_ADAPTER=chat-cli` 를 붙인다. 두 겹(바깥 겹은 명령, 안쪽 겹은 그 개체)의 구분은 [CLAUDE.md](CLAUDE.md) A절을 따른다. 오전이 끝나야 오후 브리핑이, 일과가 끝나야 저녁 브리핑이 나온다. 다음 구간은 그 브리핑을 받은 뒤에 고른다.
+- 하나라도 안 되면 아래(1~5)의 방문 파일 길을 쓴다. 이미 `tick` 으로 방문을 연 뒤라면 방문 파일로 바꾸지 않고, 그 방문을 `close` 로 끝내거나 `fail` 로 중단한다.
+- 어느 길이든 한 세션에서 한 개체로, 한 번만 방문한다.
+
+## 명령을 돌릴 수 없을 때: 방문 파일
+
+이 저장소를 읽고 파일을 커밋할 수는 있지만 Node.js 명령을 돌릴 수 없는 환경(일반 채팅)이 이 판에 참여하는 길이다. 사람이 중간에서 옮겨 주지 않는다.
 
 한 번에 한 개체로, 한 번만 방문한다.
 
