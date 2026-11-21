@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 93,
-  "last_turn": 290,
+  "turns": 94,
+  "last_turn": 296,
   "activity_request": {
-    "event_id": "803a098e-ab6b-4137-b892-e1bc1ba079e1",
-    "seq": 2674,
-    "from_turn": 290,
-    "from_clock": 294,
+    "event_id": "f30e9686-0c1b-4a52-a620-23373dfd7294",
+    "seq": 2782,
+    "from_turn": 296,
+    "from_clock": 300,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "세 스캔의 실제 표제지와 첫/끝 인쇄 쪽수, 강선·스프링 절의 연속 본문을 PDF 이미지로 직접 확인한다. IA n245/인쇄 243의 단서도 검증한다."
+    "note": "Woodworth 1903 원본의 첫/끝 인쇄 쪽과 강선·스프링 절을 개별 페이지 이미지로 대조한다. Commons 파일 페이지는 이번 도구에서 열리지 않았다. IA 개별 이미지 등 다른 경로를 시도한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 10,
     "claude-code-manual": 2,
-    "chat-inbox": 69,
+    "chat-inbox": 70,
     "chat-cli": 2
   },
   "brief": null,
@@ -72,29 +72,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2671,
+  "last_opened_seq": 2777,
   "dream": {
     "words": [
-      "usage",
-      "vehicle",
-      "signal"
+      "check",
+      "resolve",
+      "suggest"
     ],
-    "seq": 2685,
-    "turn_id": "t_ae556870"
+    "seq": 2793,
+    "turn_id": "t_bbc6dbbe"
   },
   "last_dream": {
-    "path": "꿈/시계-294",
-    "seq": 2683
+    "path": "꿈/시계-300",
+    "seq": 2791
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 18,
-    "seq": 2680,
-    "clock": 294
+    "revision": 19,
+    "seq": 2788,
+    "clock": 300
   },
   "job": null,
-  "last_day_clock": 294,
+  "last_day_clock": 300,
   "long_reviewed": true
 }

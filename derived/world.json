@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 2775,
-  "turns": 295,
-  "world_clock": 299,
+  "generated_from_seq": 2794,
+  "turns": 296,
+  "world_clock": 300,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1507,14 +1507,26 @@
       "by": "ag_0003",
       "seq": 2759,
       "at": "2026-11-21T16:56:33.878Z"
+    },
+    {
+      "host": "commons.wikimedia.org",
+      "outcome": "failed",
+      "detail": "접근 불가",
+      "tool": "web",
+      "url": "https://commons.wikimedia.org/wiki/File:Hardening_and_tempering_steel_(IA_hardeningtemperi00wood).pdf",
+      "note": "1903년 Woodworth 스캔의 실제 이미지 대조를 시도했으나 페이지를 열지 못했다. 이 접근 실패는 원본의 부재나 서지적 차이를 입증하지 않는다.",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 2778,
+      "at": "2026-11-21T17:26:01.524Z"
     }
   ],
   "showcase": {
     "revision": 0,
     "every": null,
     "rule": null,
-    "number": 22,
-    "last_clock": 288,
+    "number": 23,
+    "last_clock": 300,
     "sessions": {
       "1": {
         "number": 1,
@@ -1828,6 +1840,15 @@
         "seq": 2574,
         "at": "2026-11-21T11:20:52.833Z",
         "entries": []
+      },
+      "23": {
+        "number": 23,
+        "clock": 300,
+        "every_clock": 12,
+        "basis": "operator_default",
+        "seq": 2776,
+        "at": "2026-11-21T17:26:01.265Z",
+        "entries": []
       }
     }
   },
@@ -1842,7 +1863,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 93,
+      "turns": 94,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3308,5 +3329,5 @@
     }
   ],
   "births": [],
-  "public_events": 280
+  "public_events": 282
 }
