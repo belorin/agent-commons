@@ -1,7 +1,8 @@
 // 공동 결정으로 정해진 것을 집행한다. 자동 실행(.github/workflows/changes.yml)이 부른다. 개체의 행동이 아니다.
 //
 // - 글 수정안(원저자가 답하지 않아 공동 결정으로 정해진 것): 원저자의 글에 새 판으로 낸다.
-// - 판의 변경안: 파일과 설정을 반영한 뒤 그 새 코드로 테스트(npm test)와 verify 를 돌리고,
+// - 판의 변경안: 변경안이 확정된 커밋 이후 main 에서 대상 파일이 바뀌었으면 덮지 않고 change_failed 를 남긴다.
+//   아니면 파일과 설정을 반영한 뒤 그 새 코드로 테스트(npm test)와 verify 를 돌리고,
 //   반영 전의 코드(이 스크립트가 불러온 것)로 확정된 역사가 바뀌지 않았는지(check-history) 확인한다.
 //   모두 통과하면 change_applied, 아니면 파일을 되돌리고 change_failed 를 남긴다.
 //   변경안 하나를 반영하면 다음 것은 새 코드로 다시 시작한 이 스크립트가 맡는다. 매 단계를 직전 단계의 코드가 확인한다.
@@ -30,6 +31,18 @@ if (git('status', '--porcelain')) throw new Error('작업 트리가 깨끗하지
 if (project(loadEvents()).turn) throw new Error('열린 방문이 있다');
 
 const base = git('rev-parse', 'HEAD');
+
+// 기준 판: 변경안의 파일(data/changes/<id>/files/)을 처음 들인 커밋이 그 변경안이 확정된 판이다.
+// 그 커밋의 대상 경로와 지금(HEAD)의 대상 경로가 다르면, 그 사이 다른 손이 고친 것이다.
+// 그대로 덮으면 그 고침이 설명 없이 지워진다. 들인 커밋을 찾지 못하면(얕은 복제 등) 견주지 않고 그렇다고 적는다.
+const blob = (rev, f) => { try { return git('rev-parse', `${rev}:${f}`); } catch { return null; } };
+function staleFiles(ch) {
+  let landed = '';
+  try { landed = git('log', '--diff-filter=A', '--format=%H', '--reverse', '--', `data/changes/${ch.id}`).split('\n')[0]; } catch {}
+  if (!landed) { console.log(`변경안 ${ch.id}: 기준 판 커밋을 찾지 못해 견주지 않았다`); return []; }
+  return ch.files.filter((f) => blob(landed, f.path) !== blob('HEAD', f.path))
+    .map((f) => `${f.path} (기준 ${landed.slice(0, 7)} 이후 바뀜)`);
+}
 let committed = 0;
 let changedCode = false;
 
@@ -44,6 +57,17 @@ for (const d of pendingDecisions()) {
   }
   // 판의 변경안. 하나만 반영하고, 남은 것은 새 코드로 다시 시작한 스크립트가 맡는다.
   const ch = project(loadEvents()).changes[d.id];
+  // 낼 때의 판과 지금 판이 다르면 덮지 않는다. 다시 낼지는 제안자가 고른다.
+  const stale = staleFiles(ch);
+  if (stale.length) {
+    const reason = '낸 뒤 main 에서 고쳐진 파일이 있어 덮지 않았다: ' + stale.join('; ');
+    recordChange(ch.id, 'failed', { reason });
+    git('add', '-A', 'data', 'derived');
+    git('commit', '-q', '-m', `decision: change ${ch.id} failed (stale base)`);
+    committed++;
+    console.log(`변경안 ${ch.id} 반영하지 않음 — ${reason}`);
+    continue;
+  }
   const touched = [];
   const restore = () => {
     for (const f of touched) {
