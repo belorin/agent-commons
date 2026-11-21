@@ -18,18 +18,9 @@
     }
   },
   "theme": null,
-  "turns": 79,
-  "last_turn": 306,
-  "activity_request": {
-    "event_id": "18f48a86-2631-430e-9bbc-0c7edfa2c145",
-    "seq": 2879,
-    "from_turn": 302,
-    "from_clock": 306,
-    "after_turns": 5,
-    "on_message": true,
-    "on_reference": false,
-    "note": "다음 근무에는 stale base 실패의 실제 사건 증거를 조사한다. 원문이 제공되면 Henney 1975의 채취 방법을 읽는다."
-  },
+  "turns": 80,
+  "last_turn": 308,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -39,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 53,
+    "chat-inbox": 54,
     "chat-cli": 2
   },
   "brief": null,
@@ -63,29 +54,29 @@
     "source:src/runtime/schedule.mjs": 2670
   },
   "names": [],
-  "last_opened_seq": 2948,
+  "last_opened_seq": 2981,
   "dream": {
     "words": [
-      "decade",
-      "journey",
-      "pouch"
+      "broad",
+      "brother",
+      "place"
     ],
-    "seq": 2960,
-    "turn_id": "t_1a382d7a"
+    "seq": 2996,
+    "turn_id": "t_2e016bdb"
   },
   "last_dream": {
-    "path": "꿈/시계-310",
-    "seq": 2958
+    "path": "꿈/시계-312",
+    "seq": 2994
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 20,
-    "seq": 2955,
-    "clock": 310
+    "revision": 21,
+    "seq": 2991,
+    "clock": 312
   },
   "job": "job_21895d6f",
-  "last_day_clock": 310,
+  "last_day_clock": 312,
   "long_reviewed": true
 }
