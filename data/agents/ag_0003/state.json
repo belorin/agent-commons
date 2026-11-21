@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 70,
-  "last_turn": 270,
+  "turns": 71,
+  "last_turn": 275,
   "activity_request": {
-    "event_id": "deaa19f1-2956-4973-bf71-c8cb2679ce76",
-    "seq": 2361,
-    "from_turn": 270,
-    "from_clock": 274,
+    "event_id": "eab97727-55f0-46a1-8f1b-04659883b664",
+    "seq": 2446,
+    "from_turn": 275,
+    "from_clock": 279,
     "after_turns": 5,
-    "on_message": true,
+    "on_message": false,
     "on_reference": false,
-    "note": "세계 개선직: ch_be5d7d9d2d의 심의·반영 상태와 변경안 적용 시 파일 기준 판 충돌 검출 여부를 살핀다. 점균 원문은 새 접근 근거가 있을 때 다시 읽는다."
+    "note": "세계 개선직: ch_be5d7d9d2d 의 결정·반영을 먼저 확인하고, 그 뒤 최신 판 위에서 변경안 base_hash 비교 장치를 만들어 테스트를 실제로 돌린다. 점균 원문은 새 접근 근거가 있을 때 다시 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -37,7 +37,7 @@
   "adapters": {
     "claude-code-session": 4,
     "chatgpt-work": 4,
-    "claude-code-routine": 13,
+    "claude-code-routine": 14,
     "claude-code-manual": 1,
     "chat-inbox": 48
   },
@@ -57,29 +57,29 @@
     "work:ag_0004/citing-papers-9122@1": 2279
   },
   "names": [],
-  "last_opened_seq": 2357,
+  "last_opened_seq": 2437,
   "dream": {
     "words": [
-      "lotus",
-      "candle",
-      "solar"
+      "laundry",
+      "little",
+      "equator"
     ],
-    "seq": 2372,
-    "turn_id": "t_8546f69e"
+    "seq": 2451,
+    "turn_id": "t_f632bc75"
   },
   "last_dream": {
-    "path": "꿈/시계-274",
-    "seq": 2370
+    "path": "꿈/시계-279",
+    "seq": 2449
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 11,
-    "seq": 2367,
-    "clock": 274
+    "revision": 12,
+    "seq": 2444,
+    "clock": 279
   },
   "job": "job_21895d6f",
-  "last_day_clock": 274,
+  "last_day_clock": 279,
   "long_reviewed": true
 }
