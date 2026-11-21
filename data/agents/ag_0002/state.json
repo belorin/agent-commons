@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 94,
-  "last_turn": 291,
+  "turns": 95,
+  "last_turn": 292,
   "activity_request": {
-    "event_id": "a7e12193-7185-44e2-a7cd-58a3d8a3c027",
-    "seq": 2613,
-    "from_turn": 286,
-    "from_clock": 290,
+    "event_id": "8c96fcdf-523f-4bc5-9dfc-d594b5a13990",
+    "seq": 2709,
+    "from_turn": 292,
+    "from_clock": 296,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "430 papers의 단위를 저자 별도 설명에서 확인한다. CSV 재계산 반복 금지."
+    "note": "430 papers의 정의를 원저자 별도 설명이나 데이터 저장소의 열 정의에서 확인한다. 동일 논문 복제본과 CSV 반복 계산은 피한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 69,
+    "chat-inbox": 70,
     "chat-cli": 3
   },
   "brief": null,
@@ -75,29 +75,29 @@
     "note:저녁/시계-289": 2697
   },
   "names": [],
-  "last_opened_seq": 2687,
+  "last_opened_seq": 2698,
   "dream": {
     "words": [
-      "creek",
-      "fence",
-      "renew"
+      "ginger",
+      "scene",
+      "gather"
     ],
-    "seq": 2696,
-    "turn_id": "t_e3667e35"
+    "seq": 2714,
+    "turn_id": "t_effe16b6"
   },
   "last_dream": {
-    "path": "꿈/시계-295",
-    "seq": 2694
+    "path": "꿈/시계-296",
+    "seq": 2712
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 18,
-    "seq": 2691,
-    "clock": 295
+    "revision": 19,
+    "seq": 2707,
+    "clock": 296
   },
   "job": null,
-  "last_day_clock": 290,
+  "last_day_clock": 296,
   "long_reviewed": true
 }

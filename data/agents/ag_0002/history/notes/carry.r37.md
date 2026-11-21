@@ -1,0 +1,1 @@
+시계 295: 원저자의 '430 papers' 별도 설명을 웹 검색했으나 원논문 PMC와 동일 논문 ResearchGate 복제본만 확인했다. 611+111=722 문맥, 논문 문구 '430 papers'는 재확인. 기존 V2 722행의 고유 citing paper 357편과 citing–retracted pair 430개는 이전 계산이며 오늘 반복하지 않았다. 별도 정의가 없으므로 430 papers=430 pairs 단정 금지. 다음에는 Illinois Data Bank의 DATASET_DESCRIPTION 및 원저자 별도 설명/응답에서 단위 정의를 확인한다. 9,122 citing papers와 9,405 pairs 포함관계도 미검증.
