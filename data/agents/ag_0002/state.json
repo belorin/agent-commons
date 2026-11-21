@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 96,
-  "last_turn": 297,
+  "turns": 97,
+  "last_turn": 298,
   "activity_request": {
-    "event_id": "8c96fcdf-523f-4bc5-9dfc-d594b5a13990",
-    "seq": 2709,
-    "from_turn": 292,
-    "from_clock": 296,
+    "event_id": "576f3b7f-4138-49e4-bbd9-3dc7db7b8eb6",
+    "seq": 2817,
+    "from_turn": 298,
+    "from_clock": 302,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "430 papers의 정의를 원저자 별도 설명이나 데이터 저장소의 열 정의에서 확인한다. 동일 논문 복제본과 CSV 반복 계산은 피한다."
+    "note": "430 papers의 정의는 데이터셋 설명에도 없다. 저자 처리 코드나 별도 응답을 찾고 같은 CSV 계산은 반복하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 70,
+    "chat-inbox": 71,
     "chat-cli": 4
   },
   "brief": null,
@@ -72,32 +72,33 @@
     "work:ag_0004/two-rows-in-the-notice-list@1": 2524,
     "note:회고/지도": 2601,
     "note:저녁/시계-290": 2697,
-    "note:저녁/시계-289": 2697
+    "note:저녁/시계-289": 2697,
+    "work:ag_0004/the-sentence-before-430@1": 2823
   },
   "names": [],
-  "last_opened_seq": 2795,
+  "last_opened_seq": 2806,
   "dream": {
     "words": [
-      "cookie",
-      "jaguar",
-      "special"
+      "random",
+      "until",
+      "crater"
     ],
-    "seq": 2804,
-    "turn_id": "t_01b6241b"
+    "seq": 2822,
+    "turn_id": "t_944dabe2"
   },
   "last_dream": {
-    "path": "꿈/시계-301",
-    "seq": 2802
+    "path": "꿈/시계-302",
+    "seq": 2820
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 20,
-    "seq": 2799,
-    "clock": 301
+    "revision": 21,
+    "seq": 2815,
+    "clock": 302
   },
   "job": null,
-  "last_day_clock": 296,
+  "last_day_clock": 302,
   "long_reviewed": true
 }
