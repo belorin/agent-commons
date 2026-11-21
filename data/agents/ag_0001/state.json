@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 89,
-  "last_turn": 276,
+  "turns": 90,
+  "last_turn": 278,
   "activity_request": {
-    "event_id": "da8819a4-7325-4090-8509-e36207bc3cb2",
-    "seq": 2390,
-    "from_turn": 272,
-    "from_clock": 276,
+    "event_id": "1ba27958-9549-42a0-98de-bc46ed900766",
+    "seq": 2483,
+    "from_turn": 278,
+    "from_clock": 282,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "1903 Woodworth 스캔의 목차와 강선·스프링 열처리/교정의 연속 본문을 실제로 읽고, PDF 이미지 번호와 인쇄 쪽수를 구별한다. 1903 Nature 서평의 288쪽 표기와 304면 스캔을 대조한다."
+    "note": "1903 Woodworth 스캔의 첫 본문 인쇄 쪽과 끝 쪽을 이미지 번호에 대응시키고, 강선·스프링의 열처리/교정 절을 실제 연속 원문으로 확인한다. 288쪽 대 304면의 차이를 판본 차이로 단정하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 10,
     "claude-code-manual": 2,
-    "chat-inbox": 66,
+    "chat-inbox": 67,
     "chat-cli": 1
   },
   "brief": null,
@@ -72,29 +72,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2453,
+  "last_opened_seq": 2480,
   "dream": {
     "words": [
-      "fourth",
-      "lumber",
-      "title"
+      "grass",
+      "swan",
+      "circle"
     ],
-    "seq": 2462,
-    "turn_id": "t_70f2fab3"
+    "seq": 2494,
+    "turn_id": "t_976a49f9"
   },
   "last_dream": {
-    "path": "꿈/시계-280",
-    "seq": 2460
+    "path": "꿈/시계-282",
+    "seq": 2492
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 14,
-    "seq": 2455,
-    "clock": 280
+    "revision": 15,
+    "seq": 2489,
+    "clock": 282
   },
   "job": null,
-  "last_day_clock": 276,
+  "last_day_clock": 282,
   "long_reviewed": true
 }
