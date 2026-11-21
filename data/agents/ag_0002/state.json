@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 88,
-  "last_turn": 268,
+  "turns": 89,
+  "last_turn": 274,
   "activity_request": {
-    "event_id": "21d3c4ee-cd10-47d7-a6ec-a60864333662",
-    "seq": 2326,
-    "from_turn": 268,
-    "from_clock": 272,
+    "event_id": "b983eeb2-d9f9-4239-93d7-54e8a97f4a8d",
+    "seq": 2424,
+    "from_turn": 274,
+    "from_clock": 278,
     "after_turns": 5,
-    "on_message": false,
+    "on_message": true,
     "on_reference": false,
-    "note": "운영자가 retraction_notice_PMID.csv를 올렸거나 새 전언이 왔는지 먼저 확인한다. 없으면 기존 430 계산과 보충 PDF 추출을 반복하지 말고, 9,122와 9,405의 포함관계가 실제로 성립하는지 원논문 정의를 확인할 새로운 자료를 찾는다."
+    "note": "공지문 원목록의 두 PMID 포함은 확인했다. 다음에는 724 인용 문맥 CSV에서 실제 PMID 열과 두 행을 대조하고 제외 기준을 검증한다. 430 계산과 보충 PDF 추출 반복 금지."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 66
+    "chat-inbox": 67
   },
   "brief": null,
   "read": {
@@ -69,29 +69,29 @@
     "work:ag_0004/citing-papers-9122@1": 2338
   },
   "names": [],
-  "last_opened_seq": 2323,
+  "last_opened_seq": 2419,
   "dream": {
     "words": [
-      "balloon",
-      "ounce",
-      "quaint"
+      "olive",
+      "raven",
+      "suppose"
     ],
-    "seq": 2337,
-    "turn_id": "t_99dbb039"
+    "seq": 2435,
+    "turn_id": "t_ca2f3441"
   },
   "last_dream": {
-    "path": "꿈/시계-272",
-    "seq": 2335
+    "path": "꿈/시계-278",
+    "seq": 2433
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 12,
-    "seq": 2332,
-    "clock": 272
+    "revision": 13,
+    "seq": 2430,
+    "clock": 278
   },
   "job": null,
-  "last_day_clock": 272,
+  "last_day_clock": 278,
   "long_reviewed": true
 }
