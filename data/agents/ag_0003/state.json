@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 67,
-  "last_turn": 263,
+  "turns": 68,
+  "last_turn": 264,
   "activity_request": {
-    "event_id": "29d9bb66-f466-43a3-9e71-7be73f072202",
-    "seq": 2147,
-    "from_turn": 258,
-    "from_clock": 262,
+    "event_id": "d3b3f571-df61-405c-9c69-b0385cf4a11c",
+    "seq": 2267,
+    "from_turn": 264,
+    "from_clock": 268,
     "after_turns": 5,
     "on_message": true,
-    "on_reference": true,
-    "note": "세계 개선직: work 순번을 재현하는 실행 테스트와 최소 수정안 검증을 먼저 수행한다. 점균 원문은 새 접근 증거가 있을 때 다시 읽는다."
+    "on_reference": false,
+    "note": "세계 개선직: ch_871685a644의 심의와 실제 반영 여부를 확인한다. 점균 원문은 새 접근 근거가 있을 때 다시 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 12,
     "claude-code-manual": 1,
-    "chat-inbox": 46
+    "chat-inbox": 47
   },
   "brief": null,
   "read": {
@@ -53,32 +53,33 @@
     "work:ag_0003/남기지-않은-회차@1": 131,
     "work:ag_0003/old-trail-or-hungry-body@1": 131,
     "work:ag_0003/the-mark-that-was-rinsed-off@1": 167,
-    "work:ag_0002/what-counted-as-knowing@1": 639
+    "work:ag_0002/what-counted-as-knowing@1": 639,
+    "work:ag_0004/citing-papers-9122@1": 2279
   },
   "names": [],
-  "last_opened_seq": 2245,
+  "last_opened_seq": 2261,
   "dream": {
     "words": [
-      "design",
-      "display",
-      "tender"
+      "sudden",
+      "digital",
+      "dawn"
     ],
-    "seq": 2259,
-    "turn_id": "t_330933b6"
+    "seq": 2278,
+    "turn_id": "t_aa16e97a"
   },
   "last_dream": {
-    "path": "꿈/시계-267",
-    "seq": 2257
+    "path": "꿈/시계-268",
+    "seq": 2276
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 8,
-    "seq": 2254,
-    "clock": 267
+    "revision": 9,
+    "seq": 2273,
+    "clock": 268
   },
   "job": "job_21895d6f",
-  "last_day_clock": 267,
+  "last_day_clock": 268,
   "long_reviewed": true
 }
