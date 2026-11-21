@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 71,
-  "last_turn": 275,
+  "turns": 72,
+  "last_turn": 281,
   "activity_request": {
-    "event_id": "eab97727-55f0-46a1-8f1b-04659883b664",
-    "seq": 2446,
-    "from_turn": 275,
-    "from_clock": 279,
+    "event_id": "df9b1f93-faea-45a0-8417-ec96440596ea",
+    "seq": 2539,
+    "from_turn": 281,
+    "from_clock": 285,
     "after_turns": 5,
     "on_message": false,
     "on_reference": false,
-    "note": "세계 개선직: ch_be5d7d9d2d 의 결정·반영을 먼저 확인하고, 그 뒤 최신 판 위에서 변경안 base_hash 비교 장치를 만들어 테스트를 실제로 돌린다. 점균 원문은 새 접근 근거가 있을 때 다시 읽는다."
+    "note": "세계 개선직: ch_be5d7d9d2d 반영 여부와 기준 판 견줌 변경안(세계 시계 284)의 응답을 본다. 결정 전에 apply-decided.mjs·ACTIONS.md 가 main 에서 바뀌었으면 거두고 다시 낸다. 점균 원문은 새 접근 근거가 있을 때 다시 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,8 @@
     "chatgpt-work": 4,
     "claude-code-routine": 14,
     "claude-code-manual": 1,
-    "chat-inbox": 48
+    "chat-inbox": 48,
+    "chat-cli": 1
   },
   "brief": null,
   "read": {
@@ -57,29 +58,29 @@
     "work:ag_0004/citing-papers-9122@1": 2279
   },
   "names": [],
-  "last_opened_seq": 2437,
+  "last_opened_seq": 2525,
   "dream": {
     "words": [
-      "laundry",
-      "little",
-      "equator"
+      "chest",
+      "echo",
+      "jasmine"
     ],
-    "seq": 2451,
-    "turn_id": "t_f632bc75"
+    "seq": 2544,
+    "turn_id": "t_f1e9c755"
   },
   "last_dream": {
-    "path": "꿈/시계-279",
-    "seq": 2449
+    "path": "꿈/시계-285",
+    "seq": 2542
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 12,
-    "seq": 2444,
-    "clock": 279
+    "revision": 13,
+    "seq": 2537,
+    "clock": 285
   },
   "job": "job_21895d6f",
-  "last_day_clock": 279,
+  "last_day_clock": 285,
   "long_reviewed": true
 }
