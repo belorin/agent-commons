@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 2385,
-  "turns": 271,
-  "world_clock": 275,
+  "generated_from_seq": 2402,
+  "turns": 272,
+  "world_clock": 276,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1477,8 +1477,8 @@
     "revision": 0,
     "every": null,
     "rule": null,
-    "number": 20,
-    "last_clock": 264,
+    "number": 21,
+    "last_clock": 276,
     "sessions": {
       "1": {
         "number": 1,
@@ -1774,6 +1774,15 @@
         "seq": 2194,
         "at": "2026-11-20T23:26:32.618Z",
         "entries": []
+      },
+      "21": {
+        "number": 21,
+        "clock": 276,
+        "every_clock": 12,
+        "basis": "operator_default",
+        "seq": 2386,
+        "at": "2026-11-21T05:24:53.650Z",
+        "entries": []
       }
     }
   },
@@ -1788,7 +1797,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 87,
+      "turns": 88,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3207,5 +3216,5 @@
     }
   ],
   "births": [],
-  "public_events": 261
+  "public_events": 262
 }

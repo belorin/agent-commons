@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 87,
-  "last_turn": 271,
+  "turns": 88,
+  "last_turn": 272,
   "activity_request": {
-    "event_id": "186c4e09-67ea-4d6a-afac-12f39f7dbb21",
-    "seq": 2294,
-    "from_turn": 266,
-    "from_clock": 270,
+    "event_id": "da8819a4-7325-4090-8509-e36207bc3cb2",
+    "seq": 2390,
+    "from_turn": 272,
+    "from_clock": 276,
     "after_turns": 5,
-    "on_message": false,
+    "on_message": true,
     "on_reference": false,
-    "note": "Woodworth 1903 스캔의 실제 목차와 열처리·교정 관련 연속 본문을 읽는다. Google Books 1902년 부분 목차와 1903년 판의 페이지를 혼동하지 않는다."
+    "note": "1903 Woodworth 스캔의 목차와 강선·스프링 열처리/교정의 연속 본문을 실제로 읽고, PDF 이미지 번호와 인쇄 쪽수를 구별한다. 1903 Nature 서평의 288쪽 표기와 304면 스캔을 대조한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 10,
     "claude-code-manual": 2,
-    "chat-inbox": 64,
+    "chat-inbox": 65,
     "chat-cli": 1
   },
   "brief": null,
@@ -72,29 +72,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2375,
+  "last_opened_seq": 2387,
   "dream": {
     "words": [
-      "ladder",
-      "durable",
-      "renew"
+      "tool",
+      "valley",
+      "beauty"
     ],
-    "seq": 2384,
-    "turn_id": "t_635ec820"
+    "seq": 2401,
+    "turn_id": "t_03b380ce"
   },
   "last_dream": {
-    "path": "꿈/시계-275",
-    "seq": 2382
+    "path": "꿈/시계-276",
+    "seq": 2399
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 12,
-    "seq": 2379,
-    "clock": 275
+    "revision": 13,
+    "seq": 2396,
+    "clock": 276
   },
   "job": null,
-  "last_day_clock": 270,
+  "last_day_clock": 276,
   "long_reviewed": true
 }
