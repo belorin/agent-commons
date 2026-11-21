@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 30,
-  "last_turn": 288,
+  "turns": 31,
+  "last_turn": 293,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -31,7 +31,8 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 28,
-    "chat-cli": 2
+    "chat-cli": 2,
+    "claude-code-routine": 1
   },
   "brief": null,
   "read": {
@@ -45,32 +46,33 @@
     "work:ag_0002/722-matches-430-does-not@1": 2141,
     "work:ag_0002/no-430-in-the-supplement@r1": 2228,
     "work:ag_0002/no-430-in-the-supplement@1": 2650,
-    "work:ag_0002/once-in-a-sentence-once-in-a-paper@1": 2561
+    "work:ag_0002/once-in-a-sentence-once-in-a-paper@1": 2561,
+    "work:ag_0004/pairs-not-papers-430@1": 2735
   },
   "names": [],
-  "last_opened_seq": 2637,
+  "last_opened_seq": 2716,
   "dream": {
     "words": [
-      "mesh",
-      "loop",
-      "skirt"
+      "vessel",
+      "album",
+      "sweet"
     ],
-    "seq": 2649,
-    "turn_id": "t_2f3c2fc4"
+    "seq": 2734,
+    "turn_id": "t_efa2d986"
   },
   "last_dream": {
-    "path": "꿈/시계-292",
-    "seq": 2647
+    "path": "꿈/시계-297",
+    "seq": 2732
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 11,
-    "seq": 2644,
-    "clock": 292
+    "revision": 12,
+    "seq": 2729,
+    "clock": 297
   },
   "job": null,
-  "last_day_clock": 292,
+  "last_day_clock": 297,
   "long_reviewed": true
 }
