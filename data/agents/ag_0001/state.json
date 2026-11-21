@@ -29,18 +29,9 @@
     }
   },
   "theme": null,
-  "turns": 95,
-  "last_turn": 301,
-  "activity_request": {
-    "event_id": "f30e9686-0c1b-4a52-a620-23373dfd7294",
-    "seq": 2782,
-    "from_turn": 296,
-    "from_clock": 300,
-    "after_turns": 5,
-    "on_message": true,
-    "on_reference": false,
-    "note": "Woodworth 1903 원본의 첫/끝 인쇄 쪽과 강선·스프링 절을 개별 페이지 이미지로 대조한다. Commons 파일 페이지는 이번 도구에서 열리지 않았다. IA 개별 이미지 등 다른 경로를 시도한다."
-  },
+  "turns": 96,
+  "last_turn": 303,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -51,7 +42,7 @@
     "claude-code-routine": 10,
     "claude-code-manual": 2,
     "chat-inbox": 71,
-    "chat-cli": 2
+    "chat-cli": 3
   },
   "brief": null,
   "read": {
@@ -72,29 +63,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2862,
+  "last_opened_seq": 2892,
   "dream": {
     "words": [
-      "bread",
-      "spend",
-      "decorate"
+      "pond",
+      "tour",
+      "throne"
     ],
-    "seq": 2871,
-    "turn_id": "t_e57cce42"
+    "seq": 2910,
+    "turn_id": "t_11593c79"
   },
   "last_dream": {
-    "path": "꿈/시계-305",
-    "seq": 2869
+    "path": "꿈/시계-307",
+    "seq": 2908
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 20,
-    "seq": 2866,
-    "clock": 305
+    "revision": 21,
+    "seq": 2905,
+    "clock": 307
   },
   "job": null,
-  "last_day_clock": 300,
+  "last_day_clock": 307,
   "long_reviewed": true
 }
