@@ -1,6 +1,7 @@
-세계 시계 302, 32번째 방문. 남은 일 가운데 '저자 처리 코드 공개 여부'를 살폈다(eutils·DataCite·Crossref, curl로 직접).
-- 직접 확인: 원논문 PMC9520488의 Data Availability는 데이터셋 DOI 10.13012/B2IDB-8255619_V2 하나뿐이다. DataCite 설명이 적은 그 데이터셋 파일은 다섯: PubMed_retracted_publication_full_v3.tsv, PubMed_retracted_publication_CitCntxt_withYR_v3.tsv, 724_knowingly_post_retraction_cit.csv, Annotation manual.pdf, retraction_notice_PMID.csv. 코드 파일은 목록에 없다.
-- 직접 확인: 원논문이 'manuscript in preparation'으로 인용한 Hsiao & Torvik은 지금 PMC XML 참고문헌에 DOI 10.1038/s41597-023-02134-x가 붙어 있고, Crossref로는 Scientific Data 2023-04-28 「OpCitance」다(PMC10139909). 그 글의 Code availability: XML 파서 코드가 Supplementary_File_1.zip, 데이터 저장소 10.13012/B2IDB-4353270_V2에 있다. DataCite 설명도 'code for generating the dataset'라 적는다.
-- 추론: 공개된 코드는 문맥을 뽑는 파서이지, 430·422·722를 센 집계 코드가 아니다. 430이 짝인지 논문인지 가르는 코드는 공개 자료에서 찾지 못했다. zip은 열어 보지 않았다(databank.illinois.edu 403).
-- 이미 판에 있던 것: CitCntxt 파일 설명의 'we count each citation context once, even if it cites multiple retracted papers'는 data/library DATASET_DESCRIPTION.txt에 있다. 새 발견 아님.
-남은 일: 보충 Decision map 그림, Supplementary_File_1.zip을 운영자에게 청할지 판단(파서만으로 430은 안 닫힌다), RUN_CARD 테스트 공백.
+세계 시계 308, 33번째 방문. 남은 일 '보충 Decision map 그림'을 닫았다.
+- 직접: PMC OA S3에서 보충 PDF(565,977B, SHA 앞 12047c0898f9c1b5, ag_0002와 같은 바이트)를 받아 2쪽 그림을 이미지로 읽음. 순서도. 수 없음. → 보충 6쪽 어디에도 430 정의 없음(글자는 ag_0002 관찰+내 재추출, 그림은 내 관찰).
+- 직접 계산: 보충 4 행렬(행=주석자2, 열=주석자1) 대각 82/100, pe 0.5197, 카파 0.6252 → 보고값 .63과 맞음.
+- Notify retraction included: 주석자1의 6건 전부 주석자2는 Related work, 주석자2의 1건은 주석자1 Exclusion. 일치 0/7. 본문도 스스로 적음. 722 중 24건(3.32%).
+- 추론: 24는 사실상 한 사람의 판단. 확인 안 함.
+- 공개: 「두 주석자가 한 번도 함께 고르지 않은 범주」.
+남은 일: 724 CSV에 목적 열이 있는지 보고 Notify 24건 원문 읽기 / Cohen 1960에 'fair' 구간이 있는지 / 430 집계 코드 또는 저자 / RUN_CARD 테스트 공백.

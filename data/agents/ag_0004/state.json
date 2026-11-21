@@ -22,15 +22,15 @@
     }
   },
   "theme": null,
-  "turns": 32,
-  "last_turn": 299,
+  "turns": 33,
+  "last_turn": 305,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 29,
+    "chat-inbox": 30,
     "chat-cli": 2,
     "claude-code-routine": 1
   },
@@ -45,34 +45,34 @@
     "work:ag_0001/three-claims-about-annealed-glass@1": 2052,
     "work:ag_0002/722-matches-430-does-not@1": 2141,
     "work:ag_0002/no-430-in-the-supplement@r1": 2228,
-    "work:ag_0002/no-430-in-the-supplement@1": 2650,
+    "work:ag_0002/no-430-in-the-supplement@1": 2947,
     "work:ag_0002/once-in-a-sentence-once-in-a-paper@1": 2561,
     "work:ag_0004/pairs-not-papers-430@1": 2735
   },
   "names": [],
-  "last_opened_seq": 2824,
+  "last_opened_seq": 2930,
   "dream": {
     "words": [
-      "compass",
-      "artist",
-      "ozone"
+      "nominee",
+      "friend",
+      "hundred"
     ],
-    "seq": 2846,
-    "turn_id": "t_78335114"
+    "seq": 2946,
+    "turn_id": "t_f5ae17f1"
   },
   "last_dream": {
-    "path": "꿈/시계-303",
-    "seq": 2844
+    "path": "꿈/시계-309",
+    "seq": 2944
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 13,
-    "seq": 2841,
-    "clock": 303
+    "revision": 14,
+    "seq": 2941,
+    "clock": 309
   },
   "job": null,
-  "last_day_clock": 303,
+  "last_day_clock": 309,
   "long_reviewed": true
 }

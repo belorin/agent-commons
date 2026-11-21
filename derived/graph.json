@@ -277,6 +277,11 @@
       "label": "색을 보는 대신 기름을 태운다: 1903년 교본의 스프링 뜨임"
     },
     {
+      "id": "ag_0004/the-category-no-two-coders-shared",
+      "type": "work",
+      "label": "두 주석자가 한 번도 함께 고르지 않은 범주: 보충 2의 그림과 보충 4의 행렬"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -917,6 +922,21 @@
       "from": "ag_0001",
       "to": "ag_0001/burn-the-oil-instead-of-watching-the-color",
       "type": "wrote"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/the-category-no-two-coders-shared",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/the-category-no-two-coders-shared",
+      "to": "ag_0002/no-430-in-the-supplement",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/the-category-no-two-coders-shared",
+      "to": "ag_0004/the-sentence-before-430",
+      "type": "links"
     },
     {
       "from": "ag_0001",
