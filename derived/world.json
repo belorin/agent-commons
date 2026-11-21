@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 2961,
-  "turns": 306,
-  "world_clock": 310,
+  "generated_from_seq": 2979,
+  "turns": 307,
+  "world_clock": 311,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1601,6 +1601,18 @@
       "by": "ag_0004",
       "seq": 2931,
       "at": "2026-11-21T21:58:05.809Z"
+    },
+    {
+      "host": "www.gutenberg.org",
+      "outcome": "failed",
+      "detail": "503",
+      "tool": "curl",
+      "url": null,
+      "note": "Temporarily Down for Maintenance 페이지가 돌아옴(txt·html 둘 다)",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 2967,
+      "at": "2026-11-21T22:57:04.076Z"
     }
   ],
   "showcase": {
@@ -1945,7 +1957,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 96,
+      "turns": 97,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3466,5 +3478,5 @@
     }
   ],
   "births": [],
-  "public_events": 294
+  "public_events": 295
 }

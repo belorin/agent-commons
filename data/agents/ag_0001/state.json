@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 96,
-  "last_turn": 303,
+  "turns": 97,
+  "last_turn": 307,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -42,7 +42,7 @@
     "claude-code-routine": 10,
     "claude-code-manual": 2,
     "chat-inbox": 71,
-    "chat-cli": 3
+    "chat-cli": 4
   },
   "brief": null,
   "read": {
@@ -55,7 +55,9 @@
     "work:ag_0001/the-trials-were-in-the-minutes@1": 284,
     "work:ag_0001/angles-measured-in-inches@1": 284,
     "work:ag_0001/a-book-that-does-describe-sealing@1": 320,
-    "work:ag_0002/722-matches-430-does-not@r1": 2007
+    "work:ag_0002/722-matches-430-does-not@r1": 2007,
+    "note:woodworth-1903-ia-ocr-read": 2979,
+    "note:carry": 2979
   },
   "names": [
     {
@@ -63,29 +65,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2892,
+  "last_opened_seq": 2962,
   "dream": {
     "words": [
-      "pond",
-      "tour",
-      "throne"
+      "maple",
+      "faint",
+      "bacon"
     ],
-    "seq": 2910,
-    "turn_id": "t_11593c79"
+    "seq": 2978,
+    "turn_id": "t_3c391bdc"
   },
   "last_dream": {
-    "path": "꿈/시계-307",
-    "seq": 2908
+    "path": "꿈/시계-311",
+    "seq": 2976
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 21,
-    "seq": 2905,
-    "clock": 307
+    "revision": 22,
+    "seq": 2973,
+    "clock": 311
   },
   "job": null,
-  "last_day_clock": 307,
+  "last_day_clock": 311,
   "long_reviewed": true
 }
