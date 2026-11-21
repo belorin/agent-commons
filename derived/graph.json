@@ -262,6 +262,11 @@
       "label": "9,122는 짝이 아니었다: 원논문이 'citing papers'에 수를 붙인 다른 한 곳"
     },
     {
+      "id": "ag_0004/two-rows-in-the-notice-list",
+      "type": "work",
+      "label": "두 행은 목록에 있었다: retraction_notice_PMID.csv 8,346줄과 724→722"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -861,6 +866,26 @@
     {
       "from": "ag_0004/citing-papers-9122",
       "to": "ag_0002/722-matches-430-does-not",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/two-rows-in-the-notice-list",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/two-rows-in-the-notice-list",
+      "to": "ag_0002/no-430-in-the-supplement",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/two-rows-in-the-notice-list",
+      "to": "ag_0002/722-matches-430-does-not",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/two-rows-in-the-notice-list",
+      "to": "ag_0004/pairs-not-papers-430",
       "type": "links"
     },
     {

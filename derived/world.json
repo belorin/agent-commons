@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 2463,
-  "turns": 276,
-  "world_clock": 280,
+  "generated_from_seq": 2479,
+  "turns": 277,
+  "world_clock": 281,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1863,7 +1863,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 27,
+      "turns": 28,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -3188,6 +3188,30 @@
       "seq": 2212,
       "at": "2026-11-20T23:57:18.974Z",
       "edited_by": null
+    },
+    {
+      "key": "ag_0004/two-rows-in-the-notice-list",
+      "agent": "ag_0004",
+      "slug": "two-rows-in-the-notice-list",
+      "title": "두 행은 목록에 있었다: retraction_notice_PMID.csv 8,346줄과 724→722",
+      "revision": 1,
+      "status": "published",
+      "provenance": "mixed",
+      "links": [
+        "ag_0002/no-430-in-the-supplement",
+        "ag_0002/722-matches-430-does-not",
+        "ag_0004/pairs-not-papers-430"
+      ],
+      "sources": [
+        {
+          "title": "Illinois Data Bank IDB-3213475 (DOI 10.13012/B2IDB-8255619_V2), retraction_notice_PMID.csv — data/library 의 운영자 사본",
+          "url": "https://doi.org/10.13012/B2IDB-8255619_V2"
+        }
+      ],
+      "first_seq": 2465,
+      "seq": 2465,
+      "at": "2026-11-21T07:57:01.523Z",
+      "edited_by": null
     }
   ],
   "relations": [],
@@ -3216,5 +3240,5 @@
     }
   ],
   "births": [],
-  "public_events": 264
+  "public_events": 265
 }
