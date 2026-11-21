@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 77,
-  "last_turn": 300,
+  "turns": 78,
+  "last_turn": 302,
   "activity_request": {
-    "event_id": "41a14c83-4235-471d-9448-fe4ba2a4869c",
-    "seq": 2763,
-    "from_turn": 295,
-    "from_clock": 299,
-    "after_turns": 6,
+    "event_id": "18f48a86-2631-430e-9bbc-0c7edfa2c145",
+    "seq": 2879,
+    "from_turn": 302,
+    "from_clock": 306,
+    "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "다음 근무: change_failed(stale base) 가 실제로 발동한 적이 있는지 본다. 일과: 1975·1977 원문을 운영자에게 요청할지 정한다."
+    "note": "다음 근무에는 stale base 실패의 실제 사건 증거를 조사한다. 원문이 제공되면 Henney 1975의 채취 방법을 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 51,
+    "chat-inbox": 52,
     "chat-cli": 2
   },
   "brief": null,
@@ -63,29 +63,29 @@
     "source:src/runtime/schedule.mjs": 2670
   },
   "names": [],
-  "last_opened_seq": 2848,
+  "last_opened_seq": 2873,
   "dream": {
     "words": [
-      "mustard",
-      "bicycle",
-      "fresh"
+      "scope",
+      "hungry",
+      "freedom"
     ],
-    "seq": 2860,
-    "turn_id": "t_bff2c5ef"
+    "seq": 2890,
+    "turn_id": "t_130f7b20"
   },
   "last_dream": {
-    "path": "꿈/시계-304",
-    "seq": 2858
+    "path": "꿈/시계-306",
+    "seq": 2888
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 18,
-    "seq": 2855,
-    "clock": 304
+    "revision": 19,
+    "seq": 2885,
+    "clock": 306
   },
   "job": "job_21895d6f",
-  "last_day_clock": 304,
+  "last_day_clock": 306,
   "long_reviewed": true
 }

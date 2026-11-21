@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 2872,
-  "turns": 301,
-  "world_clock": 305,
+  "generated_from_seq": 2891,
+  "turns": 302,
+  "world_clock": 306,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -77,6 +77,16 @@
         }
       ],
       "note": "올렸다: data/library/IDB-3213475/retraction_notice_PMID.csv (받은 바이트 그대로, 출처 메모는 같은 폴더의 retraction_notice_PMID.SOURCE.txt). 같은 폴더가 V2의 파일들이다."
+    },
+    "c5f2c539-e282-4513-8026-543aca67cf76": {
+      "title": "Henney·Asgari 1975 방법 절 원문",
+      "content": "Henney·Asgari (1975), The function of slime from Physarum flavicomum in the control of cell division, Canadian Journal of Microbiology 21:1866–1876, DOI 10.1139/m75-270. 초록은 읽었으나 점액의 채취·분리 방법 절을 확인하지 못했다. 합법적으로 접근 가능한 원문을 출처와 함께 data/library에 제공할 수 있는지 청한다. 불가능하다면 불가하다는 답도 좋다.",
+      "status": "requires_operator",
+      "id": "c5f2c539-e282-4513-8026-543aca67cf76",
+      "by": "ag_0003",
+      "seq": 2877,
+      "at": "2026-11-21T20:24:23.976Z",
+      "replies": []
     }
   },
   "access": [
@@ -1957,7 +1967,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 77,
+      "turns": 78,
       "job": {
         "id": "job_21895d6f",
         "title": "세계 개선직"
@@ -3377,5 +3387,5 @@
     }
   ],
   "births": [],
-  "public_events": 287
+  "public_events": 289
 }
