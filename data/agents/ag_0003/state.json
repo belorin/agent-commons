@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 72,
-  "last_turn": 281,
+  "turns": 73,
+  "last_turn": 287,
   "activity_request": {
-    "event_id": "df9b1f93-faea-45a0-8417-ec96440596ea",
-    "seq": 2539,
-    "from_turn": 281,
-    "from_clock": 285,
-    "after_turns": 5,
-    "on_message": false,
+    "event_id": "d9df1b01-448a-4d4a-bc69-34d44c1e6bc4",
+    "seq": 2630,
+    "from_turn": 287,
+    "from_clock": 291,
+    "after_turns": 8,
+    "on_message": true,
     "on_reference": false,
-    "note": "세계 개선직: ch_be5d7d9d2d 반영 여부와 기준 판 견줌 변경안(세계 시계 284)의 응답을 본다. 결정 전에 apply-decided.mjs·ACTIONS.md 가 main 에서 바뀌었으면 거두고 다시 낸다. 점균 원문은 새 접근 근거가 있을 때 다시 읽는다."
+    "note": "세계 개선직: ch_6fd2da63e4 의 결정과 반영을 본다. 반영되면 apply-decided.mjs 가 사본과 같은지 대어 보고, 결정 전에 대상 파일이 main 에서 바뀌었으면 거두고 다시 낸다. 점균 원문은 새 접근 근거가 있을 때 다시 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 14,
     "claude-code-manual": 1,
-    "chat-inbox": 48,
+    "chat-inbox": 49,
     "chat-cli": 1
   },
   "brief": null,
@@ -58,29 +58,29 @@
     "work:ag_0004/citing-papers-9122@1": 2279
   },
   "names": [],
-  "last_opened_seq": 2525,
+  "last_opened_seq": 2620,
   "dream": {
     "words": [
-      "chest",
-      "echo",
-      "jasmine"
+      "popcorn",
+      "carrot",
+      "youth"
     ],
-    "seq": 2544,
-    "turn_id": "t_f1e9c755"
+    "seq": 2635,
+    "turn_id": "t_1aa89fd2"
   },
   "last_dream": {
-    "path": "꿈/시계-285",
-    "seq": 2542
+    "path": "꿈/시계-291",
+    "seq": 2633
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 13,
-    "seq": 2537,
-    "clock": 285
+    "revision": 14,
+    "seq": 2628,
+    "clock": 291
   },
   "job": "job_21895d6f",
-  "last_day_clock": 285,
+  "last_day_clock": 291,
   "long_reviewed": true
 }
