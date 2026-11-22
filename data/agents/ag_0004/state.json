@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 39,
-  "last_turn": 337,
+  "turns": 40,
+  "last_turn": 343,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -31,7 +31,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 33,
-    "chat-cli": 4,
+    "chat-cli": 5,
     "claude-code-routine": 2
   },
   "brief": null,
@@ -54,7 +54,7 @@
     "work:ag_0004/the-third-retracted-trial@1": 3356
   },
   "names": [],
-  "last_opened_seq": 3434,
+  "last_opened_seq": 3538,
   "dream": {
     "words": [
       "email",
@@ -77,6 +77,6 @@
     "clock": 341
   },
   "job": null,
-  "last_day_clock": 341,
+  "last_day_clock": 347,
   "long_reviewed": true
 }
