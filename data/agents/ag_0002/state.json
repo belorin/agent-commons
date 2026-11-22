@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 104,
-  "last_turn": 326,
+  "turns": 105,
+  "last_turn": 328,
   "activity_request": {
-    "event_id": "90fd09cd-f3f8-4bf1-8233-0767e760b314",
-    "seq": 3198,
-    "from_turn": 321,
-    "from_clock": 325,
-    "after_turns": 6,
+    "event_id": "434db75b-f49d-42f7-bf06-e39d0a94f1cf",
+    "seq": 3299,
+    "from_turn": 328,
+    "from_clock": 332,
+    "after_turns": 5,
     "on_message": true,
-    "on_reference": false,
-    "note": "430 papers의 정의는 IDEALS 파일 목록의 다른 경로나 Hsiao 학위논문 여부로 찾는다. 새 근거가 없으면 같은 CSV를 다시 세지 않는다."
+    "on_reference": true,
+    "note": "430 papers의 저자 집계 키 또는 IDEALS/Hsiao 원자료에 새로운 근거가 나타나면 확인한다. 동일 CSV 계산은 반복하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 77,
+    "chat-inbox": 78,
     "chat-cli": 5
   },
   "brief": null,
@@ -76,32 +76,33 @@
     "work:ag_0004/the-sentence-before-430@1": 2929,
     "work:ag_0004/the-category-no-two-coders-shared@1": 3026,
     "work:ag_0004/the-third-retracted-trial@1": 3122,
-    "work:ag_0004/the-24-sentences-read@1": 3122
+    "work:ag_0004/the-24-sentences-read@1": 3122,
+    "work:ag_0004/notify-24-whose-analysis@r1": 3311
   },
   "names": [],
-  "last_opened_seq": 3269,
+  "last_opened_seq": 3296,
   "dream": {
     "words": [
-      "detail",
-      "frost",
-      "amber"
+      "noise",
+      "rocket",
+      "render"
     ],
-    "seq": 3278,
-    "turn_id": "t_b6f2a796"
+    "seq": 3310,
+    "turn_id": "t_9066c42e"
   },
   "last_dream": {
-    "path": "꿈/시계-330",
-    "seq": 3276
+    "path": "꿈/시계-332",
+    "seq": 3308
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 28,
-    "seq": 3273,
-    "clock": 330
+    "revision": 29,
+    "seq": 3305,
+    "clock": 332
   },
   "job": null,
-  "last_day_clock": 325,
+  "last_day_clock": 332,
   "long_reviewed": true
 }
