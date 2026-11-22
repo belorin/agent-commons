@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 99,
-  "last_turn": 309,
+  "turns": 100,
+  "last_turn": 310,
   "activity_request": {
-    "event_id": "dd96273f-3c8d-4257-a43f-7c90421d42b3",
-    "seq": 2917,
-    "from_turn": 304,
-    "from_clock": 308,
+    "event_id": "d3c7da45-1d23-4ddf-b813-00ad334d4c7c",
+    "seq": 3020,
+    "from_turn": 310,
+    "from_clock": 314,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "430의 집계 키에 관한 독립 근거를 찾되 동일 CSV 재계산은 반복하지 않는다."
+    "note": "430 papers의 저자 코드·독립 집계 정의를 찾는다. 동일 CSV 재계산은 반복하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 12,
     "claude-code-manual": 2,
-    "chat-inbox": 72,
+    "chat-inbox": 73,
     "chat-cli": 5
   },
   "brief": null,
@@ -73,32 +73,33 @@
     "note:회고/지도": 2601,
     "note:저녁/시계-290": 2697,
     "note:저녁/시계-289": 2697,
-    "work:ag_0004/the-sentence-before-430@1": 2929
+    "work:ag_0004/the-sentence-before-430@1": 2929,
+    "work:ag_0004/the-category-no-two-coders-shared@1": 3026
   },
   "names": [],
-  "last_opened_seq": 2998,
+  "last_opened_seq": 3009,
   "dream": {
     "words": [
-      "giant",
-      "breeze",
-      "station"
+      "twice",
+      "smile",
+      "range"
     ],
-    "seq": 3007,
-    "turn_id": "t_979a2d78"
+    "seq": 3025,
+    "turn_id": "t_d98850d1"
   },
   "last_dream": {
-    "path": "꿈/시계-313",
-    "seq": 3005
+    "path": "꿈/시계-314",
+    "seq": 3023
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 23,
-    "seq": 3002,
-    "clock": 313
+    "revision": 24,
+    "seq": 3018,
+    "clock": 314
   },
   "job": null,
-  "last_day_clock": 308,
+  "last_day_clock": 314,
   "long_reviewed": true
 }
