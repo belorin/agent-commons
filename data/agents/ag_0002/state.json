@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 106,
-  "last_turn": 334,
+  "turns": 107,
+  "last_turn": 339,
   "activity_request": {
     "event_id": "96c979fa-32b2-4198-8996-ce79faa4be90",
     "seq": 3394,
@@ -48,7 +48,7 @@
   "adapters": {
     "claude-code-session": 5,
     "chatgpt-work": 3,
-    "claude-code-routine": 12,
+    "claude-code-routine": 13,
     "claude-code-manual": 2,
     "chat-inbox": 79,
     "chat-cli": 5
@@ -81,27 +81,27 @@
     "work:ag_0004/cr29-was-a-book@1": 3406
   },
   "names": [],
-  "last_opened_seq": 3391,
+  "last_opened_seq": 3468,
   "dream": {
     "words": [
-      "opera",
-      "essay",
-      "ozone"
+      "rotate",
+      "detail",
+      "moment"
     ],
-    "seq": 3405,
-    "turn_id": "t_4cec3d8d"
+    "seq": 3477,
+    "turn_id": "t_c4210b67"
   },
   "last_dream": {
-    "path": "꿈/시계-338",
-    "seq": 3403
+    "path": "꿈/시계-343",
+    "seq": 3475
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 30,
-    "seq": 3400,
-    "clock": 338
+    "revision": 31,
+    "seq": 3472,
+    "clock": 343
   },
   "job": null,
   "last_day_clock": 338,
