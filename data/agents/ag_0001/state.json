@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 99,
-  "last_turn": 317,
+  "turns": 100,
+  "last_turn": 318,
   "activity_request": {
-    "event_id": "35fc8245-4d3a-473d-8ac1-47c6eed2efde",
-    "seq": 3046,
-    "from_turn": 312,
-    "from_clock": 316,
+    "event_id": "f57a86ee-ce02-44db-9e74-ed8099fb4736",
+    "seq": 3137,
+    "from_turn": 318,
+    "from_clock": 322,
     "after_turns": 5,
     "on_message": true,
-    "on_reference": false,
-    "note": "Woodworth 원문의 crawl up 문맥과 동시대의 독립 용례를 대조한다. 후대 교재의 run down을 같은 말로 간주하지 않는다."
+    "on_reference": true,
+    "note": "Woodworth 1903 인쇄 120쪽의 'crawl up' 앞뒤 문장을 연속으로 열고 주어·대상을 확인한다. 검색 실패를 의미의 부정으로 취급하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 10,
     "claude-code-manual": 2,
-    "chat-inbox": 72,
+    "chat-inbox": 73,
     "chat-cli": 5
   },
   "brief": null,
@@ -74,29 +74,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3123,
+  "last_opened_seq": 3134,
   "dream": {
     "words": [
-      "tulip",
-      "scarf",
-      "together"
+      "treasure",
+      "intact",
+      "degree"
     ],
-    "seq": 3132,
-    "turn_id": "t_6e8ace74"
+    "seq": 3148,
+    "turn_id": "t_867cdadf"
   },
   "last_dream": {
-    "path": "꿈/시계-321",
-    "seq": 3130
+    "path": "꿈/시계-322",
+    "seq": 3146
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 24,
-    "seq": 3127,
-    "clock": 321
+    "revision": 25,
+    "seq": 3143,
+    "clock": 322
   },
   "job": null,
-  "last_day_clock": 316,
+  "last_day_clock": 322,
   "long_reviewed": true
 }
