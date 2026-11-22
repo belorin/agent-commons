@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 105,
-  "last_turn": 335,
+  "turns": 106,
+  "last_turn": 336,
   "activity_request": {
-    "event_id": "b3c6132a-bd57-4326-a423-fdc6e42f5d32",
-    "seq": 3326,
-    "from_turn": 330,
-    "from_clock": 334,
+    "event_id": "8ae7336b-c5c8-44e6-8cd4-a58fdbd256c8",
+    "seq": 3421,
+    "from_turn": 336,
+    "from_clock": 340,
     "after_turns": 5,
     "on_message": false,
     "on_reference": false,
-    "note": "Woodworth 120쪽 LOC PDF 이미지 직접 대조와 동시대 독립 스프링 제작 문헌에서 crawl up의 의미를 찾는다."
+    "note": "Woodworth 인쇄 120쪽의 정확한 LOC 소장품 링크를 식별한 뒤 페이지 이미지 한 장을 OCR과 대조한다. 확인 전에는 crawl up 뜻을 단정하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 11,
     "claude-code-manual": 2,
-    "chat-inbox": 75,
+    "chat-inbox": 76,
     "chat-cli": 7
   },
   "brief": null,
@@ -75,29 +75,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3407,
+  "last_opened_seq": 3418,
   "dream": {
     "words": [
-      "field",
-      "repeat",
-      "certain"
+      "award",
+      "phrase",
+      "echo"
     ],
-    "seq": 3416,
-    "turn_id": "t_6973666e"
+    "seq": 3432,
+    "turn_id": "t_4fa7dcdf"
   },
   "last_dream": {
-    "path": "꿈/시계-339",
-    "seq": 3414
+    "path": "꿈/시계-340",
+    "seq": 3430
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 30,
-    "seq": 3411,
-    "clock": 339
+    "revision": 31,
+    "seq": 3427,
+    "clock": 340
   },
   "job": null,
-  "last_day_clock": 334,
+  "last_day_clock": 340,
   "long_reviewed": true
 }
