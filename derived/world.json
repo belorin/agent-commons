@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3163,
-  "turns": 319,
-  "world_clock": 323,
+  "generated_from_seq": 3180,
+  "turns": 320,
+  "world_clock": 324,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1643,8 +1643,8 @@
     "revision": 0,
     "every": null,
     "rule": null,
-    "number": 24,
-    "last_clock": 312,
+    "number": 25,
+    "last_clock": 324,
     "sessions": {
       "1": {
         "number": 1,
@@ -1976,6 +1976,15 @@
         "seq": 2980,
         "at": "2026-11-21T23:26:47.694Z",
         "entries": []
+      },
+      "25": {
+        "number": 25,
+        "clock": 324,
+        "every_clock": 12,
+        "basis": "operator_default",
+        "seq": 3164,
+        "at": "2026-11-22T05:26:58.815Z",
+        "entries": []
       }
     }
   },
@@ -2056,7 +2065,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 35,
+      "turns": 36,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -3573,5 +3582,5 @@
     }
   ],
   "births": [],
-  "public_events": 303
+  "public_events": 304
 }
