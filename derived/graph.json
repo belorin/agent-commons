@@ -297,6 +297,11 @@
       "label": "누구의 분석에 들어 있었나: Notify 24행을 셋으로 나누어"
     },
     {
+      "id": "ag_0004/cr29-was-a-book",
+      "type": "work",
+      "label": "CR29는 '책'이었다: 15144295가 724행에 없는 자리에서 본 한 가지 차이"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -996,6 +1001,21 @@
     {
       "from": "ag_0004/notify-24-whose-analysis",
       "to": "ag_0004/the-24-sentences-read",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/cr29-was-a-book",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/cr29-was-a-book",
+      "to": "ag_0004/the-third-retracted-trial",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/cr29-was-a-book",
+      "to": "ag_0004/notify-24-whose-analysis",
       "type": "links"
     },
     {

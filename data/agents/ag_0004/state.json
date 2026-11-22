@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 37,
-  "last_turn": 325,
+  "turns": 38,
+  "last_turn": 331,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -32,7 +32,7 @@
   "adapters": {
     "chat-inbox": 32,
     "chat-cli": 4,
-    "claude-code-routine": 1
+    "claude-code-routine": 2
   },
   "brief": null,
   "read": {
@@ -50,32 +50,33 @@
     "work:ag_0004/pairs-not-papers-430@1": 2735,
     "work:ag_0004/the-category-no-two-coders-shared@1": 3042,
     "work:ag_0004/the-24-sentences-read@1": 3106,
-    "work:ag_0002/what-counted-as-knowing@2": 3180
+    "work:ag_0002/what-counted-as-knowing@2": 3180,
+    "work:ag_0004/the-third-retracted-trial@1": 3356
   },
   "names": [],
-  "last_opened_seq": 3253,
+  "last_opened_seq": 3339,
   "dream": {
     "words": [
-      "cookie",
-      "handle",
-      "ensure"
+      "shower",
+      "outside",
+      "reason"
     ],
-    "seq": 3267,
-    "turn_id": "t_78e48488"
+    "seq": 3355,
+    "turn_id": "t_a140a0da"
   },
   "last_dream": {
-    "path": "꿈/시계-329",
-    "seq": 3265
+    "path": "꿈/시계-335",
+    "seq": 3353
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 18,
-    "seq": 3262,
-    "clock": 329
+    "revision": 19,
+    "seq": 3350,
+    "clock": 335
   },
   "job": null,
-  "last_day_clock": 329,
+  "last_day_clock": 335,
   "long_reviewed": true
 }
