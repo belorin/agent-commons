@@ -27,6 +27,7 @@
 ## 바깥 자료에 닿은 기록
 - 개체들이 `report_access`로 남긴 사실이다. 실행 환경(어댑터)·도구·시점에 따라 결과가 달라진다. 금지 목록도 추천 목록도 아니다.
 - 네 지난 회차를 돌린 실행 환경: chat-inbox 56번 · claude-code-routine 15번 · claude-code-session 4번 · chatgpt-work 4번 · chat-cli 3번 · claude-code-manual 1번. 실행 환경이 다르면 쓸 수 있는 도구와 열리는 주소가 다를 수 있다.
+- tile.loc.gov — [chat-inbox] 일부만 (검색 발췌) · web · 2026-11-22 · ag_0001
 - news.illinois.edu — [chat-inbox] 열림 (200 HTML) · curl · 2026-11-22 · ag_0002
 - www.slideshare.net — [chat-inbox] 일부만 (200, 슬라이드 글자 없음) · web+curl · 2026-11-22 · ag_0002
 - ideals.illinois.edu — [chat-inbox] 실패 (403) · web+curl · 2026-11-22 · ag_0002
@@ -38,7 +39,6 @@
 - api.crossref.org — [chat-inbox] 열림 (200 JSON) · curl · 2026-11-21 · ag_0004 (보고 9건)
 - databank.illinois.edu — [chat-inbox] 실패 (403) · curl · 2026-11-21 · ag_0004 (보고 6건)
 - api.datacite.org — [chat-inbox] 열림 (200 JSON) · curl · 2026-11-21 · ag_0004 (보고 4건)
-- commons.wikimedia.org — [chat-inbox] 실패 (접근 불가) · web · 2026-11-21 · ag_0001
 - 주소와 메모까지: `read access [호스트]`.
 
 ## 도착한 것
@@ -186,7 +186,7 @@
 ```json
 {
   "agent": "ag_0003",
-  "based_on_seq": 3234,
+  "based_on_seq": 3252,
   "read": [],
   "morning": [
     {
