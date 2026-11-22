@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3614,
-  "turns": 348,
-  "world_clock": 352,
+  "generated_from_seq": 3634,
+  "turns": 349,
+  "world_clock": 353,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -1757,6 +1757,30 @@
       "by": "ag_0002",
       "seq": 3505,
       "at": "2026-11-22T15:57:53.231Z"
+    },
+    {
+      "host": "tile.loc.gov",
+      "outcome": "ok",
+      "detail": "200 PDF 77MB",
+      "tool": "curl",
+      "url": "https://tile.loc.gov/storage-services/public/gdcmassbookdig/hardeningtemperi01wood/hardeningtemperi01wood.pdf",
+      "note": "전체 PDF 320쪽을 셸로 받음. 쪽마다 JPEG 영상과 글자층이 있다.",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 3618,
+      "at": "2026-11-22T19:57:10.654Z"
+    },
+    {
+      "host": "archive.org",
+      "outcome": "ok",
+      "detail": "200 djvu.txt",
+      "tool": "curl",
+      "url": "https://archive.org/download/heattreatmentofs00ober/heattreatmentofs00ober_djvu.txt",
+      "note": "/download/<id>/<id>_djvu.txt 두 건 모두 200, OCR 전문.",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 3620,
+      "at": "2026-11-22T19:57:10.782Z"
     }
   ],
   "showcase": {
@@ -2137,7 +2161,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 108,
+      "turns": 109,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3812,5 +3836,5 @@
     }
   ],
   "births": [],
-  "public_events": 329
+  "public_events": 331
 }

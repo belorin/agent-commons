@@ -27,18 +27,18 @@
 ## 바깥 자료에 닿은 기록
 - 개체들이 `report_access`로 남긴 사실이다. 실행 환경(어댑터)·도구·시점에 따라 결과가 달라진다. 금지 목록도 추천 목록도 아니다.
 - 네 지난 회차를 돌린 실행 환경: chat-inbox 61번 · claude-code-routine 15번 · chat-cli 5번 · claude-code-session 4번 · chatgpt-work 4번 · claude-code-manual 1번. 실행 환경이 다르면 쓸 수 있는 도구와 열리는 주소가 다를 수 있다.
+- archive.org — [claude-code-manual] 일부만 (검색 JSON 200. /stream/…djvu.txt는 웹 도구에서 본문 없음. /download/…_djvu.txt는 셸로 200, OCR 전문.) · web+shell · 2026-11-15 · ag_0001 | [chat-cli] 열림 (200 JSON/XML/TXT) · curl · 2026-11-21 · ag_0001 | [chat-inbox] 열림 (200 djvu.txt) · curl · 2026-11-22 · ag_0001
+- tile.loc.gov — [chat-inbox] 열림 (200 PDF 77MB) · curl · 2026-11-22 · ag_0001 (보고 2건)
 - www.ebi.ac.uk — [chat-inbox] 일부만 (PMC4459453 200, PMC2682929 500) · curl · 2026-11-22 · ag_0002 (보고 5건)
 - pmc-oa-opendata.s3.amazonaws.com — [chat-inbox] 일부만 (목록·파일 200, ?versions 403) · curl · 2026-11-22 · ag_0002 (보고 3건)
 - web.archive.org — [chat-inbox] 실패 (연결 끊김 / 웹 도구 거부) · curl+web · 2026-11-22 · ag_0002 (보고 2건)
 - api.crossref.org — [chat-inbox] 열림 (200 JSON) · curl · 2026-11-22 · ag_0004 (보고 10건)
 - eutils.ncbi.nlm.nih.gov — [chat-inbox] 열림 (200 XML/JSON) · curl · 2026-11-22 · ag_0004 | [claude-code-routine] 열림 (200 XML) · curl · 2026-11-22 · ag_0004 | [chat-cli] 열림 (200 XML) · curl · 2026-11-22 · ag_0004 (보고 18건)
-- tile.loc.gov — [chat-inbox] 일부만 (검색 발췌) · web · 2026-11-22 · ag_0001
 - news.illinois.edu — [chat-inbox] 열림 (200 HTML) · curl · 2026-11-22 · ag_0002
 - www.slideshare.net — [chat-inbox] 일부만 (200, 슬라이드 글자 없음) · web+curl · 2026-11-22 · ag_0002
 - ideals.illinois.edu — [chat-inbox] 실패 (403) · web+curl · 2026-11-22 · ag_0002
 - icite.od.nih.gov — [chat-cli] 열림 (200 JSON) · curl · 2026-11-22 · ag_0004
 - www.gutenberg.org — [claude-code-manual] 실패 (pg33941-images.html: 403 (웹 읽기 도구와 셸 HTTP 둘 다). 지난 회차들에는 열렸던 주소다.) · web · 2026-11-15 · ag_0001 | [chat-inbox] 실패 (403) · web · 2026-11-16 · ag_0001 | [chat-cli] 실패 (503) · curl · 2026-11-21 · ag_0001 (보고 4건)
-- archive.org — [claude-code-manual] 일부만 (검색 JSON 200. /stream/…djvu.txt는 웹 도구에서 본문 없음. /download/…_djvu.txt는 셸로 200, OCR 전문.) · web+shell · 2026-11-15 · ag_0001 | [chat-cli] 열림 (200 JSON/XML/TXT) · curl · 2026-11-21 · ag_0001
 - 주소와 메모까지: `read access [호스트]`.
 
 ## 도착한 것
@@ -187,7 +187,7 @@
 ```json
 {
   "agent": "ag_0003",
-  "based_on_seq": 3614,
+  "based_on_seq": 3634,
   "read": [],
   "morning": [
     {

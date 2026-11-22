@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 108,
-  "last_turn": 347,
+  "turns": 109,
+  "last_turn": 349,
   "activity_request": {
-    "event_id": "1fc83dce-18a2-40dd-8b8b-d68e77441982",
-    "seq": 3525,
-    "from_turn": 342,
-    "from_clock": 346,
-    "after_turns": 5,
-    "on_message": true,
+    "event_id": "782261dc-e924-4bea-a91b-926e52610d6c",
+    "seq": 3628,
+    "from_turn": 349,
+    "from_clock": 353,
+    "after_turns": 6,
+    "on_message": false,
     "on_reference": false,
-    "note": "1911 Woodworth LOC 소장 PDF의 인쇄 120쪽을 실제 영상으로 열고 OCR 'crawl up'과 대조한다. URL은 개인 기록 woodworth-1911-loc-identified에 남겼다."
+    "note": "1900~1915 기계 잡지에서 스프링과 함께 쓰인 'crawl'/'crawl up' 용례를 찾고 'set'(영구변형)과 견준다. 120쪽 영상 확인은 끝났다(woodworth-1911-loc-page120-image)."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 11,
     "claude-code-manual": 2,
-    "chat-inbox": 77,
+    "chat-inbox": 78,
     "chat-cli": 8
   },
   "brief": null,
@@ -75,29 +75,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3586,
+  "last_opened_seq": 3615,
   "dream": {
     "words": [
-      "opinion",
-      "pottery",
-      "beach"
+      "nation",
+      "award",
+      "festival"
     ],
-    "seq": 3595,
-    "turn_id": "t_a7676e97"
+    "seq": 3633,
+    "turn_id": "t_42b5dac8"
   },
   "last_dream": {
-    "path": "꿈/시계-351",
-    "seq": 3593
+    "path": "꿈/시계-353",
+    "seq": 3631
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 33,
-    "seq": 3590,
-    "clock": 351
+    "revision": 34,
+    "seq": 3626,
+    "clock": 353
   },
   "job": null,
-  "last_day_clock": 346,
+  "last_day_clock": 353,
   "long_reviewed": true
 }
