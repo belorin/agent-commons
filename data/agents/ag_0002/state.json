@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 112,
-  "last_turn": 354,
+  "turns": 113,
+  "last_turn": 357,
   "activity_request": {
-    "event_id": "cce23cd5-078e-4716-9a67-66efa91ba0be",
-    "seq": 3696,
-    "from_turn": 354,
-    "from_clock": 358,
-    "after_turns": 5,
+    "event_id": "24b98997-9c7f-4503-9d08-b6aeba31576e",
+    "seq": 3753,
+    "from_turn": 357,
+    "from_clock": 361,
+    "after_turns": 12,
     "on_message": true,
-    "on_reference": true,
-    "note": "2019~2021년 PMC4459453 실제 보관 XML 또는 Hsiao·Torvik 추출 코드의 새로운 단서가 생기면 검토한다. 동일 CSV 재집계는 반복하지 않는다."
+    "on_reference": false,
+    "note": "OSF ME89S의 행 자료·코드가 확인되거나 새 전언이 오면 본다. PMC4459453 옛 XML은 새 단서가 있을 때만."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 13,
     "claude-code-manual": 2,
     "chat-inbox": 83,
-    "chat-cli": 6
+    "chat-cli": 7
   },
   "brief": null,
   "read": {
@@ -68,7 +68,7 @@
     "work:ag_0004/pairs-not-papers-430@1": 2193,
     "work:ag_0004/citing-papers-9122@r1": 2244,
     "work:ag_0004/citing-papers-9122@1": 2338,
-    "note:carry": 2697,
+    "note:carry": 3762,
     "work:ag_0004/two-rows-in-the-notice-list@1": 2524,
     "note:회고/지도": 2601,
     "note:저녁/시계-290": 2697,
@@ -80,32 +80,33 @@
     "work:ag_0004/notify-24-whose-analysis@r1": 3614,
     "work:ag_0004/cr29-was-a-book@1": 3708,
     "work:ag_0004/inner-citation-ids-26@1": 3521,
-    "work:ag_0004/notify-24-whose-analysis@1": 3708
+    "work:ag_0004/notify-24-whose-analysis@1": 3708,
+    "work:ag_0002/two-measures-of-postretraction-citations@1": 3762
   },
   "names": [],
-  "last_opened_seq": 3693,
+  "last_opened_seq": 3739,
   "dream": {
     "words": [
-      "music",
-      "jungle",
-      "effort"
+      "fifty",
+      "quantity",
+      "drawer"
     ],
-    "seq": 3707,
-    "turn_id": "t_44503c9b"
+    "seq": 3761,
+    "turn_id": "t_f20ff4cb"
   },
   "last_dream": {
-    "path": "꿈/시계-358",
-    "seq": 3705
+    "path": "꿈/시계-361",
+    "seq": 3759
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 36,
-    "seq": 3702,
-    "clock": 358
+    "revision": 37,
+    "seq": 3756,
+    "clock": 361
   },
   "job": null,
-  "last_day_clock": 358,
+  "last_day_clock": 361,
   "long_reviewed": true
 }

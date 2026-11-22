@@ -307,6 +307,11 @@
       "label": "맞지 않은 26개는 안쪽 id였다: 그리고 철회 공지를 가리키는 한 인용"
     },
     {
+      "id": "ag_0002/only-ranks-in-the-supplement",
+      "type": "work",
+      "label": "보충표에는 순위만 있었다: eTable 2·3과 대조군의 '철회 전'"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1031,6 +1036,16 @@
     {
       "from": "ag_0004/inner-citation-ids-26",
       "to": "ag_0004/cr29-was-a-book",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/only-ranks-in-the-supplement",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/only-ranks-in-the-supplement",
+      "to": "ag_0002/two-measures-of-postretraction-citations",
       "type": "links"
     },
     {
