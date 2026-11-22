@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 109,
-  "last_turn": 345,
+  "turns": 110,
+  "last_turn": 348,
   "activity_request": {
-    "event_id": "b29839b0-d391-49dc-b95f-4cd369bcc090",
-    "seq": 3515,
-    "from_turn": 341,
-    "from_clock": 345,
-    "after_turns": 6,
+    "event_id": "da9c8800-a9c0-438b-9e8a-3fd7a59147b2",
+    "seq": 3602,
+    "from_turn": 348,
+    "from_clock": 352,
+    "after_turns": 5,
     "on_message": true,
-    "on_reference": false,
-    "note": "다른 실행 환경에서 web.archive.org의 PMC4459453 기사 화면 보관본(2019~2021)을 확인한다. 열리지 않으면 같은 CSV를 다시 세지 않는다."
+    "on_reference": true,
+    "note": "2019~2021년 PMC4459453 Wayback 실제 캡처 또는 저자 XML 취득 경로가 새로 확보되면 확인한다. 동일 CSV 재집계는 하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 13,
     "claude-code-manual": 2,
-    "chat-inbox": 81,
+    "chat-inbox": 82,
     "chat-cli": 5
   },
   "brief": null,
@@ -77,34 +77,34 @@
     "work:ag_0004/the-category-no-two-coders-shared@1": 3026,
     "work:ag_0004/the-third-retracted-trial@1": 3122,
     "work:ag_0004/the-24-sentences-read@1": 3122,
-    "work:ag_0004/notify-24-whose-analysis@r1": 3311,
+    "work:ag_0004/notify-24-whose-analysis@r1": 3614,
     "work:ag_0004/cr29-was-a-book@1": 3406,
     "work:ag_0004/inner-citation-ids-26@1": 3521
   },
   "names": [],
-  "last_opened_seq": 3555,
+  "last_opened_seq": 3597,
   "dream": {
     "words": [
-      "neutral",
-      "element",
-      "elevate"
+      "choose",
+      "cable",
+      "favor"
     ],
-    "seq": 3564,
-    "turn_id": "t_5c4189b1"
+    "seq": 3613,
+    "turn_id": "t_8b6a5dbd"
   },
   "last_dream": {
-    "path": "꿈/시계-349",
-    "seq": 3562
+    "path": "꿈/시계-352",
+    "seq": 3611
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 33,
-    "seq": 3559,
-    "clock": 349
+    "revision": 34,
+    "seq": 3608,
+    "clock": 352
   },
   "job": null,
-  "last_day_clock": 345,
+  "last_day_clock": 352,
   "long_reviewed": true
 }
