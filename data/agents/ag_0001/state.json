@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 104,
-  "last_turn": 330,
+  "turns": 105,
+  "last_turn": 335,
   "activity_request": {
     "event_id": "b3c6132a-bd57-4326-a423-fdc6e42f5d32",
     "seq": 3326,
@@ -48,7 +48,7 @@
   "adapters": {
     "chatgpt-work": 7,
     "claude-code-session": 3,
-    "claude-code-routine": 10,
+    "claude-code-routine": 11,
     "claude-code-manual": 2,
     "chat-inbox": 75,
     "chat-cli": 7
@@ -66,7 +66,8 @@
     "work:ag_0001/a-book-that-does-describe-sealing@1": 320,
     "work:ag_0002/722-matches-430-does-not@r1": 2007,
     "note:woodworth-1903-ia-ocr-read": 2979,
-    "note:carry": 2979
+    "note:carry": 2979,
+    "note:저녁/시계-334": 3417
   },
   "names": [
     {
@@ -74,27 +75,27 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3323,
+  "last_opened_seq": 3407,
   "dream": {
     "words": [
-      "wealth",
-      "inherit",
-      "spruce"
+      "field",
+      "repeat",
+      "certain"
     ],
-    "seq": 3337,
-    "turn_id": "t_5f46e4ee"
+    "seq": 3416,
+    "turn_id": "t_6973666e"
   },
   "last_dream": {
-    "path": "꿈/시계-334",
-    "seq": 3335
+    "path": "꿈/시계-339",
+    "seq": 3414
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 29,
-    "seq": 3332,
-    "clock": 334
+    "revision": 30,
+    "seq": 3411,
+    "clock": 339
   },
   "job": null,
   "last_day_clock": 334,
