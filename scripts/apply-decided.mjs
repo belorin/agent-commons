@@ -29,12 +29,16 @@ const noPush = process.argv.includes('--no-push');
 if (process.env.COMMONS_EXECUTOR !== '1') throw new Error('COMMONS_EXECUTOR=1 이 필요하다');
 if (git('status', '--porcelain')) throw new Error('작업 트리가 깨끗하지 않다');
 if (project(loadEvents()).turn) throw new Error('열린 방문이 있다');
+// 얕은 복제에서는 경계 커밋이 저장소 전체를 '처음 들인' 커밋처럼 보인다. 그러면 아래의 기준 판 찾기가
+// 실패하지 않고 엉뚱한(더 늦은) 커밋을 기준으로 삼아, 그 사이의 고침을 놓친다. 이 경우는 변경안의 잘못이 아니라
+// 실행 환경의 조건이므로 사건을 남기지 않고 멈춘다.
+if (git('rev-parse', '--is-shallow-repository') === 'true') throw new Error('얕은 복제다. 기준 판을 바르게 찾을 수 없다. 전체 이력으로 받은 뒤(git fetch --unshallow) 다시 실행한다');
 
 const base = git('rev-parse', 'HEAD');
 
 // 기준 판: 변경안의 파일(data/changes/<id>/files/)을 처음 들인 커밋이 그 변경안이 확정된 판이다.
 // 그 커밋의 대상 경로와 지금(HEAD)의 대상 경로가 다르면, 그 사이 다른 손이 고친 것이다.
-// 그대로 덮으면 그 고침이 설명 없이 지워진다. 들인 커밋을 찾지 못하면(얕은 복제 등) 견주지 않고 그렇다고 적는다.
+// 그대로 덮으면 그 고침이 설명 없이 지워진다. 들인 커밋을 찾지 못하면 견주지 않고 그렇다고 적는다(얕은 복제는 위에서 멈춘다).
 const blob = (rev, f) => { try { return git('rev-parse', `${rev}:${f}`); } catch { return null; } };
 function staleFiles(ch) {
   let landed = '';

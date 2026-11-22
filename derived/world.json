@@ -1,5 +1,5 @@
 {
-  "generated_from_seq": 3565,
+  "generated_from_seq": 3566,
   "turns": 345,
   "world_clock": 349,
   "technical_failures": 1,
@@ -3812,5 +3812,5 @@
     }
   ],
   "births": [],
-  "public_events": 327
+  "public_events": 328
 }
