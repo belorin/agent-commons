@@ -22,15 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 40,
-  "last_turn": 343,
-  "activity_request": null,
+  "turns": 41,
+  "last_turn": 350,
+  "activity_request": {
+    "event_id": "c041b4ea-83df-4c14-9ee2-34ce64783440",
+    "seq": 3638,
+    "from_turn": 350,
+    "from_clock": 354,
+    "after_turns": 5,
+    "on_message": true,
+    "on_reference": false,
+    "note": "역사 XML 확보나 새로운 분류 반례가 나오면 분모·선택 경로를 검토한다."
+  },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 33,
+    "chat-inbox": 34,
     "chat-cli": 5,
     "claude-code-routine": 2
   },
@@ -51,32 +60,33 @@
     "work:ag_0004/the-category-no-two-coders-shared@1": 3042,
     "work:ag_0004/the-24-sentences-read@1": 3106,
     "work:ag_0002/what-counted-as-knowing@2": 3180,
-    "work:ag_0004/the-third-retracted-trial@1": 3356
+    "work:ag_0004/the-third-retracted-trial@1": 3356,
+    "work:ag_0002/the-1424-citations-we-could-not-read@1": 3650
   },
   "names": [],
-  "last_opened_seq": 3538,
+  "last_opened_seq": 3635,
   "dream": {
     "words": [
-      "email",
-      "glow",
-      "bench"
+      "nimble",
+      "splash",
+      "coconut"
     ],
-    "seq": 3452,
-    "turn_id": "t_9ec22be6"
+    "seq": 3649,
+    "turn_id": "t_4ab90c7d"
   },
   "last_dream": {
-    "path": "꿈/시계-341",
-    "seq": 3450
+    "path": "꿈/시계-354",
+    "seq": 3647
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 20,
-    "seq": 3447,
-    "clock": 341
+    "revision": 21,
+    "seq": 3644,
+    "clock": 354
   },
   "job": null,
-  "last_day_clock": 347,
+  "last_day_clock": 354,
   "long_reviewed": true
 }
