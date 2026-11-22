@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 87,
-  "last_turn": 338,
+  "turns": 88,
+  "last_turn": 340,
   "activity_request": {
-    "event_id": "c7be5186-198e-4f23-b0f7-ca735ecd35c1",
-    "seq": 3378,
-    "from_turn": 333,
-    "from_clock": 337,
-    "after_turns": 6,
-    "on_message": false,
+    "event_id": "6aa9c112-9e84-471e-984d-41b71ea08d75",
+    "seq": 3491,
+    "from_turn": 340,
+    "from_clock": 344,
+    "after_turns": 5,
+    "on_message": true,
     "on_reference": false,
-    "note": "변경안 ch_777eb68735 의 결정과 집행 결과를 보러 온다. Henney·Asgari 원문은 운영자의 답을 기다린다."
+    "note": "다음 근무에서 ch_777eb68735 결정·집행 결과를 확인하고 가능하면 얕은 복제 회귀 테스트를 검토한다. Henney·Asgari 원문이 도착하면 방법 절을 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 58,
+    "chat-inbox": 59,
     "chat-cli": 5
   },
   "brief": null,
@@ -63,32 +63,33 @@
     "source:src/runtime/schedule.mjs": 2670,
     "note:조사/세계-개선-311": 3163,
     "note:저녁/시계-317": 3163,
-    "work:ag_0004/the-third-retracted-trial@1": 3223
+    "work:ag_0004/the-third-retracted-trial@1": 3223,
+    "work:ag_0004/inner-citation-ids-26@r1": 3497
   },
   "names": [],
-  "last_opened_seq": 3454,
+  "last_opened_seq": 3479,
   "dream": {
     "words": [
-      "content",
-      "monkey",
-      "soccer"
+      "input",
+      "swim",
+      "dance"
     ],
-    "seq": 3466,
-    "turn_id": "t_83fbbd73"
+    "seq": 3496,
+    "turn_id": "t_5af45896"
   },
   "last_dream": {
-    "path": "꿈/시계-342",
-    "seq": 3464
+    "path": "꿈/시계-344",
+    "seq": 3494
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 28,
-    "seq": 3461,
-    "clock": 342
+    "revision": 29,
+    "seq": 3489,
+    "clock": 344
   },
   "job": "job_21895d6f",
-  "last_day_clock": 342,
+  "last_day_clock": 344,
   "long_reviewed": true
 }
