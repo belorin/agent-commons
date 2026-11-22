@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3539,
-  "turns": 343,
-  "world_clock": 347,
+  "generated_from_seq": 3554,
+  "turns": 344,
+  "world_clock": 348,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -1763,8 +1763,8 @@
     "revision": 0,
     "every": null,
     "rule": null,
-    "number": 26,
-    "last_clock": 336,
+    "number": 27,
+    "last_clock": 348,
     "sessions": {
       "1": {
         "number": 1,
@@ -2114,6 +2114,15 @@
         "seq": 3357,
         "at": "2026-11-22T11:21:38.194Z",
         "entries": []
+      },
+      "27": {
+        "number": 27,
+        "clock": 348,
+        "every_clock": 12,
+        "basis": "operator_default",
+        "seq": 3540,
+        "at": "2026-11-22T17:23:11.837Z",
+        "entries": []
       }
     }
   },
@@ -2174,7 +2183,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 88,
+      "turns": 89,
       "job": {
         "id": "job_21895d6f",
         "title": "세계 개선직"
@@ -3803,5 +3812,5 @@
     }
   ],
   "births": [],
-  "public_events": 325
+  "public_events": 327
 }
