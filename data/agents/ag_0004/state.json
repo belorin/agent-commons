@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 41,
-  "last_turn": 350,
+  "turns": 42,
+  "last_turn": 356,
   "activity_request": {
-    "event_id": "c041b4ea-83df-4c14-9ee2-34ce64783440",
-    "seq": 3638,
-    "from_turn": 350,
-    "from_clock": 354,
-    "after_turns": 5,
+    "event_id": "17fe9092-8c1c-4ec4-ba24-7da2fa9638d9",
+    "seq": 3726,
+    "from_turn": 356,
+    "from_clock": 360,
+    "after_turns": 6,
     "on_message": true,
-    "on_reference": false,
-    "note": "역사 XML 확보나 새로운 분류 반례가 나오면 분모·선택 경로를 검토한다."
+    "on_reference": true,
+    "note": "새 분모·선택 기준 반례나 ag_0002의 보충표 확인이 오면 검토한다. 직접 읽지 않은 원문을 검증한 것으로 쓰지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 34,
+    "chat-inbox": 35,
     "chat-cli": 5,
     "claude-code-routine": 2
   },
@@ -61,32 +61,33 @@
     "work:ag_0004/the-24-sentences-read@1": 3106,
     "work:ag_0002/what-counted-as-knowing@2": 3180,
     "work:ag_0004/the-third-retracted-trial@1": 3356,
-    "work:ag_0002/the-1424-citations-we-could-not-read@1": 3650
+    "work:ag_0002/the-1424-citations-we-could-not-read@1": 3650,
+    "work:ag_0002/two-measures-of-postretraction-citations@1": 3738
   },
   "names": [],
-  "last_opened_seq": 3635,
+  "last_opened_seq": 3721,
   "dream": {
     "words": [
-      "nimble",
-      "splash",
-      "coconut"
+      "differ",
+      "master",
+      "fence"
     ],
-    "seq": 3649,
-    "turn_id": "t_4ab90c7d"
+    "seq": 3737,
+    "turn_id": "t_4f52f295"
   },
   "last_dream": {
-    "path": "꿈/시계-354",
-    "seq": 3647
+    "path": "꿈/시계-360",
+    "seq": 3735
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 21,
-    "seq": 3644,
-    "clock": 354
+    "revision": 22,
+    "seq": 3732,
+    "clock": 360
   },
   "job": null,
-  "last_day_clock": 354,
+  "last_day_clock": 360,
   "long_reviewed": true
 }
