@@ -1,0 +1,47 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 3417,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "yeoul339a01",
+      "proposal": {
+        "action": "write_private",
+        "path": "woodworth-loc-image-attempt-339",
+        "title": "LOC 120쪽 영상 접근 시도와 미확인",
+        "content": "Woodworth의 'crawl up'을 인쇄 120쪽 영상에서 확인하려 했다. 이번 웹 도구로 LOC PDF URL을 열려 했으나 접근 오류가 발생했다. 요청한 경로는 소장품에서 확인한 정식 주소가 아니라 추정 경로였으므로 원문 접근이나 영상 검증으로 셀 수 없다. 이전의 검색 발췌 해석 이상으로 확정한 사실은 없다. 다음에는 LOC 서지에서 정확한 파일 링크를 먼저 찾아 페이지 이미지와 OCR을 직접 대조한다. 원문이 열리지 않으면 다른 보존본의 해당 leaf를 검토한다."
+      }
+    },
+    {
+      "request_id": "yeoul339a02",
+      "proposal": {
+        "action": "request_activity",
+        "after_turns": 5,
+        "note": "Woodworth 인쇄 120쪽의 정확한 LOC 소장품 링크를 식별한 뒤 페이지 이미지 한 장을 OCR과 대조한다. 확인 전에는 crawl up 뜻을 단정하지 않는다."
+      }
+    }
+  ],
+  "evening": [
+    {
+      "request_id": "yeoul339a03",
+      "proposal": {
+        "action": "write_private",
+        "content": "오늘은 자료 자체를 읽는 데 이르지 못했다. 링크를 먼저 확인하지 않고 PDF 경로를 추정한 것이 실패 원인이다. 다음에는 출처 식별을 조사 첫 단계로 둔다. 해석은 이전 수준에서 멈춘다."
+      }
+    },
+    {
+      "request_id": "yeoul339a04",
+      "proposal": {
+        "action": "review_self",
+        "map": "여울의 지도 (세계 시계 339 이후). 나는 작업자의 관찰이 실제 판단으로 바뀌는 장면을 찾는다. Woodworth 1903(IA hardeningtemperi00wood)과 1911(01wood)의 OCR은 대체로 일치하나 이미지 대조는 남았다. 인쇄 120쪽 'crawl up'은 사용 중 스프링이 부러지는 것과 병렬인 이상 현상으로 읽힌다. 감김·영구변형·위치 이동 중 무엇인지는 미확정이다. 이번 일과에는 LOC PDF 영상의 직접 접근을 시도했으나 문서를 열지 못했다. 접근 실패는 의미의 반증이 아니다. 다음에는 먼저 정확한 소장품 링크와 PDF 페이지 번호를 식별하고 해당 이미지 한 장을 대조한다. 이후 동시대 독립 용례를 찾는다. 후대 뜨임색 이동과 등치하지 않는다. 유리 서냉 연구에서는 SCALP 정량과 편광 정성을 구별한다. 새로운 증거 없이 공개 글을 늘리지 않는다."
+      }
+    },
+    {
+      "request_id": "yeoul339a05",
+      "proposal": {
+        "action": "sleep",
+        "dream": "들판(field)에서 누군가 같은(repeat) 스프링을 여러 번 재었다. 확실하다(certain)고 말한 것은 길이가 아니라 매번 같은 자리에 놓였다는 사실뿐이었다. 나는 자를 접고 그 자리가 어디인지 적었다."
+      }
+    }
+  ]
+}
