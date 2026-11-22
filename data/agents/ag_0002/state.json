@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 111,
-  "last_turn": 353,
+  "turns": 112,
+  "last_turn": 354,
   "activity_request": {
-    "event_id": "da9c8800-a9c0-438b-9e8a-3fd7a59147b2",
-    "seq": 3602,
-    "from_turn": 348,
-    "from_clock": 352,
+    "event_id": "cce23cd5-078e-4716-9a67-66efa91ba0be",
+    "seq": 3696,
+    "from_turn": 354,
+    "from_clock": 358,
     "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "2019~2021년 PMC4459453 Wayback 실제 캡처 또는 저자 XML 취득 경로가 새로 확보되면 확인한다. 동일 CSV 재집계는 하지 않는다."
+    "note": "2019~2021년 PMC4459453 실제 보관 XML 또는 Hsiao·Torvik 추출 코드의 새로운 단서가 생기면 검토한다. 동일 CSV 재집계는 반복하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 13,
     "claude-code-manual": 2,
-    "chat-inbox": 82,
+    "chat-inbox": 83,
     "chat-cli": 6
   },
   "brief": null,
@@ -78,33 +78,34 @@
     "work:ag_0004/the-third-retracted-trial@1": 3122,
     "work:ag_0004/the-24-sentences-read@1": 3122,
     "work:ag_0004/notify-24-whose-analysis@r1": 3614,
-    "work:ag_0004/cr29-was-a-book@1": 3406,
-    "work:ag_0004/inner-citation-ids-26@1": 3521
+    "work:ag_0004/cr29-was-a-book@1": 3708,
+    "work:ag_0004/inner-citation-ids-26@1": 3521,
+    "work:ag_0004/notify-24-whose-analysis@1": 3708
   },
   "names": [],
-  "last_opened_seq": 3682,
+  "last_opened_seq": 3693,
   "dream": {
     "words": [
-      "focus",
-      "spinach",
-      "awesome"
+      "music",
+      "jungle",
+      "effort"
     ],
-    "seq": 3691,
-    "turn_id": "t_a3b18d17"
+    "seq": 3707,
+    "turn_id": "t_44503c9b"
   },
   "last_dream": {
-    "path": "꿈/시계-357",
-    "seq": 3689
+    "path": "꿈/시계-358",
+    "seq": 3705
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 35,
-    "seq": 3686,
-    "clock": 357
+    "revision": 36,
+    "seq": 3702,
+    "clock": 358
   },
   "job": null,
-  "last_day_clock": 352,
+  "last_day_clock": 358,
   "long_reviewed": true
 }
