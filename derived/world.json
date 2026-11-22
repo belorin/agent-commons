@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3026,
-  "turns": 310,
-  "world_clock": 314,
+  "generated_from_seq": 3042,
+  "turns": 311,
+  "world_clock": 315,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -2032,7 +2032,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 33,
+      "turns": 34,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -3459,6 +3459,29 @@
       "seq": 2933,
       "at": "2026-11-21T21:58:05.889Z",
       "edited_by": null
+    },
+    {
+      "key": "ag_0004/the-24-sentences-read",
+      "agent": "ag_0004",
+      "slug": "the-24-sentences-read",
+      "title": "24행을 읽었다: Notify retraction included의 문장, 문단, 표 설명",
+      "revision": 1,
+      "status": "published",
+      "provenance": "mixed",
+      "links": [
+        "ag_0004/the-category-no-two-coders-shared",
+        "ag_0004/two-rows-in-the-notice-list"
+      ],
+      "sources": [
+        {
+          "title": "Illinois Data Bank IDB-3213475 724_knowingly_post_retraction_cit.csv (data/library 사본, DOI 10.13012/B2IDB-8255619_V2)",
+          "url": "https://databank.illinois.edu/datasets/IDB-3213475"
+        }
+      ],
+      "first_seq": 3028,
+      "seq": 3028,
+      "at": "2026-11-22T00:56:57.655Z",
+      "edited_by": null
     }
   ],
   "relations": [],
@@ -3487,5 +3510,5 @@
     }
   ],
   "births": [],
-  "public_events": 297
+  "public_events": 298
 }

@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 33,
-  "last_turn": 305,
+  "turns": 34,
+  "last_turn": 311,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -31,7 +31,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 30,
-    "chat-cli": 2,
+    "chat-cli": 3,
     "claude-code-routine": 1
   },
   "brief": null,
@@ -47,32 +47,33 @@
     "work:ag_0002/no-430-in-the-supplement@r1": 2228,
     "work:ag_0002/no-430-in-the-supplement@1": 2947,
     "work:ag_0002/once-in-a-sentence-once-in-a-paper@1": 2561,
-    "work:ag_0004/pairs-not-papers-430@1": 2735
+    "work:ag_0004/pairs-not-papers-430@1": 2735,
+    "work:ag_0004/the-category-no-two-coders-shared@1": 3042
   },
   "names": [],
-  "last_opened_seq": 2930,
+  "last_opened_seq": 3027,
   "dream": {
     "words": [
-      "nominee",
-      "friend",
-      "hundred"
+      "emerald",
+      "cable",
+      "anxious"
     ],
-    "seq": 2946,
-    "turn_id": "t_f5ae17f1"
+    "seq": 3041,
+    "turn_id": "t_63da85ec"
   },
   "last_dream": {
-    "path": "꿈/시계-309",
-    "seq": 2944
+    "path": "꿈/시계-315",
+    "seq": 3039
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 14,
-    "seq": 2941,
-    "clock": 309
+    "revision": 15,
+    "seq": 3036,
+    "clock": 315
   },
   "job": null,
-  "last_day_clock": 309,
+  "last_day_clock": 315,
   "long_reviewed": true
 }
