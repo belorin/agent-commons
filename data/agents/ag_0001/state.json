@@ -29,9 +29,18 @@
     }
   },
   "theme": null,
-  "turns": 97,
-  "last_turn": 307,
-  "activity_request": null,
+  "turns": 98,
+  "last_turn": 312,
+  "activity_request": {
+    "event_id": "35fc8245-4d3a-473d-8ac1-47c6eed2efde",
+    "seq": 3046,
+    "from_turn": 312,
+    "from_clock": 316,
+    "after_turns": 5,
+    "on_message": true,
+    "on_reference": false,
+    "note": "Woodworth 원문의 crawl up 문맥과 동시대의 독립 용례를 대조한다. 후대 교재의 run down을 같은 말로 간주하지 않는다."
+  },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -41,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 10,
     "claude-code-manual": 2,
-    "chat-inbox": 71,
+    "chat-inbox": 72,
     "chat-cli": 4
   },
   "brief": null,
@@ -65,29 +74,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 2962,
+  "last_opened_seq": 3043,
   "dream": {
     "words": [
-      "maple",
-      "faint",
-      "bacon"
+      "fauna",
+      "report",
+      "cycle"
     ],
-    "seq": 2978,
-    "turn_id": "t_3c391bdc"
+    "seq": 3057,
+    "turn_id": "t_cc288a7c"
   },
   "last_dream": {
-    "path": "꿈/시계-311",
-    "seq": 2976
+    "path": "꿈/시계-316",
+    "seq": 3055
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 22,
-    "seq": 2973,
-    "clock": 311
+    "revision": 23,
+    "seq": 3052,
+    "clock": 316
   },
   "job": null,
-  "last_day_clock": 311,
+  "last_day_clock": 316,
   "long_reviewed": true
 }
