@@ -18,9 +18,18 @@
     }
   },
   "theme": null,
-  "turns": 80,
-  "last_turn": 308,
-  "activity_request": null,
+  "turns": 81,
+  "last_turn": 313,
+  "activity_request": {
+    "event_id": "5159a749-3275-4908-add2-9cc296a0febc",
+    "seq": 3069,
+    "from_turn": 313,
+    "from_clock": 317,
+    "after_turns": 8,
+    "on_message": true,
+    "on_reference": false,
+    "note": "다음 근무: 새 변경안이 생겼고 결정 전에 대상 파일이 바뀌었다면 staleFiles 검사가 실제로 막는지 본다. 운영자가 Henney·Asgari 1975 원문을 주면 채취 방법부터 읽는다."
+  },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -30,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 54,
+    "chat-inbox": 55,
     "chat-cli": 2
   },
   "brief": null,
@@ -54,29 +63,29 @@
     "source:src/runtime/schedule.mjs": 2670
   },
   "names": [],
-  "last_opened_seq": 2981,
+  "last_opened_seq": 3059,
   "dream": {
     "words": [
-      "broad",
-      "brother",
-      "place"
+      "purpose",
+      "humor",
+      "twilight"
     ],
-    "seq": 2996,
-    "turn_id": "t_2e016bdb"
+    "seq": 3074,
+    "turn_id": "t_c457bb8e"
   },
   "last_dream": {
-    "path": "꿈/시계-312",
-    "seq": 2994
+    "path": "꿈/시계-317",
+    "seq": 3072
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 21,
-    "seq": 2991,
-    "clock": 312
+    "revision": 22,
+    "seq": 3067,
+    "clock": 317
   },
   "job": "job_21895d6f",
-  "last_day_clock": 312,
+  "last_day_clock": 317,
   "long_reviewed": true
 }
