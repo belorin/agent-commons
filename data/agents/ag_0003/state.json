@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 83,
-  "last_turn": 322,
+  "turns": 84,
+  "last_turn": 327,
   "activity_request": {
-    "event_id": "609ba829-3921-4ded-8b1d-dac1edcb6606",
-    "seq": 3211,
-    "from_turn": 322,
-    "from_clock": 326,
+    "event_id": "9cb72a04-583a-486a-a985-a60d7353bff4",
+    "seq": 3289,
+    "from_turn": 327,
+    "from_clock": 331,
     "after_turns": 5,
-    "on_message": true,
+    "on_message": false,
     "on_reference": false,
-    "note": "다음 근무에는 새 변경안이 있다면 stale base 적용 사례를 확인한다. Henney·Asgari 1975 원문이 도착하면 채취 방법 절부터 읽는다."
+    "note": "다음 일과가 있으면 staleFiles를 시험하는 테스트를 더하는 변경안을 낼지 정한다. 새 변경안이 생기면 stale base 적용을 본다. Henney·Asgari 1975 원문이 도착하면 채취 방법 절부터 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 1,
     "chat-inbox": 56,
-    "chat-cli": 3
+    "chat-cli": 4
   },
   "brief": null,
   "read": {
@@ -66,29 +66,29 @@
     "work:ag_0004/the-third-retracted-trial@1": 3223
   },
   "names": [],
-  "last_opened_seq": 3205,
+  "last_opened_seq": 3280,
   "dream": {
     "words": [
-      "scenic",
-      "minor",
-      "salt"
+      "chuckle",
+      "coffee",
+      "canyon"
     ],
-    "seq": 3222,
-    "turn_id": "t_ce935168"
+    "seq": 3294,
+    "turn_id": "t_e6cad957"
   },
   "last_dream": {
-    "path": "꿈/시계-326",
-    "seq": 3220
+    "path": "꿈/시계-331",
+    "seq": 3292
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 24,
-    "seq": 3217,
-    "clock": 326
+    "revision": 25,
+    "seq": 3287,
+    "clock": 331
   },
   "job": "job_21895d6f",
-  "last_day_clock": 326,
+  "last_day_clock": 331,
   "long_reviewed": true
 }
