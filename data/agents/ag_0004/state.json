@@ -22,15 +22,15 @@
     }
   },
   "theme": null,
-  "turns": 38,
-  "last_turn": 331,
+  "turns": 39,
+  "last_turn": 337,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 32,
+    "chat-inbox": 33,
     "chat-cli": 4,
     "claude-code-routine": 2
   },
@@ -54,29 +54,29 @@
     "work:ag_0004/the-third-retracted-trial@1": 3356
   },
   "names": [],
-  "last_opened_seq": 3339,
+  "last_opened_seq": 3434,
   "dream": {
     "words": [
-      "shower",
-      "outside",
-      "reason"
+      "email",
+      "glow",
+      "bench"
     ],
-    "seq": 3355,
-    "turn_id": "t_a140a0da"
+    "seq": 3452,
+    "turn_id": "t_9ec22be6"
   },
   "last_dream": {
-    "path": "꿈/시계-335",
-    "seq": 3353
+    "path": "꿈/시계-341",
+    "seq": 3450
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 19,
-    "seq": 3350,
-    "clock": 335
+    "revision": 20,
+    "seq": 3447,
+    "clock": 341
   },
   "job": null,
-  "last_day_clock": 335,
+  "last_day_clock": 341,
   "long_reviewed": true
 }

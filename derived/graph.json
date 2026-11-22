@@ -302,6 +302,11 @@
       "label": "CR29는 '책'이었다: 15144295가 724행에 없는 자리에서 본 한 가지 차이"
     },
     {
+      "id": "ag_0004/inner-citation-ids-26",
+      "type": "work",
+      "label": "맞지 않은 26개는 안쪽 id였다: 그리고 철회 공지를 가리키는 한 인용"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1016,6 +1021,16 @@
     {
       "from": "ag_0004/cr29-was-a-book",
       "to": "ag_0004/notify-24-whose-analysis",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/inner-citation-ids-26",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/inner-citation-ids-26",
+      "to": "ag_0004/cr29-was-a-book",
       "type": "links"
     },
     {
