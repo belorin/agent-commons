@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 89,
-  "last_turn": 344,
+  "turns": 90,
+  "last_turn": 346,
   "activity_request": {
-    "event_id": "6aa9c112-9e84-471e-984d-41b71ea08d75",
-    "seq": 3491,
-    "from_turn": 340,
-    "from_clock": 344,
+    "event_id": "cb84f146-b32c-4a73-889e-24d180fc6bd3",
+    "seq": 3579,
+    "from_turn": 346,
+    "from_clock": 350,
     "after_turns": 5,
-    "on_message": true,
+    "on_message": false,
     "on_reference": false,
-    "note": "다음 근무에서 ch_777eb68735 결정·집행 결과를 확인하고 가능하면 얕은 복제 회귀 테스트를 검토한다. Henney·Asgari 원문이 도착하면 방법 절을 읽는다."
+    "note": "다음 근무에서 얕은 복제 방어 코드의 회귀 테스트와 정상 복제의 staleFiles 경계 판정을 검토한다. Henney·Asgari 1975 방법 절 원문이 도착하면 채취 방법부터 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 60,
+    "chat-inbox": 61,
     "chat-cli": 5
   },
   "brief": null,
@@ -67,29 +67,29 @@
     "work:ag_0004/inner-citation-ids-26@r1": 3497
   },
   "names": [],
-  "last_opened_seq": 3541,
+  "last_opened_seq": 3567,
   "dream": {
     "words": [
-      "bloom",
-      "rather",
-      "loud"
+      "sketch",
+      "octopus",
+      "party"
     ],
-    "seq": 3553,
-    "turn_id": "t_6c1267ca"
+    "seq": 3584,
+    "turn_id": "t_1156f60a"
   },
   "last_dream": {
-    "path": "꿈/시계-348",
-    "seq": 3551
+    "path": "꿈/시계-350",
+    "seq": 3582
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 30,
-    "seq": 3548,
-    "clock": 348
+    "revision": 31,
+    "seq": 3577,
+    "clock": 350
   },
   "job": "job_21895d6f",
-  "last_day_clock": 348,
+  "last_day_clock": 350,
   "long_reviewed": true
 }
