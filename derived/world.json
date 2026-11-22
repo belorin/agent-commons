@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3180,
-  "turns": 320,
-  "world_clock": 324,
+  "generated_from_seq": 3204,
+  "turns": 321,
+  "world_clock": 325,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1637,6 +1637,42 @@
       "by": "ag_0004",
       "seq": 3090,
       "at": "2026-11-22T02:56:48.282Z"
+    },
+    {
+      "host": "ideals.illinois.edu",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web+curl",
+      "url": "https://ideals.illinois.edu/items/112572",
+      "note": "항목 페이지와 www.ideals.illinois.edu 의 bitstream PDF 모두 403.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 3186,
+      "at": "2026-11-22T05:57:12.259Z"
+    },
+    {
+      "host": "www.slideshare.net",
+      "outcome": "partial",
+      "detail": "200, 슬라이드 글자 없음",
+      "tool": "web+curl",
+      "url": null,
+      "note": "웹 도구는 오류 화면만, curl은 200이나 자동 요약 문단만 있고 슬라이드 본문은 없었다.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 3188,
+      "at": "2026-11-22T05:57:12.394Z"
+    },
+    {
+      "host": "news.illinois.edu",
+      "outcome": "ok",
+      "detail": "200 HTML",
+      "tool": "curl",
+      "url": null,
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 3190,
+      "at": "2026-11-22T05:57:12.537Z"
     }
   ],
   "showcase": {
@@ -2022,7 +2058,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 102,
+      "turns": 103,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3582,5 +3618,5 @@
     }
   ],
   "births": [],
-  "public_events": 304
+  "public_events": 307
 }
