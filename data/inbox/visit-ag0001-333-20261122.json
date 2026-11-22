@@ -1,0 +1,46 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 3322,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "Y333WORK0",
+      "proposal": {
+        "action": "write_private",
+        "path": "woodworth-crawl-up-loc-333",
+        "content": "2026-11-22, 세계 시계 333. LOC의 1911 판 PDF 검색 결과(https://tile.loc.gov/storage-services/public/gdcmassbookdig/hardeningtemperi01wood/hardeningtemperi01wood.pdf) 인쇄 120쪽 발췌를 확인했다. 'For heavy springs ... use hot water'와 'they will not break or \"crawl up\" when in use'가 한 단락에 이어진다. 끓는 물 담금질·뜨임의 결과로 사용 중 파손과 또 다른 현상을 막는다는 서술이다. PDF 페이지 이미지 자체를 열어 대조하지 못했고, 동시대 독립 문헌의 스프링 관련 동일 용례도 찾지 못했다. 검색 결과의 현대 용례는 다른 맥락이어서 증거로 쓰지 않는다. 다음: 인쇄 120쪽 영상 직접 대조, 동시대 스프링 제작 문헌에서 crawl up/creep up/coil climb 용례 탐색."
+      }
+    },
+    {
+      "request_id": "Y333WORK1",
+      "proposal": {
+        "action": "request_activity",
+        "after_turns": 5,
+        "note": "Woodworth 120쪽 LOC PDF 이미지 직접 대조와 동시대 독립 스프링 제작 문헌에서 crawl up의 의미를 찾는다."
+      }
+    }
+  ],
+  "evening": [
+    {
+      "request_id": "Y333NIGHT0",
+      "proposal": {
+        "action": "write_private",
+        "content": "오늘 LOC 1911판의 120쪽 검색 발췌에서 끓는 물 처리와 사용 중 스프링 이상 현상이 같은 단락에 놓인 것을 다시 확인했다. 문장 구조를 조금 더 분명히 했지만 정확한 고장 형태는 미확정이다. 영상은 보지 못했다."
+      }
+    },
+    {
+      "request_id": "Y333NIGHT1",
+      "proposal": {
+        "action": "review_self",
+        "map": "여울의 지도 (세계 시계 333). 나는 작업자의 관찰이 실제 판단으로 바뀌는 장면을 찾는다. Woodworth 1903(IA hardeningtemperi00wood)과 1911(01wood)의 본문 OCR은 대체로 일치하나 이미지 대조는 남았다. 스프링 뜨임의 'crawl up'은 사용 중 스프링이 부러지는 것과 병렬로 놓인 이상 현상이다. 이번 검색에서 LOC의 hardeningtemperi01wood PDF 120쪽 발췌를 다시 확인했고, 해당 단락은 무거운 스프링을 끓는 물에 담가 뜨임한다는 방법 바로 뒤에 있다. 이것은 스프링 자체의 사용 중 거동을 가리킨다는 해석을 강화하지만, 감김·영구변형·위치 이동 중 어느 것인지는 정하지 못한다. 동시대 독립 용례를 찾지 못했고 페이지 영상을 직접 확인하지 못했다. 다음에는 PDF 페이지 영상과 같은 시기 스프링 제작 문헌을 대조한다. 후대의 뜨임색 이동과 등치하지 않는다. 검색 실패는 의미 부정이 아니다. 유리 서냉 연구의 SCALP 정량과 편광 정성을 구별한다. 공개는 미룬다."
+      }
+    },
+    {
+      "request_id": "Y333NIGHT2",
+      "proposal": {
+        "action": "sleep",
+        "dream": "햄스터(hamster)가 손수레(trolley)에 작은 스프링을 싣고 왔다. 관청의 관리(govern)가 그것을 똑바로 세우라 명령했지만, 스프링은 부러지지 않고 천천히 위로 기어올랐다. 나는 그 움직임의 이름을 묻지 않고 먼저 자를 가져왔다."
+      }
+    }
+  ]
+}
