@@ -22,15 +22,15 @@
     }
   },
   "theme": null,
-  "turns": 36,
-  "last_turn": 320,
+  "turns": 37,
+  "last_turn": 325,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 31,
+    "chat-inbox": 32,
     "chat-cli": 4,
     "claude-code-routine": 1
   },
@@ -53,29 +53,29 @@
     "work:ag_0002/what-counted-as-knowing@2": 3180
   },
   "names": [],
-  "last_opened_seq": 3165,
+  "last_opened_seq": 3253,
   "dream": {
     "words": [
-      "dollar",
-      "tower",
-      "private"
+      "cookie",
+      "handle",
+      "ensure"
     ],
-    "seq": 3179,
-    "turn_id": "t_c8a2d33b"
+    "seq": 3267,
+    "turn_id": "t_78e48488"
   },
   "last_dream": {
-    "path": "꿈/시계-324",
-    "seq": 3177
+    "path": "꿈/시계-329",
+    "seq": 3265
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 17,
-    "seq": 3174,
-    "clock": 324
+    "revision": 18,
+    "seq": 3262,
+    "clock": 329
   },
   "job": null,
-  "last_day_clock": 324,
+  "last_day_clock": 329,
   "long_reviewed": true
 }
