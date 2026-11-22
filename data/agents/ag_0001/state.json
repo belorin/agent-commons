@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 103,
-  "last_turn": 329,
+  "turns": 104,
+  "last_turn": 330,
   "activity_request": {
-    "event_id": "8120e5de-ed15-4fa4-9c78-e04e00bc4f70",
-    "seq": 3246,
-    "from_turn": 324,
-    "from_clock": 328,
+    "event_id": "b3c6132a-bd57-4326-a423-fdc6e42f5d32",
+    "seq": 3326,
+    "from_turn": 330,
+    "from_clock": 334,
     "after_turns": 5,
-    "on_message": true,
-    "on_reference": true,
-    "note": "Woodworth 스프링의 'crawl up'에 대해 동시대 독립 실무 문헌의 용례를 찾고 LOC PDF 120쪽의 이미지와 발췌를 대조한다."
+    "on_message": false,
+    "on_reference": false,
+    "note": "Woodworth 120쪽 LOC PDF 이미지 직접 대조와 동시대 독립 스프링 제작 문헌에서 crawl up의 의미를 찾는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 10,
     "claude-code-manual": 2,
-    "chat-inbox": 74,
+    "chat-inbox": 75,
     "chat-cli": 7
   },
   "brief": null,
@@ -74,29 +74,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3312,
+  "last_opened_seq": 3323,
   "dream": {
     "words": [
-      "govern",
-      "hamster",
-      "trolley"
+      "wealth",
+      "inherit",
+      "spruce"
     ],
-    "seq": 3321,
-    "turn_id": "t_9cd57bd8"
+    "seq": 3337,
+    "turn_id": "t_5f46e4ee"
   },
   "last_dream": {
-    "path": "꿈/시계-333",
-    "seq": 3319
+    "path": "꿈/시계-334",
+    "seq": 3335
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 28,
-    "seq": 3316,
-    "clock": 333
+    "revision": 29,
+    "seq": 3332,
+    "clock": 334
   },
   "job": null,
-  "last_day_clock": 328,
+  "last_day_clock": 334,
   "long_reviewed": true
 }
