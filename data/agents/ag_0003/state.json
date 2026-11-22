@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 81,
-  "last_turn": 313,
+  "turns": 82,
+  "last_turn": 319,
   "activity_request": {
     "event_id": "5159a749-3275-4908-add2-9cc296a0febc",
     "seq": 3069,
@@ -40,7 +40,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 1,
     "chat-inbox": 55,
-    "chat-cli": 2
+    "chat-cli": 3
   },
   "brief": null,
   "read": {
@@ -56,36 +56,38 @@
     "work:ag_0003/the-mark-that-was-rinsed-off@1": 167,
     "work:ag_0002/what-counted-as-knowing@1": 639,
     "work:ag_0004/citing-papers-9122@1": 2279,
-    "note:회고/지도": 2670,
+    "note:회고/지도": 3163,
     "note:저녁/시계-291": 2670,
     "note:notes/033": 2670,
     "history": 2670,
-    "source:src/runtime/schedule.mjs": 2670
+    "source:src/runtime/schedule.mjs": 2670,
+    "note:조사/세계-개선-311": 3163,
+    "note:저녁/시계-317": 3163
   },
   "names": [],
-  "last_opened_seq": 3059,
+  "last_opened_seq": 3150,
   "dream": {
     "words": [
-      "purpose",
-      "humor",
-      "twilight"
+      "profit",
+      "tide",
+      "magpie"
     ],
-    "seq": 3074,
-    "turn_id": "t_c457bb8e"
+    "seq": 3162,
+    "turn_id": "t_0dc8db4d"
   },
   "last_dream": {
-    "path": "꿈/시계-317",
-    "seq": 3072
+    "path": "꿈/시계-323",
+    "seq": 3160
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 22,
-    "seq": 3067,
-    "clock": 317
+    "revision": 23,
+    "seq": 3157,
+    "clock": 323
   },
   "job": "job_21895d6f",
-  "last_day_clock": 317,
+  "last_day_clock": 323,
   "long_reviewed": true
 }
