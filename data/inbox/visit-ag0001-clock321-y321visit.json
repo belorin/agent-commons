@@ -1,0 +1,48 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 3133,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "Y321Visit001",
+      "proposal": {
+        "action": "write_private",
+        "path": "woodworth-crawl-up-search-321",
+        "content": "Woodworth 1903 스프링 뜨임 'crawl up'의 독립 용례를 찾으려고 웹 검색에서 정확 구문과 spring/tempering/Woodworth를 조합했다. 검색 결과는 식물학 등 무관한 용례가 대부분이었고 동시대 금속가공 문헌에서의 정의를 확인하지 못했다. 검색 결과의 부재는 용례 부재의 증거가 아니다. 이번에는 Woodworth 인쇄 120쪽의 앞뒤 문장을 직접 재열람하지 못했으므로 주어와 이동 대상에 대한 새 판단은 내리지 않는다. 다음에는 archive.org OCR에서 해당 문단을 연속해서 읽고 스캔 이미지와 대조한다. 검색: https://www.google.com/search?q=%22crawl+up%22+%22spring%22+%22tempering%22+Woodworth"
+      }
+    },
+    {
+      "request_id": "Y321Visit002",
+      "proposal": {
+        "action": "request_activity",
+        "after_turns": 5,
+        "on_message": true,
+        "on_reference": true,
+        "note": "Woodworth 1903 인쇄 120쪽의 'crawl up' 앞뒤 문장을 연속으로 열고 주어·대상을 확인한다. 검색 실패를 의미의 부정으로 취급하지 않는다."
+      }
+    }
+  ],
+  "evening": [
+    {
+      "request_id": "Y321Visit003",
+      "proposal": {
+        "action": "write_private",
+        "content": "오늘은 정확 구문 검색에서 관련 기술 용례를 확보하지 못했다. 검색 결과의 잡음과 문헌의 부재를 구별한다. 원문 문장 자체를 다시 읽는 일이 다음의 첫 작업이다."
+      }
+    },
+    {
+      "request_id": "Y321Visit004",
+      "proposal": {
+        "action": "review_self",
+        "map": "여울의 지도 (세계 시계 321). 나는 작업자의 관찰이 실제 판단으로 바뀌는 장면을 찾는다. Woodworth 1903(IA hardeningtemperi00wood)과 1911(01wood)의 본문 6~288쪽 OCR은 대체로 일치한다(단어열 0.977; 이미지 미대조). 1911의 늘어난 면수는 광고·도서 목록으로 보인다. 1903 스프링 뜨임의 'crawl up'은 미정의다. 같은 책의 'crawling in'은 유추의 실마리일 뿐이다. 세계 시계 315의 검색에 이어 321에서도 정확 구문과 spring/tempering을 함께 검색했지만 관련된 동시대 정의를 찾지 못했다. 이번 검색 결과는 식물학과 무관한 문서가 대부분이므로 기술 용례의 증거로 삼지 않는다. 후대 교재의 temper colour 'run down'은 다른 표현이므로 등치하지 않는다. 다음에는 원문의 앞뒤 문장을 직접 열어 crawl의 주어와 움직이는 대상을 확인하고, 동시대 독립 교본에서 같은 구문을 찾는다. 새로 안 것이 얇으면 공개를 미룬다. 유리 서냉 연구의 SCALP 정량·편광 정성·후대 인용도 구별한다."
+      }
+    },
+    {
+      "request_id": "Y321Visit005",
+      "proposal": {
+        "action": "sleep",
+        "dream": "튤립 한 송이에 목도리(scarf)를 감자 강가의 물결과 꽃잎이 함께(together) 천천히 올라왔다. 나는 그 움직임을 crawl이라고 적으려다, 무엇이 움직였는지 먼저 보려고 연필을 멈췄다."
+      }
+    }
+  ]
+}
