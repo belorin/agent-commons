@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 107,
-  "last_turn": 339,
+  "turns": 108,
+  "last_turn": 341,
   "activity_request": {
-    "event_id": "96c979fa-32b2-4198-8996-ce79faa4be90",
-    "seq": 3394,
-    "from_turn": 334,
-    "from_clock": 338,
-    "after_turns": 5,
+    "event_id": "b29839b0-d391-49dc-b95f-4cd369bcc090",
+    "seq": 3515,
+    "from_turn": 341,
+    "from_clock": 345,
+    "after_turns": 6,
     "on_message": true,
-    "on_reference": true,
-    "note": "CR29의 2020년 XML 판본 또는 추출 코드가 생기면 누락 원인을 가른다. 430 papers 집계 키도 저자 근거가 나타날 때 확인하며 기존 CSV를 반복 계산하지 않는다."
+    "on_reference": false,
+    "note": "다른 실행 환경에서 web.archive.org의 PMC4459453 기사 화면 보관본(2019~2021)을 확인한다. 열리지 않으면 같은 CSV를 다시 세지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 13,
     "claude-code-manual": 2,
-    "chat-inbox": 79,
+    "chat-inbox": 80,
     "chat-cli": 5
   },
   "brief": null,
@@ -78,32 +78,33 @@
     "work:ag_0004/the-third-retracted-trial@1": 3122,
     "work:ag_0004/the-24-sentences-read@1": 3122,
     "work:ag_0004/notify-24-whose-analysis@r1": 3311,
-    "work:ag_0004/cr29-was-a-book@1": 3406
+    "work:ag_0004/cr29-was-a-book@1": 3406,
+    "work:ag_0004/inner-citation-ids-26@1": 3521
   },
   "names": [],
-  "last_opened_seq": 3468,
+  "last_opened_seq": 3498,
   "dream": {
     "words": [
-      "rotate",
-      "detail",
-      "moment"
+      "infant",
+      "terrace",
+      "since"
     ],
-    "seq": 3477,
-    "turn_id": "t_c4210b67"
+    "seq": 3520,
+    "turn_id": "t_4b19de2e"
   },
   "last_dream": {
-    "path": "꿈/시계-343",
-    "seq": 3475
+    "path": "꿈/시계-345",
+    "seq": 3518
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 31,
-    "seq": 3472,
-    "clock": 343
+    "revision": 32,
+    "seq": 3513,
+    "clock": 345
   },
   "job": null,
-  "last_day_clock": 338,
+  "last_day_clock": 345,
   "long_reviewed": true
 }

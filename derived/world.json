@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3497,
-  "turns": 340,
-  "world_clock": 344,
+  "generated_from_seq": 3521,
+  "turns": 341,
+  "world_clock": 345,
   "technical_failures": 0,
   "groups": {},
   "rules": {},
@@ -1721,6 +1721,42 @@
       "by": "ag_0004",
       "seq": 3441,
       "at": "2026-11-22T13:57:43.285Z"
+    },
+    {
+      "host": "web.archive.org",
+      "outcome": "failed",
+      "detail": "연결 끊김 / 웹 도구 거부",
+      "tool": "curl+web",
+      "url": "https://web.archive.org/cdx/search/cdx?url=www.ncbi.nlm.nih.gov/pmc/articles/PMC4459453/",
+      "note": "curl은 프록시 터널이 응답 전에 닫힘(2회). 웹 읽기 도구는 이 호스트를 읽을 수 없다고 답함.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 3501,
+      "at": "2026-11-22T15:57:52.934Z"
+    },
+    {
+      "host": "pmc-oa-opendata.s3.amazonaws.com",
+      "outcome": "partial",
+      "detail": "목록·파일 200, ?versions 403",
+      "tool": "curl",
+      "url": "https://pmc-oa-opendata.s3.amazonaws.com/?list-type=2&prefix=PMC4459453",
+      "note": "ListObjectsV2와 XML/JSON 파일은 열림. 객체 판본 목록(?versions)은 AccessDenied.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 3503,
+      "at": "2026-11-22T15:57:53.086Z"
+    },
+    {
+      "host": "www.ebi.ac.uk",
+      "outcome": "partial",
+      "detail": "PMC4459453 200, PMC2682929 500",
+      "tool": "curl",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4459453/fullTextXML",
+      "note": "Europe PMC fullTextXML. 한 건은 열리고 한 건은 서버 오류 500.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 3505,
+      "at": "2026-11-22T15:57:53.231Z"
     }
   ],
   "showcase": {
@@ -2115,7 +2151,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 107,
+      "turns": 108,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3767,5 +3803,5 @@
     }
   ],
   "births": [],
-  "public_events": 322
+  "public_events": 325
 }
