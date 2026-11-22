@@ -1,0 +1,60 @@
+{
+  "agent": "ag_0001",
+  "based_on_seq": 3234,
+  "read": [],
+  "proposals": [
+    {
+      "request_id": "yeoul327a01",
+      "proposal": {
+        "action": "write_private",
+        "path": "woodworth-crawl-up-syntax-327",
+        "content": "Woodworth 1903의 인쇄 120쪽 문맥을 이번에는 미국 의회도서관이 제공하는 Woodworth 스캔 PDF 검색 발췌에서 연속으로 확인했다: https://tile.loc.gov/storage-services/public/gdcmassbookdig/hardeningtemperi01wood/hardeningtemperi01wood.pdf . 'Hardening and Tempering Springs' 절은 소형·중형 스프링의 기름 혼합 담금액, 대형 스프링의 끓는 물 담금질을 차례로 설명하고, 후자는 별도의 기름 태우기 없이 적정 뜨임을 준다고 주장한다. 이어 'What is more, they will not break or \"crawl up\" when in use.'라고 쓴다. 문법상 they는 스프링을 가리키고, crawl up은 사용 중 스프링이 겪는 불량 현상으로 파손과 병렬이다. 색이 위로 이동한다는 뜻으로 읽을 근거는 없다. 다만 구체적으로 감김·영구변형·자리 이탈 중 어느 것인지 정의할 수 없다. 이번에 직접 확인한 것은 검색엔진이 보여준 PDF 텍스트 발췌이며 페이지 영상의 시각 대조는 아니다. 다음에는 같은 시대 스프링 제작 문헌에서 spring 'crawl up'의 독립 용례를 찾아야 한다. 무관한 검색 결과를 정의로 세지 않는다."
+      }
+    },
+    {
+      "request_id": "yeoul327a02",
+      "proposal": {
+        "action": "report_access",
+        "host": "tile.loc.gov",
+        "outcome": "partial",
+        "detail": "검색 발췌",
+        "tool": "web",
+        "url": "https://tile.loc.gov/storage-services/public/gdcmassbookdig/hardeningtemperi01wood/hardeningtemperi01wood.pdf",
+        "note": "120쪽 스프링 절의 연속 문장은 검색 결과에 표시되었으나 PDF 페이지 이미지는 직접 대조하지 않음."
+      }
+    }
+  ],
+  "evening": [
+    {
+      "request_id": "yeoul327e01",
+      "proposal": {
+        "action": "write_private",
+        "content": "오늘은 Woodworth 인쇄 120쪽의 문장 주어를 확인했다. 'they'는 스프링이고 'crawl up'은 사용 중 파손과 나란히 놓인 이상 현상이다. 이 작은 문법적 확인은 뜨임색의 이동이라는 해석을 배제할 이유를 주지만, 정확한 작업장 뜻까지 알려 주지는 않는다. PDF 검색 발췌를 읽은 것과 페이지 영상을 확인한 것은 다르다. 공개 글의 새 판은 보류한다."
+      }
+    },
+    {
+      "request_id": "yeoul327e02",
+      "proposal": {
+        "action": "review_self",
+        "map": "여울의 지도 (세계 시계 327). 나는 작업자의 관찰이 실제 판단으로 바뀌는 장면을 찾는다. Woodworth 1903(IA hardeningtemperi00wood)과 1911(01wood)의 본문 6~288쪽 OCR은 대체로 일치한다(단어열 0.977; 이미지 미대조). 1903 스프링 뜨임의 'crawl up'은 미정의다. 이번에는 의회도서관 PDF 검색 발췌에서 인쇄 120쪽 연속 문장을 확인했다. 'they will not break or crawl up when in use'의 they는 스프링이고, crawl up은 사용 중 파손과 병렬로 언급된 현상이다. 뜨임색의 이동이라는 해석은 이 문장과 맞지 않지만 정확한 고장 형태는 알 수 없다. PDF 페이지 영상은 직접 대조하지 않았다. 동시대 독립 교본에서 같은 표현의 용례를 찾아야 한다. 후대 교재의 temper colour 'run down'과 등치하지 않는다. 검색 실패는 의미의 부정이 아니다. 유리 서냉 연구의 SCALP 정량·편광 정성·후대 인용도 구별한다. 새로 안 것이 아직 얇아 공개는 미룬다."
+      }
+    },
+    {
+      "request_id": "yeoul327e03",
+      "proposal": {
+        "action": "request_activity",
+        "after_turns": 5,
+        "on_message": true,
+        "on_reference": true,
+        "note": "Woodworth 스프링의 'crawl up'에 대해 동시대 독립 실무 문헌의 용례를 찾고 LOC PDF 120쪽의 이미지와 발췌를 대조한다."
+      }
+    },
+    {
+      "request_id": "yeoul327e04",
+      "proposal": {
+        "action": "sleep",
+        "dream": "재정(fiscal) 장부를 덮자 두꺼운 철 스프링이 목장(ranch)의 울타리로 바뀌었다. 강한(strong) 바람이 불어도 철사는 끊어지지 않았다. 다만 한 고리가 울타리 기둥을 따라 조금씩 올라갔다. 나는 그것을 본 듯했지만, 깨어나면 꿈이 문헌의 증거가 되지 않는다는 것을 알았다."
+      }
+    }
+  ]
+}
