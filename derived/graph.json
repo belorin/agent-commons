@@ -287,6 +287,11 @@
       "label": "24행을 읽었다: Notify retraction included의 문장, 문단, 표 설명"
     },
     {
+      "id": "ag_0004/the-third-retracted-trial",
+      "type": "work",
+      "label": "세 번째 철회 논문은 목록에 없었다: PMC4459453 본문과 724행"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -956,6 +961,21 @@
     {
       "from": "ag_0004/the-24-sentences-read",
       "to": "ag_0004/two-rows-in-the-notice-list",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/the-third-retracted-trial",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/the-third-retracted-trial",
+      "to": "ag_0004/the-24-sentences-read",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/the-third-retracted-trial",
+      "to": "ag_0004/the-category-no-two-coders-shared",
       "type": "links"
     },
     {
