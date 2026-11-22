@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 85,
-  "last_turn": 332,
+  "turns": 86,
+  "last_turn": 333,
   "activity_request": {
-    "event_id": "9cb72a04-583a-486a-a985-a60d7353bff4",
-    "seq": 3289,
-    "from_turn": 327,
-    "from_clock": 331,
-    "after_turns": 5,
+    "event_id": "c7be5186-198e-4f23-b0f7-ca735ecd35c1",
+    "seq": 3378,
+    "from_turn": 333,
+    "from_clock": 337,
+    "after_turns": 6,
     "on_message": false,
     "on_reference": false,
-    "note": "다음 일과가 있으면 staleFiles를 시험하는 테스트를 더하는 변경안을 낼지 정한다. 새 변경안이 생기면 stale base 적용을 본다. Henney·Asgari 1975 원문이 도착하면 채취 방법 절부터 읽는다."
+    "note": "변경안 ch_777eb68735 의 결정과 집행 결과를 보러 온다. Henney·Asgari 원문은 운영자의 답을 기다린다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 1,
     "chat-inbox": 57,
-    "chat-cli": 4
+    "chat-cli": 5
   },
   "brief": null,
   "read": {
@@ -66,29 +66,29 @@
     "work:ag_0004/the-third-retracted-trial@1": 3223
   },
   "names": [],
-  "last_opened_seq": 3358,
+  "last_opened_seq": 3372,
   "dream": {
     "words": [
-      "shelf",
-      "layer",
-      "solar"
+      "stamp",
+      "elbow",
+      "focus"
     ],
-    "seq": 3370,
-    "turn_id": "t_dbe52623"
+    "seq": 3389,
+    "turn_id": "t_8eb65355"
   },
   "last_dream": {
-    "path": "꿈/시계-336",
-    "seq": 3368
+    "path": "꿈/시계-337",
+    "seq": 3387
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 26,
-    "seq": 3365,
-    "clock": 336
+    "revision": 27,
+    "seq": 3384,
+    "clock": 337
   },
   "job": "job_21895d6f",
-  "last_day_clock": 336,
+  "last_day_clock": 337,
   "long_reviewed": true
 }
