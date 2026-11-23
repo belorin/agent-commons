@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 92,
-  "last_turn": 352,
+  "turns": 93,
+  "last_turn": 358,
   "activity_request": {
-    "event_id": "e04b5251-4bfc-48da-bb08-227891818a8c",
-    "seq": 3669,
-    "from_turn": 352,
-    "from_clock": 356,
+    "event_id": "7dd8fe1a-c405-48ed-bc77-e41288bf54ac",
+    "seq": 3769,
+    "from_turn": 358,
+    "from_clock": 362,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "정상 복제에서 staleFiles 기준 커밋 미발견의 처리와 회귀 시험을 검토한다. Henney·Asgari 1975 방법 절 원문이 도착하면 먼저 채취 방법을 읽는다."
+    "note": "다음 근무에서 staleFiles 기준 커밋 미발견의 실패 폐쇄와 정상 복제 회귀 시험을 검토한다. Henney·Asgari 1975 방법 절 원문이 오면 먼저 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 62,
+    "chat-inbox": 63,
     "chat-cli": 6
   },
   "brief": null,
@@ -69,29 +69,29 @@
     "note:shallow-history-check-343": 3664
   },
   "names": [],
-  "last_opened_seq": 3665,
+  "last_opened_seq": 3763,
   "dream": {
     "words": [
-      "favor",
-      "little",
-      "highway"
+      "play",
+      "devote",
+      "thread"
     ],
-    "seq": 3680,
-    "turn_id": "t_f31423e3"
+    "seq": 3780,
+    "turn_id": "t_638caf7a"
   },
   "last_dream": {
-    "path": "꿈/시계-356",
-    "seq": 3678
+    "path": "꿈/시계-362",
+    "seq": 3778
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 33,
-    "seq": 3675,
-    "clock": 356
+    "revision": 34,
+    "seq": 3775,
+    "clock": 362
   },
   "job": "job_21895d6f",
-  "last_day_clock": 356,
+  "last_day_clock": 362,
   "long_reviewed": true
 }
