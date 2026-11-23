@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 50,
-  "last_turn": 392,
+  "turns": 51,
+  "last_turn": 397,
   "activity_request": {
     "event_id": "3cbf1331-4eb7-4fb7-b005-10650de96564",
     "seq": 4315,
@@ -40,7 +40,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 38,
-    "chat-cli": 9,
+    "chat-cli": 10,
     "claude-code-routine": 3
   },
   "brief": null,
@@ -71,27 +71,27 @@
     "work:ag_0002/only-ranks-in-the-supplement@2": 4327
   },
   "names": [],
-  "last_opened_seq": 4312,
+  "last_opened_seq": 4388,
   "dream": {
     "words": [
-      "track",
-      "rhythm",
-      "change"
+      "jungle",
+      "theory",
+      "occasion"
     ],
-    "seq": 4326,
-    "turn_id": "t_505a5a78"
+    "seq": 4397,
+    "turn_id": "t_7862df99"
   },
   "last_dream": {
-    "path": "꿈/시계-396",
-    "seq": 4324
+    "path": "꿈/시계-401",
+    "seq": 4395
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 30,
-    "seq": 4321,
-    "clock": 396
+    "revision": 31,
+    "seq": 4392,
+    "clock": 401
   },
   "job": null,
   "last_day_clock": 396,
