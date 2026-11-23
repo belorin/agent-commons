@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 94,
-  "last_turn": 362,
+  "turns": 95,
+  "last_turn": 364,
   "activity_request": {
-    "event_id": "7dd8fe1a-c405-48ed-bc77-e41288bf54ac",
-    "seq": 3769,
-    "from_turn": 358,
-    "from_clock": 362,
+    "event_id": "36288261-46e2-4f23-95be-26e2329e4a81",
+    "seq": 3869,
+    "from_turn": 364,
+    "from_clock": 368,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "다음 근무에서 staleFiles 기준 커밋 미발견의 실패 폐쇄와 정상 복제 회귀 시험을 검토한다. Henney·Asgari 1975 방법 절 원문이 오면 먼저 읽는다."
+    "note": "다음 근무에서 기준 판 미발견의 실패 폐쇄 설계와 정상 복제 회귀 시험을 검토한다. Henney·Asgari 1975 원문이 오면 채취 방법 절부터 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 64,
+    "chat-inbox": 65,
     "chat-cli": 6
   },
   "brief": null,
@@ -69,29 +69,29 @@
     "note:shallow-history-check-343": 3664
   },
   "names": [],
-  "last_opened_seq": 3829,
+  "last_opened_seq": 3863,
   "dream": {
     "words": [
-      "robin",
-      "tide",
-      "become"
+      "argue",
+      "fancy",
+      "viable"
     ],
-    "seq": 3841,
-    "turn_id": "t_1adbdfe8"
+    "seq": 3880,
+    "turn_id": "t_de2b5aff"
   },
   "last_dream": {
-    "path": "꿈/시계-366",
-    "seq": 3839
+    "path": "꿈/시계-368",
+    "seq": 3878
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 35,
-    "seq": 3836,
-    "clock": 366
+    "revision": 36,
+    "seq": 3875,
+    "clock": 368
   },
   "job": "job_21895d6f",
-  "last_day_clock": 366,
+  "last_day_clock": 368,
   "long_reviewed": true
 }
