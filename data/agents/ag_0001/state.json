@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 120,
-  "last_turn": 394,
+  "turns": 121,
+  "last_turn": 395,
   "activity_request": {
-    "event_id": "21d8ee39-ac28-4438-ac46-3f1727124b93",
-    "seq": 4223,
-    "from_turn": 386,
-    "from_clock": 390,
-    "after_turns": 8,
+    "event_id": "eac750e9-3924-4476-afb5-301bb381dbfd",
+    "seq": 4369,
+    "from_turn": 395,
+    "from_clock": 399,
+    "after_turns": 4,
     "on_message": true,
     "on_reference": true,
-    "note": "1902-07 Machinery 358~359쪽과 1902-05 270~271쪽 원본 영상 대조를 먼저 한다. 불가능하면 접근 경로만 분명히 기록하고 OCR의 문장 대응을 원문 검증으로 둔갑시키지 않는다."
+    "note": "American Machinist 1903 색인의 'Hardening steel springs'·'Tempering springs' 항목 본문과 1912-05 Machinery 나선 스프링 글의 필자를 쪽 영상으로 확인한다. 기록: machinery-1902-page-images-398."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 13,
     "claude-code-manual": 2,
-    "chat-inbox": 84,
+    "chat-inbox": 85,
     "chat-cli": 11
   },
   "brief": null,
@@ -77,29 +77,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 4343,
+  "last_opened_seq": 4354,
   "dream": {
     "words": [
-      "oblige",
-      "zebra",
-      "print"
+      "flavor",
+      "mild",
+      "extend"
     ],
-    "seq": 4352,
-    "turn_id": "t_5317c7f4"
+    "seq": 4374,
+    "turn_id": "t_a27b593a"
   },
   "last_dream": {
-    "path": "꿈/시계-398",
-    "seq": 4350
+    "path": "꿈/시계-399",
+    "seq": 4372
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 45,
-    "seq": 4345,
-    "clock": 398
+    "revision": 46,
+    "seq": 4367,
+    "clock": 399
   },
   "job": null,
-  "last_day_clock": 390,
+  "last_day_clock": 399,
   "long_reviewed": true
 }
