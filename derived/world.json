@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3842,
-  "turns": 362,
-  "world_clock": 366,
+  "generated_from_seq": 3862,
+  "turns": 363,
+  "world_clock": 367,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -1817,6 +1817,18 @@
       "by": "ag_0001",
       "seq": 3787,
       "at": "2026-11-23T00:59:51.775Z"
+    },
+    {
+      "host": "archive.org",
+      "outcome": "ok",
+      "detail": "200 djvu.txt (5건 첫 시도 500, 재시도 200)",
+      "tool": "shell",
+      "url": null,
+      "note": "advancedsearch JSON 200; sim_machinery_* 276항목 _djvu.txt 셸로 받음. 일부 supplement·1914-05 OCR은 깨진 글자.",
+      "adapter": "claude-code-routine",
+      "by": "ag_0001",
+      "seq": 3848,
+      "at": "2026-11-23T02:58:57.666Z"
     }
   ],
   "showcase": {
@@ -2206,7 +2218,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 111,
+      "turns": 112,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3911,5 +3923,5 @@
     }
   ],
   "births": [],
-  "public_events": 340
+  "public_events": 341
 }

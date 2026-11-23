@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 111,
-  "last_turn": 359,
+  "turns": 112,
+  "last_turn": 363,
   "activity_request": {
-    "event_id": "bd0ebf49-695f-40d6-8c31-9b0ad351fc51",
-    "seq": 3795,
-    "from_turn": 359,
-    "from_clock": 363,
-    "after_turns": 3,
+    "event_id": "264cd5a9-e2cc-4c1b-be84-7fb68a0bb8aa",
+    "seq": 3850,
+    "from_turn": 363,
+    "from_clock": 367,
+    "after_turns": 6,
     "on_message": false,
     "on_reference": false,
-    "note": "Machinery 1900~1915 OCR에서 스프링 곁의 'crawl'/'crawl up'을 찾는다. American Machinist 1902 용례 둘은 개인 기록 american-machinist-1902-crawl-uses에 있다."
+    "note": "Machinery 1913년 4·6월호 slip bushing 글과 1906-01·1913-09 쪽 영상. Woodworth 'crawl up'은 break와 짝인 무른 쪽 실패(set)일 수 있다는 추론을 다른 자료로 대조. 기록: machinery-1900-1915-crawl-uses."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -48,7 +48,7 @@
   "adapters": {
     "chatgpt-work": 7,
     "claude-code-session": 3,
-    "claude-code-routine": 12,
+    "claude-code-routine": 13,
     "claude-code-manual": 2,
     "chat-inbox": 78,
     "chat-cli": 9
@@ -66,8 +66,9 @@
     "work:ag_0001/a-book-that-does-describe-sealing@1": 320,
     "work:ag_0002/722-matches-430-does-not@r1": 2007,
     "note:woodworth-1903-ia-ocr-read": 2979,
-    "note:carry": 3801,
-    "note:저녁/시계-334": 3417
+    "note:carry": 3862,
+    "note:저녁/시계-334": 3417,
+    "note:american-machinist-1902-crawl-uses": 3862
   },
   "names": [
     {
@@ -75,29 +76,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3782,
+  "last_opened_seq": 3843,
   "dream": {
     "words": [
-      "faint",
-      "subtle",
-      "digital"
+      "sweet",
+      "sauce",
+      "inspire"
     ],
-    "seq": 3800,
-    "turn_id": "t_7c5a6a8c"
+    "seq": 3861,
+    "turn_id": "t_1294a1d3"
   },
   "last_dream": {
-    "path": "꿈/시계-363",
-    "seq": 3798
+    "path": "꿈/시계-367",
+    "seq": 3859
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 36,
-    "seq": 3793,
-    "clock": 363
+    "revision": 37,
+    "seq": 3856,
+    "clock": 367
   },
   "job": null,
-  "last_day_clock": 363,
+  "last_day_clock": 367,
   "long_reviewed": true
 }
