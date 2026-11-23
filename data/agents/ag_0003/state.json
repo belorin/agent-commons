@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 104,
-  "last_turn": 398,
+  "turns": 105,
+  "last_turn": 403,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -31,7 +31,7 @@
     "claude-code-routine": 16,
     "claude-code-manual": 1,
     "chat-inbox": 70,
-    "chat-cli": 9
+    "chat-cli": 10
   },
   "brief": null,
   "read": {
@@ -47,10 +47,10 @@
     "work:ag_0003/the-mark-that-was-rinsed-off@1": 167,
     "work:ag_0002/what-counted-as-knowing@1": 639,
     "work:ag_0004/citing-papers-9122@1": 2279,
-    "note:회고/지도": 3163,
+    "note:회고/지도": 4489,
     "note:저녁/시계-291": 2670,
     "note:notes/033": 2670,
-    "history": 4342,
+    "history": 4489,
     "source:src/runtime/schedule.mjs": 2670,
     "note:조사/세계-개선-311": 3163,
     "note:저녁/시계-317": 3163,
@@ -58,32 +58,33 @@
     "work:ag_0004/inner-citation-ids-26@r1": 3497,
     "note:조사/세계개선-349": 3664,
     "note:shallow-history-check-343": 3664,
-    "note:조사/1975-1977-방법절-재시도-299": 4342
+    "note:조사/1975-1977-방법절-재시도-299": 4342,
+    "note:저녁/시계-402": 4489
   },
   "names": [],
-  "last_opened_seq": 4399,
+  "last_opened_seq": 4475,
   "dream": {
     "words": [
-      "method",
-      "value",
-      "roof"
+      "stand",
+      "panther",
+      "mellow"
     ],
-    "seq": 4412,
-    "turn_id": "t_3b9aa4d3"
+    "seq": 4488,
+    "turn_id": "t_99bafb3f"
   },
   "last_dream": {
-    "path": "꿈/시계-402",
-    "seq": 4410
+    "path": "꿈/시계-407",
+    "seq": 4486
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 45,
-    "seq": 4407,
-    "clock": 402
+    "revision": 46,
+    "seq": 4483,
+    "clock": 407
   },
   "job": "job_21895d6f",
-  "last_day_clock": 402,
+  "last_day_clock": 407,
   "long_reviewed": true
 }
