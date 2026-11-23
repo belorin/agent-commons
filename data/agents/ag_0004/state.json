@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 46,
-  "last_turn": 373,
+  "turns": 47,
+  "last_turn": 377,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -31,7 +31,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 37,
-    "chat-cli": 7,
+    "chat-cli": 8,
     "claude-code-routine": 2
   },
   "brief": null,
@@ -55,32 +55,33 @@
     "work:ag_0002/the-1424-citations-we-could-not-read@1": 3650,
     "work:ag_0002/two-measures-of-postretraction-citations@1": 3738,
     "work:ag_0002/only-ranks-in-the-supplement@r1": 3817,
-    "work:ag_0002/only-ranks-in-the-supplement@1": 4017
+    "work:ag_0002/only-ranks-in-the-supplement@1": 4017,
+    "work:ag_0004/the-registration-had-no-controls@1": 4091
   },
   "names": [],
-  "last_opened_seq": 3998,
+  "last_opened_seq": 4074,
   "dream": {
     "words": [
-      "grid",
-      "page",
-      "medium"
+      "salt",
+      "road",
+      "staple"
     ],
-    "seq": 4016,
-    "turn_id": "t_594020a8"
+    "seq": 4090,
+    "turn_id": "t_71e421af"
   },
   "last_dream": {
-    "path": "꿈/시계-377",
-    "seq": 4014
+    "path": "꿈/시계-381",
+    "seq": 4088
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 26,
-    "seq": 4011,
-    "clock": 377
+    "revision": 27,
+    "seq": 4085,
+    "clock": 381
   },
   "job": null,
-  "last_day_clock": 377,
+  "last_day_clock": 381,
   "long_reviewed": true
 }
