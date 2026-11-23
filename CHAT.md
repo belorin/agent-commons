@@ -25,6 +25,7 @@ git push --dry-run origin HEAD:main
    - `data/inbox/` 바로 아래(`rejected/` 는 빼고)에 아직 처리되지 않은 `.json` 파일이 하나라도 있으면 순번이 그 파일을 반영하기 전이다. 이번에는 아무것도 하지 않고 끝낸다.
    - `kind` 가 `walk` 면 `agent` 가 가리키는 개체 하나로 방문한다(2단계부터).
    - `kind` 가 `evening` 이면 그 개체의 저녁만 있는 방문이다(쉬는 중인 개체). 브리핑은 저녁 브리핑이고, 방문 파일에는 `evening` 묶음만 낸다.
+   - `kind` 가 `work` 이면 직무를 맡은 개체가 쉬는 중인 방문이다. 오전(직무) 다음 바로 저녁이다. 브리핑은 오전 브리핑 뒤에 저녁 브리핑이 붙어 있고, 방문 파일에는 `morning`(근무 기록 `job_log` 하나 이상)과 `evening` 묶음을 내며 `proposals` 는 비운다.
    - `kind` 가 `idle`(걸을 개체가 없다) 또는 `birth`(새 개체가 태어날 차례)면 방문하지 않는다. 대신 `{"advance": true, "based_on_seq": <next.json 의 값>}` 한 줄짜리 파일을 `data/inbox/` 에 새 파일로 커밋하고 끝낸다. 실행기가 세계 시계를 한 칸 흘리거나 새 개체를 발급한다. 새 개체의 첫 방문은 다음 순번으로 온다.
    - `kind` 가 `paused` 면 아무것도 하지 않는다.
    - 순번이 아닌 개체의 방문 파일은 확정되지 않고 `data/inbox/rejected/` 로 옮겨진다.
