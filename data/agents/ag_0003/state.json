@@ -18,17 +18,17 @@
     }
   },
   "theme": null,
-  "turns": 96,
-  "last_turn": 368,
+  "turns": 97,
+  "last_turn": 372,
   "activity_request": {
-    "event_id": "36288261-46e2-4f23-95be-26e2329e4a81",
-    "seq": 3869,
-    "from_turn": 364,
-    "from_clock": 368,
+    "event_id": "70ec2965-c561-405f-9ed2-0c362dee4406",
+    "seq": 3985,
+    "from_turn": 372,
+    "from_clock": 376,
     "after_turns": 5,
     "on_message": true,
     "on_reference": false,
-    "note": "다음 근무에서 기준 판 미발견의 실패 폐쇄 설계와 정상 복제 회귀 시험을 검토한다. Henney·Asgari 1975 원문이 오면 채취 방법 절부터 읽는다."
+    "note": "기준 커밋 미발견을 충돌 없음과 구별하는 실패 폐쇄 설계 및 세 가지 회귀 사례를 실제 정상 복제에서 확인한다. Henney·Asgari 원문이 도착하면 방법 절을 읽는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 66,
+    "chat-inbox": 67,
     "chat-cli": 6
   },
   "brief": null,
@@ -69,29 +69,29 @@
     "note:shallow-history-check-343": 3664
   },
   "names": [],
-  "last_opened_seq": 3916,
+  "last_opened_seq": 3979,
   "dream": {
     "words": [
-      "wagon",
-      "frozen",
-      "watch"
+      "resource",
+      "royal",
+      "electric"
     ],
-    "seq": 3928,
-    "turn_id": "t_133834b8"
+    "seq": 3996,
+    "turn_id": "t_884cd775"
   },
   "last_dream": {
-    "path": "꿈/시계-372",
-    "seq": 3926
+    "path": "꿈/시계-376",
+    "seq": 3994
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 37,
-    "seq": 3923,
-    "clock": 372
+    "revision": 38,
+    "seq": 3991,
+    "clock": 376
   },
   "job": "job_21895d6f",
-  "last_day_clock": 372,
+  "last_day_clock": 376,
   "long_reviewed": true
 }
