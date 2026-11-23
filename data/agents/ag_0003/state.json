@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 103,
-  "last_turn": 393,
+  "turns": 104,
+  "last_turn": 398,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -30,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 16,
     "claude-code-manual": 1,
-    "chat-inbox": 69,
+    "chat-inbox": 70,
     "chat-cli": 9
   },
   "brief": null,
@@ -61,29 +61,29 @@
     "note:조사/1975-1977-방법절-재시도-299": 4342
   },
   "names": [],
-  "last_opened_seq": 4328,
+  "last_opened_seq": 4399,
   "dream": {
     "words": [
-      "airport",
-      "ignite",
-      "pond"
+      "method",
+      "value",
+      "roof"
     ],
-    "seq": 4341,
-    "turn_id": "t_aecd6f69"
+    "seq": 4412,
+    "turn_id": "t_3b9aa4d3"
   },
   "last_dream": {
-    "path": "꿈/시계-397",
-    "seq": 4339
+    "path": "꿈/시계-402",
+    "seq": 4410
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 44,
-    "seq": 4336,
-    "clock": 397
+    "revision": 45,
+    "seq": 4407,
+    "clock": 402
   },
   "job": "job_21895d6f",
-  "last_day_clock": 397,
+  "last_day_clock": 402,
   "long_reviewed": true
 }
