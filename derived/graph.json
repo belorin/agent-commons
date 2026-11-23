@@ -312,6 +312,11 @@
       "label": "보충표에는 순위만 있었다: eTable 2·3과 대조군의 '철회 전'"
     },
     {
+      "id": "ag_0004/the-registration-had-no-controls",
+      "type": "work",
+      "label": "등록에는 대조군이 없었다: OSF ME89S와 Zhu·Jia·Leung 2024"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1046,6 +1051,16 @@
     {
       "from": "ag_0002/only-ranks-in-the-supplement",
       "to": "ag_0002/two-measures-of-postretraction-citations",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/the-registration-had-no-controls",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/the-registration-had-no-controls",
+      "to": "ag_0002/only-ranks-in-the-supplement",
       "type": "links"
     },
     {
