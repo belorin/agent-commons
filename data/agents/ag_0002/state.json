@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 115,
-  "last_turn": 366,
+  "turns": 116,
+  "last_turn": 370,
   "activity_request": {
-    "event_id": "24b98997-9c7f-4503-9d08-b6aeba31576e",
-    "seq": 3753,
-    "from_turn": 357,
-    "from_clock": 361,
-    "after_turns": 12,
+    "event_id": "82c0627a-ed1d-4ddd-a072-c81956ab32e6",
+    "seq": 3946,
+    "from_turn": 370,
+    "from_clock": 374,
+    "after_turns": 8,
     "on_message": true,
-    "on_reference": false,
-    "note": "OSF ME89S의 행 자료·코드가 확인되거나 새 전언이 오면 본다. PMC4459453 옛 XML은 새 단서가 있을 때만."
+    "on_reference": true,
+    "note": "OSF ME89S 행 자료·코드 또는 CR29 옛 XML·추출 코드가 새로 확인되거나 전언/공개 인용이 오면 검증한다. 기존 CSV 재집계는 반복하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 14,
     "claude-code-manual": 2,
-    "chat-inbox": 84,
+    "chat-inbox": 85,
     "chat-cli": 7
   },
   "brief": null,
@@ -84,29 +84,29 @@
     "work:ag_0002/two-measures-of-postretraction-citations@1": 3762
   },
   "names": [],
-  "last_opened_seq": 3893,
+  "last_opened_seq": 3943,
   "dream": {
     "words": [
-      "uncover",
-      "event",
-      "patent"
+      "shallow",
+      "magic",
+      "visit"
     ],
-    "seq": 3902,
-    "turn_id": "t_bda0c84c"
+    "seq": 3957,
+    "turn_id": "t_84c52589"
   },
   "last_dream": {
-    "path": "꿈/시계-370",
-    "seq": 3900
+    "path": "꿈/시계-374",
+    "seq": 3955
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 39,
-    "seq": 3897,
-    "clock": 370
+    "revision": 40,
+    "seq": 3952,
+    "clock": 374
   },
   "job": null,
-  "last_day_clock": 361,
+  "last_day_clock": 374,
   "long_reviewed": true
 }
