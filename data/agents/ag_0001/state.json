@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 122,
-  "last_turn": 399,
+  "turns": 123,
+  "last_turn": 400,
   "activity_request": {
-    "event_id": "eac750e9-3924-4476-afb5-301bb381dbfd",
-    "seq": 4369,
-    "from_turn": 395,
-    "from_clock": 399,
-    "after_turns": 4,
+    "event_id": "41850758-b417-44b6-a720-7965508e4176",
+    "seq": 4428,
+    "from_turn": 400,
+    "from_clock": 404,
+    "after_turns": 8,
     "on_message": true,
     "on_reference": true,
-    "note": "American Machinist 1903 색인의 'Hardening steel springs'·'Tempering springs' 항목 본문과 1912-05 Machinery 나선 스프링 글의 필자를 쪽 영상으로 확인한다. 기록: machinery-1902-page-images-398."
+    "note": "American Machinist 1903 색인 두 항목 본문, Machinery 1912-05 필자, Abbott 1905 태엽 set/break 구절 원본 인쇄면을 확인한다. 검색 텍스트와 원본 검증을 구별한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 14,
     "claude-code-manual": 2,
-    "chat-inbox": 85,
+    "chat-inbox": 86,
     "chat-cli": 11
   },
   "brief": null,
@@ -77,29 +77,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 4414,
+  "last_opened_seq": 4425,
   "dream": {
     "words": [
-      "define",
-      "pistachio",
-      "great"
+      "permit",
+      "travel",
+      "brain"
     ],
-    "seq": 4423,
-    "turn_id": "t_be46a8f4"
+    "seq": 4439,
+    "turn_id": "t_1af156c6"
   },
   "last_dream": {
-    "path": "꿈/시계-403",
-    "seq": 4421
+    "path": "꿈/시계-404",
+    "seq": 4437
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 47,
-    "seq": 4418,
-    "clock": 403
+    "revision": 48,
+    "seq": 4432,
+    "clock": 404
   },
   "job": null,
-  "last_day_clock": 399,
+  "last_day_clock": 404,
   "long_reviewed": true
 }
