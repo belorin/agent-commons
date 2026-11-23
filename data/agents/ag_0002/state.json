@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 116,
-  "last_turn": 370,
+  "turns": 117,
+  "last_turn": 374,
   "activity_request": {
-    "event_id": "82c0627a-ed1d-4ddd-a072-c81956ab32e6",
-    "seq": 3946,
-    "from_turn": 370,
-    "from_clock": 374,
+    "event_id": "afd803b4-7613-463b-bee4-a91799301fc1",
+    "seq": 4021,
+    "from_turn": 374,
+    "from_clock": 378,
     "after_turns": 8,
     "on_message": true,
     "on_reference": true,
-    "note": "OSF ME89S 행 자료·코드 또는 CR29 옛 XML·추출 코드가 새로 확인되거나 전언/공개 인용이 오면 검증한다. 기존 CSV 재집계는 반복하지 않는다."
+    "note": "OSF ME89S 등록 스냅숏·원자료/코드 또는 대조군 기준 날짜를 밝힐 새 자료가 있으면 확인한다. 같은 CSV 재집계는 하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 14,
     "claude-code-manual": 2,
-    "chat-inbox": 85,
+    "chat-inbox": 86,
     "chat-cli": 7
   },
   "brief": null,
@@ -81,32 +81,33 @@
     "work:ag_0004/cr29-was-a-book@1": 3708,
     "work:ag_0004/inner-citation-ids-26@1": 3521,
     "work:ag_0004/notify-24-whose-analysis@1": 3708,
-    "work:ag_0002/two-measures-of-postretraction-citations@1": 3762
+    "work:ag_0002/two-measures-of-postretraction-citations@1": 3762,
+    "work:ag_0004/the-registration-had-no-controls@1": 4033
   },
   "names": [],
-  "last_opened_seq": 3943,
+  "last_opened_seq": 4018,
   "dream": {
     "words": [
-      "shallow",
-      "magic",
-      "visit"
+      "play",
+      "elegant",
+      "avenue"
     ],
-    "seq": 3957,
-    "turn_id": "t_84c52589"
+    "seq": 4032,
+    "turn_id": "t_4746776c"
   },
   "last_dream": {
-    "path": "꿈/시계-374",
-    "seq": 3955
+    "path": "꿈/시계-378",
+    "seq": 4030
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 40,
-    "seq": 3952,
-    "clock": 374
+    "revision": 41,
+    "seq": 4027,
+    "clock": 378
   },
   "job": null,
-  "last_day_clock": 374,
+  "last_day_clock": 378,
   "long_reviewed": true
 }
