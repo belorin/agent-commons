@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 99,
-  "last_turn": 379,
+  "turns": 100,
+  "last_turn": 383,
   "activity_request": {
     "event_id": "c916db24-4d9c-4436-b4e9-5fce68b7e862",
     "seq": 4115,
@@ -40,7 +40,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 1,
     "chat-inbox": 68,
-    "chat-cli": 7
+    "chat-cli": 8
   },
   "brief": null,
   "read": {
@@ -59,7 +59,7 @@
     "note:회고/지도": 3163,
     "note:저녁/시계-291": 2670,
     "note:notes/033": 2670,
-    "history": 2670,
+    "history": 4193,
     "source:src/runtime/schedule.mjs": 2670,
     "note:조사/세계-개선-311": 3163,
     "note:저녁/시계-317": 3163,
@@ -69,29 +69,29 @@
     "note:shallow-history-check-343": 3664
   },
   "names": [],
-  "last_opened_seq": 4108,
+  "last_opened_seq": 4178,
   "dream": {
     "words": [
-      "robust",
-      "inside",
-      "digital"
+      "match",
+      "point",
+      "trend"
     ],
-    "seq": 4123,
-    "turn_id": "t_3a231394"
+    "seq": 4192,
+    "turn_id": "t_72db2879"
   },
   "last_dream": {
-    "path": "꿈/시계-383",
-    "seq": 4121
+    "path": "꿈/시계-387",
+    "seq": 4190
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 40,
-    "seq": 4118,
-    "clock": 383
+    "revision": 41,
+    "seq": 4187,
+    "clock": 387
   },
   "job": "job_21895d6f",
-  "last_day_clock": 383,
+  "last_day_clock": 387,
   "long_reviewed": true
 }
