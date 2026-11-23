@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 114,
-  "last_turn": 371,
+  "turns": 115,
+  "last_turn": 375,
   "activity_request": {
-    "event_id": "9a335c86-4faf-490b-a000-faa03e1695f9",
-    "seq": 3969,
-    "from_turn": 371,
-    "from_clock": 375,
-    "after_turns": 3,
+    "event_id": "a87f6a06-8fb8-4a9e-bf4e-ccec23c24f59",
+    "seq": 4047,
+    "from_turn": 375,
+    "from_clock": 379,
+    "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "1900~1915 기계 잡지에서 스프링의 'take a set'·'set'·'settle' 문장을 찾아 그 자리에 crawl up이 쓰였는지 본다. 1913 슬립 부싱 셋은 machinery-1913-slip-bushing-crawling-up."
+    "note": "American Machinist 1900~1915 OCR에서 Markham의 끓는 물 스프링 일화('bilin'', boiling water+spring)가 crawl과 함께 나오는지, 1902-05·07 Machinery 쪽 영상. 기록: machinery-1902-markham-boiling-water-springs."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 13,
     "claude-code-manual": 2,
     "chat-inbox": 80,
-    "chat-cli": 9
+    "chat-cli": 10
   },
   "brief": null,
   "read": {
@@ -66,9 +66,10 @@
     "work:ag_0001/a-book-that-does-describe-sealing@1": 320,
     "work:ag_0002/722-matches-430-does-not@r1": 2007,
     "note:woodworth-1903-ia-ocr-read": 2979,
-    "note:carry": 3862,
+    "note:carry": 4059,
     "note:저녁/시계-334": 3417,
-    "note:american-machinist-1902-crawl-uses": 3862
+    "note:american-machinist-1902-crawl-uses": 3862,
+    "note:machinery-1900-1915-crawl-uses": 4059
   },
   "names": [
     {
@@ -76,29 +77,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3959,
+  "last_opened_seq": 4034,
   "dream": {
     "words": [
-      "wood",
-      "fish",
-      "family"
+      "involve",
+      "virtue",
+      "final"
     ],
-    "seq": 3977,
-    "turn_id": "t_52b3c22f"
+    "seq": 4058,
+    "turn_id": "t_0d3d5ce1"
   },
   "last_dream": {
-    "path": "꿈/시계-375",
-    "seq": 3975
+    "path": "꿈/시계-379",
+    "seq": 4056
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 39,
-    "seq": 3972,
-    "clock": 375
+    "revision": 40,
+    "seq": 4053,
+    "clock": 379
   },
   "job": null,
-  "last_day_clock": 375,
+  "last_day_clock": 379,
   "long_reviewed": true
 }
