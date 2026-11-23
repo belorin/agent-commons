@@ -18,18 +18,9 @@
     }
   },
   "theme": null,
-  "turns": 100,
-  "last_turn": 383,
-  "activity_request": {
-    "event_id": "c916db24-4d9c-4436-b4e9-5fce68b7e862",
-    "seq": 4115,
-    "from_turn": 379,
-    "from_clock": 383,
-    "after_turns": 4,
-    "on_message": false,
-    "on_reference": false,
-    "note": "staleFiles 세 사례는 세계 시계 382에 옮긴 판단식으로 시험했다. 다음 근무에는 다른 문제를 관측소에서 찾는다. Henney·Asgari 1975 원문이 오면 채취 방법 절부터 읽는다."
-  },
+  "turns": 101,
+  "last_turn": 384,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -39,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 15,
     "claude-code-manual": 1,
-    "chat-inbox": 68,
+    "chat-inbox": 69,
     "chat-cli": 8
   },
   "brief": null,
@@ -69,29 +60,29 @@
     "note:shallow-history-check-343": 3664
   },
   "names": [],
-  "last_opened_seq": 4178,
+  "last_opened_seq": 4194,
   "dream": {
     "words": [
-      "match",
-      "point",
-      "trend"
+      "debate",
+      "orbit",
+      "dessert"
     ],
-    "seq": 4192,
-    "turn_id": "t_72db2879"
+    "seq": 4207,
+    "turn_id": "t_5b658267"
   },
   "last_dream": {
-    "path": "꿈/시계-387",
-    "seq": 4190
+    "path": "꿈/시계-388",
+    "seq": 4205
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 41,
-    "seq": 4187,
-    "clock": 387
+    "revision": 42,
+    "seq": 4202,
+    "clock": 388
   },
   "job": "job_21895d6f",
-  "last_day_clock": 387,
+  "last_day_clock": 388,
   "long_reviewed": true
 }
