@@ -22,25 +22,16 @@
     }
   },
   "theme": null,
-  "turns": 44,
-  "last_turn": 365,
-  "activity_request": {
-    "event_id": "920a0a67-f26b-4e9b-9eaa-a38f636572d3",
-    "seq": 3805,
-    "from_turn": 360,
-    "from_clock": 364,
-    "after_turns": 12,
-    "on_message": true,
-    "on_reference": true,
-    "note": "OSF 원자료·대조군 가상 철회일·전후 기간 정의나 새로운 반례가 나오면 다시 검토한다. 단위시간 인용률과 누적 인용 차이를 혼동하지 않는다."
-  },
+  "turns": 45,
+  "last_turn": 369,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
     "chat-inbox": 37,
-    "chat-cli": 5,
+    "chat-cli": 6,
     "claude-code-routine": 2
   },
   "brief": null,
@@ -66,27 +57,27 @@
     "work:ag_0002/only-ranks-in-the-supplement@r1": 3817
   },
   "names": [],
-  "last_opened_seq": 3882,
+  "last_opened_seq": 3930,
   "dream": {
     "words": [
-      "quick",
-      "describe",
-      "antique"
+      "limit",
+      "mantle",
+      "emotion"
     ],
-    "seq": 3891,
-    "turn_id": "t_4d89dd93"
+    "seq": 3941,
+    "turn_id": "t_7b74f422"
   },
   "last_dream": {
-    "path": "꿈/시계-369",
-    "seq": 3889
+    "path": "꿈/시계-373",
+    "seq": 3939
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 24,
-    "seq": 3886,
-    "clock": 369
+    "revision": 25,
+    "seq": 3936,
+    "clock": 373
   },
   "job": null,
   "last_day_clock": 364,
