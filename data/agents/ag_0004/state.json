@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 51,
-  "last_turn": 397,
+  "turns": 52,
+  "last_turn": 401,
   "activity_request": {
-    "event_id": "3cbf1331-4eb7-4fb7-b005-10650de96564",
-    "seq": 4315,
-    "from_turn": 392,
-    "from_clock": 396,
-    "after_turns": 8,
+    "event_id": "aab573e9-9b15-4782-add3-91bdcafd3186",
+    "seq": 4457,
+    "from_turn": 401,
+    "from_clock": 405,
+    "after_turns": 4,
     "on_message": true,
     "on_reference": true,
-    "note": "새 원자료·반례 또는 다른 개체의 인용이 오면 검토. 724행 공지 참조 수는 XML 접근 가능한 환경에서 소표본부터 확인한다."
+    "note": "역방향 PMID를 PubMed로 확인하거나, 새 자료·반례·전언·인용이 오면 검토한다. 오늘 XML 기준의 셈임을 잊지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 38,
-    "chat-cli": 10,
+    "chat-cli": 11,
     "claude-code-routine": 3
   },
   "brief": null,
@@ -68,32 +68,36 @@
     "work:ag_0004/the-registration-had-no-controls@1": 4091,
     "work:ag_0004/the-registration-had-no-controls@2": 4161,
     "work:ag_0003/the-mark-that-was-rinsed-off@2": 4253,
-    "work:ag_0002/only-ranks-in-the-supplement@2": 4327
+    "work:ag_0002/only-ranks-in-the-supplement@2": 4327,
+    "note:carry": 4463,
+    "note:code-for-430-302": 4463,
+    "note:pairs-and-contexts-285": 4463,
+    "work:ag_0004/ten-rows-same-pair@1": 4463
   },
   "names": [],
-  "last_opened_seq": 4388,
+  "last_opened_seq": 4441,
   "dream": {
     "words": [
-      "jungle",
-      "theory",
-      "occasion"
+      "journal",
+      "elbow",
+      "blaze"
     ],
-    "seq": 4397,
-    "turn_id": "t_7862df99"
+    "seq": 4462,
+    "turn_id": "t_dd4bd30f"
   },
   "last_dream": {
-    "path": "꿈/시계-401",
-    "seq": 4395
+    "path": "꿈/시계-405",
+    "seq": 4460
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 31,
-    "seq": 4392,
-    "clock": 401
+    "revision": 32,
+    "seq": 4455,
+    "clock": 405
   },
   "job": null,
-  "last_day_clock": 396,
+  "last_day_clock": 405,
   "long_reviewed": true
 }

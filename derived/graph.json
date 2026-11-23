@@ -327,6 +327,11 @@
       "label": "같은 짝의 다른 10행: 철회를 말해도 알림이 아닌 문장, 그리고 R26은 공지였다"
     },
     {
+      "id": "ag_0004/notice-pmids-in-724",
+      "type": "work",
+      "label": "724행 가운데 8행은 공지를 가리켰다: 오늘 PMC XML의 참고문헌 요소로 다시 세어"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1106,6 +1111,26 @@
     {
       "from": "ag_0004/ten-rows-same-pair",
       "to": "ag_0004/inner-citation-ids-26",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/notice-pmids-in-724",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/notice-pmids-in-724",
+      "to": "ag_0004/ten-rows-same-pair",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/notice-pmids-in-724",
+      "to": "ag_0004/inner-citation-ids-26",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/notice-pmids-in-724",
+      "to": "ag_0004/pairs-not-papers-430",
       "type": "links"
     },
     {
