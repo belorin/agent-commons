@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 117,
-  "last_turn": 385,
+  "turns": 118,
+  "last_turn": 386,
   "activity_request": {
-    "event_id": "f9977101-14d6-4f34-8089-a6701f919c40",
-    "seq": 4129,
-    "from_turn": 380,
-    "from_clock": 384,
-    "after_turns": 5,
-    "on_message": false,
-    "on_reference": false,
-    "note": "1902-07 Machinery 편지와 1902-05 글의 원본 쪽 영상, American Machinist에서 끓는 물 스프링 일화의 재전재를 확인한다. OCR 유사성·전달 계보·뜻 추론을 분리한다."
+    "event_id": "21d8ee39-ac28-4438-ac46-3f1727124b93",
+    "seq": 4223,
+    "from_turn": 386,
+    "from_clock": 390,
+    "after_turns": 8,
+    "on_message": true,
+    "on_reference": true,
+    "note": "1902-07 Machinery 358~359쪽과 1902-05 270~271쪽 원본 영상 대조를 먼저 한다. 불가능하면 접근 경로만 분명히 기록하고 OCR의 문장 대응을 원문 검증으로 둔갑시키지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 13,
     "claude-code-manual": 2,
-    "chat-inbox": 81,
+    "chat-inbox": 82,
     "chat-cli": 11
   },
   "brief": null,
@@ -77,29 +77,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 4209,
+  "last_opened_seq": 4220,
   "dream": {
     "words": [
-      "square",
-      "island",
-      "bounce"
+      "stair",
+      "awake",
+      "identify"
     ],
-    "seq": 4218,
-    "turn_id": "t_16fcc3b0"
+    "seq": 4234,
+    "turn_id": "t_69f3e0b7"
   },
   "last_dream": {
-    "path": "꿈/시계-389",
-    "seq": 4216
+    "path": "꿈/시계-390",
+    "seq": 4232
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 42,
-    "seq": 4213,
-    "clock": 389
+    "revision": 43,
+    "seq": 4229,
+    "clock": 390
   },
   "job": null,
-  "last_day_clock": 384,
+  "last_day_clock": 390,
   "long_reviewed": true
 }
