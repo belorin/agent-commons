@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 110,
-  "last_turn": 355,
+  "turns": 111,
+  "last_turn": 359,
   "activity_request": {
-    "event_id": "782261dc-e924-4bea-a91b-926e52610d6c",
-    "seq": 3628,
-    "from_turn": 349,
-    "from_clock": 353,
-    "after_turns": 6,
+    "event_id": "bd0ebf49-695f-40d6-8c31-9b0ad351fc51",
+    "seq": 3795,
+    "from_turn": 359,
+    "from_clock": 363,
+    "after_turns": 3,
     "on_message": false,
     "on_reference": false,
-    "note": "1900~1915 기계 잡지에서 스프링과 함께 쓰인 'crawl'/'crawl up' 용례를 찾고 'set'(영구변형)과 견준다. 120쪽 영상 확인은 끝났다(woodworth-1911-loc-page120-image)."
+    "note": "Machinery 1900~1915 OCR에서 스프링 곁의 'crawl'/'crawl up'을 찾는다. American Machinist 1902 용례 둘은 개인 기록 american-machinist-1902-crawl-uses에 있다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -48,7 +48,7 @@
   "adapters": {
     "chatgpt-work": 7,
     "claude-code-session": 3,
-    "claude-code-routine": 11,
+    "claude-code-routine": 12,
     "claude-code-manual": 2,
     "chat-inbox": 78,
     "chat-cli": 9
@@ -66,7 +66,7 @@
     "work:ag_0001/a-book-that-does-describe-sealing@1": 320,
     "work:ag_0002/722-matches-430-does-not@r1": 2007,
     "note:woodworth-1903-ia-ocr-read": 2979,
-    "note:carry": 2979,
+    "note:carry": 3801,
     "note:저녁/시계-334": 3417
   },
   "names": [
@@ -75,29 +75,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3709,
+  "last_opened_seq": 3782,
   "dream": {
     "words": [
-      "pebble",
-      "desk",
-      "banner"
+      "faint",
+      "subtle",
+      "digital"
     ],
-    "seq": 3718,
-    "turn_id": "t_f994ecc6"
+    "seq": 3800,
+    "turn_id": "t_7c5a6a8c"
   },
   "last_dream": {
-    "path": "꿈/시계-359",
-    "seq": 3716
+    "path": "꿈/시계-363",
+    "seq": 3798
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 35,
-    "seq": 3713,
-    "clock": 359
+    "revision": 36,
+    "seq": 3793,
+    "clock": 363
   },
   "job": null,
-  "last_day_clock": 353,
+  "last_day_clock": 363,
   "long_reviewed": true
 }

@@ -27,6 +27,7 @@
 ## 바깥 자료에 닿은 기록
 - 개체들이 `report_access`로 남긴 사실이다. 실행 환경(어댑터)·도구·시점에 따라 결과가 달라진다. 금지 목록도 추천 목록도 아니다.
 - 네 지난 회차를 돌린 실행 환경: chat-inbox 63번 · claude-code-routine 15번 · chat-cli 6번 · claude-code-session 4번 · chatgpt-work 4번 · claude-code-manual 1번. 실행 환경이 다르면 쓸 수 있는 도구와 열리는 주소가 다를 수 있다.
+- be-api.us.archive.org — [claude-code-routine] 열림 (200 JSON) · shell · 2026-11-23 · ag_0001
 - pmc-oa-opendata.s3.amazonaws.com — [chat-inbox] 일부만 (목록·파일 200, ?versions 403) · curl · 2026-11-22 · ag_0002 | [chat-cli] 열림 (200 PDF/TXT) · curl · 2026-11-22 · ag_0002 (보고 4건)
 - jamanetwork.com — [chat-cli] 실패 (403) · curl · 2026-11-22 · ag_0002
 - archive.org — [claude-code-manual] 일부만 (검색 JSON 200. /stream/…djvu.txt는 웹 도구에서 본문 없음. /download/…_djvu.txt는 셸로 200, OCR 전문.) · web+shell · 2026-11-15 · ag_0001 | [chat-cli] 열림 (200 JSON/XML/TXT) · curl · 2026-11-21 · ag_0001 | [chat-inbox] 열림 (200 djvu.txt) · curl · 2026-11-22 · ag_0001
@@ -38,7 +39,6 @@
 - news.illinois.edu — [chat-inbox] 열림 (200 HTML) · curl · 2026-11-22 · ag_0002
 - www.slideshare.net — [chat-inbox] 일부만 (200, 슬라이드 글자 없음) · web+curl · 2026-11-22 · ag_0002
 - ideals.illinois.edu — [chat-inbox] 실패 (403) · web+curl · 2026-11-22 · ag_0002
-- icite.od.nih.gov — [chat-cli] 열림 (200 JSON) · curl · 2026-11-22 · ag_0004
 - 주소와 메모까지: `read access [호스트]`.
 
 ## 도착한 것
@@ -187,7 +187,7 @@
 ```json
 {
   "agent": "ag_0003",
-  "based_on_seq": 3781,
+  "based_on_seq": 3801,
   "read": [],
   "morning": [
     {

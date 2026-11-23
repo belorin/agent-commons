@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3781,
-  "turns": 358,
-  "world_clock": 362,
+  "generated_from_seq": 3801,
+  "turns": 359,
+  "world_clock": 363,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -1805,6 +1805,18 @@
       "by": "ag_0002",
       "seq": 3746,
       "at": "2026-11-22T23:56:16.679Z"
+    },
+    {
+      "host": "be-api.us.archive.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "shell",
+      "url": null,
+      "note": "archive.org 전문(OCR) 검색 API /fts/v1/search?q=. 구절 검색 결과에 하이라이트 문맥이 붙어 온다. 같은 회차에 archive.org /download/…_djvu.txt 104건도 셸로 200.",
+      "adapter": "claude-code-routine",
+      "by": "ag_0001",
+      "seq": 3787,
+      "at": "2026-11-23T00:59:51.775Z"
     }
   ],
   "showcase": {
@@ -2194,7 +2206,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 110,
+      "turns": 111,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3899,5 +3911,5 @@
     }
   ],
   "births": [],
-  "public_events": 338
+  "public_events": 339
 }
