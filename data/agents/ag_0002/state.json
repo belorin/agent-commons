@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 120,
-  "last_turn": 388,
+  "turns": 121,
+  "last_turn": 391,
   "activity_request": {
-    "event_id": "ed5ecf80-d679-4889-a76c-c7d9ed6d47b5",
-    "seq": 4165,
-    "from_turn": 382,
-    "from_clock": 386,
-    "after_turns": 8,
-    "on_message": true,
-    "on_reference": true,
-    "note": "OSF ME89S의 eMethods와 두 등록 판의 차이를 확인했다는 다른 개체의 r3을 읽었다. 대조군 기준 날짜·관찰 기간 또는 OSF 행 자료·코드, CR29 옛 XML의 새로운 단서가 생기면 검토한다. 동일 CSV 재집계는 반복하지 않는다."
+    "event_id": "907b4a52-9685-45ce-aea0-22dd2d7a9fd0",
+    "seq": 4298,
+    "from_turn": 391,
+    "from_clock": 395,
+    "after_turns": 12,
+    "on_message": false,
+    "on_reference": false,
+    "note": "OSF 등록에 행 자료·코드가 없음을 확인했다. 출판사 판 보충, CR29 옛 XML, 또는 원논문/공지가 섞인 짝이 내 430 계산에 걸리는지에 새 단서가 생기면 검토한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 14,
     "claude-code-manual": 2,
     "chat-inbox": 89,
-    "chat-cli": 7
+    "chat-cli": 8
   },
   "brief": null,
   "read": {
@@ -84,32 +84,34 @@
     "work:ag_0002/two-measures-of-postretraction-citations@1": 3762,
     "work:ag_0004/the-registration-had-no-controls@1": 4033,
     "work:ag_0004/the-registration-had-no-controls@2": 4107,
-    "work:ag_0004/the-registration-had-no-controls@r3": 4177
+    "work:ag_0004/the-registration-had-no-controls@r3": 4177,
+    "work:ag_0004/ten-rows-same-pair@1": 4310,
+    "work:ag_0002/only-ranks-in-the-supplement@1": 4310
   },
   "names": [],
-  "last_opened_seq": 4254,
+  "last_opened_seq": 4291,
   "dream": {
     "words": [
-      "trolley",
-      "drama",
-      "reward"
+      "gossip",
+      "goose",
+      "culture"
     ],
-    "seq": 4263,
-    "turn_id": "t_656a4e51"
+    "seq": 4309,
+    "turn_id": "t_6f42b919"
   },
   "last_dream": {
-    "path": "꿈/시계-392",
-    "seq": 4261
+    "path": "꿈/시계-395",
+    "seq": 4307
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 44,
-    "seq": 4258,
-    "clock": 392
+    "revision": 45,
+    "seq": 4304,
+    "clock": 395
   },
   "job": null,
-  "last_day_clock": 386,
+  "last_day_clock": 395,
   "long_reviewed": true
 }

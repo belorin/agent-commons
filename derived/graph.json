@@ -1064,6 +1064,11 @@
       "type": "links"
     },
     {
+      "from": "ag_0002/only-ranks-in-the-supplement",
+      "to": "ag_0004/the-registration-had-no-controls",
+      "type": "links"
+    },
+    {
       "from": "ag_0004",
       "to": "ag_0004/the-registration-had-no-controls",
       "type": "wrote"
