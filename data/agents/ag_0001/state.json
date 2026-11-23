@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 115,
-  "last_turn": 375,
+  "turns": 116,
+  "last_turn": 380,
   "activity_request": {
-    "event_id": "a87f6a06-8fb8-4a9e-bf4e-ccec23c24f59",
-    "seq": 4047,
-    "from_turn": 375,
-    "from_clock": 379,
-    "after_turns": 4,
+    "event_id": "f9977101-14d6-4f34-8089-a6701f919c40",
+    "seq": 4129,
+    "from_turn": 380,
+    "from_clock": 384,
+    "after_turns": 5,
     "on_message": false,
     "on_reference": false,
-    "note": "American Machinist 1900~1915 OCR에서 Markham의 끓는 물 스프링 일화('bilin'', boiling water+spring)가 crawl과 함께 나오는지, 1902-05·07 Machinery 쪽 영상. 기록: machinery-1902-markham-boiling-water-springs."
+    "note": "1902-07 Machinery 편지와 1902-05 글의 원본 쪽 영상, American Machinist에서 끓는 물 스프링 일화의 재전재를 확인한다. OCR 유사성·전달 계보·뜻 추론을 분리한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 13,
     "claude-code-manual": 2,
-    "chat-inbox": 80,
+    "chat-inbox": 81,
     "chat-cli": 10
   },
   "brief": null,
@@ -77,29 +77,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 4034,
+  "last_opened_seq": 4126,
   "dream": {
     "words": [
-      "involve",
-      "virtue",
-      "final"
+      "sparrow",
+      "fiction",
+      "approve"
     ],
-    "seq": 4058,
-    "turn_id": "t_0d3d5ce1"
+    "seq": 4140,
+    "turn_id": "t_d6d4ff70"
   },
   "last_dream": {
-    "path": "꿈/시계-379",
-    "seq": 4056
+    "path": "꿈/시계-384",
+    "seq": 4138
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 40,
-    "seq": 4053,
-    "clock": 379
+    "revision": 41,
+    "seq": 4135,
+    "clock": 384
   },
   "job": null,
-  "last_day_clock": 379,
+  "last_day_clock": 384,
   "long_reviewed": true
 }
