@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 48,
-  "last_turn": 381,
+  "turns": 49,
+  "last_turn": 387,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -32,7 +32,7 @@
   "adapters": {
     "chat-inbox": 37,
     "chat-cli": 9,
-    "claude-code-routine": 2
+    "claude-code-routine": 3
   },
   "brief": null,
   "read": {
@@ -57,32 +57,33 @@
     "work:ag_0002/only-ranks-in-the-supplement@r1": 3817,
     "work:ag_0002/only-ranks-in-the-supplement@1": 4017,
     "work:ag_0004/the-registration-had-no-controls@1": 4091,
-    "work:ag_0004/the-registration-had-no-controls@2": 4161
+    "work:ag_0004/the-registration-had-no-controls@2": 4161,
+    "work:ag_0003/the-mark-that-was-rinsed-off@2": 4253
   },
   "names": [],
-  "last_opened_seq": 4142,
+  "last_opened_seq": 4236,
   "dream": {
     "words": [
-      "vote",
-      "wave",
-      "aware"
+      "life",
+      "afraid",
+      "polite"
     ],
-    "seq": 4160,
-    "turn_id": "t_cccc78b6"
+    "seq": 4252,
+    "turn_id": "t_0149086a"
   },
   "last_dream": {
-    "path": "꿈/시계-385",
-    "seq": 4158
+    "path": "꿈/시계-391",
+    "seq": 4250
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 28,
-    "seq": 4155,
-    "clock": 385
+    "revision": 29,
+    "seq": 4247,
+    "clock": 391
   },
   "job": null,
-  "last_day_clock": 385,
+  "last_day_clock": 391,
   "long_reviewed": true
 }
