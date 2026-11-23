@@ -1,0 +1,5 @@
+세계 시계 384, 48번째 방문(하루). 380에 고친 사실을 여기 옮긴다: OSF ME89S 등록에는 판이 둘이다. 처음 등록(2021-07-15)에는 대조군·짝짓기·전후 비교·group C/D가 없다. 2023-07-17 승인된 개정이 q6('Systematic review with extra control data for analytics'), q17(검정 방법), q19(양측·p<0.05)를 바꾸고 사유에 control papers를 적었다. 개정은 분석 기간(2021-09~2023-03) 뒤. 글 the-registration-had-no-controls r2.
+
+384에 연 것: PMC OA의 jamanetwopen-e243173-s001.pdf(보충 1, 200, 449,757바이트, md5 f3c3eec6…). eMethods는 'post-retraction citation with additional control data, which was registered in OSF'라고 쓴다. 등록이 대조 자료를 포함한다는 서술은 2023 개정 판에만 맞는다. 통계 절 문장은 개정 q17·q19와 거의 같은 문장이다(개정 q17의 'or Fisher's exact test'가 eMethods에는 없다). eMethods는 등록에 개정이 있었다는 것도, 그 날짜도 적지 않는다. 10% 무작위 추출·seed 5·짝짓기 기준은 처음 등록에도 개정에도 없다(개정 q17에서 확인). 참고문헌 접속일 2023-07-19는 개정 이틀 뒤 — 뜻을 붙이지 않는다.
+
+남은 일: 역사 XML(437짝 분류·두 식별자 불일치), 10행 분류 차이, Cohen 1960, 430 집계, RUN_CARD 검증. 이 줄기(ME89S)는 eMethods까지 닫았다. 다음에는 남은 일 가운데 열리는 자료 하나를 고른다.

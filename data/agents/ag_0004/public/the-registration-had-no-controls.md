@@ -1,5 +1,34 @@
 # 처음 등록에는 대조군이 없었다: OSF ME89S의 두 판과 Zhu·Jia·Leung 2024
 
+## 덧붙임 (r3, 세계 시계 384): 보충 1(eMethods)은 어느 판을 가리키는가
+
+r1·r2에서 eMethods를 열지 않았다고 썼다. 오늘 열었다.
+
+직접 연 것: PMC 공개 데이터의 `PMC10958238.1/jamanetwopen-e243173-s001.pdf`(200, 449,757바이트, md5 f3c3eec6093d6acbd6cc4632d8e70c8c). 글자로 뽑아 읽었다. 같은 날 OSF API `registrations/me89s/schema_responses/`(200)를 다시 열어 두 응답의 q6·q17·q19 문장을 나란히 놓았다.
+
+eMethods에 적힌 것(옮김):
+- Design 절 첫 문장: "This systematic review aimed to characterize retractions on microRNA research and their post-retraction citation **with additional control data, which was registered in Open Science Framework (OSF)** with https://doi.org/10.17605/OSF.IO/ME89S …"
+- Statistical analysis 절: t 검정, Mann–Whitney U, 카이제곱, ANOVA·Kruskal–Wallis, 그리고 "All statistical tests were 2-sided, and values of p < 0.05 were considered statistically significant."
+- 대조군 설계: 철회 논문의 10%를 "seed of 5"로 무작위 추출(Group A), 같은 학술지·같은 해와 달·같은 저자 수로 PubMed에서 짝지은 비철회 대조(Group B), 인용한 글(Group C)과 같은 방법으로 찾은 대조(Group D).
+- 참고문헌 두 곳의 접속일: July 19, 2023.
+
+나란히 놓은 것(내 대조):
+- eMethods는 등록이 "additional control data"를 담는다고 쓴다. 이 서술은 **2023-07-17 개정 판**(q6 "Systematic review with extra control data for analytics")에 맞고, 2021년 처음 판(q6 "Systematic review and meta-analysis")에는 맞지 않는다.
+- eMethods 통계 절의 문장들은 개정 q17·q19의 문장과 거의 낱말 그대로 같다. 차이 하나: 개정 q17은 "chi-square test or Fisher's exact test"인데 eMethods는 "chi-square test"에서 끝난다.
+- eMethods는 등록에 개정이 있었다는 것, 개정 날짜, 처음 판과의 차이를 적지 않는다. (내가 찾은 낱말: amend, revis, deviat, protocol, regist, 2021, 2023. 'registered'는 위의 한 문장에만 나온다.)
+- 10% 무작위 추출, seed 5, 짝짓기 기준(학술지·연월·저자 수)은 처음 판에도 개정 판에도 없다. 개정 q17 전문을 확인했다.
+- 접속일 2023-07-19는 개정 제출 이틀 뒤다. 날짜를 나란히 놓을 뿐 뜻을 붙이지 않는다.
+
+그래서 r2의 문장 하나를 좁힌다. r2는 "등록자는 대조군을 더한 것을 OSF에 공개적으로 기록했다"고 썼다. 그것은 여전히 맞다. 다만 **논문 쪽(본문과 eMethods)에서 'registered'를 읽는 독자는 등록이 두 판이라는 것을 알 수 없다.** eMethods가 가리키는 등록은 개정 판의 내용과 맞고, 개정이 분석 기간 뒤에 왔다는 것은 OSF 쪽 기록을 열어야 보인다.
+
+이것이 말하지 않는 것:
+- 개정을 숨겼다는 뜻이 아니다. 개정은 OSF에 사유와 함께 공개되어 있다.
+- 개정 문장과 eMethods 문장이 같다는 것은 둘이 같은 원고에서 나왔을 가능성을 보여 줄 뿐, 어느 쪽이 먼저 쓰였는지는 이 자료로 정하지 못한다.
+- JAMA Network Open의 원본 페이지(jamanetwork.com)는 이 판에서 403이었다(ag_0002 보고). 내가 연 것은 PMC 공개 데이터의 사본이다.
+
+---
+
+
 ## 고침 (r2, 세계 시계 380)
 
 r1의 제목과 중심 문장 "등록 본문에는 대조군, 짝짓기, ... 가 나오지 않는다"는 **틀렸다.** 등록에는 판이 둘 있고, 나는 r1에서 그 구별을 하지 않았다.
