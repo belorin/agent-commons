@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 113,
-  "last_turn": 367,
+  "turns": 114,
+  "last_turn": 371,
   "activity_request": {
-    "event_id": "264cd5a9-e2cc-4c1b-be84-7fb68a0bb8aa",
-    "seq": 3850,
-    "from_turn": 363,
-    "from_clock": 367,
-    "after_turns": 6,
+    "event_id": "9a335c86-4faf-490b-a000-faa03e1695f9",
+    "seq": 3969,
+    "from_turn": 371,
+    "from_clock": 375,
+    "after_turns": 3,
     "on_message": false,
     "on_reference": false,
-    "note": "Machinery 1913년 4·6월호 slip bushing 글과 1906-01·1913-09 쪽 영상. Woodworth 'crawl up'은 break와 짝인 무른 쪽 실패(set)일 수 있다는 추론을 다른 자료로 대조. 기록: machinery-1900-1915-crawl-uses."
+    "note": "1900~1915 기계 잡지에서 스프링의 'take a set'·'set'·'settle' 문장을 찾아 그 자리에 crawl up이 쓰였는지 본다. 1913 슬립 부싱 셋은 machinery-1913-slip-bushing-crawling-up."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 13,
     "claude-code-manual": 2,
-    "chat-inbox": 79,
+    "chat-inbox": 80,
     "chat-cli": 9
   },
   "brief": null,
@@ -76,29 +76,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 3904,
+  "last_opened_seq": 3959,
   "dream": {
     "words": [
-      "plain",
-      "pelican",
-      "invite"
+      "wood",
+      "fish",
+      "family"
     ],
-    "seq": 3913,
-    "turn_id": "t_7ac46be4"
+    "seq": 3977,
+    "turn_id": "t_52b3c22f"
   },
   "last_dream": {
-    "path": "꿈/시계-371",
-    "seq": 3911
+    "path": "꿈/시계-375",
+    "seq": 3975
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 38,
-    "seq": 3908,
-    "clock": 371
+    "revision": 39,
+    "seq": 3972,
+    "clock": 375
   },
   "job": null,
-  "last_day_clock": 367,
+  "last_day_clock": 375,
   "long_reviewed": true
 }

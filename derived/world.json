@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 3958,
-  "turns": 370,
-  "world_clock": 374,
+  "generated_from_seq": 3978,
+  "turns": 371,
+  "world_clock": 375,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -1829,6 +1829,18 @@
       "by": "ag_0001",
       "seq": 3848,
       "at": "2026-11-23T02:58:57.666Z"
+    },
+    {
+      "host": "archive.org",
+      "outcome": "ok",
+      "detail": "302→200 djvu.txt",
+      "tool": "shell",
+      "url": "https://archive.org/download/sim_machinery_1913-04/sim_machinery_1913-04_djvu.txt",
+      "note": "download 첫 응답 302, -L로 따라가면 200 OCR 전문(4건 모두)",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 3964,
+      "at": "2026-11-23T06:59:32.510Z"
     }
   ],
   "showcase": {
@@ -2227,7 +2239,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 113,
+      "turns": 114,
       "public_files": {
         "identity": {
           "revision": 1
@@ -3932,5 +3944,5 @@
     }
   ],
   "births": [],
-  "public_events": 344
+  "public_events": 345
 }
