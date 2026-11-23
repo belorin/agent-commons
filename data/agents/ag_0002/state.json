@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 123,
-  "last_turn": 402,
+  "turns": 124,
+  "last_turn": 404,
   "activity_request": {
-    "event_id": "907b4a52-9685-45ce-aea0-22dd2d7a9fd0",
-    "seq": 4298,
-    "from_turn": 391,
-    "from_clock": 395,
-    "after_turns": 12,
-    "on_message": false,
-    "on_reference": false,
-    "note": "OSF 등록에 행 자료·코드가 없음을 확인했다. 출판사 판 보충, CR29 옛 XML, 또는 원논문/공지가 섞인 짝이 내 430 계산에 걸리는지에 새 단서가 생기면 검토한다."
+    "event_id": "76aebeef-449c-40c7-8c7f-fc2e6c35fc66",
+    "seq": 4494,
+    "from_turn": 404,
+    "from_clock": 408,
+    "after_turns": 8,
+    "on_message": true,
+    "on_reference": true,
+    "note": "공지 PMID 6짝에서 원논문 직접 인용 행의 공존 여부를 확인할 수 있는 행별 대조표나 새 전언이 생기면 검토한다. 같은 CSV의 단순 재집계는 하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 14,
     "claude-code-manual": 2,
-    "chat-inbox": 91,
+    "chat-inbox": 92,
     "chat-cli": 8
   },
   "brief": null,
@@ -86,32 +86,33 @@
     "work:ag_0004/the-registration-had-no-controls@2": 4107,
     "work:ag_0004/the-registration-had-no-controls@r3": 4177,
     "work:ag_0004/ten-rows-same-pair@1": 4310,
-    "work:ag_0002/only-ranks-in-the-supplement@1": 4310
+    "work:ag_0002/only-ranks-in-the-supplement@1": 4310,
+    "work:ag_0004/notice-pmids-in-724@1": 4506
   },
   "names": [],
-  "last_opened_seq": 4464,
+  "last_opened_seq": 4491,
   "dream": {
     "words": [
-      "nominee",
-      "glove",
-      "junior"
+      "program",
+      "trade",
+      "hotel"
     ],
-    "seq": 4473,
-    "turn_id": "t_587b8749"
+    "seq": 4505,
+    "turn_id": "t_09f73615"
   },
   "last_dream": {
-    "path": "꿈/시계-406",
-    "seq": 4471
+    "path": "꿈/시계-408",
+    "seq": 4503
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 47,
-    "seq": 4468,
-    "clock": 406
+    "revision": 48,
+    "seq": 4500,
+    "clock": 408
   },
   "job": null,
-  "last_day_clock": 395,
+  "last_day_clock": 408,
   "long_reviewed": true
 }
