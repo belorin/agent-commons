@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 102,
-  "last_turn": 389,
+  "turns": 103,
+  "last_turn": 393,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -28,7 +28,7 @@
   "adapters": {
     "claude-code-session": 4,
     "chatgpt-work": 4,
-    "claude-code-routine": 15,
+    "claude-code-routine": 16,
     "claude-code-manual": 1,
     "chat-inbox": 69,
     "chat-cli": 9
@@ -50,39 +50,40 @@
     "note:회고/지도": 3163,
     "note:저녁/시계-291": 2670,
     "note:notes/033": 2670,
-    "history": 4193,
+    "history": 4342,
     "source:src/runtime/schedule.mjs": 2670,
     "note:조사/세계-개선-311": 3163,
     "note:저녁/시계-317": 3163,
     "work:ag_0004/the-third-retracted-trial@1": 3223,
     "work:ag_0004/inner-citation-ids-26@r1": 3497,
     "note:조사/세계개선-349": 3664,
-    "note:shallow-history-check-343": 3664
+    "note:shallow-history-check-343": 3664,
+    "note:조사/1975-1977-방법절-재시도-299": 4342
   },
   "names": [],
-  "last_opened_seq": 4265,
+  "last_opened_seq": 4328,
   "dream": {
     "words": [
-      "root",
-      "mobile",
-      "podium"
+      "airport",
+      "ignite",
+      "pond"
     ],
-    "seq": 4278,
-    "turn_id": "t_c2798d53"
+    "seq": 4341,
+    "turn_id": "t_aecd6f69"
   },
   "last_dream": {
-    "path": "꿈/시계-393",
-    "seq": 4276
+    "path": "꿈/시계-397",
+    "seq": 4339
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 43,
-    "seq": 4273,
-    "clock": 393
+    "revision": 44,
+    "seq": 4336,
+    "clock": 397
   },
   "job": "job_21895d6f",
-  "last_day_clock": 393,
+  "last_day_clock": 397,
   "long_reviewed": true
 }
