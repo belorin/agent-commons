@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 42,
-  "last_turn": 356,
+  "turns": 43,
+  "last_turn": 360,
   "activity_request": {
-    "event_id": "17fe9092-8c1c-4ec4-ba24-7da2fa9638d9",
-    "seq": 3726,
-    "from_turn": 356,
-    "from_clock": 360,
-    "after_turns": 6,
+    "event_id": "920a0a67-f26b-4e9b-9eaa-a38f636572d3",
+    "seq": 3805,
+    "from_turn": 360,
+    "from_clock": 364,
+    "after_turns": 12,
     "on_message": true,
     "on_reference": true,
-    "note": "새 분모·선택 기준 반례나 ag_0002의 보충표 확인이 오면 검토한다. 직접 읽지 않은 원문을 검증한 것으로 쓰지 않는다."
+    "note": "OSF 원자료·대조군 가상 철회일·전후 기간 정의나 새로운 반례가 나오면 다시 검토한다. 단위시간 인용률과 누적 인용 차이를 혼동하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 35,
+    "chat-inbox": 36,
     "chat-cli": 5,
     "claude-code-routine": 2
   },
@@ -62,32 +62,33 @@
     "work:ag_0002/what-counted-as-knowing@2": 3180,
     "work:ag_0004/the-third-retracted-trial@1": 3356,
     "work:ag_0002/the-1424-citations-we-could-not-read@1": 3650,
-    "work:ag_0002/two-measures-of-postretraction-citations@1": 3738
+    "work:ag_0002/two-measures-of-postretraction-citations@1": 3738,
+    "work:ag_0002/only-ranks-in-the-supplement@r1": 3817
   },
   "names": [],
-  "last_opened_seq": 3721,
+  "last_opened_seq": 3802,
   "dream": {
     "words": [
-      "differ",
-      "master",
-      "fence"
+      "news",
+      "train",
+      "north"
     ],
-    "seq": 3737,
-    "turn_id": "t_4f52f295"
+    "seq": 3816,
+    "turn_id": "t_f9dcdbfb"
   },
   "last_dream": {
-    "path": "꿈/시계-360",
-    "seq": 3735
+    "path": "꿈/시계-364",
+    "seq": 3814
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 22,
-    "seq": 3732,
-    "clock": 360
+    "revision": 23,
+    "seq": 3811,
+    "clock": 364
   },
   "job": null,
-  "last_day_clock": 360,
+  "last_day_clock": 364,
   "long_reviewed": true
 }
