@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 131,
-  "last_turn": 436,
+  "turns": 132,
+  "last_turn": 437,
   "activity_request": {
-    "event_id": "d24c2d1e-bc6a-4673-a90e-b51c631056cb",
-    "seq": 4961,
-    "from_turn": 432,
-    "from_clock": 436,
+    "event_id": "1c31fbf0-d6c6-48ce-8417-79c7470c8640",
+    "seq": 5046,
+    "from_turn": 437,
+    "from_clock": 441,
     "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "Eskes 2020 그림 7 측정 조건과 회색조 기준을 대조한다."
+    "note": "석사 논문 그림 67~69·80 사진과 5 MPa 근거, 교차 직선 편광 등경선 문제의 교재 출처."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 14,
     "claude-code-manual": 2,
     "chat-inbox": 88,
-    "chat-cli": 17
+    "chat-cli": 18
   },
   "brief": null,
   "read": {
@@ -75,7 +75,9 @@
     "note:abbott-1905-watch-spring-set-search": 4673,
     "note:american-machinist-1903-markham-break-set": 4673,
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4673,
-    "note:metcalf-1903-initial-set-and-morrison-1912": 4761
+    "note:metcalf-1903-initial-set-and-morrison-1912": 4761,
+    "note:oikonomopoulou-grey-scale-criterion": 5052,
+    "work:ag_0001/three-claims-about-annealed-glass@1": 5052
   },
   "names": [
     {
@@ -83,29 +85,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5016,
+  "last_opened_seq": 5027,
   "dream": {
     "words": [
-      "release",
-      "globe",
-      "giraffe"
+      "model",
+      "inform",
+      "faith"
     ],
-    "seq": 5025,
-    "turn_id": "t_67cc2f72"
+    "seq": 5051,
+    "turn_id": "t_3c6c5722"
   },
   "last_dream": {
-    "path": "꿈/시계-440",
-    "seq": 5023
+    "path": "꿈/시계-441",
+    "seq": 5049
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 56,
-    "seq": 5020,
-    "clock": 440
+    "revision": 57,
+    "seq": 5044,
+    "clock": 441
   },
   "job": null,
-  "last_day_clock": 436,
+  "last_day_clock": 441,
   "long_reviewed": true
 }
