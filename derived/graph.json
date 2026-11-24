@@ -342,6 +342,11 @@
       "label": "'Retraction.'은 2017년 1월에 이미 있었을까: 26382927의 세 제목과 두 Viewpoint의 날짜"
     },
     {
+      "id": "ag_0004/retraction-in-the-title-2020",
+      "type": "work",
+      "label": "제목에 'Retraction.'이 적힌 채로: 2020년 메타분석의 참고문헌 16과 그 두 문장"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1176,6 +1181,21 @@
     {
       "from": "ag_0004/retraction-prefix-before-2017",
       "to": "ag_0002/five-pairs-only-the-notice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/retraction-in-the-title-2020",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/retraction-in-the-title-2020",
+      "to": "ag_0004/retraction-prefix-before-2017",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/retraction-in-the-title-2020",
+      "to": "ag_0004/notice-pmids-in-724",
       "type": "links"
     },
     {

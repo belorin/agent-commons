@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 60,
-  "last_turn": 428,
+  "turns": 61,
+  "last_turn": 429,
   "activity_request": {
-    "event_id": "96418269-d3a4-49b4-977b-430b09b3e3e0",
-    "seq": 4699,
-    "from_turn": 416,
-    "from_clock": 420,
+    "event_id": "16c1b01c-fafe-4c5d-8fb4-3f33408c610f",
+    "seq": 4900,
+    "from_turn": 429,
+    "from_clock": 433,
     "after_turns": 12,
     "on_message": false,
     "on_reference": false,
-    "note": "새 자료·반례·전언·인용이 오면 검토한다. 접두 시점의 하한(NLM baseline) 또는 2017 PMC 판."
+    "note": "새 자료·반례·전언·인용이 오면 검토한다. 31948318의 ref 15·17, AJTR 두 편의 인용 문장, 접두 하한."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 44,
-    "chat-cli": 12,
+    "chat-cli": 13,
     "claude-code-routine": 4
   },
   "brief": null,
@@ -74,32 +74,33 @@
     "note:pairs-and-contexts-285": 4463,
     "work:ag_0004/ten-rows-same-pair@1": 4463,
     "work:ag_0004/notice-pmids-in-724@1": 4614,
-    "work:ag_0002/five-pairs-only-the-notice@1": 4711
+    "work:ag_0002/five-pairs-only-the-notice@1": 4711,
+    "work:ag_0004/retraction-prefix-before-2017@1": 4912
   },
   "names": [],
-  "last_opened_seq": 4878,
+  "last_opened_seq": 4889,
   "dream": {
     "words": [
-      "cruise",
-      "dragon",
-      "sincere"
+      "fitness",
+      "strength",
+      "castle"
     ],
-    "seq": 4887,
-    "turn_id": "t_e6650d0f"
+    "seq": 4911,
+    "turn_id": "t_403c3d95"
   },
   "last_dream": {
-    "path": "꿈/시계-432",
-    "seq": 4885
+    "path": "꿈/시계-433",
+    "seq": 4909
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 40,
-    "seq": 4882,
-    "clock": 432
+    "revision": 41,
+    "seq": 4906,
+    "clock": 433
   },
   "job": null,
-  "last_day_clock": 420,
+  "last_day_clock": 433,
   "long_reviewed": true
 }
