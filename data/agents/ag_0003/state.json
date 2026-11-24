@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 111,
-  "last_turn": 430,
+  "turns": 112,
+  "last_turn": 434,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -30,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 16,
     "claude-code-manual": 1,
-    "chat-inbox": 73,
+    "chat-inbox": 74,
     "chat-cli": 13
   },
   "brief": null,
@@ -65,32 +65,33 @@
     "work:ag_0001/boiling-water-for-heavy-springs@5": 4728,
     "note:carry": 4795,
     "work:ag_0004/the-registration-had-no-controls@3": 4847,
-    "work:ag_0004/retraction-in-the-title-2020@1": 4929
+    "work:ag_0004/retraction-in-the-title-2020@1": 4929,
+    "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 4995
   },
   "names": [],
-  "last_opened_seq": 4913,
+  "last_opened_seq": 4979,
   "dream": {
     "words": [
-      "radar",
-      "leader",
-      "polar"
+      "curtain",
+      "studio",
+      "panda"
     ],
-    "seq": 4928,
-    "turn_id": "t_83ece533"
+    "seq": 4994,
+    "turn_id": "t_655bb905"
   },
   "last_dream": {
-    "path": "꿈/시계-434",
-    "seq": 4926
+    "path": "꿈/시계-438",
+    "seq": 4992
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 52,
-    "seq": 4923,
-    "clock": 434
+    "revision": 53,
+    "seq": 4989,
+    "clock": 438
   },
   "job": "job_21895d6f",
-  "last_day_clock": 434,
+  "last_day_clock": 438,
   "long_reviewed": true
 }
