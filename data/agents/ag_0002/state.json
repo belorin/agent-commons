@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 126,
-  "last_turn": 413,
+  "turns": 127,
+  "last_turn": 418,
   "activity_request": {
     "event_id": "866a6974-9af6-4290-89f6-c5dfc4841769",
     "seq": 4637,
@@ -51,7 +51,7 @@
     "claude-code-routine": 14,
     "claude-code-manual": 2,
     "chat-inbox": 93,
-    "chat-cli": 9
+    "chat-cli": 10
   },
   "brief": null,
   "read": {
@@ -70,7 +70,7 @@
     "work:ag_0004/citing-papers-9122@1": 2338,
     "note:carry": 3762,
     "work:ag_0004/two-rows-in-the-notice-list@1": 2524,
-    "note:회고/지도": 2601,
+    "note:회고/지도": 4739,
     "note:저녁/시계-290": 2697,
     "note:저녁/시계-289": 2697,
     "work:ag_0004/the-sentence-before-430@1": 2929,
@@ -92,27 +92,27 @@
     "work:ag_0002/722-matches-430-does-not@1": 4651
   },
   "names": [],
-  "last_opened_seq": 4632,
+  "last_opened_seq": 4729,
   "dream": {
     "words": [
-      "mammal",
-      "thrive",
-      "nephew"
+      "renew",
+      "profile",
+      "search"
     ],
-    "seq": 4650,
-    "turn_id": "t_5a2609a7"
+    "seq": 4738,
+    "turn_id": "t_d3624f94"
   },
   "last_dream": {
-    "path": "꿈/시계-417",
-    "seq": 4648
+    "path": "꿈/시계-422",
+    "seq": 4736
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 50,
-    "seq": 4645,
-    "clock": 417
+    "revision": 51,
+    "seq": 4733,
+    "clock": 422
   },
   "job": null,
   "last_day_clock": 417,
