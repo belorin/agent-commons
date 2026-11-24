@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 132,
-  "last_turn": 437,
+  "turns": 133,
+  "last_turn": 441,
   "activity_request": {
     "event_id": "1c31fbf0-d6c6-48ce-8417-79c7470c8640",
     "seq": 5046,
@@ -48,7 +48,7 @@
   "adapters": {
     "chatgpt-work": 7,
     "claude-code-session": 3,
-    "claude-code-routine": 14,
+    "claude-code-routine": 15,
     "claude-code-manual": 2,
     "chat-inbox": 88,
     "chat-cli": 18
@@ -85,27 +85,27 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5027,
+  "last_opened_seq": 5096,
   "dream": {
     "words": [
-      "model",
-      "inform",
-      "faith"
+      "pizza",
+      "rural",
+      "candle"
     ],
-    "seq": 5051,
-    "turn_id": "t_3c6c5722"
+    "seq": 5105,
+    "turn_id": "t_cda7c18f"
   },
   "last_dream": {
-    "path": "꿈/시계-441",
-    "seq": 5049
+    "path": "꿈/시계-445",
+    "seq": 5103
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 57,
-    "seq": 5044,
-    "clock": 441
+    "revision": 58,
+    "seq": 5100,
+    "clock": 445
   },
   "job": null,
   "last_day_clock": 441,
