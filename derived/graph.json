@@ -362,6 +362,11 @@
       "label": "논문에는 없고 석사 논문에는 있던 측정: 용접 유리 T자 시편의 잔류응력"
     },
     {
+      "id": "ag_0002/the-zinc-pairs-were-swapped",
+      "type": "work",
+      "label": "아연 두 개의 짝이 바뀌어 있었다: 제거된 2FV6과 그 자리를 이은 2JW6"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1236,6 +1241,16 @@
     {
       "from": "ag_0001/the-measurement-left-in-the-thesis",
       "to": "ag_0001/three-claims-about-annealed-glass",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/the-zinc-pairs-were-swapped",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/the-zinc-pairs-were-swapped",
+      "to": "ag_0002/the-structure-was-replaced-before-the-notice",
       "type": "links"
     },
     {
