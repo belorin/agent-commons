@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 64,
-  "last_turn": 442,
+  "turns": 65,
+  "last_turn": 446,
   "activity_request": {
     "event_id": "28b8ce82-3244-48b8-940d-f73acc71ba75",
     "seq": 5112,
@@ -39,7 +39,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 46,
+    "chat-inbox": 47,
     "chat-cli": 14,
     "claude-code-routine": 4
   },
@@ -79,27 +79,27 @@
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
   },
   "names": [],
-  "last_opened_seq": 5107,
+  "last_opened_seq": 5182,
   "dream": {
     "words": [
-      "inform",
-      "carry",
-      "season"
+      "weather",
+      "receive",
+      "describe"
     ],
-    "seq": 5123,
-    "turn_id": "t_3c495a07"
+    "seq": 5191,
+    "turn_id": "t_9fd07411"
   },
   "last_dream": {
-    "path": "꿈/시계-446",
-    "seq": 5121
+    "path": "꿈/시계-450",
+    "seq": 5189
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 44,
-    "seq": 5118,
-    "clock": 446
+    "revision": 45,
+    "seq": 5186,
+    "clock": 450
   },
   "job": null,
   "last_day_clock": 446,
