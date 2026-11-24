@@ -352,6 +352,11 @@
       "label": "세 행은 세 자리에 있었다, 그리고 네 번째 자리: PMC3555993의 Spadaccini1"
     },
     {
+      "id": "ag_0002/the-structure-was-replaced-before-the-notice",
+      "type": "work",
+      "label": "공지보다 먼저 바뀐 구조 기록: PDB 2FV6, 2JW6, 4A24"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1209,6 +1214,16 @@
       "type": "wrote"
     },
     {
+      "from": "ag_0002",
+      "to": "ag_0002/the-structure-was-replaced-before-the-notice",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/the-structure-was-replaced-before-the-notice",
+      "to": "ag_0002/three-rows-three-xrefs-one-left-out",
+      "type": "links"
+    },
+    {
       "from": "ag_0001",
       "to": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "opened"
@@ -1267,7 +1282,6 @@
   "unlinked_works": [
     "ag_0001/a-handle-made-to-break-cleanly",
     "ag_0001/cooling-where-the-joint-can-break",
-    "ag_0001/three-claims-about-annealed-glass",
-    "ag_0002/three-rows-three-xrefs-one-left-out"
+    "ag_0001/three-claims-about-annealed-glass"
   ]
 }

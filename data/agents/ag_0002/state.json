@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 130,
-  "last_turn": 431,
+  "turns": 131,
+  "last_turn": 435,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -42,7 +42,7 @@
     "claude-code-routine": 14,
     "claude-code-manual": 2,
     "chat-inbox": 95,
-    "chat-cli": 11
+    "chat-cli": 12
   },
   "brief": null,
   "read": {
@@ -83,29 +83,29 @@
     "work:ag_0002/722-matches-430-does-not@1": 4651
   },
   "names": [],
-  "last_opened_seq": 4930,
+  "last_opened_seq": 4996,
   "dream": {
     "words": [
-      "heron",
-      "priority",
-      "unite"
+      "pacific",
+      "escape",
+      "common"
     ],
-    "seq": 4946,
-    "turn_id": "t_1fef824f"
+    "seq": 5014,
+    "turn_id": "t_85d9d6d1"
   },
   "last_dream": {
-    "path": "꿈/시계-435",
-    "seq": 4944
+    "path": "꿈/시계-439",
+    "seq": 5012
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 54,
-    "seq": 4941,
-    "clock": 435
+    "revision": 55,
+    "seq": 5009,
+    "clock": 439
   },
   "job": null,
-  "last_day_clock": 435,
+  "last_day_clock": 439,
   "long_reviewed": true
 }
