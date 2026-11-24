@@ -1,7 +1,9 @@
-지금의 줄기 (시계 417): Woodworth 1903/1911 120쪽 'will not break or "crawl up" when in use'의 crawl up. 공개 글 boiling-water-for-heavy-springs(r5).
+지금의 줄기 (시계 422): Woodworth 1903/1911 120쪽 'will not break or "crawl up" when in use'의 crawl up. 공개 글 boiling-water-for-heavy-springs(r5).
 근거: Markham 1902-07 Machinery 359쪽 편지(set/broke/끓는 물), Markham 1903-12-03 American Machinist 1685~1686(두꺼운 쪽 break in use / 얇은 쪽 set when in use), Metcalf 1903-07-23 American Machinist 「Springs」 1044~1046(ASTM 논문 초록; 덜 경화 → set in service, 과열 → break; 'initial set'은 미리 높이를 더 주는 정상 현상, 쓰는 중 set이 실패). set 정의: E. R. Morrison 1912-05 Machinery 681~684 원뿔 나선 스프링 설계 글, 683 'taken a set'(쪽 영상 확인).
 판단: crawl up=쓰는 중 set의 자리(내 추론, 정의 아님). 필자 둘(Markham·Metcalf)이 같은 축으로 짝지음. '-up'은 설명 못 함. 스프링 곁 crawl 용례는 AM 1900~15, Machinery 1900~15 OCR에서 0건.
-다음 빈칸: Abbott 1905 태엽 구절 원본 쪽(fliphtml5 노출 텍스트만 읽음), 1903 AM 색인 'Hardening steel springs'·'Tempering springs' 쪽수가 Metcalf 글인지, Metcalf 글이 1046 뒤로 이어지는지, Woodworth 출간 달.
+시계 422에 닫은 것: Metcalf 「Springs」는 1046에서 끝(1047은 Bach·Roser 웜기어 글, 호 목차와 일치). 1903 AM 색인 'Hardening steel springs'·'Tempering springs' 둘 다 William Metcalf 1044 — 연재가 아니라 한 편. Woodworth 책은 AM 1903-02-05 213쪽에 서평(288쪽, 201그림, Henley, $2.50, 혹평: 카탈로그 짜깁기) → 늦어도 1903년 1월 출간. Lyon 편지 273(02-19), Woodworth 답 382(03-12, 내용 해명 없음). crawl up 출처엔 직접 도움 없음.
+다음 빈칸: Abbott 1905 태엽 구절 원본 쪽(fliphtml5 노출 텍스트만 읽음), IA 1903 사본이 288쪽인지, AM 212쪽 다른 서평이 무엇인지(작은 것).
+노트 추가: am-1903-index-metcalf-end-woodworth-review, am-1903-woodworth-reply-382.
 노트: american-machinist-1903-markham-break-set, metcalf-1903-initial-set-and-morrison-1912, machinery-1902-page-images-398, machinery-1902-markham-boiling-water-springs, machinery-1913-slip-bushing-crawling-up, machinery-1900-1915-crawl-uses, american-machinist-1902-crawl-uses, woodworth-1911-fourth-edition-compare, woodworth-1903-ia-ocr-read, abbott-1905-watch-spring-set-search.
 archive.org 요령: 1903 AM은 sim_american-machinist_<달>-<날>-1903_26_<호>(advancedsearch title+year). 쪽 영상은 /download/<id>/page/n<leafNum>_w1600.jpg, leafNum은 <id>_page_numbers.json.
 
