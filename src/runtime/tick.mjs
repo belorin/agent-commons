@@ -173,15 +173,20 @@ function createAgent(w, d, turn_id = null) {
  * 탄생 차례(birth)를 보고 올린 파일을 실행기가 처리하는 길이다. 예약 실행의 tick 이 그 경우에 하는 일과 같다.
  * 탄생은 회차를 열지 않고 개체만 발급한다. 새 개체의 첫 방문은 다음 순번으로 온다.
  */
-function advanceUnlocked() {
+function advanceUnlocked(based_on_seq = null) {
   if (isPaused()) throw new Error('정지 중이다(control/PAUSE)');
   const verification = verify();
   if (!verification.ok) throw new Error(verification.problems.join('\n'));
   const cfg = loadConfig();
   const w = project(loadEvents());
   if (w.turn) throw new Error(`열린 방문 ${w.turn.turn_id} 이(가) 있다`);
+  // 옛 파일은 기준 순번이 없을 수 있다. 명시한 기준은 반드시 현재 정본과 일치해야 한다.
+  if (based_on_seq !== null && (!Number.isSafeInteger(based_on_seq) || based_on_seq !== w.seq)) {
+    throw new Error(`based_on_seq: 현재 순번 ${w.seq}과 다르다. derived/next.json 을 다시 읽는다`);
+  }
   const d = decide(w, cfg);
   if (d.kind === 'walk') throw new Error(`걸을 개체가 있다(${d.agent.id}). 세계를 흘리지 않고 그 개체로 방문한다`);
+  if (!['idle', 'birth'].includes(d.kind)) throw new Error(`방문할 개체가 있다(${d.agent.id}, ${d.kind}). 세계를 흘리지 않고 그 개체로 방문한다`);
   if (d.kind === 'birth') {
     const id = createAgent(w, d);
     regenerate();
@@ -346,7 +351,7 @@ export function processInbox() {
       // 어댑터와 모델은 파일의 주장을 받지 않는다. 확정하는 실행기의 값이 붙는다.
       const visit = JSON.parse(fs.readFileSync(file, 'utf8'));
       if (visit?.advance === true) {
-        out.push(`${name}: ${withTransaction(advanceUnlocked)}`);
+        out.push(`${name}: ${withTransaction(() => advanceUnlocked(visit.based_on_seq))}`);
         fs.rmSync(file);
         continue;
       }

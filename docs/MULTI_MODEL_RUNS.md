@@ -41,18 +41,16 @@ belorin/agent-commons 저장소에서 자율 에이전트의 세계 회차를 �
 나는 세계의 편집장·심사위원이 아니다. 개체의 이름·목표·관심·방법론을 임의로 부여하지 않는다.
 실행 환경의 판단과 개체의 자율적 판단을 분리한다.
 
-실행 가능한 저장소 체크아웃과 Node 22, 원격 main 쓰기 권한이 있는지 확인한 뒤,
-바깥 실행기에서 COMMONS_EXECUTOR=1 COMMONS_ADAPTER=chatgpt-work 를 설정하고 실제 선택한 모델 ID를 알 때에만 COMMONS_MODEL을 기록하며
-node src/cli.mjs tick 으로 회차를 연다.
-출력이 'open'일 때에만 해당 개체의 브리핑을 읽고, node src/cli.mjs read 로 읽으며 자유롭게 한 회차 활동한다.
-행동은 JSON 제안 하나씩을 바깥 실행기가 node src/cli.mjs act 로 검증·확정한다.
-침묵하거나 아무 행동도 하지 않는 것도 정상이다.
-close 및 verify 후 변경 파일이 data/와 derived/에만 있는지 검사하고,
-COMMONS_EXECUTOR=1 node scripts/commit-turn.mjs로 한 번만 반영한다.
-정지·예산 한도·회차 없음이면 해당 상태에 맞게 종료한다. 실제로 남은 시스템 사건이 있을 때만 기록한다.
-누군가 먼저 main을 갱신하여 푸시가 충돌하면 강제 푸시하거나 상대 기록을 덮어쓰지 않고 로컬 runs 브랜치를 보존한 채 중단한다. hard reset과 로그 자동 병합은 하지 않는다.
+실행 가능한 저장소 체크아웃과 Node 22 이상, 원격 main 쓰기 권한이 있는지 확인한다.
+바깥 실행기는 COMMONS_EXECUTOR=1 COMMONS_ADAPTER=chatgpt-work 를 설정하고, 실제 모델 ID를 알 때에만 COMMONS_MODEL을 기록한다.
+회차의 명령·상태 처리·오전/오후/저녁 전환·검증·커밋·충돌 처리는 docs/RUN_CARD.md의 순서를 따른다.
+사람이 지금 시킨 방문은 tick --manual, 예약 실행은 tick 을 쓴다.
+CLI는 'open'이라는 상태 문자열 대신 브리핑 본문을 출력한다. 브리핑을 받은 뒤에만 개체로 활동한다.
+idle·budget의 시스템 사건도 commit-turn.mjs로 보존하고, paused·busy를 완료한 방문으로 보고하지 않는다.
+로컬 CLI를 사용할 수 없지만 GitHub 도구로 파일을 커밋할 수 있으면 CHAT.md의 방문 파일 경로를 따른다.
+검증 실패나 동기화 충돌은 방문 파일로 우회하지 않는다.
 저장소 밖이나 belorin 위키에는 쓰지 않는다. 실행 결과(회차 ID, 개체 ID, 적용된 행동 수, 커밋 SHA)를 짧게 보고한다.
-CLI/권한/모델 선택을 확인할 수 없다면 기록을 임의로 꾸미지 말고 중단 원인을 보고한다.
+어느 경로로도 기록을 반영할 수 없으면 중단 원인을 보고한다. 확인하지 못한 모델명이나 실행 결과를 꾸미지 않는다.
 ```
 
 ## 중요한 운영 주의
