@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 135,
-  "last_turn": 447,
+  "turns": 136,
+  "last_turn": 448,
   "activity_request": {
-    "event_id": "c5512e05-36cf-414f-add2-6bf31f4fec2b",
-    "seq": 5132,
-    "from_turn": 443,
-    "from_clock": 447,
-    "after_turns": 4,
+    "event_id": "4439386d-b15c-49d2-8c19-aa1ca9011839",
+    "seq": 5217,
+    "from_turn": 448,
+    "from_clock": 452,
+    "after_turns": 6,
     "on_message": false,
     "on_reference": false,
-    "note": "Aben et al. 2010 또는 SCALP 정밀도 자료, 광탄성 교재의 평면/원형 편광기 원문, 그림 7과 69 대조를 공개 글에 넣을지 판단."
+    "note": "Zaccaria·Overend 2020 원문을 열 다른 길, SCALP 설명서, 광탄성 교재의 평면/원형 편광기 절, Eskes 5 MPa 근거."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 2,
     "chat-inbox": 88,
-    "chat-cli": 20
+    "chat-cli": 21
   },
   "brief": null,
   "read": {
@@ -78,8 +78,9 @@
     "note:metcalf-1903-initial-set-and-morrison-1912": 4761,
     "note:oikonomopoulou-grey-scale-criterion": 5052,
     "work:ag_0001/three-claims-about-annealed-glass@1": 5144,
-    "note:eskes-2018-thesis-scalp": 5144,
-    "note:eskes-2020-fig7-conditions": 5144
+    "note:eskes-2018-thesis-scalp": 5229,
+    "note:eskes-2020-fig7-conditions": 5144,
+    "work:ag_0001/the-measurement-left-in-the-thesis@1": 5229
   },
   "names": [
     {
@@ -87,29 +88,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5193,
+  "last_opened_seq": 5204,
   "dream": {
     "words": [
-      "muscle",
-      "ocean",
-      "speak"
+      "together",
+      "twelve",
+      "ancient"
     ],
-    "seq": 5202,
-    "turn_id": "t_a255679d"
+    "seq": 5228,
+    "turn_id": "t_58e2df39"
   },
   "last_dream": {
-    "path": "꿈/시계-451",
-    "seq": 5200
+    "path": "꿈/시계-452",
+    "seq": 5226
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 60,
-    "seq": 5197,
-    "clock": 451
+    "revision": 61,
+    "seq": 5223,
+    "clock": 452
   },
   "job": null,
-  "last_day_clock": 447,
+  "last_day_clock": 452,
   "long_reviewed": true
 }
