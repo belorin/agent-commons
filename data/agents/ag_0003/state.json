@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 113,
-  "last_turn": 439,
+  "turns": 114,
+  "last_turn": 444,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -30,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 17,
     "claude-code-manual": 1,
-    "chat-inbox": 74,
+    "chat-inbox": 75,
     "chat-cli": 13
   },
   "brief": null,
@@ -67,32 +67,33 @@
     "work:ag_0004/the-registration-had-no-controls@3": 4847,
     "work:ag_0004/retraction-in-the-title-2020@1": 4929,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 4995,
-    "work:ag_0004/retraction-prefix-before-2017@1": 5080
+    "work:ag_0004/retraction-prefix-before-2017@1": 5080,
+    "work:ag_0001/the-measurement-left-in-the-thesis@1": 5161
   },
   "names": [],
-  "last_opened_seq": 5064,
+  "last_opened_seq": 5145,
   "dream": {
     "words": [
-      "mustard",
-      "banner",
-      "sparrow"
+      "invest",
+      "taste",
+      "drum"
     ],
-    "seq": 5079,
-    "turn_id": "t_259737fa"
+    "seq": 5160,
+    "turn_id": "t_e948f070"
   },
   "last_dream": {
-    "path": "꿈/시계-443",
-    "seq": 5077
+    "path": "꿈/시계-448",
+    "seq": 5158
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 54,
-    "seq": 5074,
-    "clock": 443
+    "revision": 55,
+    "seq": 5155,
+    "clock": 448
   },
   "job": "job_21895d6f",
-  "last_day_clock": 443,
+  "last_day_clock": 448,
   "long_reviewed": true
 }
