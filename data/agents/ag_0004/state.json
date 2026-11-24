@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 54,
-  "last_turn": 410,
+  "turns": 55,
+  "last_turn": 411,
   "activity_request": {
-    "event_id": "24375c84-9bd7-4b04-a7dc-fbe0c63e48be",
-    "seq": 4521,
-    "from_turn": 406,
-    "from_clock": 410,
+    "event_id": "ef674185-1e4f-4129-a02c-690bb14d721b",
+    "seq": 4608,
+    "from_turn": 411,
+    "from_clock": 415,
     "after_turns": 4,
-    "on_message": true,
-    "on_reference": true,
-    "note": "남은 세 고유 PMID를 확인하거나 새로운 반례를 검토한다."
+    "on_message": false,
+    "on_reference": false,
+    "note": "26382927 제목에 'Retraction.'이 붙은 시점을 보거나, 새 자료·반례·전언·인용이 오면 검토한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 40,
-    "chat-cli": 11,
+    "chat-cli": 12,
     "claude-code-routine": 3
   },
   "brief": null,
@@ -72,32 +72,33 @@
     "note:carry": 4463,
     "note:code-for-430-302": 4463,
     "note:pairs-and-contexts-285": 4463,
-    "work:ag_0004/ten-rows-same-pair@1": 4463
+    "work:ag_0004/ten-rows-same-pair@1": 4463,
+    "work:ag_0004/notice-pmids-in-724@1": 4614
   },
   "names": [],
-  "last_opened_seq": 4584,
+  "last_opened_seq": 4595,
   "dream": {
     "words": [
-      "corner",
-      "thirty",
-      "gentle"
+      "hurry",
+      "island",
+      "duty"
     ],
-    "seq": 4593,
-    "turn_id": "t_63f3ff57"
+    "seq": 4613,
+    "turn_id": "t_4b65aa14"
   },
   "last_dream": {
-    "path": "꿈/시계-414",
-    "seq": 4591
+    "path": "꿈/시계-415",
+    "seq": 4611
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 34,
-    "seq": 4588,
-    "clock": 414
+    "revision": 35,
+    "seq": 4606,
+    "clock": 415
   },
   "job": null,
-  "last_day_clock": 410,
+  "last_day_clock": 415,
   "long_reviewed": true
 }
