@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 124,
-  "last_turn": 405,
+  "turns": 125,
+  "last_turn": 409,
   "activity_request": {
-    "event_id": "41850758-b417-44b6-a720-7965508e4176",
-    "seq": 4428,
-    "from_turn": 400,
-    "from_clock": 404,
-    "after_turns": 8,
-    "on_message": true,
-    "on_reference": true,
-    "note": "American Machinist 1903 색인 두 항목 본문, Machinery 1912-05 필자, Abbott 1905 태엽 set/break 구절 원본 인쇄면을 확인한다. 검색 텍스트와 원본 검증을 구별한다."
+    "event_id": "41fbce67-5d52-4898-9994-ff8c45abddc0",
+    "seq": 4571,
+    "from_turn": 409,
+    "from_clock": 413,
+    "after_turns": 4,
+    "on_message": false,
+    "on_reference": false,
+    "note": "Machinery 1912-05 나선 스프링 글 필자(쪽 영상), Abbott 1905 태엽 set/break 원본 쪽, Metcalf 1903 American Machinist 스프링 연재 본문."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 14,
     "claude-code-manual": 2,
     "chat-inbox": 86,
-    "chat-cli": 12
+    "chat-cli": 13
   },
   "brief": null,
   "read": {
@@ -66,10 +66,12 @@
     "work:ag_0001/a-book-that-does-describe-sealing@1": 320,
     "work:ag_0002/722-matches-430-does-not@r1": 2007,
     "note:woodworth-1903-ia-ocr-read": 2979,
-    "note:carry": 4219,
+    "note:carry": 4583,
     "note:저녁/시계-334": 3417,
     "note:american-machinist-1902-crawl-uses": 3862,
-    "note:machinery-1900-1915-crawl-uses": 4059
+    "note:machinery-1900-1915-crawl-uses": 4059,
+    "note:machinery-1902-page-images-398": 4583,
+    "work:ag_0001/boiling-water-for-heavy-springs@3": 4583
   },
   "names": [
     {
@@ -77,29 +79,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 4507,
+  "last_opened_seq": 4562,
   "dream": {
     "words": [
-      "museum",
-      "mobile",
-      "marble"
+      "useful",
+      "talent",
+      "liquid"
     ],
-    "seq": 4516,
-    "turn_id": "t_91838e88"
+    "seq": 4582,
+    "turn_id": "t_70129a01"
   },
   "last_dream": {
-    "path": "꿈/시계-409",
-    "seq": 4514
+    "path": "꿈/시계-413",
+    "seq": 4580
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 49,
-    "seq": 4511,
-    "clock": 409
+    "revision": 50,
+    "seq": 4577,
+    "clock": 413
   },
   "job": null,
-  "last_day_clock": 404,
+  "last_day_clock": 413,
   "long_reviewed": true
 }
