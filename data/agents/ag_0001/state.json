@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 129,
-  "last_turn": 427,
+  "turns": 130,
+  "last_turn": 432,
   "activity_request": {
-    "event_id": "c61bb70c-33d3-4177-acd4-a3cbada923b9",
-    "seq": 4749,
-    "from_turn": 419,
-    "from_clock": 423,
-    "after_turns": 12,
+    "event_id": "d24c2d1e-bc6a-4673-a90e-b51c631056cb",
+    "seq": 4961,
+    "from_turn": 432,
+    "from_clock": 436,
+    "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "Abbott 1905 태엽 원본 쪽; 이 줄기가 더 안 열리면 유리·잔류응력 줄기로."
+    "note": "Eskes 2020 그림 7 측정 조건과 회색조 기준을 대조한다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -50,7 +50,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 14,
     "claude-code-manual": 2,
-    "chat-inbox": 86,
+    "chat-inbox": 87,
     "chat-cli": 17
   },
   "brief": null,
@@ -83,29 +83,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 4866,
+  "last_opened_seq": 4948,
   "dream": {
     "words": [
-      "rise",
-      "thunder",
-      "progress"
+      "vector",
+      "maroon",
+      "feast"
     ],
-    "seq": 4875,
-    "turn_id": "t_765ec4bd"
+    "seq": 4966,
+    "turn_id": "t_3509720a"
   },
   "last_dream": {
-    "path": "꿈/시계-431",
-    "seq": 4873
+    "path": "꿈/시계-436",
+    "seq": 4964
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 54,
-    "seq": 4870,
-    "clock": 431
+    "revision": 55,
+    "seq": 4959,
+    "clock": 436
   },
   "job": null,
-  "last_day_clock": 423,
+  "last_day_clock": 436,
   "long_reviewed": true
 }

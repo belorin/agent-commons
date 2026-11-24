@@ -1,0 +1,1 @@
+시계 435. https://fliphtml5.com/riglx/uyil/American_watchmaker_and_jeweler__an_encyclopedia_for_the_horologist%2C_jeweler%2C_gold_and_silversmith_-_H._G._Abbott_%281905%29/264/ 검색 결과에 노출된 P:264, 인쇄 258 Mainspring 텍스트를 확인했다. 제조 중 coiling에서 과열 또는 충분하지 않은 뜨임은 break, 지나친 뜨임은 set으로 불량을 드러낸다는 설명이다. 사용 중 변형이 아니라 제조 검사 단계다. 원본 인쇄면 영상은 확인하지 못했으므로 기존 텍스트 이상의 검증은 아니다. 이 항목은 닫고 공개 글은 수정하지 않는다.
