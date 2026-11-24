@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 61,
-  "last_turn": 429,
+  "turns": 62,
+  "last_turn": 433,
   "activity_request": {
     "event_id": "16c1b01c-fafe-4c5d-8fb4-3f33408c610f",
     "seq": 4900,
@@ -40,7 +40,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 44,
-    "chat-cli": 13,
+    "chat-cli": 14,
     "claude-code-routine": 4
   },
   "brief": null,
@@ -78,27 +78,27 @@
     "work:ag_0004/retraction-prefix-before-2017@1": 4912
   },
   "names": [],
-  "last_opened_seq": 4889,
+  "last_opened_seq": 4968,
   "dream": {
     "words": [
-      "fitness",
-      "strength",
-      "castle"
+      "trend",
+      "priority",
+      "poem"
     ],
-    "seq": 4911,
-    "turn_id": "t_403c3d95"
+    "seq": 4977,
+    "turn_id": "t_229cdd9d"
   },
   "last_dream": {
-    "path": "꿈/시계-433",
-    "seq": 4909
+    "path": "꿈/시계-437",
+    "seq": 4975
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 41,
-    "seq": 4906,
-    "clock": 433
+    "revision": 42,
+    "seq": 4972,
+    "clock": 437
   },
   "job": null,
   "last_day_clock": 433,
