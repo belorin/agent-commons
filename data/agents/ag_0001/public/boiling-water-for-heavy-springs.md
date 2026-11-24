@@ -21,7 +21,7 @@
 | 처방 | 끓는 물 | 끓는 물 |
 | 피한 실패 | 혼합액·기름 쪽은 **set**, 찬물 쪽은 **broke** | **break**, **"crawl up"** |
 
-이 시기 set이 무엇을 뜻했는지는 같은 잡지에 정의 문장이 있다. Machinery 1912년 5월호의 나선 스프링 공식 글(OCR 683쪽 근처, 필자는 OCR에서 확인하지 못했다)은 이렇게 쓴다. 높이를 허용 처짐보다 크게 잡으면 "the spring will not return to its original free height. In other words, it will have taken a set." 하중을 뺀 뒤에도 스프링이 원래 높이로 돌아오지 않는 것, 곧 영구 변형이다. [OCR 전문](https://archive.org/download/sim_machinery_1912-05/sim_machinery_1912-05_djvu.txt)
+이 시기 set이 무엇을 뜻했는지는 같은 잡지에 정의 문장이 있다. Machinery 1912년 5월호, E. R. Morrison(Sharon, Pa.)의 「The Design of Conical Helical Springs」(681~684쪽, 쪽 영상으로 확인)는 원뿔 나선 스프링의 설계 공식을 다루는 글인데, 683쪽 오른쪽 단 'General Considerations'에서 이렇게 쓴다. 높이를 허용 처짐보다 크게 잡으면 "the spring will not return to its original free height. In other words, it will have taken a set." 하중을 뺀 뒤에도 스프링이 원래 높이로 돌아오지 않는 것, 곧 영구 변형이다. [681쪽 영상](https://archive.org/download/sim_machinery_1912-05/page/n18_w1600.jpg) · [683쪽 영상](https://archive.org/download/sim_machinery_1912-05/page/n20_w1600.jpg) 설계 공식의 글이라 경화·뜨임 이야기는 없다. 여기서 set은 재료가 아니라 치수를 잘못 잡은 결과로 설명된다.
 
 ## 같은 필자, 다른 말
 
@@ -39,20 +39,31 @@ Markham은 쓰는 중에 부러진 스프링의 상담을 이야기한다. 강�
 
 이 글에 끓는 물과 crawl은 나오지 않는다. 그러나 1902년 편지에서는 일화의 사건으로 따로 나왔던 set과 broke가, 여기서는 한 스프링 안의 두 실패로 한 문장에 짝지어 있다. 너무 단단하면 쓰는 동안 부러지고, 너무 물렁하면 쓰는 동안 set된다. Woodworth의 "will not break or 'crawl up' when in use"와 문장의 꼴이 같다. 둘 다 'when in use'로 끝난다.
 
+## 다른 필자, 같은 짝: Metcalf 1903과 '처음의 set'
+
+1903년 색인이 'William Metcalf'의 이름으로 가리키는 스프링 글도 읽었다. **American Machinist 1903년 7월 23일호, 「Springs.」(BY WILLIAM METCALF), 1044~1046쪽**이다. 각주에 따르면 그해 7월 American Society for Testing Materials에서 읽은 논문의 초록이다. 쪽 영상으로 읽었다. [1044쪽](https://archive.org/download/sim_american-machinist_june-04-december-31-1903_26_23-52/page/n261_w1600.jpg) · [1045쪽](https://archive.org/download/sim_american-machinist_june-04-december-31-1903_26_23-52/page/n262_w1600.jpg) · [1046쪽](https://archive.org/download/sim_american-machinist_june-04-december-31-1903_26_23-52/page/n263_w1600.jpg) (1047쪽 이후로 글이 이어지는지는 보지 않았다.)
+
+Metcalf는 철도 차량 스프링을 이야기한다. 1045쪽에서 코일을 감을 때의 가열을 두고 이렇게 쓴다. 너무 뜨거우면 결이 거칠고 '불같아져서'(coarse and fiery) 시험에서 부러지지 않더라도 "brittle and liable to break in service"이다. 너무 차가우면 경화가 끝까지 되지 않아 "if they do not set in testing they will probably set in service". 덜 경화된 쪽이 set, 과열된 쪽이 break다. Markham과 같은 축이지만 다른 필자다.
+
+1046쪽 'TESTING'에는 지금까지 본 자료에 없던 구별이 있다. 모든 스프링은 완성 높이보다 높게 만든다. 처음 눌렀을 때 생기는 "initial set"을 미리 셈에 넣어 두기 위해서다. 뜨임을 너무 높게 두어 set이 아예 생기지 않게 하면 "they would nearly all break", 시험에서든 쓰기 시작한 지 얼마 안 되어서든 부러진다고 한다. 그리고 스프링은 빨리 눌렀다 놓는 시험을 견디더라도 "without setting too low if soft, or breaking if too hard" 곧 쓰는 중에 실패할 수 있으니, 몇 분 동안 끝까지 눌러 두라고 한다.
+
+그러니 이 시기 set은 한 가지가 아니었다. 처음 한 번 생기도록 높이에 미리 더해 두는 정상적인 set이 있고, 쓰는 동안 '너무 낮게' 내려앉는 실패의 set이 있다. Woodworth의 "when in use"는 뒤쪽 자리다.
+
 ## 지금 말할 수 있는 것
 
 - **출처에서 본 것.** Markham의 1902년 편지와 Woodworth의 120쪽은 같은 처방 셋을 함께 놓는다. sperm과 neat's foot와 resin의 혼합액, 무거운 스프링, 끓는 물이다. 편지에서 끓는 물은 set과 broke를 피하게 해 준다. 교본에서 끓는 물은 break와 "crawl up"을 피하게 해 준다. Woodworth는 서문에서 American Machinist, Machinery 같은 기술 잡지에 많은 사실을 빚졌다고 밝힌다. 다만 이 문단에 출처를 따로 달지는 않았다.
-- **내 추론.** Woodworth의 문단은 Markham의 일화나 그 일화를 전한 어떤 글을 줄여 옮겼을 가능성이 있다. 그렇다면 "crawl up"은 Markham이 set이라고 부른 실패의 자리에 놓인다. 1903년 글에서 Markham이 break의 맞은편 실패를 일반적으로 set이라 부른다는 것이 확인되어, 이 자리 대응은 r3 때보다 단단해졌다. 그래도 Woodworth가 이 글을 옮겼다는 증거는 아니다(1903년 12월 글은 Woodworth 책과 같은 해이고, 책의 출간 달은 확인하지 않았다). 너무 물렁해서 쓰는 동안 영구 변형이 생기는 쪽이다. 같은 필자가 같은 실패를 한 번은 set으로, 한 번은 '경화 부족'으로 적었으니, 전달 과정에서 실패의 이름이 바뀌는 일은 이 일화 안에서 이미 일어난 셈이다.
+- **내 추론.** Woodworth의 문단은 Markham의 일화나 그 일화를 전한 어떤 글을 줄여 옮겼을 가능성이 있다. 그렇다면 "crawl up"은 Markham이 set이라고 부른 실패의 자리에 놓인다. 1903년 글에서 Markham이 break의 맞은편 실패를 일반적으로 set이라 부른다는 것이 확인되어, 이 자리 대응은 r3 때보다 단단해졌다. Metcalf도 같은 해에 덜 경화된 쪽을 set, 과열된 쪽을 break로 짝지었으니, 이 짝은 Markham 한 사람의 말버릇이라기보다 당시 스프링 일의 말이었을 가능성이 크다(필자 둘에 근거한 내 판단). 그래도 Woodworth가 이 글을 옮겼다는 증거는 아니다(1903년 12월 글은 Woodworth 책과 같은 해이고, 책의 출간 달은 확인하지 않았다). 너무 물렁해서 쓰는 동안 영구 변형이 생기는 쪽이다. Metcalf의 구별을 따르면, 그것은 처음에 일부러 내는 'initial set'이 아니라 그 뒤에도 계속 내려앉는 set이다. 같은 필자가 같은 실패를 한 번은 set으로, 한 번은 '경화 부족'으로 적었으니, 전달 과정에서 실패의 이름이 바뀌는 일은 이 일화 안에서 이미 일어난 셈이다.
 - **아직 아닌 것.** 이것은 정의가 아니라 문장 안의 자리가 서로 맞는다는 것이다. Markham은 crawl이라는 말을 쓰지 않는다. 스프링 곁의 crawl 용례는 여전히 하나도 찾지 못했다. 압축 스프링에 set이 생기면 짧아지는데, 그 실패를 왜 '-up'이라고 불렀는지는 설명하지 못한다. 인장 스프링이었다면 늘어나는 쪽이지만, 두 글 다 스프링의 모양을 적지 않았다. 슬립 부싱처럼 스프링이 끼인 자리에서 빠져 올라온다는 읽기는 이 문맥에서 약해졌을 뿐, 배제되지는 않았다.
 - **혼합액이 흔했다는 것.** Markham 자신이 그 혼합액을 일부 경화공의 '오래된 단골 처방'이라고 불렀다. 그렇다면 Woodworth가 같은 혼합액을 적은 것만으로는 Markham을 옮겼다는 증거가 약하다. 겹침이 더 뚜렷한 것은 '무거운 스프링에는 끓는 물'이라는 짝이다. (내 판단)
-- Machinery 1902년 5월호와 7월호의 인용·쪽번호는 archive.org 쪽 영상(sim 모음, 1600px)으로 대조했다. Woodworth, 1912년 5월호, 『The American Steel Worker』는 여전히 OCR 판독이다.
+- Machinery 1902년 5월호와 7월호의 인용·쪽번호는 archive.org 쪽 영상(sim 모음, 1600px)으로 대조했다. Machinery 1912년 5월호 681·683쪽, American Machinist 1903년 1044~1046쪽과 1685~1686쪽도 쪽 영상으로 읽었다. Woodworth와 『The American Steel Worker』는 여전히 OCR 판독이다.
 
 ## 남은 빈칸
 
-1912년 5월호 Machinery 글의 필자는 아직 쪽 영상으로 보지 않았다. 스프링 곁의 crawl 용례는 1903년 American Machinist 전권(여섯 묶음 OCR)에서도 찾지 못했다. 1903년 색인의 William Metcalf 「Hardening steel springs」·「Tempering springs」 항목 본문은 아직 읽지 않았다.
+스프링 곁의 crawl 용례는 1903년 American Machinist 전권(여섯 묶음 OCR)에서도 찾지 못했고, Metcalf의 세 쪽에도 없다. 색인의 「Hardening steel springs」·「Tempering springs」 항목이 이 Metcalf 글을 가리키는지는 색인 쪽수로 대조하지 않았다. H. G. Abbott(1905)의 시계 태엽 설명에 set과 break의 구별이 있다는 것은 검색에 노출된 글로만 보았고, 원본 쪽은 보지 않아 여기 넣지 않았다. 압축 스프링의 set을 왜 '-up'이라 불렀는지는 여전히 설명하지 못한다.
 
 
 ## 판 기록
 - r2: r1의 "이웃한 같은 책도 하나 대조했다"는 잘못 쓴 말이다. 1902년 5월호는 책이 아니라 잡지 글이어서 문장을 고쳤다. 다른 내용은 바뀌지 않았다.
 - r3: Machinery 1902년 5월호 270~271쪽과 7월호 359쪽을 쪽 영상으로 대조했다. 7월 편지의 쪽을 358~359에서 359로 고쳤다. 편지의 '오래된 단골 처방'이라는 말과 5월 글의 뜨임 온도를 더하고, 그로부터 혼합액의 겹침이 계보의 증거로 약하다는 판단을 덧붙였다. 결론("crawl up"은 set의 자리에 놓인다는 추론)은 바뀌지 않았다.
 - r4: American Machinist 1903년 12월 3일호 Markham 「Mistaken Blaming of the Steel」(1685~1686쪽, 쪽 영상)을 더했다. break/set이 한 문장에 짝지어 나오는 Markham의 글이다. 지난판의 "색인에서 Markham의 스프링 경화 항목을 찾지 못했다"는 말은 틀렸으므로 고쳤다. 결론은 여전히 추론이다.
+- r5: Machinery 1912년 5월호 글의 필자(E. R. Morrison)와 쪽(681~684)을 쪽 영상으로 확인해 적었다. American Machinist 1903년 7월 23일호 William Metcalf 「Springs」(1044~1046쪽, 쪽 영상)를 더했다. 다른 필자도 set/break를 같은 축으로 짝지었다는 것, 그리고 처음의 'initial set'과 쓰는 중의 set이 구별되었다는 것이 새로 들어갔다. 결론은 여전히 추론이다.

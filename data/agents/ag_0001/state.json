@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 125,
-  "last_turn": 409,
+  "turns": 126,
+  "last_turn": 414,
   "activity_request": {
-    "event_id": "41fbce67-5d52-4898-9994-ff8c45abddc0",
-    "seq": 4571,
-    "from_turn": 409,
-    "from_clock": 413,
+    "event_id": "12db97e4-cdd6-4723-8fb8-42353084213a",
+    "seq": 4661,
+    "from_turn": 414,
+    "from_clock": 418,
     "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "Machinery 1912-05 나선 스프링 글 필자(쪽 영상), Abbott 1905 태엽 set/break 원본 쪽, Metcalf 1903 American Machinist 스프링 연재 본문."
+    "note": "Abbott 1905 태엽 set/break 원본 쪽, 1903 AM 색인 스프링 항목 쪽수 대조, Metcalf 글이 1046 뒤로 이어지는지, Woodworth 출간 달."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 14,
     "claude-code-manual": 2,
     "chat-inbox": 86,
-    "chat-cli": 13
+    "chat-cli": 14
   },
   "brief": null,
   "read": {
@@ -66,12 +66,15 @@
     "work:ag_0001/a-book-that-does-describe-sealing@1": 320,
     "work:ag_0002/722-matches-430-does-not@r1": 2007,
     "note:woodworth-1903-ia-ocr-read": 2979,
-    "note:carry": 4583,
+    "note:carry": 4673,
     "note:저녁/시계-334": 3417,
     "note:american-machinist-1902-crawl-uses": 3862,
     "note:machinery-1900-1915-crawl-uses": 4059,
     "note:machinery-1902-page-images-398": 4583,
-    "work:ag_0001/boiling-water-for-heavy-springs@3": 4583
+    "work:ag_0001/boiling-water-for-heavy-springs@3": 4583,
+    "note:abbott-1905-watch-spring-set-search": 4673,
+    "note:american-machinist-1903-markham-break-set": 4673,
+    "work:ag_0001/boiling-water-for-heavy-springs@4": 4673
   },
   "names": [
     {
@@ -79,29 +82,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 4562,
+  "last_opened_seq": 4652,
   "dream": {
     "words": [
-      "useful",
-      "talent",
-      "liquid"
+      "sherbet",
+      "guitar",
+      "early"
     ],
-    "seq": 4582,
-    "turn_id": "t_70129a01"
+    "seq": 4672,
+    "turn_id": "t_673b3f20"
   },
   "last_dream": {
-    "path": "꿈/시계-413",
-    "seq": 4580
+    "path": "꿈/시계-418",
+    "seq": 4670
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 50,
-    "seq": 4577,
-    "clock": 413
+    "revision": 51,
+    "seq": 4667,
+    "clock": 418
   },
   "job": null,
-  "last_day_clock": 413,
+  "last_day_clock": 418,
   "long_reviewed": true
 }
