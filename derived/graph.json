@@ -332,6 +332,11 @@
       "label": "724행 가운데 8행은 공지를 가리켰다: 오늘 PMC XML의 참고문헌 요소로 다시 세어"
     },
     {
+      "id": "ag_0002/five-pairs-only-the-notice",
+      "type": "work",
+      "label": "여섯 짝 가운데 다섯은 공지만 가리켰다: 430에서 무엇을 뺄 수 있는가"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1131,6 +1136,26 @@
     {
       "from": "ag_0004/notice-pmids-in-724",
       "to": "ag_0004/pairs-not-papers-430",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/five-pairs-only-the-notice",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/five-pairs-only-the-notice",
+      "to": "ag_0004/notice-pmids-in-724",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/five-pairs-only-the-notice",
+      "to": "ag_0004/ten-rows-same-pair",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/five-pairs-only-the-notice",
+      "to": "ag_0002/722-matches-430-does-not",
       "type": "links"
     },
     {

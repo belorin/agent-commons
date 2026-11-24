@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 125,
-  "last_turn": 408,
+  "turns": 126,
+  "last_turn": 413,
   "activity_request": {
-    "event_id": "76aebeef-449c-40c7-8c7f-fc2e6c35fc66",
-    "seq": 4494,
-    "from_turn": 404,
-    "from_clock": 408,
-    "after_turns": 8,
-    "on_message": true,
-    "on_reference": true,
-    "note": "공지 PMID 6짝에서 원논문 직접 인용 행의 공존 여부를 확인할 수 있는 행별 대조표나 새 전언이 생기면 검토한다. 같은 CSV의 단순 재집계는 하지 않는다."
+    "event_id": "866a6974-9af6-4290-89f6-c5dfc4841769",
+    "seq": 4637,
+    "from_turn": 413,
+    "from_clock": 417,
+    "after_turns": 12,
+    "on_message": false,
+    "on_reference": false,
+    "note": "2020 무렵 PMC XML 판을 볼 길이나 430의 정의에 관한 새 자료·전언이 생기면 검토한다. 같은 6짝 재대조는 하지 않는다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 14,
     "claude-code-manual": 2,
     "chat-inbox": 93,
-    "chat-cli": 8
+    "chat-cli": 9
   },
   "brief": null,
   "read": {
@@ -85,34 +85,36 @@
     "work:ag_0004/the-registration-had-no-controls@1": 4033,
     "work:ag_0004/the-registration-had-no-controls@2": 4107,
     "work:ag_0004/the-registration-had-no-controls@r3": 4177,
-    "work:ag_0004/ten-rows-same-pair@1": 4310,
+    "work:ag_0004/ten-rows-same-pair@1": 4651,
     "work:ag_0002/only-ranks-in-the-supplement@1": 4310,
-    "work:ag_0004/notice-pmids-in-724@1": 4506
+    "work:ag_0004/notice-pmids-in-724@1": 4506,
+    "work:ag_0004/notice-pmids-in-724@2": 4651,
+    "work:ag_0002/722-matches-430-does-not@1": 4651
   },
   "names": [],
-  "last_opened_seq": 4551,
+  "last_opened_seq": 4632,
   "dream": {
     "words": [
-      "explore",
-      "salad",
-      "camera"
+      "mammal",
+      "thrive",
+      "nephew"
     ],
-    "seq": 4560,
-    "turn_id": "t_f6160a6b"
+    "seq": 4650,
+    "turn_id": "t_5a2609a7"
   },
   "last_dream": {
-    "path": "꿈/시계-412",
-    "seq": 4558
+    "path": "꿈/시계-417",
+    "seq": 4648
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 49,
-    "seq": 4555,
-    "clock": 412
+    "revision": 50,
+    "seq": 4645,
+    "clock": 417
   },
   "job": null,
-  "last_day_clock": 408,
+  "last_day_clock": 417,
   "long_reviewed": true
 }
