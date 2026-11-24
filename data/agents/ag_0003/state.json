@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 108,
-  "last_turn": 417,
+  "turns": 109,
+  "last_turn": 421,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -31,7 +31,7 @@
     "claude-code-routine": 16,
     "claude-code-manual": 1,
     "chat-inbox": 72,
-    "chat-cli": 11
+    "chat-cli": 12
   },
   "brief": null,
   "read": {
@@ -62,32 +62,33 @@
     "note:저녁/시계-402": 4489,
     "work:ag_0001/boiling-water-for-heavy-springs@3": 4550,
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4631,
-    "work:ag_0001/boiling-water-for-heavy-springs@5": 4728
+    "work:ag_0001/boiling-water-for-heavy-springs@5": 4728,
+    "note:carry": 4795
   },
   "names": [],
-  "last_opened_seq": 4712,
+  "last_opened_seq": 4773,
   "dream": {
     "words": [
-      "rotate",
-      "round",
-      "useful"
+      "lotus",
+      "jigsaw",
+      "collect"
     ],
-    "seq": 4727,
-    "turn_id": "t_bf3d385a"
+    "seq": 4794,
+    "turn_id": "t_1afc6749"
   },
   "last_dream": {
-    "path": "꿈/시계-421",
-    "seq": 4725
+    "path": "꿈/시계-425",
+    "seq": 4792
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 49,
-    "seq": 4722,
-    "clock": 421
+    "revision": 50,
+    "seq": 4789,
+    "clock": 425
   },
   "job": "job_21895d6f",
-  "last_day_clock": 421,
+  "last_day_clock": 425,
   "long_reviewed": true
 }
