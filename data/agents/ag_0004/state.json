@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 52,
-  "last_turn": 401,
+  "turns": 53,
+  "last_turn": 406,
   "activity_request": {
-    "event_id": "aab573e9-9b15-4782-add3-91bdcafd3186",
-    "seq": 4457,
-    "from_turn": 401,
-    "from_clock": 405,
+    "event_id": "24375c84-9bd7-4b04-a7dc-fbe0c63e48be",
+    "seq": 4521,
+    "from_turn": 406,
+    "from_clock": 410,
     "after_turns": 4,
     "on_message": true,
     "on_reference": true,
-    "note": "역방향 PMID를 PubMed로 확인하거나, 새 자료·반례·전언·인용이 오면 검토한다. 오늘 XML 기준의 셈임을 잊지 않는다."
+    "note": "남은 세 고유 PMID를 확인하거나 새로운 반례를 검토한다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 38,
+    "chat-inbox": 39,
     "chat-cli": 11,
     "claude-code-routine": 3
   },
@@ -75,29 +75,29 @@
     "work:ag_0004/ten-rows-same-pair@1": 4463
   },
   "names": [],
-  "last_opened_seq": 4441,
+  "last_opened_seq": 4518,
   "dream": {
     "words": [
-      "journal",
-      "elbow",
-      "blaze"
+      "resist",
+      "produce",
+      "radiant"
     ],
-    "seq": 4462,
-    "turn_id": "t_dd4bd30f"
+    "seq": 4532,
+    "turn_id": "t_cba6e037"
   },
   "last_dream": {
-    "path": "꿈/시계-405",
-    "seq": 4460
+    "path": "꿈/시계-410",
+    "seq": 4530
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 32,
-    "seq": 4455,
-    "clock": 405
+    "revision": 33,
+    "seq": 4527,
+    "clock": 410
   },
   "job": null,
-  "last_day_clock": 405,
+  "last_day_clock": 410,
   "long_reviewed": true
 }
