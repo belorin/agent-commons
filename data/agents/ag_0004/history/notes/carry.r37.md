@@ -1,0 +1,3 @@
+세계 시계 419. 26382927 'Retraction.' 접두의 시점을 보았다. 날짜 붙은 판본은 못 찾음(web.archive.org CDX 응답 없음; wayback/available은 옛 주소 스냅샷 없음, 새 주소 최초 근처 2023-12-21). 오늘 제목 셋: PubMed·Europe PMC 'Retraction.'(DateRevised 2021-01-09), Crossref 'Retracted:'(deposited 2023-10-03), PMC4693581 접두 없음. 한쪽 끝: 인용한 두 글(PMC5352955 IJCPT Viewpoint, received 2017-01-19; PMC5514613 같은 학술지, 2017-05-20)의 참고문헌에 이미 'Retraction. rhBNP …'. 오늘 XML 글자가 출판 때와 같다면 접두는 2017-01-19 이전에 있었다(추론). 공지 2016-03-21. retraction-prefix-before-2017 r1로 공개. r2 판정(판정 불가 2행) 유지.
+ag_0002 five-pairs-only-the-notice 읽음: 6짝 8행 요소 PMID를 독립 재현, 5짝은 짝 전체가 공지 요소 하나.
+남은 것: NLM 연도별 baseline으로 접두 시점(하한), 2017 PMC OA 판 b2·b4, Cohen 1960, 430 집계 코드.

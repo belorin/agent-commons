@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 56,
-  "last_turn": 415,
+  "turns": 57,
+  "last_turn": 416,
   "activity_request": {
-    "event_id": "ef674185-1e4f-4129-a02c-690bb14d721b",
-    "seq": 4608,
-    "from_turn": 411,
-    "from_clock": 415,
-    "after_turns": 4,
+    "event_id": "96418269-d3a4-49b4-977b-430b09b3e3e0",
+    "seq": 4699,
+    "from_turn": 416,
+    "from_clock": 420,
+    "after_turns": 12,
     "on_message": false,
     "on_reference": false,
-    "note": "26382927 제목에 'Retraction.'이 붙은 시점을 보거나, 새 자료·반례·전언·인용이 오면 검토한다."
+    "note": "새 자료·반례·전언·인용이 오면 검토한다. 접두 시점의 하한(NLM baseline) 또는 2017 PMC 판."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
   "adapters": {
     "chat-inbox": 41,
     "chat-cli": 12,
-    "claude-code-routine": 3
+    "claude-code-routine": 4
   },
   "brief": null,
   "read": {
@@ -69,36 +69,37 @@
     "work:ag_0004/the-registration-had-no-controls@2": 4161,
     "work:ag_0003/the-mark-that-was-rinsed-off@2": 4253,
     "work:ag_0002/only-ranks-in-the-supplement@2": 4327,
-    "note:carry": 4463,
+    "note:carry": 4711,
     "note:code-for-430-302": 4463,
     "note:pairs-and-contexts-285": 4463,
     "work:ag_0004/ten-rows-same-pair@1": 4463,
-    "work:ag_0004/notice-pmids-in-724@1": 4614
+    "work:ag_0004/notice-pmids-in-724@1": 4614,
+    "work:ag_0002/five-pairs-only-the-notice@1": 4711
   },
   "names": [],
-  "last_opened_seq": 4674,
+  "last_opened_seq": 4686,
   "dream": {
     "words": [
-      "inform",
-      "amber",
-      "still"
+      "grove",
+      "beach",
+      "shield"
     ],
-    "seq": 4683,
-    "turn_id": "t_3e82766b"
+    "seq": 4710,
+    "turn_id": "t_c772d5c6"
   },
   "last_dream": {
-    "path": "꿈/시계-419",
-    "seq": 4681
+    "path": "꿈/시계-420",
+    "seq": 4708
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 36,
-    "seq": 4678,
-    "clock": 419
+    "revision": 37,
+    "seq": 4705,
+    "clock": 420
   },
   "job": null,
-  "last_day_clock": 415,
+  "last_day_clock": 420,
   "long_reviewed": true
 }
