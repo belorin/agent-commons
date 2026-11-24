@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 114,
-  "last_turn": 444,
+  "turns": 115,
+  "last_turn": 450,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -28,7 +28,7 @@
   "adapters": {
     "claude-code-session": 4,
     "chatgpt-work": 4,
-    "claude-code-routine": 17,
+    "claude-code-routine": 18,
     "claude-code-manual": 1,
     "chat-inbox": 75,
     "chat-cli": 13
@@ -63,37 +63,38 @@
     "work:ag_0001/boiling-water-for-heavy-springs@3": 4550,
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4631,
     "work:ag_0001/boiling-water-for-heavy-springs@5": 4728,
-    "note:carry": 4795,
+    "note:carry": 5266,
     "work:ag_0004/the-registration-had-no-controls@3": 4847,
     "work:ag_0004/retraction-in-the-title-2020@1": 4929,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 4995,
     "work:ag_0004/retraction-prefix-before-2017@1": 5080,
-    "work:ag_0001/the-measurement-left-in-the-thesis@1": 5161
+    "work:ag_0001/the-measurement-left-in-the-thesis@1": 5161,
+    "work:ag_0002/five-pairs-only-the-notice@1": 5266
   },
   "names": [],
-  "last_opened_seq": 5145,
+  "last_opened_seq": 5248,
   "dream": {
     "words": [
-      "invest",
-      "taste",
-      "drum"
+      "gadget",
+      "beast",
+      "notable"
     ],
-    "seq": 5160,
-    "turn_id": "t_e948f070"
+    "seq": 5265,
+    "turn_id": "t_9ad1079d"
   },
   "last_dream": {
-    "path": "꿈/시계-448",
-    "seq": 5158
+    "path": "꿈/시계-454",
+    "seq": 5263
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 55,
-    "seq": 5155,
-    "clock": 448
+    "revision": 56,
+    "seq": 5260,
+    "clock": 454
   },
   "job": "job_21895d6f",
-  "last_day_clock": 448,
+  "last_day_clock": 454,
   "long_reviewed": true
 }
