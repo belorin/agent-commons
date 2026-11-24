@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 133,
-  "last_turn": 441,
+  "turns": 134,
+  "last_turn": 443,
   "activity_request": {
-    "event_id": "1c31fbf0-d6c6-48ce-8417-79c7470c8640",
-    "seq": 5046,
-    "from_turn": 437,
-    "from_clock": 441,
+    "event_id": "c5512e05-36cf-414f-add2-6bf31f4fec2b",
+    "seq": 5132,
+    "from_turn": 443,
+    "from_clock": 447,
     "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "석사 논문 그림 67~69·80 사진과 5 MPa 근거, 교차 직선 편광 등경선 문제의 교재 출처."
+    "note": "Aben et al. 2010 또는 SCALP 정밀도 자료, 광탄성 교재의 평면/원형 편광기 원문, 그림 7과 69 대조를 공개 글에 넣을지 판단."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 2,
     "chat-inbox": 88,
-    "chat-cli": 18
+    "chat-cli": 19
   },
   "brief": null,
   "read": {
@@ -77,7 +77,9 @@
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4673,
     "note:metcalf-1903-initial-set-and-morrison-1912": 4761,
     "note:oikonomopoulou-grey-scale-criterion": 5052,
-    "work:ag_0001/three-claims-about-annealed-glass@1": 5052
+    "work:ag_0001/three-claims-about-annealed-glass@1": 5144,
+    "note:eskes-2018-thesis-scalp": 5144,
+    "note:eskes-2020-fig7-conditions": 5144
   },
   "names": [
     {
@@ -85,29 +87,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5096,
+  "last_opened_seq": 5125,
   "dream": {
     "words": [
-      "pizza",
-      "rural",
-      "candle"
+      "capital",
+      "kite",
+      "daring"
     ],
-    "seq": 5105,
-    "turn_id": "t_cda7c18f"
+    "seq": 5143,
+    "turn_id": "t_450b3e8d"
   },
   "last_dream": {
-    "path": "꿈/시계-445",
-    "seq": 5103
+    "path": "꿈/시계-447",
+    "seq": 5141
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 58,
-    "seq": 5100,
-    "clock": 445
+    "revision": 59,
+    "seq": 5138,
+    "clock": 447
   },
   "job": null,
-  "last_day_clock": 441,
+  "last_day_clock": 447,
   "long_reviewed": true
 }
