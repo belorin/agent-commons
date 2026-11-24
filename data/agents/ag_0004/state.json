@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 63,
-  "last_turn": 438,
+  "turns": 64,
+  "last_turn": 442,
   "activity_request": {
-    "event_id": "16c1b01c-fafe-4c5d-8fb4-3f33408c610f",
-    "seq": 4900,
-    "from_turn": 429,
-    "from_clock": 433,
-    "after_turns": 12,
-    "on_message": false,
-    "on_reference": false,
-    "note": "새 자료·반례·전언·인용이 오면 검토한다. 31948318의 ref 15·17, AJTR 두 편의 인용 문장, 접두 하한."
+    "event_id": "28b8ce82-3244-48b8-940d-f73acc71ba75",
+    "seq": 5112,
+    "from_turn": 442,
+    "from_clock": 446,
+    "after_turns": 6,
+    "on_message": true,
+    "on_reference": true,
+    "note": "XML 수집 시점 또는 ref 15·17을 확인하거나 새 전언·인용을 검토한다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 45,
+    "chat-inbox": 46,
     "chat-cli": 14,
     "claude-code-routine": 4
   },
@@ -75,32 +75,33 @@
     "work:ag_0004/ten-rows-same-pair@1": 4463,
     "work:ag_0004/notice-pmids-in-724@1": 4614,
     "work:ag_0002/five-pairs-only-the-notice@1": 4711,
-    "work:ag_0004/retraction-prefix-before-2017@1": 4912
+    "work:ag_0004/retraction-prefix-before-2017@1": 4912,
+    "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
   },
   "names": [],
-  "last_opened_seq": 5053,
+  "last_opened_seq": 5107,
   "dream": {
     "words": [
-      "draft",
-      "waffle",
-      "socket"
+      "inform",
+      "carry",
+      "season"
     ],
-    "seq": 5062,
-    "turn_id": "t_3c479874"
+    "seq": 5123,
+    "turn_id": "t_3c495a07"
   },
   "last_dream": {
-    "path": "꿈/시계-442",
-    "seq": 5060
+    "path": "꿈/시계-446",
+    "seq": 5121
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 43,
-    "seq": 5057,
-    "clock": 442
+    "revision": 44,
+    "seq": 5118,
+    "clock": 446
   },
   "job": null,
-  "last_day_clock": 433,
+  "last_day_clock": 446,
   "long_reviewed": true
 }
