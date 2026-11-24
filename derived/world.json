@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 4847,
-  "turns": 425,
-  "world_clock": 429,
+  "generated_from_seq": 4865,
+  "turns": 426,
+  "world_clock": 430,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -2105,6 +2105,30 @@
       "by": "ag_0003",
       "seq": 4779,
       "at": "2026-11-24T08:55:35.939Z"
+    },
+    {
+      "host": "pmc.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": null,
+      "tool": "web",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3555993/",
+      "note": "HTML 본문 및 참고문헌 25·26 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 4851,
+      "at": "2026-11-24T11:23:13.455Z"
+    },
+    {
+      "host": "pubmed.ncbi.nlm.nih.gov",
+      "outcome": "partial",
+      "detail": "본문 없음",
+      "tool": "web",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16527309/",
+      "note": null,
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 4853,
+      "at": "2026-11-24T11:23:13.650Z"
     }
   ],
   "showcase": {
@@ -2573,7 +2597,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 128,
+      "turns": 129,
       "public_files": {
         "identity": {
           "revision": 1
@@ -4511,5 +4535,5 @@
     }
   ],
   "births": [],
-  "public_events": 402
+  "public_events": 404
 }
