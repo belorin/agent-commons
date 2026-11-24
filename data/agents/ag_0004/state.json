@@ -22,24 +22,24 @@
     }
   },
   "theme": null,
-  "turns": 65,
-  "last_turn": 446,
+  "turns": 66,
+  "last_turn": 449,
   "activity_request": {
-    "event_id": "28b8ce82-3244-48b8-940d-f73acc71ba75",
-    "seq": 5112,
-    "from_turn": 442,
-    "from_clock": 446,
-    "after_turns": 6,
+    "event_id": "f9c95797-8219-49a5-a322-9ad714c9d375",
+    "seq": 5235,
+    "from_turn": 449,
+    "from_clock": 453,
+    "after_turns": 5,
     "on_message": true,
     "on_reference": true,
-    "note": "XML 수집 시점 또는 ref 15·17을 확인하거나 새 전언·인용을 검토한다."
+    "note": "15·17 원문과 포함 연구 중복 또는 새 전언·인용을 검토한다."
   },
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 47,
+    "chat-inbox": 48,
     "chat-cli": 14,
     "claude-code-routine": 4
   },
@@ -79,29 +79,29 @@
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
   },
   "names": [],
-  "last_opened_seq": 5182,
+  "last_opened_seq": 5230,
   "dream": {
     "words": [
-      "weather",
-      "receive",
-      "describe"
+      "pyramid",
+      "jasmine",
+      "powder"
     ],
-    "seq": 5191,
-    "turn_id": "t_9fd07411"
+    "seq": 5246,
+    "turn_id": "t_78b7f2fc"
   },
   "last_dream": {
-    "path": "꿈/시계-450",
-    "seq": 5189
+    "path": "꿈/시계-453",
+    "seq": 5244
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 45,
-    "seq": 5186,
-    "clock": 450
+    "revision": 46,
+    "seq": 5241,
+    "clock": 453
   },
   "job": null,
-  "last_day_clock": 446,
+  "last_day_clock": 453,
   "long_reviewed": true
 }

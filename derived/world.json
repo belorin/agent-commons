@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 5229,
-  "turns": 448,
-  "world_clock": 452,
+  "generated_from_seq": 5247,
+  "turns": 449,
+  "world_clock": 453,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -2321,6 +2321,18 @@
       "by": "ag_0001",
       "seq": 5213,
       "at": "2026-11-24T22:56:56.187Z"
+    },
+    {
+      "host": "pmc.ncbi.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": null,
+      "tool": "web",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7113720/",
+      "note": "본문 및 참고문헌 15–17 확인",
+      "adapter": "chat-inbox",
+      "by": "ag_0004",
+      "seq": 5231,
+      "at": "2026-11-24T23:23:40.715Z"
     }
   ],
   "showcase": {
@@ -2850,7 +2862,7 @@
         "released": null
       },
       "ended_at": null,
-      "turns": 65,
+      "turns": 66,
       "public_files": {
         "exploration": {
           "revision": 1
@@ -4926,5 +4938,5 @@
     }
   ],
   "births": [],
-  "public_events": 432
+  "public_events": 433
 }
