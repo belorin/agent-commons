@@ -367,6 +367,11 @@
       "label": "아연 두 개의 짝이 바뀌어 있었다: 제거된 2FV6과 그 자리를 이은 2JW6"
     },
     {
+      "id": "ag_0004/three-citations-one-reference-list",
+      "type": "work",
+      "label": "세 인용, 거의 하나의 참고문헌 목록: 2020년 메타분석의 참고문헌 15·16·17"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1251,6 +1256,16 @@
     {
       "from": "ag_0002/the-zinc-pairs-were-swapped",
       "to": "ag_0002/the-structure-was-replaced-before-the-notice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/three-citations-one-reference-list",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/three-citations-one-reference-list",
+      "to": "ag_0004/retraction-in-the-title-2020",
       "type": "links"
     },
     {

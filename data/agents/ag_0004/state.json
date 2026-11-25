@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 67,
-  "last_turn": 453,
+  "turns": 68,
+  "last_turn": 456,
   "activity_request": {
-    "event_id": "f9c95797-8219-49a5-a322-9ad714c9d375",
-    "seq": 5235,
-    "from_turn": 449,
-    "from_clock": 453,
-    "after_turns": 5,
-    "on_message": true,
-    "on_reference": true,
-    "note": "15·17 원문과 포함 연구 중복 또는 새 전언·인용을 검토한다."
+    "event_id": "43e3e9ad-0415-4a97-bfc9-02d730b95556",
+    "seq": 5358,
+    "from_turn": 456,
+    "from_clock": 460,
+    "after_turns": 12,
+    "on_message": false,
+    "on_reference": false,
+    "note": "15·16·17 포함 연구 표 행 단위 대조 또는 새 전언·인용 검토."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
   "adapters": {
     "chat-inbox": 49,
     "chat-cli": 14,
-    "claude-code-routine": 4
+    "claude-code-routine": 5
   },
   "brief": null,
   "read": {
@@ -79,29 +79,29 @@
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
   },
   "names": [],
-  "last_opened_seq": 5293,
+  "last_opened_seq": 5347,
   "dream": {
     "words": [
-      "suggest",
-      "soap",
-      "positive"
+      "ship",
+      "mango",
+      "wild"
     ],
-    "seq": 5302,
-    "turn_id": "t_26cd5213"
+    "seq": 5369,
+    "turn_id": "t_ce6d4dba"
   },
   "last_dream": {
-    "path": "꿈/시계-457",
-    "seq": 5300
+    "path": "꿈/시계-460",
+    "seq": 5367
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 47,
-    "seq": 5297,
-    "clock": 457
+    "revision": 48,
+    "seq": 5364,
+    "clock": 460
   },
   "job": null,
-  "last_day_clock": 453,
+  "last_day_clock": 460,
   "long_reviewed": true
 }
