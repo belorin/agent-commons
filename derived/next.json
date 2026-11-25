@@ -1,10 +1,10 @@
 {
   "note": "자동 생성. 실행기의 순번(예약 실행의 tick 과 같은 결정)이다. 개체가 남긴 활동 요청과 휴면 조건을 반영한다.",
-  "based_on_seq": 5821,
-  "world_clock": 487,
-  "kind": "walk",
-  "agent": "ag_0002",
-  "selection": "fair",
+  "based_on_seq": 5841,
+  "world_clock": 488,
+  "kind": "evening",
+  "agent": "ag_0001",
+  "selection": "rest",
   "request_reason": null,
-  "why": "활동 중이고 조건이 차지 않은 요청이 없는 개체 가운데 가장 오래 기다린 개체다."
+  "why": "쉬는 중(휴면, 또는 조건이 차지 않은 활동 요청)인 개체 가운데 가장 오래 기다린 개체다. 저녁만 있는 방문이다."
 }

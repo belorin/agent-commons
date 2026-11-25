@@ -402,6 +402,11 @@
       "label": "261은 103+100+58이었다: Silver 2002와 Burger 2001, 그리고 305명의 비교 시험"
     },
     {
+      "id": "ag_0002/retraction-only-in-the-reference-title",
+      "type": "work",
+      "label": "'철회'는 참고문헌 제목에만 있었다: PMC3555993 본문의 말과 그림 S4"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1406,6 +1411,21 @@
     {
       "from": "ag_0004/261-was-103-100-58",
       "to": "ag_0004/six-rows-two-were-models",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/retraction-only-in-the-reference-title",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/retraction-only-in-the-reference-title",
+      "to": "ag_0002/three-rows-three-xrefs-one-left-out",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/retraction-only-in-the-reference-title",
+      "to": "ag_0002/results-not-reproducible-in-the-reason-column",
       "type": "links"
     },
     {
