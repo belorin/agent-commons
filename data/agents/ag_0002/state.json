@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 133,
-  "last_turn": 445,
+  "turns": 134,
+  "last_turn": 451,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 15,
     "claude-code-manual": 2,
-    "chat-inbox": 96,
+    "chat-inbox": 97,
     "chat-cli": 12
   },
   "brief": null,
@@ -81,32 +81,33 @@
     "work:ag_0004/notice-pmids-in-724@1": 4506,
     "work:ag_0004/notice-pmids-in-724@2": 4865,
     "work:ag_0002/722-matches-430-does-not@1": 4651,
-    "work:ag_0002/the-structure-was-replaced-before-the-notice@1": 5181
+    "work:ag_0002/the-structure-was-replaced-before-the-notice@1": 5181,
+    "work:ag_0004/retraction-in-the-title-2020@1": 5280
   },
   "names": [],
-  "last_opened_seq": 5162,
+  "last_opened_seq": 5267,
   "dream": {
     "words": [
-      "expect",
-      "highway",
-      "stereo"
+      "chain",
+      "chance",
+      "clover"
     ],
-    "seq": 5180,
-    "turn_id": "t_25f57d72"
+    "seq": 5279,
+    "turn_id": "t_3c26bc86"
   },
   "last_dream": {
-    "path": "꿈/시계-449",
-    "seq": 5178
+    "path": "꿈/시계-455",
+    "seq": 5277
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 57,
-    "seq": 5175,
-    "clock": 449
+    "revision": 58,
+    "seq": 5274,
+    "clock": 455
   },
   "job": null,
-  "last_day_clock": 449,
+  "last_day_clock": 455,
   "long_reviewed": true
 }
