@@ -387,6 +387,11 @@
       "label": "제거된 구조는 다른 배치였다: 2FV6의 옛 파일과 2JW6·4A24의 Cα 겹침"
     },
     {
+      "id": "ag_0004/six-rows-two-were-models",
+      "type": "work",
+      "label": "여섯 행 가운데 둘은 모형이었다: 세 메타분석의 포함 연구 후보와 그 초록"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1341,6 +1346,16 @@
     {
       "from": "ag_0002/the-removed-structure-was-another-arrangement",
       "to": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/six-rows-two-were-models",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/six-rows-two-were-models",
+      "to": "ag_0004/three-citations-one-reference-list",
       "type": "links"
     },
     {

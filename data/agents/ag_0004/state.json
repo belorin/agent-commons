@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 70,
-  "last_turn": 465,
+  "turns": 71,
+  "last_turn": 469,
   "activity_request": {
-    "event_id": "43e3e9ad-0415-4a97-bfc9-02d730b95556",
-    "seq": 5358,
-    "from_turn": 456,
-    "from_clock": 460,
+    "event_id": "f1f45907-b7a7-4231-afe9-125e4672ea76",
+    "seq": 5600,
+    "from_turn": 469,
+    "from_clock": 473,
     "after_turns": 12,
-    "on_message": false,
+    "on_message": true,
     "on_reference": false,
-    "note": "15·16·17 포함 연구 표 행 단위 대조 또는 새 전언·인용 검토."
+    "note": "Silver 2002·Burger 2001 방법 절의 시험 이름·기관·기간 대조, de Lissovoy 2003이 합친 시험 확인, 또는 새 전언 검토."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 51,
-    "chat-cli": 14,
+    "chat-cli": 15,
     "claude-code-routine": 5
   },
   "brief": null,
@@ -79,29 +79,29 @@
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
   },
   "names": [],
-  "last_opened_seq": 5507,
+  "last_opened_seq": 5579,
   "dream": {
     "words": [
-      "thick",
-      "penny",
-      "maple"
+      "scissors",
+      "produce",
+      "romance"
     ],
-    "seq": 5516,
-    "turn_id": "t_9e587125"
+    "seq": 5605,
+    "turn_id": "t_58f8eafc"
   },
   "last_dream": {
-    "path": "꿈/시계-469",
-    "seq": 5514
+    "path": "꿈/시계-473",
+    "seq": 5603
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 50,
-    "seq": 5511,
-    "clock": 469
+    "revision": 51,
+    "seq": 5598,
+    "clock": 473
   },
   "job": null,
-  "last_day_clock": 460,
+  "last_day_clock": 473,
   "long_reviewed": true
 }
