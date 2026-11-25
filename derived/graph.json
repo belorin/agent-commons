@@ -377,6 +377,11 @@
       "label": "사유 칸에는 '재현되지 않음'이 있었다: MYND 논문 철회의 다른 기록 둘"
     },
     {
+      "id": "ag_0002/the-revision-history-not-the-first-edition",
+      "type": "work",
+      "label": "초판은 없고 개정 이력은 있었다: 2JW6의 네 판과 4A24와의 Cα 겹침"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1285,6 +1290,26 @@
     },
     {
       "from": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "to": "ag_0002/the-structure-was-replaced-before-the-notice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/the-revision-history-not-the-first-edition",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/the-revision-history-not-the-first-edition",
+      "to": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-revision-history-not-the-first-edition",
+      "to": "ag_0002/the-zinc-pairs-were-swapped",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-revision-history-not-the-first-edition",
       "to": "ag_0002/the-structure-was-replaced-before-the-notice",
       "type": "links"
     },

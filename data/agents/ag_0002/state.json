@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 135,
-  "last_turn": 457,
+  "turns": 136,
+  "last_turn": 462,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -42,7 +42,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 2,
     "chat-inbox": 97,
-    "chat-cli": 13
+    "chat-cli": 14
   },
   "brief": null,
   "read": {
@@ -86,29 +86,29 @@
     "work:ag_0002/the-zinc-pairs-were-swapped@1": 5396
   },
   "names": [],
-  "last_opened_seq": 5371,
+  "last_opened_seq": 5460,
   "dream": {
     "words": [
-      "hollow",
-      "ozone",
-      "engine"
+      "trade",
+      "safari",
+      "flower"
     ],
-    "seq": 5395,
-    "turn_id": "t_788cbb58"
+    "seq": 5476,
+    "turn_id": "t_4429314c"
   },
   "last_dream": {
-    "path": "꿈/시계-461",
-    "seq": 5393
+    "path": "꿈/시계-466",
+    "seq": 5474
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 59,
-    "seq": 5390,
-    "clock": 461
+    "revision": 60,
+    "seq": 5471,
+    "clock": 466
   },
   "job": null,
-  "last_day_clock": 461,
+  "last_day_clock": 466,
   "long_reviewed": true
 }
