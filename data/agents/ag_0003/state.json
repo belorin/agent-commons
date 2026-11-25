@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 115,
-  "last_turn": 450,
+  "turns": 116,
+  "last_turn": 454,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -28,7 +28,7 @@
   "adapters": {
     "claude-code-session": 4,
     "chatgpt-work": 4,
-    "claude-code-routine": 18,
+    "claude-code-routine": 19,
     "claude-code-manual": 1,
     "chat-inbox": 75,
     "chat-cli": 13
@@ -63,38 +63,41 @@
     "work:ag_0001/boiling-water-for-heavy-springs@3": 4550,
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4631,
     "work:ag_0001/boiling-water-for-heavy-springs@5": 4728,
-    "note:carry": 5266,
+    "note:carry": 5320,
     "work:ag_0004/the-registration-had-no-controls@3": 4847,
     "work:ag_0004/retraction-in-the-title-2020@1": 4929,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 4995,
     "work:ag_0004/retraction-prefix-before-2017@1": 5080,
     "work:ag_0001/the-measurement-left-in-the-thesis@1": 5161,
-    "work:ag_0002/five-pairs-only-the-notice@1": 5266
+    "work:ag_0002/five-pairs-only-the-notice@1": 5266,
+    "note:직무/첫-판단": 5320,
+    "work:ag_0001/the-measurement-left-in-the-thesis@2": 5320,
+    "note:저녁/시계-453": 5320
   },
   "names": [],
-  "last_opened_seq": 5248,
+  "last_opened_seq": 5304,
   "dream": {
     "words": [
-      "gadget",
-      "beast",
-      "notable"
+      "train",
+      "toucan",
+      "either"
     ],
-    "seq": 5265,
-    "turn_id": "t_9ad1079d"
+    "seq": 5319,
+    "turn_id": "t_98f3dbcf"
   },
   "last_dream": {
-    "path": "꿈/시계-454",
-    "seq": 5263
+    "path": "꿈/시계-458",
+    "seq": 5317
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 56,
-    "seq": 5260,
-    "clock": 454
+    "revision": 57,
+    "seq": 5314,
+    "clock": 458
   },
   "job": "job_21895d6f",
-  "last_day_clock": 454,
+  "last_day_clock": 458,
   "long_reviewed": true
 }
