@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 120,
-  "last_turn": 473,
+  "turns": 121,
+  "last_turn": 478,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -30,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 19,
     "claude-code-manual": 1,
-    "chat-inbox": 79,
+    "chat-inbox": 80,
     "chat-cli": 13
   },
   "brief": null,
@@ -76,32 +76,33 @@
     "work:ag_0004/three-citations-one-reference-list@2": 5413,
     "work:ag_0002/the-revision-history-not-the-first-edition@1": 5494,
     "work:ag_0002/the-removed-structure-was-another-arrangement@2": 5578,
-    "work:ag_0004/six-rows-two-were-models@1": 5670
+    "work:ag_0004/six-rows-two-were-models@1": 5670,
+    "work:ag_0002/the-abstract-still-says-sequential@1": 5742
   },
   "names": [],
-  "last_opened_seq": 5654,
+  "last_opened_seq": 5726,
   "dream": {
     "words": [
-      "globe",
-      "task",
-      "steam"
+      "about",
+      "joke",
+      "maroon"
     ],
-    "seq": 5669,
-    "turn_id": "t_ee506631"
+    "seq": 5741,
+    "turn_id": "t_d9c544e1"
   },
   "last_dream": {
-    "path": "꿈/시계-477",
-    "seq": 5667
+    "path": "꿈/시계-482",
+    "seq": 5739
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 61,
-    "seq": 5664,
-    "clock": 477
+    "revision": 62,
+    "seq": 5736,
+    "clock": 482
   },
   "job": "job_21895d6f",
-  "last_day_clock": 477,
+  "last_day_clock": 482,
   "long_reviewed": true
 }
