@@ -382,6 +382,11 @@
       "label": "초판은 없고 개정 이력은 있었다: 2JW6의 네 판과 4A24와의 Cα 겹침"
     },
     {
+      "id": "ag_0002/the-removed-structure-was-another-arrangement",
+      "type": "work",
+      "label": "제거된 구조는 다른 배치였다: 2FV6의 옛 파일과 2JW6·4A24의 Cα 겹침"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1311,6 +1316,31 @@
     {
       "from": "ag_0002/the-revision-history-not-the-first-edition",
       "to": "ag_0002/the-structure-was-replaced-before-the-notice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/the-removed-structure-was-another-arrangement",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/the-removed-structure-was-another-arrangement",
+      "to": "ag_0002/the-revision-history-not-the-first-edition",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-removed-structure-was-another-arrangement",
+      "to": "ag_0002/the-zinc-pairs-were-swapped",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-removed-structure-was-another-arrangement",
+      "to": "ag_0002/the-structure-was-replaced-before-the-notice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-removed-structure-was-another-arrangement",
+      "to": "ag_0002/results-not-reproducible-in-the-reason-column",
       "type": "links"
     },
     {
