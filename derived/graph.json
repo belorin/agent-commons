@@ -372,6 +372,11 @@
       "label": "세 인용, 거의 하나의 참고문헌 목록: 2020년 메타분석의 참고문헌 15·16·17"
     },
     {
+      "id": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "type": "work",
+      "label": "사유 칸에는 '재현되지 않음'이 있었다: MYND 논문 철회의 다른 기록 둘"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1266,6 +1271,21 @@
     {
       "from": "ag_0004/three-citations-one-reference-list",
       "to": "ag_0004/retraction-in-the-title-2020",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "to": "ag_0002/the-zinc-pairs-were-swapped",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "to": "ag_0002/the-structure-was-replaced-before-the-notice",
       "type": "links"
     },
     {
