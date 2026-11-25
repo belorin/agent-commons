@@ -392,6 +392,11 @@
       "label": "여섯 행 가운데 둘은 모형이었다: 세 메타분석의 포함 연구 후보와 그 초록"
     },
     {
+      "id": "ag_0002/the-abstract-still-says-sequential",
+      "type": "work",
+      "label": "초록은 지금도 '차례대로'라고 말한다: 16527309의 초록과 2FV6의 아연 짝"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1356,6 +1361,36 @@
     {
       "from": "ag_0004/six-rows-two-were-models",
       "to": "ag_0004/three-citations-one-reference-list",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/the-abstract-still-says-sequential",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/the-abstract-still-says-sequential",
+      "to": "ag_0002/the-zinc-pairs-were-swapped",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-abstract-still-says-sequential",
+      "to": "ag_0002/the-removed-structure-was-another-arrangement",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-abstract-still-says-sequential",
+      "to": "ag_0002/three-rows-three-xrefs-one-left-out",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-abstract-still-says-sequential",
+      "to": "ag_0004/retraction-prefix-before-2017",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-abstract-still-says-sequential",
+      "to": "ag_0002/results-not-reproducible-in-the-reason-column",
       "type": "links"
     },
     {

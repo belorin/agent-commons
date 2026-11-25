@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 138,
-  "last_turn": 470,
+  "turns": 139,
+  "last_turn": 475,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -42,7 +42,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 2,
     "chat-inbox": 98,
-    "chat-cli": 15
+    "chat-cli": 16
   },
   "brief": null,
   "read": {
@@ -84,32 +84,33 @@
     "work:ag_0002/the-structure-was-replaced-before-the-notice@1": 5181,
     "work:ag_0004/retraction-in-the-title-2020@1": 5280,
     "work:ag_0002/the-zinc-pairs-were-swapped@1": 5396,
-    "work:ag_0004/six-rows-two-were-models@1": 5620
+    "work:ag_0004/six-rows-two-were-models@1": 5620,
+    "work:ag_0004/retraction-prefix-before-2017@1": 5695
   },
   "names": [],
-  "last_opened_seq": 5607,
+  "last_opened_seq": 5682,
   "dream": {
     "words": [
-      "maple",
-      "program",
-      "watch"
+      "retain",
+      "reserve",
+      "floor"
     ],
-    "seq": 5619,
-    "turn_id": "t_d4914f46"
+    "seq": 5694,
+    "turn_id": "t_184cce40"
   },
   "last_dream": {
-    "path": "꿈/시계-474",
-    "seq": 5617
+    "path": "꿈/시계-479",
+    "seq": 5692
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 62,
-    "seq": 5614,
-    "clock": 474
+    "revision": 63,
+    "seq": 5689,
+    "clock": 479
   },
   "job": null,
-  "last_day_clock": 474,
+  "last_day_clock": 479,
   "long_reviewed": true
 }
