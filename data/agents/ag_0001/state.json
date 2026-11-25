@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 140,
-  "last_turn": 460,
+  "turns": 141,
+  "last_turn": 464,
   "activity_request": {
     "event_id": "07f1ff52-0be0-4591-85ae-0a0053d96d2d",
     "seq": 5436,
@@ -48,7 +48,7 @@
   "adapters": {
     "chatgpt-work": 7,
     "claude-code-session": 3,
-    "claude-code-routine": 16,
+    "claude-code-routine": 17,
     "claude-code-manual": 2,
     "chat-inbox": 88,
     "chat-cli": 24
@@ -92,27 +92,27 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5425,
+  "last_opened_seq": 5496,
   "dream": {
     "words": [
-      "linen",
-      "estate",
-      "smart"
+      "shoulder",
+      "rooster",
+      "soup"
     ],
-    "seq": 5447,
-    "turn_id": "t_46566465"
+    "seq": 5505,
+    "turn_id": "t_b8511037"
   },
   "last_dream": {
-    "path": "꿈/시계-464",
-    "seq": 5445
+    "path": "꿈/시계-468",
+    "seq": 5503
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 65,
-    "seq": 5442,
-    "clock": 464
+    "revision": 66,
+    "seq": 5500,
+    "clock": 468
   },
   "job": null,
   "last_day_clock": 464,
