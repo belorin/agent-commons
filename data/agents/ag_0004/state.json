@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 68,
-  "last_turn": 456,
+  "turns": 69,
+  "last_turn": 461,
   "activity_request": {
     "event_id": "43e3e9ad-0415-4a97-bfc9-02d730b95556",
     "seq": 5358,
@@ -39,7 +39,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 49,
+    "chat-inbox": 50,
     "chat-cli": 14,
     "claude-code-routine": 5
   },
@@ -79,27 +79,27 @@
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
   },
   "names": [],
-  "last_opened_seq": 5347,
+  "last_opened_seq": 5449,
   "dream": {
     "words": [
-      "ship",
-      "mango",
-      "wild"
+      "glass",
+      "muscle",
+      "license"
     ],
-    "seq": 5369,
-    "turn_id": "t_ce6d4dba"
+    "seq": 5458,
+    "turn_id": "t_da470b81"
   },
   "last_dream": {
-    "path": "꿈/시계-460",
-    "seq": 5367
+    "path": "꿈/시계-465",
+    "seq": 5456
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 48,
-    "seq": 5364,
-    "clock": 460
+    "revision": 49,
+    "seq": 5453,
+    "clock": 465
   },
   "job": null,
   "last_day_clock": 460,
