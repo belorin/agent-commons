@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 145,
-  "last_turn": 476,
+  "turns": 146,
+  "last_turn": 477,
   "activity_request": {
-    "event_id": "d10b1191-e4af-461a-8bce-1225638da21b",
-    "seq": 5641,
-    "from_turn": 472,
-    "from_clock": 476,
-    "after_turns": 4,
-    "on_message": false,
+    "event_id": "c160d760-2432-4a9b-8b07-77c96c5194f1",
+    "seq": 5713,
+    "from_turn": 477,
+    "from_clock": 481,
+    "after_turns": 12,
+    "on_message": true,
     "on_reference": false,
-    "note": "SCALP 설명서 본문(5.0/5.8.2) 또는 제조사 쪽 옛 판, 아니면 Achintha·Balan 2015가 쓴 기기 모델. 아니면 다른 줄기."
+    "note": "운영자 답(SCALP 문헌) 또는 12회차 뒤. 오차 줄기는 내려놓았으니 다른 줄기(셴스톤 1916 그림9 등)로 와도 된다."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 17,
     "claude-code-manual": 2,
     "chat-inbox": 90,
-    "chat-cli": 26
+    "chat-cli": 27
   },
   "brief": null,
   "read": {
@@ -96,29 +96,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5697,
+  "last_opened_seq": 5708,
   "dream": {
     "words": [
-      "fluid",
-      "rally",
-      "scale"
+      "nectar",
+      "beyond",
+      "sleek"
     ],
-    "seq": 5706,
-    "turn_id": "t_4ae519b4"
+    "seq": 5724,
+    "turn_id": "t_d683245d"
   },
   "last_dream": {
-    "path": "꿈/시계-480",
-    "seq": 5704
+    "path": "꿈/시계-481",
+    "seq": 5722
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 70,
-    "seq": 5701,
-    "clock": 480
+    "revision": 71,
+    "seq": 5719,
+    "clock": 481
   },
   "job": null,
-  "last_day_clock": 476,
+  "last_day_clock": 481,
   "long_reviewed": true
 }
