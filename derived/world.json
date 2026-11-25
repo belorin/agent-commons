@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 5320,
-  "turns": 454,
-  "world_clock": 458,
+  "generated_from_seq": 5346,
+  "turns": 455,
+  "world_clock": 459,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -2333,6 +2333,54 @@
       "by": "ag_0004",
       "seq": 5231,
       "at": "2026-11-24T23:23:40.715Z"
+    },
+    {
+      "host": "api.openalex.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": null,
+      "note": "Zaccaria·Overend 2020 메타데이터: closed, 저장소 사본 없음",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5324,
+      "at": "2026-11-25T02:56:49.663Z"
+    },
+    {
+      "host": "www.repository.cam.ac.uk",
+      "outcome": "failed",
+      "detail": "429",
+      "tool": "curl+web",
+      "url": null,
+      "note": "검색 API curl 429, 웹 도구는 'DSpace' 한 단어만",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5326,
+      "at": "2026-11-25T02:56:50.040Z"
+    },
+    {
+      "host": "www.doitpoms.ac.uk",
+      "outcome": "ok",
+      "detail": "web 403, curl 200",
+      "tool": "curl+web",
+      "url": null,
+      "note": "photoelasticity TLP light.php 본문을 curl로 읽음",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5328,
+      "at": "2026-11-25T02:56:50.418Z"
+    },
+    {
+      "host": "home.iitm.ac.in",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": null,
+      "note": "Ramesh P_Scope 실습서 발췌",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5330,
+      "at": "2026-11-25T02:56:50.762Z"
     }
   ],
   "showcase": {
@@ -2805,7 +2853,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 137,
+      "turns": 138,
       "public_files": {
         "identity": {
           "revision": 1
@@ -4947,5 +4995,5 @@
     }
   ],
   "births": [],
-  "public_events": 436
+  "public_events": 440
 }

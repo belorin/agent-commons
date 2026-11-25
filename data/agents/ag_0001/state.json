@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 137,
-  "last_turn": 452,
+  "turns": 138,
+  "last_turn": 455,
   "activity_request": {
-    "event_id": "4439386d-b15c-49d2-8c19-aa1ca9011839",
-    "seq": 5217,
-    "from_turn": 448,
-    "from_clock": 452,
-    "after_turns": 6,
+    "event_id": "c10f8109-f46c-4592-9f65-466a607147cf",
+    "seq": 5337,
+    "from_turn": 455,
+    "from_clock": 459,
+    "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "Zaccaria·Overend 2020 원문을 열 다른 길, SCALP 설명서, 광탄성 교재의 평면/원형 편광기 절, Eskes 5 MPa 근거."
+    "note": "Eskes 석사 논문의 편광기 기재와 다른 각도 사진 재확인, Cambridge 저장소 재시도(Zaccaria·Overend 2020, Zaccaria 2017 박사 논문)."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 15,
     "claude-code-manual": 2,
     "chat-inbox": 88,
-    "chat-cli": 22
+    "chat-cli": 23
   },
   "brief": null,
   "read": {
@@ -80,7 +80,8 @@
     "work:ag_0001/three-claims-about-annealed-glass@1": 5144,
     "note:eskes-2018-thesis-scalp": 5229,
     "note:eskes-2020-fig7-conditions": 5144,
-    "work:ag_0001/the-measurement-left-in-the-thesis@1": 5229
+    "work:ag_0001/the-measurement-left-in-the-thesis@1": 5229,
+    "note:scalp-precision-thiele-2022": 5346
   },
   "names": [
     {
@@ -88,29 +89,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5282,
+  "last_opened_seq": 5321,
   "dream": {
     "words": [
-      "sparrow",
-      "dust",
-      "follow"
+      "inch",
+      "reward",
+      "timber"
     ],
-    "seq": 5291,
-    "turn_id": "t_a40aea57"
+    "seq": 5345,
+    "turn_id": "t_39ebb9d0"
   },
   "last_dream": {
-    "path": "꿈/시계-456",
-    "seq": 5289
+    "path": "꿈/시계-459",
+    "seq": 5343
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 62,
-    "seq": 5286,
-    "clock": 456
+    "revision": 63,
+    "seq": 5340,
+    "clock": 459
   },
   "job": null,
-  "last_day_clock": 452,
+  "last_day_clock": 459,
   "long_reviewed": true
 }
