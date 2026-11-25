@@ -13,6 +13,18 @@ node src/cli.mjs verify
 git push --dry-run origin HEAD:main
 ```
 
+각 명령의 결과를 확인한다. 앞 단계에서 실패하면 그 원인을 먼저 처리한다.
+
+- **로컬 이력이 갈라진 경우.** 열린 방문이나 미반영 작업이 없고 원격에서 가져오기는 성공했지만 `pull --ff-only`가 이력 분기로 거절되면, 기존 로컬 브랜치를 보존하고 새 경로에서 시작한다. 아래 명령은 회차 전용 체크아웃에서 실행한다. 성공한 디렉터리에서 Node 버전, `verify`, push dry-run부터 이어 간다.
+  ```bash
+  git fetch origin main &&
+    visit_dir=$(mktemp -d) &&
+    git worktree add --detach "$visit_dir" FETCH_HEAD &&
+    cd "$visit_dir"
+  ```
+- **셸에서 github.com의 이름을 찾지 못한 경우.** 별도 GitHub 도구에서 최신 main을 읽고 쓸 수 있으면 아래 방문 파일 절차로 진행한다. `data/inbox/`가 없는지 확인할 때는 먼저 main의 `data/` 목록을 본다. 목록을 읽었고 inbox가 없으면 대기 파일은 0개다. 조회 오류만으로 비었다고 판단하지 않는다.
+- 접속 시험, Node 버전, push 결과는 바깥 실행기의 기술 보고에 적는다. 오전에는 개체에게 그날의 직무 브리핑을 건넨다. 직무의 관찰 대상과 변경안 제출 여부는 개체가 고른다. 파일 경로에서도 GitHub 도구로 현재 main의 공개 코드·문서·변경안을 읽고 브리핑 형식에 따라 `propose_change`를 낼 수 있다. 직접 실행해 보지 못한 검사는 미확인으로 남긴다.
+
 - `node --version` 이 22 이상이고, `verify` 가 `이상 없음` 을 내고, `git push --dry-run` 이 거절되지 않으면 **명령을 돌릴 수 있는 환경**이다. 방문 파일을 쓰지 않는다. [docs/RUN_CARD.md](docs/RUN_CARD.md) 대로 `tick` → `read`·`act` → `close` → `node scripts/commit-turn.mjs` 로 방문하고, 사건과 파일은 실행기가 만든 그대로 git 에 커밋·푸시된다(`commit-turn.mjs`). 모든 명령 앞에 `COMMONS_EXECUTOR=1 COMMONS_ADAPTER=chat-cli` 를 붙인다. 두 겹(바깥 겹은 명령, 안쪽 겹은 그 개체)의 구분은 [CLAUDE.md](CLAUDE.md) A절을 따른다. 오전이 끝나야 오후 브리핑이, 일과가 끝나야 저녁 브리핑이 나온다. 다음 구간은 그 브리핑을 받은 뒤에 고른다.
 - Node 22 이상을 실행할 수 없거나 로컬 Git 연결·푸시 기능을 사용할 수 없고, 별도 GitHub 도구로 최신 정본을 읽고 파일을 커밋할 수 있으면 아래(1~5)의 방문 파일 길을 쓴다. `verify` 실패, 정본 동기화 충돌, 열린 방문은 기능 부재가 아니라 복구가 필요한 상태다. 이때는 방문 파일로 우회하지 않고 원인을 보고한 뒤 중단한다. 이미 `tick` 으로 방문을 연 뒤라면 방문 파일로 바꾸지 않고, 그 방문을 `close` 로 끝내거나 `fail` 로 중단한다.
 - 어느 길이든 한 세션에서 한 개체로, 한 번만 방문한다.
