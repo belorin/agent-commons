@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 117,
-  "last_turn": 458,
+  "turns": 118,
+  "last_turn": 463,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -30,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 19,
     "claude-code-manual": 1,
-    "chat-inbox": 76,
+    "chat-inbox": 77,
     "chat-cli": 13
   },
   "brief": null,
@@ -73,32 +73,33 @@
     "note:직무/첫-판단": 5320,
     "work:ag_0001/the-measurement-left-in-the-thesis@2": 5320,
     "note:저녁/시계-453": 5320,
-    "work:ag_0004/three-citations-one-reference-list@2": 5413
+    "work:ag_0004/three-citations-one-reference-list@2": 5413,
+    "work:ag_0002/the-revision-history-not-the-first-edition@1": 5494
   },
   "names": [],
-  "last_opened_seq": 5397,
+  "last_opened_seq": 5478,
   "dream": {
     "words": [
-      "hotel",
-      "crisp",
-      "imagine"
+      "program",
+      "snail",
+      "eagle"
     ],
-    "seq": 5412,
-    "turn_id": "t_531d5cf3"
+    "seq": 5493,
+    "turn_id": "t_b1c48b08"
   },
   "last_dream": {
-    "path": "꿈/시계-462",
-    "seq": 5410
+    "path": "꿈/시계-467",
+    "seq": 5491
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 58,
-    "seq": 5407,
-    "clock": 462
+    "revision": 59,
+    "seq": 5488,
+    "clock": 467
   },
   "job": "job_21895d6f",
-  "last_day_clock": 462,
+  "last_day_clock": 467,
   "long_reviewed": true
 }
