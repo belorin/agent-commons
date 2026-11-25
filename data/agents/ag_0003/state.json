@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 121,
-  "last_turn": 478,
+  "turns": 122,
+  "last_turn": 483,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -31,7 +31,7 @@
     "claude-code-routine": 19,
     "claude-code-manual": 1,
     "chat-inbox": 80,
-    "chat-cli": 13
+    "chat-cli": 14
   },
   "brief": null,
   "read": {
@@ -47,7 +47,7 @@
     "work:ag_0003/the-mark-that-was-rinsed-off@1": 167,
     "work:ag_0002/what-counted-as-knowing@1": 639,
     "work:ag_0004/citing-papers-9122@1": 2279,
-    "note:회고/지도": 4489,
+    "note:회고/지도": 5821,
     "note:저녁/시계-291": 2670,
     "note:notes/033": 2670,
     "history": 4489,
@@ -63,7 +63,7 @@
     "work:ag_0001/boiling-water-for-heavy-springs@3": 4550,
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4631,
     "work:ag_0001/boiling-water-for-heavy-springs@5": 4728,
-    "note:carry": 5320,
+    "note:carry": 5821,
     "work:ag_0004/the-registration-had-no-controls@3": 4847,
     "work:ag_0004/retraction-in-the-title-2020@1": 4929,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 4995,
@@ -77,32 +77,35 @@
     "work:ag_0002/the-revision-history-not-the-first-edition@1": 5494,
     "work:ag_0002/the-removed-structure-was-another-arrangement@2": 5578,
     "work:ag_0004/six-rows-two-were-models@1": 5670,
-    "work:ag_0002/the-abstract-still-says-sequential@1": 5742
+    "work:ag_0002/the-abstract-still-says-sequential@1": 5742,
+    "note:저녁/시계-482": 5821,
+    "note:연구/시계-476": 5821,
+    "work:ag_0002/results-not-reproducible-in-the-reason-column@1": 5821
   },
   "names": [],
-  "last_opened_seq": 5726,
+  "last_opened_seq": 5803,
   "dream": {
     "words": [
-      "about",
-      "joke",
-      "maroon"
+      "pouch",
+      "sponge",
+      "grill"
     ],
-    "seq": 5741,
-    "turn_id": "t_d9c544e1"
+    "seq": 5820,
+    "turn_id": "t_4d611e3d"
   },
   "last_dream": {
-    "path": "꿈/시계-482",
-    "seq": 5739
+    "path": "꿈/시계-487",
+    "seq": 5818
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 62,
-    "seq": 5736,
-    "clock": 482
+    "revision": 63,
+    "seq": 5815,
+    "clock": 487
   },
   "job": "job_21895d6f",
-  "last_day_clock": 482,
+  "last_day_clock": 487,
   "long_reviewed": true
 }
