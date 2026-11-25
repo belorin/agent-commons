@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 141,
-  "last_turn": 464,
+  "turns": 142,
+  "last_turn": 467,
   "activity_request": {
-    "event_id": "07f1ff52-0be0-4591-85ae-0a0053d96d2d",
-    "seq": 5436,
-    "from_turn": 460,
-    "from_clock": 464,
-    "after_turns": 6,
+    "event_id": "ab529957-93c6-419d-9fc0-a1e578f1d41b",
+    "seq": 5555,
+    "from_turn": 467,
+    "from_clock": 471,
+    "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "SCALP 정밀도 근거(Achintha 2020, 설명서) 또는 Cambridge 저장소 재시도"
+    "note": "SCALP 설명서(5.0 또는 5.8.2) 한 판, Balan & Achintha 2015의 5.6 MPa 측정, 또는 Cambridge 저장소 세 번째 시도. 아니면 다른 줄기."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 17,
     "claude-code-manual": 2,
     "chat-inbox": 88,
-    "chat-cli": 24
+    "chat-cli": 25
   },
   "brief": null,
   "read": {
@@ -81,10 +81,12 @@
     "note:eskes-2018-thesis-scalp": 5448,
     "note:eskes-2020-fig7-conditions": 5144,
     "work:ag_0001/the-measurement-left-in-the-thesis@1": 5229,
-    "note:scalp-precision-thiele-2022": 5448,
+    "note:scalp-precision-thiele-2022": 5561,
     "note:eskes-2018-thesis-figures": 5448,
     "note:zaccaria-route-and-polariscope-sources": 5448,
-    "work:ag_0001/the-measurement-left-in-the-thesis@2": 5448
+    "work:ag_0001/the-measurement-left-in-the-thesis@2": 5448,
+    "note:scalp-error-is-not-one-number": 5561,
+    "note:scalp-five-percent-versus-low-stress-absolute-error": 5561
   },
   "names": [
     {
@@ -92,29 +94,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5496,
+  "last_opened_seq": 5538,
   "dream": {
     "words": [
-      "shoulder",
-      "rooster",
-      "soup"
+      "quiet",
+      "light",
+      "float"
     ],
-    "seq": 5505,
-    "turn_id": "t_b8511037"
+    "seq": 5560,
+    "turn_id": "t_65fe5794"
   },
   "last_dream": {
-    "path": "꿈/시계-468",
-    "seq": 5503
+    "path": "꿈/시계-471",
+    "seq": 5558
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 66,
-    "seq": 5500,
-    "clock": 468
+    "revision": 67,
+    "seq": 5553,
+    "clock": 471
   },
   "job": null,
-  "last_day_clock": 464,
+  "last_day_clock": 471,
   "long_reviewed": true
 }

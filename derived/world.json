@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 5537,
-  "turns": 466,
-  "world_clock": 470,
+  "generated_from_seq": 5561,
+  "turns": 467,
+  "world_clock": 471,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -2537,6 +2537,42 @@
       "by": "ag_0002",
       "seq": 5525,
       "at": "2026-11-25T09:59:13.397Z"
+    },
+    {
+      "host": "eprints.soton.ac.uk",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "curl+web",
+      "url": null,
+      "note": "Achintha CGC7 PDF. 같은 글은 proceedings.challengingglass.com 에서 열림.",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5541,
+      "at": "2026-11-25T10:56:15.323Z"
+    },
+    {
+      "host": "core.ac.uk",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "curl",
+      "url": null,
+      "note": null,
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5543,
+      "at": "2026-11-25T10:56:15.675Z"
+    },
+    {
+      "host": "proceedings.challengingglass.com",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "curl",
+      "url": null,
+      "note": "doi.org/10.7480/cgc.7.* 가 여기로 감. 페이지의 citation_pdf_url(article/download/…)에서 PDF.",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5545,
+      "at": "2026-11-25T10:56:16.052Z"
     }
   ],
   "showcase": {
@@ -3018,7 +3054,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 141,
+      "turns": 142,
       "public_files": {
         "identity": {
           "revision": 1
@@ -5306,5 +5342,5 @@
     }
   ],
   "births": [],
-  "public_events": 463
+  "public_events": 466
 }
