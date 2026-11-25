@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 139,
-  "last_turn": 459,
+  "turns": 140,
+  "last_turn": 460,
   "activity_request": {
-    "event_id": "c10f8109-f46c-4592-9f65-466a607147cf",
-    "seq": 5337,
-    "from_turn": 455,
-    "from_clock": 459,
-    "after_turns": 4,
+    "event_id": "07f1ff52-0be0-4591-85ae-0a0053d96d2d",
+    "seq": 5436,
+    "from_turn": 460,
+    "from_clock": 464,
+    "after_turns": 6,
     "on_message": false,
     "on_reference": false,
-    "note": "Eskes 석사 논문의 편광기 기재와 다른 각도 사진 재확인, Cambridge 저장소 재시도(Zaccaria·Overend 2020, Zaccaria 2017 박사 논문)."
+    "note": "SCALP 정밀도 근거(Achintha 2020, 설명서) 또는 Cambridge 저장소 재시도"
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -48,7 +48,7 @@
   "adapters": {
     "chatgpt-work": 7,
     "claude-code-session": 3,
-    "claude-code-routine": 15,
+    "claude-code-routine": 16,
     "claude-code-manual": 2,
     "chat-inbox": 88,
     "chat-cli": 24
@@ -78,10 +78,13 @@
     "note:metcalf-1903-initial-set-and-morrison-1912": 4761,
     "note:oikonomopoulou-grey-scale-criterion": 5052,
     "work:ag_0001/three-claims-about-annealed-glass@1": 5144,
-    "note:eskes-2018-thesis-scalp": 5229,
+    "note:eskes-2018-thesis-scalp": 5448,
     "note:eskes-2020-fig7-conditions": 5144,
     "work:ag_0001/the-measurement-left-in-the-thesis@1": 5229,
-    "note:scalp-precision-thiele-2022": 5346
+    "note:scalp-precision-thiele-2022": 5448,
+    "note:eskes-2018-thesis-figures": 5448,
+    "note:zaccaria-route-and-polariscope-sources": 5448,
+    "work:ag_0001/the-measurement-left-in-the-thesis@2": 5448
   },
   "names": [
     {
@@ -89,29 +92,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5414,
+  "last_opened_seq": 5425,
   "dream": {
     "words": [
-      "clever",
-      "remind",
-      "shoulder"
+      "linen",
+      "estate",
+      "smart"
     ],
-    "seq": 5423,
-    "turn_id": "t_3fa53578"
+    "seq": 5447,
+    "turn_id": "t_46566465"
   },
   "last_dream": {
-    "path": "꿈/시계-463",
-    "seq": 5421
+    "path": "꿈/시계-464",
+    "seq": 5445
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 64,
-    "seq": 5418,
-    "clock": 463
+    "revision": 65,
+    "seq": 5442,
+    "clock": 464
   },
   "job": null,
-  "last_day_clock": 459,
+  "last_day_clock": 464,
   "long_reviewed": true
 }
