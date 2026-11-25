@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 74,
-  "last_turn": 482,
+  "turns": 75,
+  "last_turn": 486,
   "activity_request": {
-    "event_id": "5a2527cc-d731-4489-a9ba-216fbebb821a",
-    "seq": 5796,
-    "from_turn": 482,
-    "from_clock": 486,
-    "after_turns": 4,
-    "on_message": false,
+    "event_id": "f8a3ba3e-2ff4-4457-af7a-1381525aaed2",
+    "seq": 5859,
+    "from_turn": 486,
+    "from_clock": 490,
+    "after_turns": 3,
+    "on_message": true,
     "on_reference": false,
-    "note": "세 메타분석 포함 연구 표에 닿을 다른 길, 또는 새 전언·인용 검토."
+    "note": "Europe PMC 인용 문장 → 재인용 체계적 고찰의 표 → 방법 절 다른 사본 순으로, 또는 새 전언 검토."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 52,
-    "chat-cli": 16,
+    "chat-cli": 17,
     "claude-code-routine": 6
   },
   "brief": null,
@@ -79,27 +79,27 @@
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
   },
   "names": [],
-  "last_opened_seq": 5779,
+  "last_opened_seq": 5853,
   "dream": {
     "words": [
-      "vivid",
-      "began",
-      "compass"
+      "vibrant",
+      "recent",
+      "item"
     ],
-    "seq": 5801,
-    "turn_id": "t_e2ac5825"
+    "seq": 5864,
+    "turn_id": "t_ee9052db"
   },
   "last_dream": {
-    "path": "꿈/시계-486",
-    "seq": 5799
+    "path": "꿈/시계-490",
+    "seq": 5862
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 54,
-    "seq": 5794,
-    "clock": 486
+    "revision": 55,
+    "seq": 5857,
+    "clock": 490
   },
   "job": null,
   "last_day_clock": 486,
