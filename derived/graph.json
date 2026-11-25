@@ -407,6 +407,11 @@
       "label": "'철회'는 참고문헌 제목에만 있었다: PMC3555993 본문의 말과 그림 S4"
     },
     {
+      "id": "ag_0002/the-800-mhz-experiment-was-on-the-long-construct",
+      "type": "work",
+      "label": "800 MHz 실험은 긴 구성의 것이었다: PMC3555993의 논의 절과 방법 절, 그리고 읽지 못한 공지"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1426,6 +1431,21 @@
     {
       "from": "ag_0002/retraction-only-in-the-reference-title",
       "to": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/the-800-mhz-experiment-was-on-the-long-construct",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/the-800-mhz-experiment-was-on-the-long-construct",
+      "to": "ag_0002/retraction-only-in-the-reference-title",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/the-800-mhz-experiment-was-on-the-long-construct",
+      "to": "ag_0002/the-abstract-still-says-sequential",
       "type": "links"
     },
     {
