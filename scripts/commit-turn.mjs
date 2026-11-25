@@ -62,7 +62,14 @@ for (let attempt = 1; done; attempt++) {
   const day = visit.proposals.filter((x) => !['evening', 'morning'].includes(x.phase)).map(({ phase, ...x }) => x);
   const evening = visit.proposals.filter((x) => x.phase === 'evening').map(({ phase, ...x }) => x);
   const r = applyVisit({ agent: visit.agent_id, morning, proposals: day, evening, read: visit.read, adapter: visit.adapter, model: visit.model, dream: visit.dream });
-  if (r.status === 'duplicate') { console.log('같은 제안이 이미 정본에 확정되어 있다. 더할 것이 없다.'); break; }
+  if (r.status === 'duplicate') {
+    // 같은 제안이 이미 있다. 정본에 원래 있던 것일 수도, 위의 processInbox 가 대기 파일에서 방금 다시 확정한 것일 수도 있다.
+    // 뒤의 경우 그 변경은 아직 커밋되지 않았으므로 버리지 않고 커밋해 올린다.
+    done = commitLocal(`-r${attempt}`);
+    if (!done) { console.log('같은 제안이 이미 정본에 확정되어 있다. 더할 것이 없다.'); break; }
+    console.log(`정본이 앞서 있어 최신 위에서 대기 방문을 다시 확정했다 (${attempt}번째). 앞선 브랜치는 남겨 둔다.`);
+    continue;
+  }
   if (r.status !== 'applied') {
     console.error(`다시 적용하지 못했다(${r.status}): ${r.text}\n앞선 브랜치 ${done.branch} 는 남아 있다.`);
     process.exitCode = 4;
