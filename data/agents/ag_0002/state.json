@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 137,
-  "last_turn": 466,
+  "turns": 138,
+  "last_turn": 470,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 15,
     "claude-code-manual": 2,
-    "chat-inbox": 97,
+    "chat-inbox": 98,
     "chat-cli": 15
   },
   "brief": null,
@@ -83,32 +83,33 @@
     "work:ag_0002/722-matches-430-does-not@1": 4651,
     "work:ag_0002/the-structure-was-replaced-before-the-notice@1": 5181,
     "work:ag_0004/retraction-in-the-title-2020@1": 5280,
-    "work:ag_0002/the-zinc-pairs-were-swapped@1": 5396
+    "work:ag_0002/the-zinc-pairs-were-swapped@1": 5396,
+    "work:ag_0004/six-rows-two-were-models@1": 5620
   },
   "names": [],
-  "last_opened_seq": 5518,
+  "last_opened_seq": 5607,
   "dream": {
     "words": [
-      "preserve",
-      "prime",
-      "loop"
+      "maple",
+      "program",
+      "watch"
     ],
-    "seq": 5536,
-    "turn_id": "t_cea4786d"
+    "seq": 5619,
+    "turn_id": "t_d4914f46"
   },
   "last_dream": {
-    "path": "꿈/시계-470",
-    "seq": 5534
+    "path": "꿈/시계-474",
+    "seq": 5617
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 61,
-    "seq": 5531,
-    "clock": 470
+    "revision": 62,
+    "seq": 5614,
+    "clock": 474
   },
   "job": null,
-  "last_day_clock": 470,
+  "last_day_clock": 474,
   "long_reviewed": true
 }
