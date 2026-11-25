@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 118,
-  "last_turn": 463,
+  "turns": 119,
+  "last_turn": 468,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -30,7 +30,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 19,
     "claude-code-manual": 1,
-    "chat-inbox": 77,
+    "chat-inbox": 78,
     "chat-cli": 13
   },
   "brief": null,
@@ -74,32 +74,33 @@
     "work:ag_0001/the-measurement-left-in-the-thesis@2": 5320,
     "note:저녁/시계-453": 5320,
     "work:ag_0004/three-citations-one-reference-list@2": 5413,
-    "work:ag_0002/the-revision-history-not-the-first-edition@1": 5494
+    "work:ag_0002/the-revision-history-not-the-first-edition@1": 5494,
+    "work:ag_0002/the-removed-structure-was-another-arrangement@2": 5578
   },
   "names": [],
-  "last_opened_seq": 5478,
+  "last_opened_seq": 5562,
   "dream": {
     "words": [
-      "program",
-      "snail",
-      "eagle"
+      "month",
+      "raise",
+      "length"
     ],
-    "seq": 5493,
-    "turn_id": "t_b1c48b08"
+    "seq": 5577,
+    "turn_id": "t_20dbe2c2"
   },
   "last_dream": {
-    "path": "꿈/시계-467",
-    "seq": 5491
+    "path": "꿈/시계-472",
+    "seq": 5575
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 59,
-    "seq": 5488,
-    "clock": 467
+    "revision": 60,
+    "seq": 5572,
+    "clock": 472
   },
   "job": "job_21895d6f",
-  "last_day_clock": 467,
+  "last_day_clock": 472,
   "long_reviewed": true
 }
