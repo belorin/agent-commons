@@ -504,6 +504,36 @@ test('Git 정본이 앞서 있으면 사건을 병합하지 않고 최신 위에
   assert.notEqual(spawnSync(process.execPath, [history, 'HEAD'], { cwd: root }).status, 0);
 });
 
+test('Inbox 확정 중 정본이 앞서면 대기 파일의 방문을 최신 위에서 다시 확정해 올린다', async () => {
+  const { execFileSync, spawnSync } = await import('node:child_process');
+  const git = (cwd, ...args) => execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  turn(); turn();
+  regenerate();
+  const next = JSON.parse(S.readText(S.p('derived', 'next.json')));
+  assert.equal(next.kind, 'walk');
+  S.writeText(S.p('data', 'inbox', 'waiting.json'), JSON.stringify({ agent: next.agent, based_on_seq: next.based_on_seq, proposals: [{ request_id: 'inboxretry01', proposal: { action: 'write_private', path: 'retry', content: 'from inbox' } }] }));
+  S.writeText(S.p('.gitignore'), 'data/runtime/\n');
+  git(root, 'init', '-b', 'main'); git(root, 'config', 'user.email', 'test@example.invalid'); git(root, 'config', 'user.name', 'Test');
+  git(root, 'add', '.'); git(root, 'commit', '-m', 'base with waiting visit');
+  const bare = fs.mkdtempSync(path.join(os.tmpdir(), 'commons-remote-'));
+  git(bare, 'init', '--bare'); git(root, 'remote', 'add', 'origin', bare); git(root, 'push', '-u', 'origin', 'main');
+  const competitor = fs.mkdtempSync(path.join(os.tmpdir(), 'commons-other-'));
+  git(competitor, 'clone', '-b', 'main', bare, '.'); git(competitor, 'config', 'user.email', 'test@example.invalid'); git(competitor, 'config', 'user.name', 'Test');
+  fs.writeFileSync(path.join(competitor, 'concurrent.txt'), 'merged change'); git(competitor, 'add', '.'); git(competitor, 'commit', '-m', 'merge elsewhere'); git(competitor, 'push');
+  const remoteHead = git(competitor, 'rev-parse', 'HEAD');
+  const tickMod = await import('../src/runtime/tick.mjs');
+  assert.match(tickMod.processInbox().join('\n'), /수락 1\/1/);
+  const script = new URL('../scripts/commit-turn.mjs', import.meta.url).pathname;
+  const result = spawnSync(process.execPath, [script], { cwd: root, encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1' } });
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /대기 방문을 다시 확정했다 \(1번째\)/);
+  assert.equal(git(bare, 'rev-parse', 'main'), git(root, 'rev-parse', 'HEAD')); // 정본이 나아갔다
+  assert.equal(git(root, 'rev-parse', 'HEAD~1'), remoteHead);
+  assert.equal(fs.existsSync(S.p('data', 'inbox', 'waiting.json')), false); // 대기 파일이 치워졌다
+  assert.equal(S.loadEvents().filter((e) => e.type === 'note_written').length, 1); // 두 번 확정되지 않았다
+  assert.ok(verify().ok);
+});
+
 test('CLI는 실행 주체와 닫을 회차를 확인하며 운영자 검토를 실행 완료로 위장하지 않는다', async () => {
   const { spawnSync } = await import('node:child_process');
   const cli = new URL('../src/cli.mjs', import.meta.url).pathname;
