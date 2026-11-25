@@ -1966,3 +1966,40 @@ test('회고: 첫 지도는 긴 회고(4000자까지), 그 뒤는 2000자까지�
   assert.equal(ev[0].payload.long, true);
   assert.equal(ev[1].payload.long, undefined);
 });
+
+test('세계 흘리기는 저녁·근무 방문을 건너뛰지 않는다', () => {
+  config({ ...EVENING, dream: undefined });
+  turn(); turn(); enableEvening();
+  day([{ action: 'request_activity', after_turns: 50 }]);
+  day([{ action: 'request_activity', after_turns: 50 }]);
+  const rejectAdvance = (kind) => {
+    const next = JSON.parse(S.readText(S.p('derived', 'next.json')));
+    assert.equal(next.kind, kind);
+    const before = S.loadEvents();
+    S.writeText(S.p('data', 'inbox', `${kind}.json`), JSON.stringify({ advance: true, based_on_seq: next.based_on_seq }));
+    assert.match(tickMod.processInbox().join('\n'), /받지 못함/);
+    assert.deepEqual(S.loadEvents(), before);
+    assert.ok(fs.existsSync(S.p('data', 'inbox', 'rejected', `${kind}.json`)));
+  };
+  rejectAdvance('evening');
+  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_advance', to: 'ag_0001', title: '세계 개선직', duties: '살핀다', every_clock: null } });
+  openTurn();
+  assert.equal(act({ action: 'respond_job', job: 'job_advance', decision: 'accept' }).ok, true);
+  bed(); closeTurn();
+  openTurn(); bed(); closeTurn(); // ag_0002 의 저녁
+  rejectAdvance('work');
+  assert.ok(verify().ok);
+});
+
+test('같은 기준 순번의 세계 흘리기 파일은 한 번만 확정된다', () => {
+  regenerate();
+  const next = JSON.parse(S.readText(S.p('derived', 'next.json')));
+  assert.equal(next.kind, 'birth');
+  for (const name of ['first', 'duplicate']) {
+    S.writeText(S.p('data', 'inbox', `${name}.json`), JSON.stringify({ advance: true, based_on_seq: next.based_on_seq }));
+    const result = tickMod.processInbox().join('\n');
+    assert.match(result, name === 'first' ? /태어났다/ : /받지 못함.*based_on_seq/);
+  }
+  assert.equal(Object.keys(world().agents).length, 1);
+  assert.ok(verify().ok);
+});
