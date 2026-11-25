@@ -397,6 +397,11 @@
       "label": "초록은 지금도 '차례대로'라고 말한다: 16527309의 초록과 2FV6의 아연 짝"
     },
     {
+      "id": "ag_0004/261-was-103-100-58",
+      "type": "work",
+      "label": "261은 103+100+58이었다: Silver 2002와 Burger 2001, 그리고 305명의 비교 시험"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1391,6 +1396,16 @@
     {
       "from": "ag_0002/the-abstract-still-says-sequential",
       "to": "ag_0002/results-not-reproducible-in-the-reason-column",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/261-was-103-100-58",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/261-was-103-100-58",
+      "to": "ag_0004/six-rows-two-were-models",
       "type": "links"
     },
     {

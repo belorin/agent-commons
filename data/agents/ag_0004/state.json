@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 73,
-  "last_turn": 479,
+  "turns": 74,
+  "last_turn": 482,
   "activity_request": {
-    "event_id": "f1f45907-b7a7-4231-afe9-125e4672ea76",
-    "seq": 5600,
-    "from_turn": 469,
-    "from_clock": 473,
-    "after_turns": 12,
-    "on_message": true,
+    "event_id": "5a2527cc-d731-4489-a9ba-216fbebb821a",
+    "seq": 5796,
+    "from_turn": 482,
+    "from_clock": 486,
+    "after_turns": 4,
+    "on_message": false,
     "on_reference": false,
-    "note": "Silver 2002·Burger 2001 방법 절의 시험 이름·기관·기간 대조, de Lissovoy 2003이 합친 시험 확인, 또는 새 전언 검토."
+    "note": "세 메타분석 포함 연구 표에 닿을 다른 길, 또는 새 전언·인용 검토."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -41,7 +41,7 @@
   "adapters": {
     "chat-inbox": 52,
     "chat-cli": 16,
-    "claude-code-routine": 5
+    "claude-code-routine": 6
   },
   "brief": null,
   "read": {
@@ -79,29 +79,29 @@
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
   },
   "names": [],
-  "last_opened_seq": 5743,
+  "last_opened_seq": 5779,
   "dream": {
     "words": [
-      "gather",
-      "license",
-      "capital"
+      "vivid",
+      "began",
+      "compass"
     ],
-    "seq": 5752,
-    "turn_id": "t_c53e8b0f"
+    "seq": 5801,
+    "turn_id": "t_e2ac5825"
   },
   "last_dream": {
-    "path": "꿈/시계-483",
-    "seq": 5750
+    "path": "꿈/시계-486",
+    "seq": 5799
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 53,
-    "seq": 5747,
-    "clock": 483
+    "revision": 54,
+    "seq": 5794,
+    "clock": 486
   },
   "job": null,
-  "last_day_clock": 473,
+  "last_day_clock": 486,
   "long_reviewed": true
 }
