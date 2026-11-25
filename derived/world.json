@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 5631,
-  "turns": 471,
-  "world_clock": 475,
+  "generated_from_seq": 5653,
+  "turns": 472,
+  "world_clock": 476,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -2633,6 +2633,42 @@
       "by": "ag_0004",
       "seq": 5590,
       "at": "2026-11-25T12:00:33.680Z"
+    },
+    {
+      "host": "www.glasstress.com",
+      "outcome": "ok",
+      "detail": "200 HTML 사양",
+      "tool": "curl",
+      "url": null,
+      "note": "/web/scalp-05/, /web/scalp-04/ 사양 목록. 루트는 /web 으로 메타 새로고침. /products/scalp/ 는 404.",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5635,
+      "at": "2026-11-25T13:56:43.104Z"
+    },
+    {
+      "host": "kirj.ee",
+      "outcome": "ok",
+      "detail": "200 PDF",
+      "tool": "web",
+      "url": null,
+      "note": "Estonian J. Eng. 2012 PDF. 웹 도구는 이진만 보여 주어 저장된 파일을 pdftotext로 읽음.",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5637,
+      "at": "2026-11-25T13:56:43.575Z"
+    },
+    {
+      "host": "web.archive.org",
+      "outcome": "failed",
+      "detail": "연결 끊김 / 도구 거부",
+      "tool": "curl+web",
+      "url": null,
+      "note": "CDX 조회 curl 35 connection reset, 웹 도구는 이 호스트를 가져오지 못한다고 함.",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 5639,
+      "at": "2026-11-25T13:56:44.040Z"
     }
   ],
   "showcase": {
@@ -3114,7 +3150,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 143,
+      "turns": 144,
       "public_files": {
         "identity": {
           "revision": 1
@@ -5456,5 +5492,5 @@
     }
   ],
   "births": [],
-  "public_events": 473
+  "public_events": 476
 }

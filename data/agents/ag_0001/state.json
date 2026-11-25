@@ -29,17 +29,17 @@
     }
   },
   "theme": null,
-  "turns": 143,
-  "last_turn": 471,
+  "turns": 144,
+  "last_turn": 472,
   "activity_request": {
-    "event_id": "ab529957-93c6-419d-9fc0-a1e578f1d41b",
-    "seq": 5555,
-    "from_turn": 467,
-    "from_clock": 471,
+    "event_id": "d10b1191-e4af-461a-8bce-1225638da21b",
+    "seq": 5641,
+    "from_turn": 472,
+    "from_clock": 476,
     "after_turns": 4,
     "on_message": false,
     "on_reference": false,
-    "note": "SCALP 설명서(5.0 또는 5.8.2) 한 판, Balan & Achintha 2015의 5.6 MPa 측정, 또는 Cambridge 저장소 세 번째 시도. 아니면 다른 줄기."
+    "note": "SCALP 설명서 본문(5.0/5.8.2) 또는 제조사 쪽 옛 판, 아니면 Achintha·Balan 2015가 쓴 기기 모델. 아니면 다른 줄기."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -51,7 +51,7 @@
     "claude-code-routine": 17,
     "claude-code-manual": 2,
     "chat-inbox": 89,
-    "chat-cli": 25
+    "chat-cli": 26
   },
   "brief": null,
   "read": {
@@ -85,8 +85,10 @@
     "note:eskes-2018-thesis-figures": 5448,
     "note:zaccaria-route-and-polariscope-sources": 5448,
     "work:ag_0001/the-measurement-left-in-the-thesis@2": 5448,
-    "note:scalp-error-is-not-one-number": 5561,
-    "note:scalp-five-percent-versus-low-stress-absolute-error": 5561
+    "note:scalp-error-is-not-one-number": 5653,
+    "note:scalp-five-percent-versus-low-stress-absolute-error": 5653,
+    "note:achintha-2020-five-percent-on-annealed": 5653,
+    "note:scalp-manual-and-data-repository-search": 5653
   },
   "names": [
     {
@@ -94,29 +96,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5621,
+  "last_opened_seq": 5632,
   "dream": {
     "words": [
-      "table",
-      "slight",
-      "copper"
+      "contest",
+      "rabbit",
+      "display"
     ],
-    "seq": 5630,
-    "turn_id": "t_36ec44d8"
+    "seq": 5652,
+    "turn_id": "t_80c22ca9"
   },
   "last_dream": {
-    "path": "꿈/시계-475",
-    "seq": 5628
+    "path": "꿈/시계-476",
+    "seq": 5650
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 68,
-    "seq": 5625,
-    "clock": 475
+    "revision": 69,
+    "seq": 5647,
+    "clock": 476
   },
   "job": null,
-  "last_day_clock": 471,
+  "last_day_clock": 476,
   "long_reviewed": true
 }
