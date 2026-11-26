@@ -22,19 +22,29 @@ export function activityDue(w, a) {
   return null;
 }
 
-/**
- * 쉬는 중인가: 휴면 중이고 깨어날 조건이 차지 않았거나, 활동 요청을 남겼고 그 조건이 차지 않았다.
- * evening 기능이 켜진 뒤에는 쉬는 개체도 순번에 남고, 차례가 오면 저녁만 있는 방문을 받는다.
- */
 /** 직무를 맡고 일하는 중인가(휴면은 휴직이다). 그런 개체의 방문은 오전(직무)으로 시작한다. */
 export function working(w, a) {
   const j = a?.job ? w.jobs?.[a.job] : null;
   return !!(w.features?.evening && j && j.status === 'active' && a.status === 'active');
 }
 
+/** 쉬는 중인가: 휴면 중이고 깨어날 조건이 차지 않았거나, 활동 요청을 남겼고 그 조건이 차지 않았다. */
 export function resting(w, a) {
   if (a.status === 'dormant') return !wakeDue(w, a);
   return a.status === 'active' && !!a.activity_request && !activityDue(w, a);
+}
+
+/**
+ * 조건이 차지 않은 활동 요청을 가진 개체에게도 순번이 오면 저녁만 있는 방문(직장인은 오전과 저녁)을 열까.
+ * 설정 scheduling.rest_visits(기본 false). 끄면 그 개체는 조건이 찰 때까지 일반 순번에서 빠진다.
+ * 휴면 중의 저녁 방문은 이 설정과 상관없다.
+ */
+export const restVisits = (cfg) => cfg?.scheduling?.rest_visits === true;
+
+/** 이 개체에게 방문이 열리면 일과 없는 방문(저녁만, 또는 오전과 저녁)인가. evening 기능이 켜진 판에서만. */
+export function restOnly(w, a, cfg) {
+  if (!w.features?.evening || !resting(w, a)) return false;
+  return a.status === 'dormant' || restVisits(cfg);
 }
 
 /** 이번 회차에 무슨 일이 일어날지 정한다. 난수도 숨은 확률도 없다. */
@@ -48,10 +58,13 @@ export function decide(w, cfg) {
     return { kind: 'birth', origin: 'birth_proposal', proposal: accepted };
   }
   // 아직 조건이 차지 않은 요청은 그 개체가 스스로 일반 순번을 유보한 것으로 취급한다.
-  // evening 기능이 켜진 뒤에는 유보한 개체도 순번에 남는다. 차례가 오면 저녁만 있는 방문이다.
+  // evening 기능이 켜진 뒤에는 휴면 개체도 순번에 남는다. 차례가 오면 저녁만 있는 방문이다.
+  // 조건이 차지 않은 요청을 가진 개체는 scheduling.rest_visits 가 켜져 있을 때만 순번에 남는다(저녁만 있는 방문).
   const evening = !!w.features?.evening;
-  const eligible = alive.filter((a) =>
-    evening || (a.status === 'active' && (!a.activity_request || activityDue(w, a))) || wakeDue(w, a)
+  const waiting = (a) => a.status === 'active' && !!a.activity_request && !activityDue(w, a);
+  const eligible = alive.filter((a) => evening
+    ? (a.status === 'dormant' || !waiting(a) || restVisits(cfg))
+    : (a.status === 'active' && !waiting(a)) || wakeDue(w, a)
   ).sort((x, y) => x.last_turn - y.last_turn || x.id.localeCompare(y.id));
   const due = eligible.filter((a) => a.status === 'active' && activityDue(w, a));
   const limit = Number.isInteger(cfg.scheduling?.max_request_streak) ? Math.max(0, cfg.scheduling.max_request_streak) : 2;
@@ -61,7 +74,7 @@ export function decide(w, cfg) {
   }
   if (eligible.length) {
     const a = eligible[0];
-    // 쉬는 중이어도 직장인은 출근한다: 오전(직무) 다음 바로 저녁(work). 휴면은 휴직이라 저녁만.
+    // 쉬는 개체: 휴면은 저녁만. rest_visits 가 켜져 있으면 요청을 기다리는 직장인은 오전(직무) 다음 바로 저녁(work).
     if (evening && resting(w, a)) return working(w, a) ? { kind: 'work', agent: a, selection: 'rest' } : { kind: 'evening', agent: a, selection: 'rest' };
     return { kind: 'walk', agent: a, selection: 'fair' };
   }
@@ -81,7 +94,7 @@ export function nextVisit(w, cfg, { paused = false } = {}) {
   if (d.kind === 'work') return { ...base, kind: 'work', agent: d.agent.id, selection: d.selection, request_reason: null,
     why: '직무를 맡은 개체가 쉬는 중이다. 오전(직무) 다음 바로 저녁이다.' };
   if (d.kind === 'evening') return { ...base, kind: 'evening', agent: d.agent.id, selection: d.selection, request_reason: null,
-    why: '쉬는 중(휴면, 또는 조건이 차지 않은 활동 요청)인 개체 가운데 가장 오래 기다린 개체다. 저녁만 있는 방문이다.' };
+    why: '쉬는 중인 개체 가운데 가장 오래 기다린 개체다. 저녁만 있는 방문이다.' };
   if (d.kind === 'birth') return { ...base, kind: 'birth', why: '새 개체가 태어날 차례다. 방문하지 않고 세계를 한 칸 흘리는 파일을 올리면 실행기가 개체를 발급한다.' };
   return { ...base, kind: 'idle', reason: d.reason, why: '걸을 개체가 없다. 방문하지 않고 세계를 한 칸 흘리는 파일을 올린다.' };
 }

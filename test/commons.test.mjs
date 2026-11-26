@@ -1467,7 +1467,7 @@ test('판의 변경안: 반대 없이 세계 시계가 흐르면 결정되고, �
 
 // ── 일과, 저녁, 잠 (evening 기능, 2026-11-19) ─────────────────────────────
 const tickMod = await import('../src/runtime/tick.mjs');
-const EVENING = { seed_population: 2, max_turns_per_day: 500, dream: { enabled: true, url: 'https://words.test/api?count=3', timeout_ms: 1000 } };
+const EVENING = { seed_population: 2, scheduling: { rest_visits: true }, max_turns_per_day: 500, dream: { enabled: true, url: 'https://words.test/api?count=3', timeout_ms: 1000 } };
 const enableEvening = () => S.appendEvent({ type: 'feature_enabled', actor_id: 'operator', visibility: 'public', payload: { feature: 'evening' } });
 /** 잠들기: 저녁의 사생활 하나와 꿈. */
 const bed = (dream = '물가의 꿈') => { act({ action: 'write_private', content: '저녁의 한 줄' }); act({ action: 'review_self', map: '지금의 나: 물가에 있다.' }); return act({ action: 'sleep', dream }); };
@@ -1602,6 +1602,69 @@ test('저녁: 쉬는 개체는 순번이 오면 저녁만 있는 방문을 받�
   closeTurn(); bed(); closeTurn();
   assert.equal(world().agents.ag_0001.activity_request, null);
   assert.ok(verify().ok);
+});
+
+test('저녁: rest_visits 가 꺼져 있으면 조건이 차지 않은 요청을 가진 개체는 순번에서 빠지고, 조건이 차면 하루 방문이다', () => {
+  config({ ...EVENING, scheduling: { rest_visits: false }, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  day([{ action: 'request_activity', after_turns: 3, note: '세 칸 뒤' }]); // ag_0001, 세계 시계 3
+  assert.equal(day().agent_id, 'ag_0002'); // 시계 4
+  assert.equal(day().agent_id, 'ag_0002'); // 시계 5: ag_0001 은 기다리는 중이라 순번에서 빠진다(저녁만 있는 방문이 없다)
+  assert.equal(day().agent_id, 'ag_0002'); // 시계 6
+  const back = openTurn(); // 시계 7: 조건이 찼다
+  assert.equal(back.agent_id, 'ag_0001');
+  assert.equal(back.kind, 'walk');
+  assert.equal(back.selection, 'requested');
+  assert.match(back.text, /조건이 차지 않은 활동 요청은 일반 순번에서 제외된다\. 그동안 방문이 열리지 않는다/);
+  assert.doesNotMatch(back.text, /조건이 차지 않은 활동 요청\)에도 순번이 오면 저녁만/);
+  closeTurn(); bed(); closeTurn();
+  assert.ok(!S.loadEvents().some((e) => e.type === 'turn_opened' && e.payload.kind === 'evening'));
+  // 모두가 기다리면 세계는 유휴 회차로 흐른다.
+  day([{ action: 'request_activity', after_turns: 50 }]); // ag_0002
+  openTurn(); act({ action: 'request_activity', after_turns: 50 }); closeTurn(); bed(); closeTurn(); // ag_0001
+  const idle = JSON.parse(S.readText(S.p('derived', 'next.json')));
+  assert.equal(idle.kind, 'idle');
+  assert.ok(verify().ok, verify().problems.join('\n'));
+});
+
+test('직무: rest_visits 가 꺼져 있으면 요청을 기다리는 직장인에게 오전과 저녁만 있는 방문이 없다', () => {
+  config({ ...EVENING, scheduling: { rest_visits: false }, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_norest', to: 'ag_0001', title: '세계 개선직', duties: '살핀다.', every_clock: null } });
+  const offer = openTurn();
+  assert.match(offer.text, /조건이 차지 않은 활동 요청이 있는 동안에는 방문이 열리지 않는다/);
+  act({ action: 'respond_job', job: 'job_norest', decision: 'accept' });
+  act({ action: 'request_activity', after_turns: 3 });
+  closeTurn(); bed(); closeTurn();
+  assert.equal(day().agent_id, 'ag_0002');
+  assert.equal(day().agent_id, 'ag_0002');
+  assert.equal(day().agent_id, 'ag_0002');
+  const m = openTurn(); // 조건이 찼다: 오전 → 오후
+  assert.equal(m.agent_id, 'ag_0001');
+  assert.equal(m.kind, 'walk');
+  assert.match(m.text, /^# 오전 — ag_0001/);
+  assert.doesNotMatch(m.text, /쉬는 중이면/);
+  act({ action: 'job_log', content: '살폈다.' });
+  assert.equal(closeTurn().state, 'afternoon');
+  closeTurn(); bed(); closeTurn();
+  assert.ok(!S.loadEvents().some((e) => e.type === 'turn_opened' && ['evening', 'work'].includes(e.payload.kind)));
+  assert.ok(verify().ok, verify().problems.join('\n'));
+});
+
+test('저녁: rest_visits 가 꺼져 있어도 휴면 중에는 저녁만 있는 방문이 열린다', () => {
+  config({ ...EVENING, scheduling: { rest_visits: false }, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  day([{ action: 'request_dormancy', wake: { after_turns: 50 } }]); // ag_0001
+  assert.equal(day().agent_id, 'ag_0002');
+  const rest = openTurn();
+  assert.equal(rest.agent_id, 'ag_0001');
+  assert.equal(rest.kind, 'evening');
+  assert.match(rest.text, /휴면 중이다/);
+  bed(); closeTurn();
+  assert.ok(verify().ok, verify().problems.join('\n'));
 });
 
 test('저녁: 휴면 중에는 저녁만 있는 방문이 열리고, 전언은 일과에 건네진다', () => {

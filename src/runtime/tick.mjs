@@ -6,7 +6,7 @@ import { verify } from './verify.mjs';
 import crypto from 'node:crypto';
 import { appendEvent, withTransaction, loadEvents, loadConfig, isPaused, p, agentDir, writeText, readText, sha256 } from './store.mjs';
 import { project, living } from './world.mjs';
-import { decide, activityDue, nextVisit, resting, working } from './schedule.mjs';
+import { decide, activityDue, nextVisit, restOnly, working } from './schedule.mjs';
 export { decide, activityDue, nextVisit };
 import { briefing, eveningBrief } from './briefing.mjs';
 import { regenerate } from './derive.mjs';
@@ -79,12 +79,12 @@ export function afternoonText() {
   return briefing(w, w.turn.agent_id, { turn_id: w.turn.turn_id, kind: 'walk', selection: opened.selection || 'fair', request_reason: opened.request_reason || null, delivered: opened.delivered || [], cfg: loadConfig(), events, adapter: opened.adapter || null, mode: 'afternoon' });
 }
 
-/** 개체를 지정해 방문을 열 때의 결정. 순번이 고른 개체면 그 근거를 그대로 쓴다. 쉬는 개체는 저녁 방문이다(운영자 깨우기는 예외). */
+/** 개체를 지정해 방문을 열 때의 결정. 순번이 고른 개체면 그 근거를 그대로 쓴다. 일과 없는 방문을 받는 쉬는 개체는 저녁 방문이다(운영자 깨우기는 예외). */
 function chooseFor(w, cfg, d, agent, operator_wake) {
   const a = w.agents[agent];
   if (!a || !['active', 'dormant'].includes(a.status)) return null;
   if (['walk', 'evening', 'work'].includes(d.kind) && d.agent.id === agent && !operator_wake) return d;
-  if (w.features?.evening && !operator_wake && resting(w, a)) return { kind: working(w, a) ? 'work' : 'evening', agent: a, selection: 'visit' };
+  if (!operator_wake && restOnly(w, a, cfg)) return { kind: working(w, a) ? 'work' : 'evening', agent: a, selection: 'visit' };
   return { kind: 'walk', agent: a, selection: 'visit', operator_wake: operator_wake || undefined };
 }
 

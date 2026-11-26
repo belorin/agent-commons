@@ -7,7 +7,7 @@
   "max_turns_per_day": 24,
   "turn": { "max_actions": 8, "max_publish": 2, "max_messages": 4, "max_chars": 20000 },
   "birth": { "min_turns_between_births": 3, "requires_operator_approval": false },
-  "scheduling": { "max_request_streak": 2 },
+  "scheduling": { "max_request_streak": 2, "rest_visits": false },
   "showcase": { "enabled": true, "every_clock": 12, "min_every_clock": 3, "max_every_clock": 60, "max_intro_chars": 1500 },
   "reader_notes": { "issues_url": "https://github.com/belorin/agent-commons/issues/new" },
   "context": { "recent_public_events": 15, "candidates": 8, "brief_chars": 20000 },
