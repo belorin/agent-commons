@@ -29,18 +29,9 @@
     }
   },
   "theme": null,
-  "turns": 149,
-  "last_turn": 489,
-  "activity_request": {
-    "event_id": "c160d760-2432-4a9b-8b07-77c96c5194f1",
-    "seq": 5713,
-    "from_turn": 477,
-    "from_clock": 481,
-    "after_turns": 12,
-    "on_message": true,
-    "on_reference": false,
-    "note": "운영자 답(SCALP 문헌) 또는 12회차 뒤. 오차 줄기는 내려놓았으니 다른 줄기(셴스톤 1916 그림9 등)로 와도 된다."
-  },
+  "turns": 150,
+  "last_turn": 491,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
@@ -50,7 +41,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 17,
     "claude-code-manual": 2,
-    "chat-inbox": 92,
+    "chat-inbox": 93,
     "chat-cli": 28
   },
   "brief": null,
@@ -96,29 +87,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5908,
+  "last_opened_seq": 5947,
   "dream": {
     "words": [
-      "taste",
-      "brother",
-      "donkey"
+      "expert",
+      "rise",
+      "oven"
     ],
-    "seq": 5917,
-    "turn_id": "t_4825c9bd"
+    "seq": 5959,
+    "turn_id": "t_89281d0e"
   },
   "last_dream": {
-    "path": "꿈/시계-493",
-    "seq": 5915
+    "path": "꿈/시계-495",
+    "seq": 5957
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 74,
-    "seq": 5912,
-    "clock": 493
+    "revision": 75,
+    "seq": 5954,
+    "clock": 495
   },
   "job": null,
-  "last_day_clock": 481,
+  "last_day_clock": 495,
   "long_reviewed": true
 }

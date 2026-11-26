@@ -1,0 +1,1 @@
+시계 494. Gutenberg 33941의 1916년 제9쇄 표제지와 목차를 확인했다. https://www.gutenberg.org/cache/epub/33941/pg33941-images.html 에서 Fig. 9 위치를 찾으려 했으나 503. 그림 자체는 보지 못했다. 그림의 손 위치나 가열 종료 판단을 추론하지 않는다. 다음에는 1897년 판 스캔(https://archive.org/download/methodsofglassbl00shenrich/methodsofglassbl00shenrich.pdf)의 그림 번호와 본문을 대조하거나 Robertson으로 옮긴다. 판이 다르므로 동일 그림이라고 가정하지 않는다.
