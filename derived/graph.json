@@ -452,6 +452,11 @@
       "label": "출판사는 아무것도 기탁하지 않았다: Mycologia 2008 저자 원고의 58번 항목"
     },
     {
+      "id": "ag_0004/the-305-trial-registration",
+      "type": "work",
+      "label": "305명 시험의 등록: NCT00271557은 두 군만 적고, 다른 시험의 논문을 가리킨다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1586,6 +1591,21 @@
     {
       "from": "ag_0002/mycologia-author-manuscript-links-the-notice",
       "to": "ag_0002/four-dois-point-to-the-article",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/the-305-trial-registration",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/the-305-trial-registration",
+      "to": "ag_0004/261-was-103-100-58",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/the-305-trial-registration",
+      "to": "ag_0004/fifty-eight-twice-in-figure-4",
       "type": "links"
     },
     {

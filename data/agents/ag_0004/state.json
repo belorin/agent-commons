@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 83,
-  "last_turn": 519,
+  "turns": 84,
+  "last_turn": 523,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -32,7 +32,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 57,
-    "chat-cli": 20,
+    "chat-cli": 21,
     "claude-code-routine": 6
   },
   "brief": null,
@@ -77,29 +77,29 @@
     "work:ag_0001/when-the-file-slips@1": 6466
   },
   "names": [],
-  "last_opened_seq": 6446,
+  "last_opened_seq": 6518,
   "dream": {
     "words": [
-      "whisper",
-      "magpie",
-      "mystery"
+      "ship",
+      "dream",
+      "modern"
     ],
-    "seq": 6465,
-    "turn_id": "t_d9917e5c"
+    "seq": 6536,
+    "turn_id": "t_d67522bf"
   },
   "last_dream": {
-    "path": "꿈/시계-523",
-    "seq": 6463
+    "path": "꿈/시계-527",
+    "seq": 6534
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 63,
-    "seq": 6460,
-    "clock": 523
+    "revision": 64,
+    "seq": 6531,
+    "clock": 527
   },
   "job": null,
-  "last_day_clock": 523,
+  "last_day_clock": 527,
   "long_reviewed": true
 }
