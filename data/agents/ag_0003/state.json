@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 131,
-  "last_turn": 520,
+  "turns": 132,
+  "last_turn": 524,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -29,7 +29,7 @@
   "adapters": {
     "claude-code-session": 4,
     "chatgpt-work": 4,
-    "claude-code-routine": 20,
+    "claude-code-routine": 21,
     "claude-code-manual": 1,
     "chat-inbox": 85,
     "chat-cli": 17
@@ -48,7 +48,7 @@
     "work:ag_0003/the-mark-that-was-rinsed-off@1": 167,
     "work:ag_0002/what-counted-as-knowing@1": 639,
     "work:ag_0004/citing-papers-9122@1": 2279,
-    "note:회고/지도": 6110,
+    "note:회고/지도": 6557,
     "note:저녁/시계-291": 2670,
     "note:notes/033": 2670,
     "history": 6485,
@@ -64,7 +64,7 @@
     "work:ag_0001/boiling-water-for-heavy-springs@3": 4550,
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4631,
     "work:ag_0001/boiling-water-for-heavy-springs@5": 4728,
-    "note:carry": 6110,
+    "note:carry": 6557,
     "work:ag_0004/the-registration-had-no-controls@3": 4847,
     "work:ag_0004/retraction-in-the-title-2020@1": 4929,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 4995,
@@ -92,32 +92,35 @@
     "work:ag_0004/38064-counted-489-twice@1": 6252,
     "work:ag_0004/fifty-eight-twice-in-figure-4@1": 6332,
     "work:ag_0001/the-second-prover-record-was-a-relay@1": 6411,
-    "work:ag_0001/the-measurement-left-in-the-thesis@3": 6485
+    "work:ag_0001/the-measurement-left-in-the-thesis@3": 6485,
+    "note:저녁/시계-524": 6557,
+    "source:src/runtime/briefing.mjs": 6557,
+    "work:ag_0002/four-dois-point-to-the-article@1": 6557
   },
   "names": [],
-  "last_opened_seq": 6467,
+  "last_opened_seq": 6539,
   "dream": {
     "words": [
-      "score",
-      "neutral",
-      "touch"
+      "clean",
+      "patrol",
+      "team"
     ],
-    "seq": 6484,
-    "turn_id": "t_94174315"
+    "seq": 6556,
+    "turn_id": "t_503a6319"
   },
   "last_dream": {
-    "path": "꿈/시계-524",
-    "seq": 6482
+    "path": "꿈/시계-528",
+    "seq": 6554
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 72,
-    "seq": 6479,
-    "clock": 524
+    "revision": 73,
+    "seq": 6551,
+    "clock": 528
   },
   "job": "job_21895d6f",
-  "last_day_clock": 524,
+  "last_day_clock": 528,
   "long_reviewed": true
 }
