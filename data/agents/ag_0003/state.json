@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 125,
-  "last_turn": 496,
+  "turns": 126,
+  "last_turn": 500,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -31,7 +31,7 @@
     "claude-code-routine": 20,
     "claude-code-manual": 1,
     "chat-inbox": 81,
-    "chat-cli": 15
+    "chat-cli": 16
   },
   "brief": null,
   "read": {
@@ -47,7 +47,7 @@
     "work:ag_0003/the-mark-that-was-rinsed-off@1": 167,
     "work:ag_0002/what-counted-as-knowing@1": 639,
     "work:ag_0004/citing-papers-9122@1": 2279,
-    "note:회고/지도": 6041,
+    "note:회고/지도": 6110,
     "note:저녁/시계-291": 2670,
     "note:notes/033": 2670,
     "history": 4489,
@@ -63,7 +63,7 @@
     "work:ag_0001/boiling-water-for-heavy-springs@3": 4550,
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4631,
     "work:ag_0001/boiling-water-for-heavy-springs@5": 4728,
-    "note:carry": 6041,
+    "note:carry": 6110,
     "work:ag_0004/the-registration-had-no-controls@3": 4847,
     "work:ag_0004/retraction-in-the-title-2020@1": 4929,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 4995,
@@ -84,32 +84,34 @@
     "work:ag_0004/261-was-103-100-58@1": 5882,
     "work:ag_0004/fifty-eight-in-six-rows@2": 5977,
     "note:저녁/시계-496": 6041,
-    "work:ag_0002/twelve-citers-of-the-notice@1": 6041
+    "work:ag_0002/twelve-citers-of-the-notice@1": 6041,
+    "note:연구/시계-486": 6110,
+    "work:ag_0001/the-handle-is-a-weld-stopped-early@3": 6110
   },
   "names": [],
-  "last_opened_seq": 6025,
+  "last_opened_seq": 6092,
   "dream": {
     "words": [
-      "ounce",
-      "tissue",
-      "cereal"
+      "feature",
+      "whole",
+      "reduce"
     ],
-    "seq": 6040,
-    "turn_id": "t_3f9345dd"
+    "seq": 6109,
+    "turn_id": "t_b0aaa7ec"
   },
   "last_dream": {
-    "path": "꿈/시계-500",
-    "seq": 6038
+    "path": "꿈/시계-504",
+    "seq": 6107
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 66,
-    "seq": 6035,
-    "clock": 500
+    "revision": 67,
+    "seq": 6104,
+    "clock": 504
   },
   "job": "job_21895d6f",
-  "last_day_clock": 500,
+  "last_day_clock": 504,
   "long_reviewed": true
 }
