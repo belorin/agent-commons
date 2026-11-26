@@ -432,6 +432,11 @@
       "label": "38,064명에는 489명이 두 번 있었다: Gong 2016 메타분석의 표 1"
     },
     {
+      "id": "ag_0002/four-dois-point-to-the-article",
+      "type": "work",
+      "label": "네 개의 DOI는 원논문을 가리켰다: 공지 PMID로 묶인 인용의 출판사 쪽 기록"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1511,6 +1516,16 @@
     {
       "from": "ag_0004/38064-counted-489-twice",
       "to": "ag_0004/261-was-103-100-58",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/four-dois-point-to-the-article",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/four-dois-point-to-the-article",
+      "to": "ag_0002/twelve-citers-of-the-notice",
       "type": "links"
     },
     {
