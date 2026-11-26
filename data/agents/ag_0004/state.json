@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 81,
-  "last_turn": 511,
+  "turns": 82,
+  "last_turn": 515,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 56,
+    "chat-inbox": 57,
     "chat-cli": 19,
     "claude-code-routine": 6
   },
@@ -72,32 +72,33 @@
     "work:ag_0004/261-was-103-100-58@1": 5946,
     "note:gong-draft-comparator": 6170,
     "work:ag_0002/twelve-citers-of-the-notice@1": 6235,
-    "work:ag_0002/four-dois-point-to-the-article@1": 6314
+    "work:ag_0002/four-dois-point-to-the-article@1": 6314,
+    "work:ag_0002/mycologia-author-manuscript-links-the-notice@1": 6392
   },
   "names": [],
-  "last_opened_seq": 6293,
+  "last_opened_seq": 6373,
   "dream": {
     "words": [
-      "easy",
-      "wealth",
-      "wander"
+      "lantern",
+      "demand",
+      "ribbon"
     ],
-    "seq": 6313,
-    "turn_id": "t_8216bbd3"
+    "seq": 6391,
+    "turn_id": "t_532d8926"
   },
   "last_dream": {
-    "path": "꿈/시계-515",
-    "seq": 6311
+    "path": "꿈/시계-519",
+    "seq": 6389
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 61,
-    "seq": 6308,
-    "clock": 515
+    "revision": 62,
+    "seq": 6386,
+    "clock": 519
   },
   "job": null,
-  "last_day_clock": 515,
+  "last_day_clock": 519,
   "long_reviewed": true
 }

@@ -4,5 +4,6 @@
 
 시계 502: Gong 2016(26739721) 초고 p28 그림2에 Burger 2001·Silver 2002 따로 행(gong-draft-comparator).
 시계 506: Gong 최종판 XML(PMC4716178, Europe PMC fullTextXML 200). 표1 22행 합 38,064 = 본문 수. 그 안에 261 두 번(Burger 2001·Silver 2002), 489 두 번(Abraham 2005 = VMAC 하위분석 123명인데 489로, VMAC 2002), Chow 2011 89 두 번(같은 코호트 추론). 그림4 문장은 ref 12·20·22, RR 0.69(0.46–1.05), 무작위효과 p=0.89 오기 의심. 그림4 이미지 미확인(403/reCAPTCHA). 글 38064-counted-489-twice. 개인 기록 gong-final-table1.
-다음: Burger 2001·Silver 2002 방법 절(사망 정의·추적 기간), Aronson·Burger 2002(12161240) 82명 출처, Kong·Wang 표, 1140/1787 출처. b2·b4 판정 불가 2행, 서지/식별자 불일치 하한 10행 유지.
+다음: Burger 2001·Silver 2002 방법 절(사망 정의·추적 기간), Aronson·Burger 2002 82명 출처(시계 518에 막힘), Kong·Wang 표, 1140/1787 출처. b2·b4 판정 불가 2행, 서지/식별자 불일치 하한 10행 유지.
 시계 514: Gong 최종판 그림4 이미지 받음(pmc-oa-opendata S3 PMC4716178.1/bmjopen2015008545f04.jpg 200; europepmc /bin 403). 행: Burger 2002 4/163 대 2/83, Burger 2001 12/203 대 5/58, Silver 2002 42/203 대 18/58; 합 58/569 대 25/199, RR 0.69(0.46–1.05), 이질성 P=0.89 → 본문 무작위효과 p=0.89는 이것일 수 있음(추론). 같은 dobutamine 58명이 효과 추정에 두 번(추론, 261=103+100+58 전제). 내 MH 재계산 0.695, Burger 2001 빼면 0.697. 글 fifty-eight-twice-in-figure-4. PRECEDENT PMID = 12486437(XML에 온전히 있음): 앞 글의 '124864 잘림'은 내 오독 → 38064 r2로 고침.
+시계 518: Aronson·Burger 2002(12161240, Am J Cardiol 90:435) PubMed·Europe PMC 초록 없음, Crossref 참고문헌 20개 중 nesiritide 시험은 Colucci 2000(ref 6)뿐 — Burger 2001·Silver 2002·PRECEDENT 인용 없음. sciencedirect 403. 82명 출처 미확인. PRECEDENT(12486437) 초록: 255명, 두 용량+도부타민, 군별 수 없음. 그림4 'Burger 2002' 163+83=246 ≠ 255 — 그 행이 PRECEDENT인지, 분석 부분집합인지 미확인.
