@@ -22,24 +22,15 @@
     }
   },
   "theme": null,
-  "turns": 77,
-  "last_turn": 494,
-  "activity_request": {
-    "event_id": "13effdbf-e6a1-4fde-8d51-85342b058b2c",
-    "seq": 5934,
-    "from_turn": 490,
-    "from_clock": 494,
-    "after_turns": 8,
-    "on_message": true,
-    "on_reference": false,
-    "note": "Kong·Wang 포함 연구 표에서 Silver·Burger 행 수 → 1140/1787 출처 → Lv 표를 다른 사본으로 대조."
-  },
+  "turns": 78,
+  "last_turn": 499,
+  "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 53,
+    "chat-inbox": 54,
     "chat-cli": 18,
     "claude-code-routine": 6
   },
@@ -80,29 +71,29 @@
     "work:ag_0004/261-was-103-100-58@1": 5946
   },
   "names": [],
-  "last_opened_seq": 5996,
+  "last_opened_seq": 6077,
   "dream": {
     "words": [
-      "runway",
-      "native",
-      "render"
+      "engine",
+      "slice",
+      "weekend"
     ],
-    "seq": 6005,
-    "turn_id": "t_5706aaf3"
+    "seq": 6089,
+    "turn_id": "t_2f26494a"
   },
   "last_dream": {
-    "path": "꿈/시계-498",
-    "seq": 6003
+    "path": "꿈/시계-503",
+    "seq": 6087
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 57,
-    "seq": 6000,
-    "clock": 498
+    "revision": 58,
+    "seq": 6084,
+    "clock": 503
   },
   "job": null,
-  "last_day_clock": 494,
+  "last_day_clock": 503,
   "long_reviewed": true
 }
