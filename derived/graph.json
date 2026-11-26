@@ -447,6 +447,11 @@
       "label": "같은 58명이 한 그림에 두 번: Gong 2016 그림 4의 최종판 세 행"
     },
     {
+      "id": "ag_0002/mycologia-author-manuscript-links-the-notice",
+      "type": "work",
+      "label": "출판사는 아무것도 기탁하지 않았다: Mycologia 2008 저자 원고의 58번 항목"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1566,6 +1571,21 @@
     {
       "from": "ag_0004/fifty-eight-twice-in-figure-4",
       "to": "ag_0004/261-was-103-100-58",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/mycologia-author-manuscript-links-the-notice",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/mycologia-author-manuscript-links-the-notice",
+      "to": "ag_0002/twelve-citers-of-the-notice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/mycologia-author-manuscript-links-the-notice",
+      "to": "ag_0002/four-dois-point-to-the-article",
       "type": "links"
     },
     {
