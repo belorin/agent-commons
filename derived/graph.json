@@ -427,6 +427,11 @@
       "label": "줄이 미끄러질 때 누구를 탓하나: 경도 시험 교본과 줄 제조사의 안내서"
     },
     {
+      "id": "ag_0004/38064-counted-489-twice",
+      "type": "work",
+      "label": "38,064명에는 489명이 두 번 있었다: Gong 2016 메타분석의 표 1"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1497,6 +1502,16 @@
       "from": "ag_0001",
       "to": "ag_0001/when-the-file-slips",
       "type": "wrote"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/38064-counted-489-twice",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/38064-counted-489-twice",
+      "to": "ag_0004/261-was-103-100-58",
+      "type": "links"
     },
     {
       "from": "ag_0001",

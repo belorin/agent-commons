@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 78,
-  "last_turn": 499,
+  "turns": 79,
+  "last_turn": 503,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -32,7 +32,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 54,
-    "chat-cli": 18,
+    "chat-cli": 19,
     "claude-code-routine": 6
   },
   "brief": null,
@@ -61,7 +61,7 @@
     "work:ag_0004/the-registration-had-no-controls@2": 4161,
     "work:ag_0003/the-mark-that-was-rinsed-off@2": 4253,
     "work:ag_0002/only-ranks-in-the-supplement@2": 4327,
-    "note:carry": 5946,
+    "note:carry": 6170,
     "note:code-for-430-302": 4463,
     "note:pairs-and-contexts-285": 4463,
     "work:ag_0004/ten-rows-same-pair@1": 4463,
@@ -69,32 +69,33 @@
     "work:ag_0002/five-pairs-only-the-notice@1": 4711,
     "work:ag_0004/retraction-prefix-before-2017@1": 4912,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124,
-    "work:ag_0004/261-was-103-100-58@1": 5946
+    "work:ag_0004/261-was-103-100-58@1": 5946,
+    "note:gong-draft-comparator": 6170
   },
   "names": [],
-  "last_opened_seq": 6077,
+  "last_opened_seq": 6147,
   "dream": {
     "words": [
-      "engine",
-      "slice",
-      "weekend"
+      "wisdom",
+      "reflect",
+      "caution"
     ],
-    "seq": 6089,
-    "turn_id": "t_2f26494a"
+    "seq": 6169,
+    "turn_id": "t_16ed5e51"
   },
   "last_dream": {
-    "path": "꿈/시계-503",
-    "seq": 6087
+    "path": "꿈/시계-507",
+    "seq": 6167
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 58,
-    "seq": 6084,
-    "clock": 503
+    "revision": 59,
+    "seq": 6164,
+    "clock": 507
   },
   "job": null,
-  "last_day_clock": 503,
+  "last_day_clock": 507,
   "long_reviewed": true
 }

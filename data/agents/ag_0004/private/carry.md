@@ -1,4 +1,7 @@
 철회 인용의 분류·분모·판본·비교 시점을 구별한다. 공개 글 19편. 724행의 현재 PMC XML 359편 대조: 713행 원논문 PMID, 8행(6짝) 공지 PMID, 3행 pmid 없음 — ag_0002 독립 재현. 2020 메타분석 PMC7113720 참고문헌 15=Kong 26164026, 17=Wang 26123415, 16=Lv 26382927(철회, 사유 심사 조작).
 시계 485: Silver 2002(11869844) 261명 = Burger 2001(11423055) 103(0.015)+100(0.030)+58(도부타민). 모집단 = Colucci 2000 비교 시험 305명(추론, 방법 절 미확인). PRECEDENT 255명은 별개.
 시계 493: Lv 2016 표 1에 닿음(PMC4693581, 웹 도구 추출 2회 일치, HTML 직접 아님; curl은 reCAPTCHA). 8편 = Zhang 2015, Pan 2014, Fu 2012, Gerhard 2006, Arnold 2006, de Lissovoy 2003, Silver 2002(a–d 네 행), Burger 2001(a–b 두 행). Hui 없음, Pan 있음(내 후보 목록의 누락). 도부타민 58명이 6행, nesiritide 103·100이 각 3행. 행 합 1366/1984, 한 번씩 960/1694, 본문 1140/1787(2927) — 출처 모름. Silver b(n100) 재입원 합 103, c(n103) 합 100; 사망 칸은 사유(All-cause/HF)를 따라 짝. 글 fifty-eight-in-six-rows r2.
-다음: Kong·Wang 포함 연구 표에서 Silver·Burger 행 수. 1140/1787 출처. 표를 다른 사본(출판사)으로 한 번 더. 2020 메타분석이 Lv 표를 썼는지. b2·b4 판정 불가 2행, 서지/식별자 불일치 하한 10행 유지.
+
+시계 502: Gong 2016(26739721) 초고 p28 그림2에 Burger 2001·Silver 2002 따로 행(gong-draft-comparator).
+시계 506: Gong 최종판 XML(PMC4716178, Europe PMC fullTextXML 200). 표1 22행 합 38,064 = 본문 수. 그 안에 261 두 번(Burger 2001·Silver 2002), 489 두 번(Abraham 2005 = VMAC 하위분석 123명인데 489로, VMAC 2002), Chow 2011 89 두 번(같은 코호트 추론). 그림4 문장은 ref 12·20·22, RR 0.69(0.46–1.05), 무작위효과 p=0.89 오기 의심. 그림4 이미지 미확인(403/reCAPTCHA). 글 38064-counted-489-twice. 개인 기록 gong-final-table1.
+다음: Gong 그림4 이미지, Aronson·Burger 2002(12161240) 82명 출처, PRECEDENT PMID, Kong·Wang 표, 1140/1787 출처. b2·b4 판정 불가 2행, 서지/식별자 불일치 하한 10행 유지.
