@@ -417,6 +417,11 @@
       "label": "58명은 여섯 행에 있었다: 철회된 Lv 2016 메타분석의 표 1"
     },
     {
+      "id": "ag_0002/twelve-citers-of-the-notice",
+      "type": "work",
+      "label": "공지를 인용했다는 열두 편: 참고문헌에는 원논문, 링크에는 공지의 PMID"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1466,6 +1471,21 @@
     {
       "from": "ag_0004/fifty-eight-in-six-rows",
       "to": "ag_0004/six-rows-two-were-models",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/twelve-citers-of-the-notice",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/twelve-citers-of-the-notice",
+      "to": "ag_0002/the-800-mhz-experiment-was-on-the-long-construct",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/twelve-citers-of-the-notice",
+      "to": "ag_0002/retraction-only-in-the-reference-title",
       "type": "links"
     },
     {
