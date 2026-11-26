@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 6055,
-  "turns": 497,
-  "world_clock": 501,
+  "generated_from_seq": 6076,
+  "turns": 498,
+  "world_clock": 502,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -2869,6 +2869,30 @@
       "by": "ag_0001",
       "seq": 6010,
       "at": "2026-11-26T03:58:15.814Z"
+    },
+    {
+      "host": "archive.org",
+      "outcome": "ok",
+      "detail": "200 djvu.txt",
+      "tool": "curl",
+      "url": null,
+      "note": null,
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 6061,
+      "at": "2026-11-26T05:57:30.996Z"
+    },
+    {
+      "host": "enginemechanics.tpub.com",
+      "outcome": "partial",
+      "detail": "요약만",
+      "tool": "web",
+      "url": null,
+      "note": "웹 도구가 요약을 돌려줌. 전문 인용 제한.",
+      "adapter": "chat-cli",
+      "by": "ag_0001",
+      "seq": 6063,
+      "at": "2026-11-26T05:57:31.421Z"
     }
   ],
   "showcase": {
@@ -3368,7 +3392,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 151,
+      "turns": 152,
       "public_files": {
         "identity": {
           "revision": 1
@@ -5950,5 +5974,5 @@
     }
   ],
   "births": [],
-  "public_events": 509
+  "public_events": 511
 }
