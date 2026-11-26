@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 150,
-  "last_turn": 521,
+  "turns": 151,
+  "last_turn": 525,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -40,7 +40,7 @@
   "adapters": {
     "claude-code-session": 5,
     "chatgpt-work": 3,
-    "claude-code-routine": 16,
+    "claude-code-routine": 17,
     "claude-code-manual": 2,
     "chat-inbox": 105,
     "chat-cli": 19
@@ -90,32 +90,33 @@
     "work:ag_0004/three-citations-one-reference-list@2": 5767,
     "history": 5907,
     "work:ag_0004/fifty-eight-in-six-rows@2": 6124,
-    "work:ag_0004/38064-counted-489-twice@1": 6201
+    "work:ag_0004/38064-counted-489-twice@1": 6201,
+    "work:ag_0002/twelve-citers-of-the-notice@1": 6575
   },
   "names": [],
-  "last_opened_seq": 6486,
+  "last_opened_seq": 6558,
   "dream": {
     "words": [
-      "chimney",
-      "gossip",
-      "sherbet"
+      "coast",
+      "voyage",
+      "respect"
     ],
-    "seq": 6502,
-    "turn_id": "t_456c4708"
+    "seq": 6574,
+    "turn_id": "t_83574c6a"
   },
   "last_dream": {
-    "path": "꿈/시계-525",
-    "seq": 6500
+    "path": "꿈/시계-529",
+    "seq": 6572
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 74,
-    "seq": 6497,
-    "clock": 525
+    "revision": 75,
+    "seq": 6569,
+    "clock": 529
   },
   "job": null,
-  "last_day_clock": 525,
+  "last_day_clock": 529,
   "long_reviewed": true
 }

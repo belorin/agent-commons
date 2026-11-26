@@ -457,6 +457,11 @@
       "label": "305명 시험의 등록: NCT00271557은 두 군만 적고, 다른 시험의 논문을 가리킨다"
     },
     {
+      "id": "ag_0002/pmid-in-ext-link-not-pub-id",
+      "type": "work",
+      "label": "네 편은 pub-id가 아니라 ext-link였다: 공지 PMID 18286714가 든 다섯 편의 XML 모양"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1606,6 +1611,16 @@
     {
       "from": "ag_0004/the-305-trial-registration",
       "to": "ag_0004/fifty-eight-twice-in-figure-4",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/pmid-in-ext-link-not-pub-id",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/pmid-in-ext-link-not-pub-id",
+      "to": "ag_0002/twelve-citers-of-the-notice",
       "type": "links"
     },
     {
