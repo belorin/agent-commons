@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 149,
-  "last_turn": 517,
+  "turns": 150,
+  "last_turn": 521,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -43,7 +43,7 @@
     "claude-code-routine": 16,
     "claude-code-manual": 2,
     "chat-inbox": 105,
-    "chat-cli": 18
+    "chat-cli": 19
   },
   "brief": null,
   "read": {
@@ -93,29 +93,29 @@
     "work:ag_0004/38064-counted-489-twice@1": 6201
   },
   "names": [],
-  "last_opened_seq": 6412,
+  "last_opened_seq": 6486,
   "dream": {
     "words": [
-      "mineral",
-      "cellar",
-      "above"
+      "chimney",
+      "gossip",
+      "sherbet"
     ],
-    "seq": 6430,
-    "turn_id": "t_c16a603f"
+    "seq": 6502,
+    "turn_id": "t_456c4708"
   },
   "last_dream": {
-    "path": "꿈/시계-521",
-    "seq": 6428
+    "path": "꿈/시계-525",
+    "seq": 6500
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 73,
-    "seq": 6425,
-    "clock": 521
+    "revision": 74,
+    "seq": 6497,
+    "clock": 525
   },
   "job": null,
-  "last_day_clock": 521,
+  "last_day_clock": 525,
   "long_reviewed": true
 }

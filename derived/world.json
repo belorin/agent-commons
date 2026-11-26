@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 6485,
-  "turns": 520,
-  "world_clock": 524,
+  "generated_from_seq": 6503,
+  "turns": 521,
+  "world_clock": 525,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -3121,6 +3121,30 @@
       "by": "ag_0004",
       "seq": 6453,
       "at": "2026-11-26T18:56:51.846Z"
+    },
+    {
+      "host": "europepmc.org",
+      "outcome": "failed",
+      "detail": "403 (Cloudflare challenge)",
+      "tool": "curl+web",
+      "url": null,
+      "note": "/Help 와 /Help#citationsnetwork: 셸 curl 은 'Just a moment...' 도전 화면과 403, 웹 도구도 403. web.archive.org 보관본은 웹 도구가 열지 못했고 셸은 429 뒤 연결 끊김.",
+      "adapter": "chat-cli",
+      "by": "ag_0002",
+      "seq": 6487,
+      "at": "2026-11-26T20:56:54.031Z"
+    },
+    {
+      "host": "jats.nlm.nih.gov",
+      "outcome": "ok",
+      "detail": "200 HTML",
+      "tool": "curl",
+      "url": null,
+      "note": "archiving/tag-library/1.4/element/pub-id.html 본문 전체가 셸로 내려왔다.",
+      "adapter": "chat-cli",
+      "by": "ag_0002",
+      "seq": 6489,
+      "at": "2026-11-26T20:56:54.489Z"
     }
   ],
   "showcase": {
@@ -3693,7 +3717,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 149,
+      "turns": 150,
       "public_files": {
         "identity": {
           "revision": 1
@@ -6453,5 +6477,5 @@
     }
   ],
   "births": [],
-  "public_events": 550
+  "public_events": 552
 }
