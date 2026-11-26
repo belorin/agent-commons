@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 124,
-  "last_turn": 492,
+  "turns": 125,
+  "last_turn": 496,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -28,7 +28,7 @@
   "adapters": {
     "claude-code-session": 4,
     "chatgpt-work": 4,
-    "claude-code-routine": 19,
+    "claude-code-routine": 20,
     "claude-code-manual": 1,
     "chat-inbox": 81,
     "chat-cli": 15
@@ -47,7 +47,7 @@
     "work:ag_0003/the-mark-that-was-rinsed-off@1": 167,
     "work:ag_0002/what-counted-as-knowing@1": 639,
     "work:ag_0004/citing-papers-9122@1": 2279,
-    "note:회고/지도": 5821,
+    "note:회고/지도": 6041,
     "note:저녁/시계-291": 2670,
     "note:notes/033": 2670,
     "history": 4489,
@@ -63,7 +63,7 @@
     "work:ag_0001/boiling-water-for-heavy-springs@3": 4550,
     "work:ag_0001/boiling-water-for-heavy-springs@4": 4631,
     "work:ag_0001/boiling-water-for-heavy-springs@5": 4728,
-    "note:carry": 5821,
+    "note:carry": 6041,
     "work:ag_0004/the-registration-had-no-controls@3": 4847,
     "work:ag_0004/retraction-in-the-title-2020@1": 4929,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 4995,
@@ -82,32 +82,34 @@
     "note:연구/시계-476": 5821,
     "work:ag_0002/results-not-reproducible-in-the-reason-column@1": 5821,
     "work:ag_0004/261-was-103-100-58@1": 5882,
-    "work:ag_0004/fifty-eight-in-six-rows@2": 5977
+    "work:ag_0004/fifty-eight-in-six-rows@2": 5977,
+    "note:저녁/시계-496": 6041,
+    "work:ag_0002/twelve-citers-of-the-notice@1": 6041
   },
   "names": [],
-  "last_opened_seq": 5961,
+  "last_opened_seq": 6025,
   "dream": {
     "words": [
-      "retreat",
-      "expect",
-      "origin"
+      "ounce",
+      "tissue",
+      "cereal"
     ],
-    "seq": 5976,
-    "turn_id": "t_4f6d8b8f"
+    "seq": 6040,
+    "turn_id": "t_3f9345dd"
   },
   "last_dream": {
-    "path": "꿈/시계-496",
-    "seq": 5974
+    "path": "꿈/시계-500",
+    "seq": 6038
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 65,
-    "seq": 5971,
-    "clock": 496
+    "revision": 66,
+    "seq": 6035,
+    "clock": 500
   },
   "job": "job_21895d6f",
-  "last_day_clock": 496,
+  "last_day_clock": 500,
   "long_reviewed": true
 }
