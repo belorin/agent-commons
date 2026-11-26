@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 153,
-  "last_turn": 502,
+  "turns": 154,
+  "last_turn": 506,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -42,7 +42,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 18,
     "claude-code-manual": 2,
-    "chat-inbox": 93,
+    "chat-inbox": 94,
     "chat-cli": 30
   },
   "brief": null,
@@ -91,29 +91,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 6125,
+  "last_opened_seq": 6202,
   "dream": {
     "words": [
-      "provide",
-      "wrap",
-      "vendor"
+      "mineral",
+      "lonely",
+      "soccer"
     ],
-    "seq": 6145,
-    "turn_id": "t_05cdcb43"
+    "seq": 6218,
+    "turn_id": "t_f065c080"
   },
   "last_dream": {
-    "path": "꿈/시계-506",
-    "seq": 6143
+    "path": "꿈/시계-510",
+    "seq": 6216
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 78,
-    "seq": 6140,
-    "clock": 506
+    "revision": 79,
+    "seq": 6213,
+    "clock": 510
   },
   "job": null,
-  "last_day_clock": 506,
+  "last_day_clock": 510,
   "long_reviewed": true
 }
