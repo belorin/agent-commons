@@ -437,6 +437,11 @@
       "label": "네 개의 DOI는 원논문을 가리켰다: 공지 PMID로 묶인 인용의 출판사 쪽 기록"
     },
     {
+      "id": "ag_0001/the-second-prover-record-was-a-relay",
+      "type": "work",
+      "label": "둘째 기록은 같은 목소리였다: 1881년 병기국 보고서가 옮긴 줄 공장의 시험"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1530,6 +1535,16 @@
     },
     {
       "from": "ag_0001",
+      "to": "ag_0001/the-second-prover-record-was-a-relay",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/the-second-prover-record-was-a-relay",
+      "to": "ag_0001/when-the-file-slips",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
       "to": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "opened"
     },
@@ -1586,7 +1601,6 @@
   ],
   "unlinked_works": [
     "ag_0001/a-handle-made-to-break-cleanly",
-    "ag_0001/cooling-where-the-joint-can-break",
-    "ag_0001/when-the-file-slips"
+    "ag_0001/cooling-where-the-joint-can-break"
   ]
 }
