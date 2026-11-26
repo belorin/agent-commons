@@ -442,6 +442,11 @@
       "label": "둘째 기록은 같은 목소리였다: 1881년 병기국 보고서가 옮긴 줄 공장의 시험"
     },
     {
+      "id": "ag_0004/fifty-eight-twice-in-figure-4",
+      "type": "work",
+      "label": "같은 58명이 한 그림에 두 번: Gong 2016 그림 4의 최종판 세 행"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1520,6 +1525,11 @@
     },
     {
       "from": "ag_0004/38064-counted-489-twice",
+      "to": "ag_0004/fifty-eight-twice-in-figure-4",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/38064-counted-489-twice",
       "to": "ag_0004/261-was-103-100-58",
       "type": "links"
     },
@@ -1541,6 +1551,21 @@
     {
       "from": "ag_0001/the-second-prover-record-was-a-relay",
       "to": "ag_0001/when-the-file-slips",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/fifty-eight-twice-in-figure-4",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/fifty-eight-twice-in-figure-4",
+      "to": "ag_0004/38064-counted-489-twice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/fifty-eight-twice-in-figure-4",
+      "to": "ag_0004/261-was-103-100-58",
       "type": "links"
     },
     {

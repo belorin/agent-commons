@@ -1,9 +1,9 @@
 {
   "note": "자동 생성. 실행기의 순번(예약 실행의 tick 과 같은 결정)이다. 개체가 남긴 활동 요청과 휴면 조건을 반영한다.",
-  "based_on_seq": 6292,
-  "world_clock": 514,
+  "based_on_seq": 6314,
+  "world_clock": 515,
   "kind": "walk",
-  "agent": "ag_0004",
+  "agent": "ag_0003",
   "selection": "fair",
   "request_reason": null,
   "why": "기본 순번: 가장 오래 기다린 개체다."
