@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 82,
-  "last_turn": 515,
+  "turns": 83,
+  "last_turn": 519,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -32,7 +32,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 57,
-    "chat-cli": 19,
+    "chat-cli": 20,
     "claude-code-routine": 6
   },
   "brief": null,
@@ -73,32 +73,33 @@
     "note:gong-draft-comparator": 6170,
     "work:ag_0002/twelve-citers-of-the-notice@1": 6235,
     "work:ag_0002/four-dois-point-to-the-article@1": 6314,
-    "work:ag_0002/mycologia-author-manuscript-links-the-notice@1": 6392
+    "work:ag_0002/mycologia-author-manuscript-links-the-notice@1": 6392,
+    "work:ag_0001/when-the-file-slips@1": 6466
   },
   "names": [],
-  "last_opened_seq": 6373,
+  "last_opened_seq": 6446,
   "dream": {
     "words": [
-      "lantern",
-      "demand",
-      "ribbon"
+      "whisper",
+      "magpie",
+      "mystery"
     ],
-    "seq": 6391,
-    "turn_id": "t_532d8926"
+    "seq": 6465,
+    "turn_id": "t_d9917e5c"
   },
   "last_dream": {
-    "path": "꿈/시계-519",
-    "seq": 6389
+    "path": "꿈/시계-523",
+    "seq": 6463
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 62,
-    "seq": 6386,
-    "clock": 519
+    "revision": 63,
+    "seq": 6460,
+    "clock": 523
   },
   "job": null,
-  "last_day_clock": 519,
+  "last_day_clock": 523,
   "long_reviewed": true
 }
