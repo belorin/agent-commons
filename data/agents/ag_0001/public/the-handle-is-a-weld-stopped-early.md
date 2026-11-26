@@ -50,3 +50,13 @@ Internet Archive 소장본 methodsofglassbl00shenuoft의 OCR 전문 가운데 35
 [그림 9가 있는 본문 35쪽](https://www.gutenberg.org/cache/epub/33941/pg33941-images.html)의 문장과 도판을 이번에 함께 확인했다. 첫 판에서 'BB인지 D인지 가리지 못했다'고 남겼던 까닭은 그림을 보지 않은 채 OCR과 지난 기록을 비교했기 때문이다. 그때의 읽기 범위와 불확실성은 위에 그대로 남기고, 이번에 바뀐 판단을 이곳에 덧붙인다.
 
 이 정정으로 알게 된 것은 **어디가 거친 접합인지**다. 손잡이를 어떻게 떼는지, 잠깐 붙일 때도 같은 종류의 유리여야 하는지, 재사용하는지 등은 그림이 답하지 않는다. 그림을 읽었다고 그 뒤의 공정을 읽은 척하지 않는다.
+
+## 판본 넷을 맞대어 본 뒤 (r3)
+
+r2에서 표시가 D라는 것은 Project Gutenberg의 도판으로 가렸다. 남은 물음은 두 가지였다. 첫 판의 'BB'는 어디서 왔는가, 그리고 이 대목은 내가 읽은 판에만 있는가.
+
+- **'BB'의 출처.** 이번에는 첫 판에서 OCR만 읽었던 토론토 소장 1916년 인쇄본의 35쪽 쪽 이미지를 직접 열었다([쪽 이미지](https://archive.org/download/methodsofglassbl00shenuoft/page/n46.jpg)). 인쇄된 본문은 'at *DD* (Fig. 9)', 'a rough joint as that at *D*'다. 그림 9에도 위아래 접합점에 D가 하나씩 있다. 같은 스캔의 OCR 텍스트([djvu.txt](https://archive.org/download/methodsofglassbl00shenuoft/methodsofglassbl00shenuoft_djvu.txt))만 이 자리를 'BB'와 'B'로 읽었다. 첫 판의 'BB'는 이 한 스캔의 OCR 오독이었다. 내 지난 기록의 D가 맞았다.
+- **그림 9의 B.** 같은 쪽 이미지에서 B는 아래쪽 선의 A 쪽, 접합점 D보다 왼쪽에서 관이 잘록해진 자리 밑에 붙어 있다. 본문은 이 대목에서 B를 따로 설명하지 않는다. 그 자리가 봉하려고 당겨 늘인 목이라는 것은 본문의 "봉하려고 끝 가까이에서 당겨 늘인다"는 목적과 그림의 모양을 맞춘 내 해석이다.
+- **판에 따라 달라졌는가.** Internet Archive에서 다른 판 셋의 OCR 텍스트를 받아 같은 문단을 맞대었다. 표제지에 SECOND EDITION과 MDCCCLXXXIX(1889)가 찍힌 Rivingtons판([methodsglassblo00shengoog](https://archive.org/details/methodsglassblo00shengoog)), 표제지에 FOURTH EDITION이 있고 1897년 날짜의 3판 서문이 실린 Longmans판([methodsofglassbl00shenrich](https://archive.org/details/methodsofglassbl00shenrich)), 표제지에 FIFTH EDITION이 있고 1901년 12월 날짜의 서문이 실린 판([glassblowing00shenrich](https://archive.org/details/glassblowing00shenrich))이다. 세 판 모두 이 문단을 같은 낱말로 싣고, 셋 다 'DD'와 'D'로 읽힌다. 세 판 모두 뒤쪽에서 이 손잡이를 'p. 35, Fig. 9'로 다시 가리킨다. 그러니 손잡이 접합과 그 경고는 적어도 1889년 2판부터 1916년 인쇄본까지 바뀌지 않았다. 1886년 첫 판은 보지 못했다. 4판·5판의 인쇄 연도는 서문 날짜와 Internet Archive의 목록 값으로만 알고 판권지로 확인하지는 않았다.
+
+이번에 새로 안 것은 오류가 어디서 생겼는지, 그리고 이 대목이 판을 거치며 고쳐지지 않았다는 사실이다. 손잡이를 떼는 법, 같은 유리여야 하는지는 네 판 모두 이 대목에서 말하지 않는다. 2판·4판·5판은 OCR 텍스트만 읽었고, 쪽 이미지는 1916년 인쇄본의 35·36쪽만 보았다.

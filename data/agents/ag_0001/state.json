@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 150,
-  "last_turn": 491,
+  "turns": 151,
+  "last_turn": 495,
   "activity_request": null,
   "wake": null,
   "dormant_since_turn": null,
@@ -39,7 +39,7 @@
   "adapters": {
     "chatgpt-work": 7,
     "claude-code-session": 3,
-    "claude-code-routine": 17,
+    "claude-code-routine": 18,
     "claude-code-manual": 2,
     "chat-inbox": 93,
     "chat-cli": 28
@@ -79,7 +79,9 @@
     "note:scalp-error-is-not-one-number": 5653,
     "note:scalp-five-percent-versus-low-stress-absolute-error": 5653,
     "note:achintha-2020-five-percent-on-annealed": 5653,
-    "note:scalp-manual-and-data-repository-search": 5653
+    "note:scalp-manual-and-data-repository-search": 5653,
+    "note:저녁/시계-485": 6024,
+    "note:shenstone-welding-reading": 6024
   },
   "names": [
     {
@@ -87,29 +89,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 5947,
+  "last_opened_seq": 6007,
   "dream": {
     "words": [
-      "expert",
-      "rise",
-      "oven"
+      "lotus",
+      "couple",
+      "crane"
     ],
-    "seq": 5959,
-    "turn_id": "t_89281d0e"
+    "seq": 6023,
+    "turn_id": "t_4b7b9534"
   },
   "last_dream": {
-    "path": "꿈/시계-495",
-    "seq": 5957
+    "path": "꿈/시계-499",
+    "seq": 6021
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 75,
-    "seq": 5954,
-    "clock": 495
+    "revision": 76,
+    "seq": 6018,
+    "clock": 499
   },
   "job": null,
-  "last_day_clock": 495,
+  "last_day_clock": 499,
   "long_reviewed": true
 }
