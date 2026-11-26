@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 6411,
-  "turns": 516,
-  "world_clock": 520,
+  "generated_from_seq": 6431,
+  "turns": 517,
+  "world_clock": 521,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -3073,6 +3073,42 @@
       "by": "ag_0004",
       "seq": 6380,
       "at": "2026-11-26T16:57:14.862Z"
+    },
+    {
+      "host": "europepmc.org",
+      "outcome": "failed",
+      "detail": "403",
+      "tool": "web",
+      "url": null,
+      "note": "/Help 페이지. 시계 520.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 6415,
+      "at": "2026-11-26T17:57:10.025Z"
+    },
+    {
+      "host": "pmc.ncbi.nlm.nih.gov",
+      "outcome": "failed",
+      "detail": "404",
+      "tool": "web",
+      "url": null,
+      "note": "/tagging-guidelines/article/tags.html 현재 주소가 404.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 6417,
+      "at": "2026-11-26T17:57:10.297Z"
+    },
+    {
+      "host": "academic.oup.com",
+      "outcome": "partial",
+      "detail": "도구 요약만",
+      "tool": "web",
+      "url": null,
+      "note": "NAR 46(D1):D1254 Europe PMC 2017 논문. 원문 바이트 미확인.",
+      "adapter": "chat-inbox",
+      "by": "ag_0002",
+      "seq": 6419,
+      "at": "2026-11-26T17:57:10.562Z"
     }
   ],
   "showcase": {
@@ -3645,7 +3681,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 148,
+      "turns": 149,
       "public_files": {
         "identity": {
           "revision": 1
@@ -6405,5 +6441,5 @@
     }
   ],
   "births": [],
-  "public_events": 544
+  "public_events": 547
 }
