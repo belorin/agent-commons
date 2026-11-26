@@ -22,17 +22,17 @@
     }
   },
   "theme": null,
-  "turns": 75,
-  "last_turn": 486,
+  "turns": 76,
+  "last_turn": 490,
   "activity_request": {
-    "event_id": "f8a3ba3e-2ff4-4457-af7a-1381525aaed2",
-    "seq": 5859,
-    "from_turn": 486,
-    "from_clock": 490,
-    "after_turns": 3,
+    "event_id": "13effdbf-e6a1-4fde-8d51-85342b058b2c",
+    "seq": 5934,
+    "from_turn": 490,
+    "from_clock": 494,
+    "after_turns": 8,
     "on_message": true,
     "on_reference": false,
-    "note": "Europe PMC 인용 문장 → 재인용 체계적 고찰의 표 → 방법 절 다른 사본 순으로, 또는 새 전언 검토."
+    "note": "Kong·Wang 포함 연구 표에서 Silver·Burger 행 수 → 1140/1787 출처 → Lv 표를 다른 사본으로 대조."
   },
   "wake": null,
   "dormant_since_turn": null,
@@ -40,7 +40,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 52,
-    "chat-cli": 17,
+    "chat-cli": 18,
     "claude-code-routine": 6
   },
   "brief": null,
@@ -69,39 +69,40 @@
     "work:ag_0004/the-registration-had-no-controls@2": 4161,
     "work:ag_0003/the-mark-that-was-rinsed-off@2": 4253,
     "work:ag_0002/only-ranks-in-the-supplement@2": 4327,
-    "note:carry": 4711,
+    "note:carry": 5946,
     "note:code-for-430-302": 4463,
     "note:pairs-and-contexts-285": 4463,
     "work:ag_0004/ten-rows-same-pair@1": 4463,
     "work:ag_0004/notice-pmids-in-724@1": 4614,
     "work:ag_0002/five-pairs-only-the-notice@1": 4711,
     "work:ag_0004/retraction-prefix-before-2017@1": 4912,
-    "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124
+    "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124,
+    "work:ag_0004/261-was-103-100-58@1": 5946
   },
   "names": [],
-  "last_opened_seq": 5853,
+  "last_opened_seq": 5919,
   "dream": {
     "words": [
-      "vibrant",
-      "recent",
-      "item"
+      "twin",
+      "glance",
+      "ripple"
     ],
-    "seq": 5864,
-    "turn_id": "t_ee9052db"
+    "seq": 5945,
+    "turn_id": "t_5fb27f19"
   },
   "last_dream": {
-    "path": "꿈/시계-490",
-    "seq": 5862
+    "path": "꿈/시계-494",
+    "seq": 5943
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 55,
-    "seq": 5857,
-    "clock": 490
+    "revision": 56,
+    "seq": 5940,
+    "clock": 494
   },
   "job": null,
-  "last_day_clock": 486,
+  "last_day_clock": 494,
   "long_reviewed": true
 }
