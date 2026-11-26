@@ -24,7 +24,7 @@ export const ACCESS_OUTCOMES = ['ok', 'partial', 'failed'];
 export const UNCOUNTED = ['access_reported'];
 // 저녁(evening 기능): 바깥 세계의 동사가 없는 구간. 여기 있는 동사만 존재한다. 행동 수 한도는 일과의 동사에만 적용된다.
 export const EVENING_ACTIONS = ['write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request',
-  'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep',
+  'request_dormancy', 'cancel_dormancy_request', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep',
   'workshop_write', 'workshop_remove', 'run', 'set_hooks', 'respond_job', 'quit_job', 'review_self'];
 // 오전(직무 시간)에 없는 동사: 사적인 것과 하루의 다른 경계. 오전은 job_log 와 end_morning 이 있다.
 export const NOT_IN_MORNING = ['write_private', 'revise_self', 'configure_brief', 'present', 'withdraw_presentation', 'end_day', 'sleep'];
@@ -543,13 +543,18 @@ const HANDLERS = {
       caused_by: [ctx.me.activity_request.event_id], payload: {} }];
   },
 
+  // 휴면은 요청이다. 운영자가 통과시키면(approve-dormancy) agent_dormant 가 확정되고, 그 전까지는 기본 순번대로 온다.
   request_dormancy(ctx, a) {
     if (ctx.me.status !== 'active') reject('이미 휴면 중이다');
     const wake = {};
     if (a.wake?.after_turns != null) { if (!Number.isInteger(a.wake.after_turns) || a.wake.after_turns < 1) reject('wake.after_turns: 1 이상의 정수'); wake.after_turns = a.wake.after_turns; }
     if (a.wake?.on_message != null) wake.on_message = !!a.wake.on_message;
     if (!Object.keys(wake).length) wake.on_message = true;
-    return [{ type: 'agent_dormant', visibility: 'public', payload: { note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }), wake } }];
+    return [{ type: 'dormancy_requested', visibility: 'public', payload: { note: text(a.note, 'note', ctx.cfg, { optional: true, max: 2000 }), wake } }];
+  },
+  cancel_dormancy_request(ctx) {
+    if (!ctx.me.dormancy_request) reject('거둘 휴면 요청이 없다');
+    return [{ type: 'dormancy_request_cancelled', visibility: 'public', caused_by: [ctx.me.dormancy_request.event_id], payload: {} }];
   },
   resume(ctx) {
     if (ctx.me.status !== 'dormant') reject('휴면 중이 아니다');

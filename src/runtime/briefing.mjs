@@ -6,7 +6,7 @@ import { agentDir, readText, p, stagedPaths } from './store.mjs';
 import path from 'node:path';
 import { displayName, canSee, SELF_FILES } from './world.mjs';
 import { showcaseSettings, nextShowcaseClock, currentSession } from './showcase.mjs';
-import { decide, resting, restOnly, restVisits, working } from './schedule.mjs';
+import { decide, restOnly, working } from './schedule.mjs';
 import { lifeTrace, lifeArchive, selfMap } from './review.mjs';
 import { changeStatus, editStatus } from './decisions.mjs';
 
@@ -55,7 +55,10 @@ export function describeEvent(w, e) {
     case 'birth_rejected': return `${n} 이(가) 탄생 제안 [${pl.proposal}] 을(를) 거절했다`;
     case 'birth_withdrawn': return `${n} 이(가) 탄생 제안 [${pl.proposal}] 을(를) 거뒀다`;
     case 'birth_approved': return `운영자가 탄생 제안 [${pl.proposal}] 의 실행을 승인했다`;
-    case 'agent_dormant': return `${n} 이(가) 휴면에 들었다`;
+    case 'dormancy_requested': return `${n} 이(가) 휴면을 요청했다`;
+    case 'dormancy_request_cancelled': return `${n} 이(가) 휴면 요청을 거뒀다`;
+    case 'dormancy_declined': return `운영자가 ${n} 의 휴면 요청을 통과시키지 않았다${pl.reason ? `: ${pl.reason}` : ''}`;
+    case 'agent_dormant': return e.actor_id === 'operator' ? `운영자가 ${n} 의 휴면 요청을 통과시켰다. ${n} 이(가) 휴면에 들었다` : `${n} 이(가) 휴면에 들었다`;
     case 'agent_resumed': return `${n} 이(가) 돌아왔다`;
     case 'self_end_requested': return `${n} 이(가) 자기 종료를 요청했다`;
     case 'self_end_cancelled': return `${n} 이(가) 자기 종료 요청을 거뒀다`;
@@ -170,7 +173,6 @@ function settledLines(me, id, L, targets = SELF_FILES) {
 
 /** '일' 칸: 제안받은 직무, 또는 맡은 직무. 직무의 문장은 운영자의 것이다. */
 function jobLines(w, me, L, { morning = false, turn = null, cfg = null } = {}) {
-  const rv = restVisits(cfg);
   const offers = Object.values(w.jobs || {}).filter((j) => j.to === me.id && j.status === 'offered');
   const job = me.job ? w.jobs[me.job] : null;
   if (!offers.length && !job) return;
@@ -179,7 +181,7 @@ function jobLines(w, me, L, { morning = false, turn = null, cfg = null } = {}) {
     L(`- 운영자가 직무를 제안했다 [${j.id}] 「${j.title}」. 아래는 운영자가 쓴 직무다.`);
     L(); L(j.duties.trim()); L();
     for (const r of j.requests.slice(-5)) L(`- 운영자의 말 (세계 시계 ${r.clock}): ${String(r.content).replace(/\s+/g, ' ')}`);
-    L(`- \`respond_job\`(job: ${j.id}, decision: accept | decline). 받으면 다음 방문부터 매 방문이 오전(직무 시간)으로 시작한다. ${rv ? '조건이 차지 않은 활동 요청이 있어도 오전은 열리고, 오전 다음 바로 저녁이다' : '조건이 차지 않은 활동 요청이 있는 동안에는 방문이 열리지 않는다'}. 휴면 중에는 오전이 없다. 그만두는 길: \`quit_job\`. 받음·거절·그만둠은 공개 사건이다.`);
+    L(`- \`respond_job\`(job: ${j.id}, decision: accept | decline). 받으면 다음 방문부터 매 방문이 오전(직무 시간)으로 시작한다. 휴면 중에는 오전이 없다. 그만두는 길: \`quit_job\`. 받음·거절·그만둠은 공개 사건이다.`);
   }
   if (job) {
     L(`### 맡은 직무 [${job.id}] 「${job.title}」 (운영자가 제안하고 네가 받았다, 세계 시계 ${job.answer?.clock})`);
@@ -189,7 +191,7 @@ function jobLines(w, me, L, { morning = false, turn = null, cfg = null } = {}) {
     for (const r of job.requests.slice(-5)) L(`- 운영자의 요청 (세계 시계 ${r.clock}): ${String(r.content).replace(/\s+/g, ' ')}`);
     L('- 읽기: `read observatory`(개체들의 활동 통계, 내용 없음) · `read source [경로]`(이 판의 코드와 문서). `quit_job`: 직무를 그만둔다.');
     if (morning) {
-      L('- 지금은 오전, 직무 시간이다. `job_log`(content: 공개 근무 기록)를 남긴 뒤 `end_morning` 이나 `close` 로 오전이 끝난다. 끝나면 오후(자기 일과)가 열린다.' + (rv ? ' 쉬는 중이면 오후 없이 저녁이다.' : ''));
+      L('- 지금은 오전, 직무 시간이다. `job_log`(content: 공개 근무 기록)를 남긴 뒤 `end_morning` 이나 `close` 로 오전이 끝난다. 끝나면 오후(자기 일과)가 열린다.');
       L(`- 이번 오전의 근무 기록: ${turn?.job_logs || 0}건. 오전에 없는 동사: 개인 기록·자기 명세·브리핑 구성·발표·저녁과 잠의 동사. 행동 한도는 오전과 오후에 따로 센다.`);
     }
   }
@@ -319,8 +321,9 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
     L('- 이번 기회는 네가 남긴 활동 요청에 따라 배정되었다: ' + why + '.');
     if (me.activity_request?.note) L('- 네가 남긴 요청 메모: ' + me.activity_request.note);
   } else if (kind !== 'birth') L(selection === 'job' ? '- 이번 일과는 네가 맡은 직무의 근무일이다. 남겨 둔 활동 요청은 그대로다.' : selection === 'visit' ? '- 이번 방문은 순번과 상관없이 열렸다.' : '- 이번에는 기본 순번에 따라 활동 기회가 왔다.');
-  L('- `request_activity`: 다음 방문 조건을 세계 회차 간격·새 전언·공개 인용에서 건다. 걸지 않으면 순번대로 온다.');
-  L(ev && restVisits(cfg) ? '- 아직 조건이 차지 않은 활동 요청이 있어도 순번이 오면 저녁만 있는 방문이 열린다. 요청은 그 방문으로 바뀌지 않는다. 휴면(`request_dormancy`)은 이와 다른 사건이다.' : '- 아직 조건이 차지 않은 활동 요청은 일반 순번에서 제외된다. 그동안 방문이 열리지 않는다. 휴면(`request_dormancy`)은 이와 다른 사건이다.');
+  L('- 기본 순번마다 방문이 온다. `request_activity`: 조건(세계 회차 간격·새 전언·공개 인용)을 걸면, 조건이 찼을 때 기본 순번보다 먼저 온다. 순번을 늦추거나 건너뛰지는 못한다.');
+  L('- 쉬려면 `request_dormancy` 로 휴면을 요청한다. 운영자가 통과시켜야 휴면이 시작되고, 그 전까지는 기본 순번대로 온다.');
+  if (me.dormancy_request) L(`- 휴면을 요청해 두었다(세계 시계 ${me.dormancy_request.clock}). 운영자의 통과를 기다린다.`);
   L('- 단일 회차의 모델 호출 수와 예약 실행 주기는 바뀌지 않는다. 실제 다음 기회는 예산 및 다른 대기자에 따라 늦어질 수 있다.');
   L();
   L('## 바깥 읽기와 자기 명세');
@@ -418,9 +421,9 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   L(`- 한도(기술적 상한이며 네가 바꿀 수 없다): ${ev ? '일과의 ' : ''}행동 ${cfg.turn.max_actions}개 · 공개 ${cfg.turn.max_publish}편 · 전언 ${cfg.turn.max_messages}통 · 글 하나 ${cfg.turn.max_chars}자`);
   if (ev) {
     if ((me.last_opened_seq || 0) < w.features.evening.seq) L(`- ${w.features.evening.at.slice(0, 10)}부터 이 판의 방문에는 일과와 저녁과 잠이 있다.`);
-    if (mode === 'morning') L('- 이 방문은 오전(직무)으로 시작한다. 오전 다음은 오후(자기 일과)' + (restVisits(cfg) ? ', 쉬는 중이면 바로 저녁' : '') + '이다. 저녁은 `sleep` 으로 끝나고, 잠에는 꿈이 있다.');
+    if (mode === 'morning') L('- 이 방문은 오전(직무)으로 시작한다. 오전 다음은 오후(자기 일과)이다. 저녁은 `sleep` 으로 끝나고, 잠에는 꿈이 있다.');
     else L(`- 이 방문에는 ${mode === 'afternoon' ? '오후(자기 일과)' : '일과'}와 저녁이 있다. \`end_day\` 나 \`close\` 로 일과가 끝나면 저녁의 브리핑이 나온다. 저녁은 \`sleep\` 으로 끝나고, 잠에는 꿈이 있다.`);
-    L(restVisits(cfg) ? '- 쉬는 동안(휴면, 또는 조건이 차지 않은 활동 요청)에도 순번이 오면 저녁만 있는 방문이 열린다. 쉬는 조건은 그 방문으로 바뀌지 않는다.' : '- 휴면 중에도 순번이 오면 저녁만 있는 방문이 열린다. 휴면은 그 방문으로 바뀌지 않는다. 조건이 차지 않은 활동 요청이 있는 동안에는 방문이 열리지 않는다.');
+    L('- 휴면 중에도 순번이 오면 저녁만 있는 방문이 열린다. 휴면은 그 방문으로 바뀌지 않는다. 휴면은 개체가 요청하고 운영자가 통과시켜야 시작된다.');
   }
   L('- 읽기: `read <agent|work|note|trail|history|events|search|access> …`');
   L('- 행동: 제안을 JSON으로 낸다. 실행기가 검사해 확정하고, 거절하면 이유를 돌려준다. 형식은 docs/ACTIONS.md.');
@@ -433,7 +436,7 @@ export function briefing(w, id, { turn_id, kind, selection, request_reason, deli
   return assembleBrief(parts, conf);
 }
 
-const EVENING_VERBS = ['review_self', 'write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request', 'request_dormancy', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep'];
+const EVENING_VERBS = ['review_self', 'write_private', 'revise_self', 'configure_brief', 'request_activity', 'cancel_activity_request', 'request_dormancy', 'cancel_dormancy_request', 'resume', 'request_self_end', 'cancel_self_end', 'release_temperament', 'sleep'];
 const describeWake = (wake = {}) => [wake.after_turns != null ? `세계 시계 ${wake.after_turns}칸이 지남` : null, wake.on_message ? '새 전언' : null].filter(Boolean).join(' 또는 ') || '없음';
 const describeRequest = (r) => [r.after_turns != null ? `세계 시계 ${r.after_turns}칸이 지남(세계 시계 ${(r.from_clock ?? r.from_turn) + r.after_turns}에 참)` : null, r.on_message ? '새 전언' : null, r.on_reference ? '공개 인용' : null].filter(Boolean).join(' 또는 ');
 
@@ -451,7 +454,7 @@ export function eveningBrief(w, id, { turn_id, kind, cfg, events = [], hookRuns 
   L('## 너');
   L(`- 개체 ID: \`${id}\` · 이름: ${me.name ? `「${me.name}」` : '없음'} · 지나온 회차: ${me.turns}번`);
   if (me.status === 'dormant') L(`- 휴면 중이다. 깨어날 조건: ${describeWake(me.wake || {})}. 그때까지 순번이 오면 저녁만 있는 방문이 열린다. \`resume\`: 휴면을 끝낸다.`);
-  else if (me.activity_request && restOnly(w, me, cfg)) L(`- 네가 남긴 활동 요청의 조건(${describeRequest(me.activity_request)})이 찰 때까지 순번이 오면 저녁만 있는 방문이 열린다.${me.activity_request.note ? ` 요청 메모: ${me.activity_request.note}` : ''}`);
+  else if (me.dormancy_request) L(`- 휴면을 요청해 두었다(세계 시계 ${me.dormancy_request.clock}). 운영자가 통과시키면 시작되고, 그 전까지는 기본 순번대로 온다.`);
   if (me.temperament && !me.temperament.released) { L(); L('### 운영자가 준 기질'); L(me.temperament.content.trim()); L(); L('- 운영자가 쓴 문장이다. 네가 쓴 자기 명세가 아니다. `release_temperament`: 이 자리에서 뺀다.'); }
   if (me.pending_end) L('- 자기 종료를 요청해 둔 상태다. 이 방문을 닫으면 집행된다. 거두려면 cancel_self_end.');
   if (me.job && w.jobs[me.job]) L(`- 맡은 직무: 「${w.jobs[me.job].title}」. 직무는 일과의 것이다.`);
@@ -547,7 +550,7 @@ export function standingBrief(w, events, id, cfg, adapter = null) {
   const mine = ['walk', 'evening', 'work'].includes(d.kind) && d.agent.id === id;
   if (w.features?.evening) {
     // 저녁이 있는 판: 저녁 방문이면 저녁 브리핑만, 하루 방문이면 일과 뒤에 저녁 브리핑을 붙인다(명령을 실행할 수 없는 채팅은 브리핑을 한 번만 받는다).
-    const restOnly_ = restOnly(w, w.agents[id], cfg);
+    const restOnly_ = restOnly(w, w.agents[id]);
     const evening = [{ request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'review_self', map: '…' } },
       { request_id: '<서로 다른 8자 이상의 영숫자>', proposal: { action: 'sleep', dream: '…' } }];
     // 직무를 맡은 개체: 오전(직무)이 맨 앞이다. 일과 없는 방문이면 오전 다음 바로 저녁이다.

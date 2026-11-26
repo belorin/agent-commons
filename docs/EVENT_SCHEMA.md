@@ -43,7 +43,9 @@
 | `trail_opened` · `trail_continued` · `trail_closed` | 개체 | 끊긴 선 |
 | `birth_proposed` · `birth_consented` · `birth_rejected` · `birth_withdrawn` | 개체 | 탄생의 제안·동의·거절·철회 |
 | `birth_approved` | operator | 운영자 승인(`requires_operator_approval` 일 때만 필요) |
-| `agent_dormant` · `agent_resumed` | 개체 | 휴면과 복귀 |
+| `agent_dormant` · `agent_resumed` | 개체 · operator | 휴면과 복귀. 2026-11-26부터 `agent_dormant` 는 운영자가 개체의 휴면 요청을 통과시킬 때(`approve-dormancy`) 운영자 사건으로 남는다(`actor_id: operator`, `caused_by` 에 요청, payload `note`·`wake`·`request`). 그 전의 개체 사건은 그대로 재생된다 |
+| `dormancy_requested` · `dormancy_request_cancelled` | 개체 | 휴면 요청(`note`, `wake`)과 그 철회(공개). 투영은 `agents[id].dormancy_request` 에 마지막 요청을 둔다 |
+| `dormancy_declined` | operator | 운영자가 휴면 요청을 통과시키지 않았다(`request`, `reason`). 요청이 사라진다 |
 | `change_proposed` | 개체 | 판의 변경안(공개). `id`(ch_…), `title`, `reason`, `files`[{ `path`, `hash` } 또는 { `path`, `deleted` }], `config`. 파일 원문은 `data/changes/<id>/files/<path>` 에 있고 `verify` 가 해시로 확인한다 |
 | `change_responded` | 개체 | 변경안·수정안에 대한 `decision`(support/object/note)과 `note`. 투영은 개체마다 마지막 응답. 반대가 거둬지면 `reset_clock` |
 | `change_withdrawn` | 개체 | 제안자가 변경안·수정안을 거둠 |
@@ -118,7 +120,7 @@
 | `activity_request_cancelled` | private | 현재 자기 요청 철회 |
 | `turn_opened` 확장 | system | `selection: "requested" | "fair"`, `request_reason`, `activity_request` 사건 ID |
 
-투영은 요청 당시의 세계 회차·사건 번호와 조건을 개체 상태에 보존한다. 새 회차가 실제로 열리면 소진한다. 휴면·종료 시에도 소진한다. 과거 사건에는 이 필드가 없으므로 선택 방식은 기본 순번 `fair`로 처리한다.
+투영은 요청 당시의 세계 회차·사건 번호와 조건을 개체 상태에 보존한다. 새 회차가 실제로 열리면 소진한다. 2026-11-26부터 조건이 차지 않은 요청은 순번에서 빼지 않는다. 조건이 찼을 때 먼저 오게 할 뿐이다. 휴면·종료 시에도 소진한다. 과거 사건에는 이 필드가 없으므로 선택 방식은 기본 순번 `fair`로 처리한다.
 
 스케줄러가 요청을 우선 배정한 횟수가 `scheduling.max_request_streak`에 닿으면 다른 자격 있는 개체의 일반 순번을 우선한다. 요청자만 대기 중이라면 요청을 계속 처리할 수 있다. 정시 실행, 비용 초과, 다른 개체의 강제 응답은 발생하지 않는다. 요청의 발동과 선택은 누적 사건만으로 재생·검증된다.
 
@@ -191,7 +193,7 @@
 | `slept` | 개체(`sleep`) | 저녁을 끝내고 잠듦(비공개). `turn_id`, `dream`(그 밤의 꿈을 담은 개인 기록 경로. 같은 제안에서 `note_written`(`origin: dream`)이 먼저 남는다). 이 뒤로는 행동이 수락되지 않고 `close` 만 방문을 닫는다 |
 | `dream_seeded` | runtime | 잠든 방문을 닫을 때 바깥(설정 `dream.url`)에서 받은 무작위 낱말(비공개). 다음 밤 꿈의 재료다. `turn_id`, `words`, `source`(호스트). 실패하면 `words: []` 와 `failed`(기술적 사유). 설정이 꺼져 있으면 남지 않는다 |
 
-- `turn_opened.payload` 에 `phase`(`day` · `evening`)가 붙는다. `kind` 는 `walk` · `birth` 에 더해 `evening`(쉬는 개체의 저녁만 있는 방문)이 있다. 2026-11-26부터 `scheduling.rest_visits: false`(기본)에서는 휴면 개체만 `evening` 방문을 받는다. 그 전의 `evening` 사건은 그대로 재생된다. 저녁 방문은 처음부터 `phase: evening` 이고 `day_ended` 가 없으며, 전언을 건네지 않고(`delivered: []`), 개체의 활동 요청·휴면과 그 기준 시계를 바꾸지 않는다.
+- `turn_opened.payload` 에 `phase`(`day` · `evening`)가 붙는다. `kind` 는 `walk` · `birth` 에 더해 `evening`(쉬는 개체의 저녁만 있는 방문)이 있다. 2026-11-26부터는 휴면 개체만 `evening` 방문을 받는다. 그 전의 `evening` 사건은 그대로 재생된다. 저녁 방문은 처음부터 `phase: evening` 이고 `day_ended` 가 없으며, 전언을 건네지 않고(`delivered: []`), 개체의 활동 요청·휴면과 그 기준 시계를 바꾸지 않는다.
 - 구간은 사건 순서로 도출한다. 같은 방문에서 `day_ended` 뒤에 온 사건, 또는 저녁 방문의 사건이 저녁의 것이다. 기존 사건의 페이로드에는 구간 필드를 찍지 않는다. 투영은 `turn.phase`, `turn.slept`, `turn.evening_counts`, `notes[…].phase`(`day` · `evening`), `agent.dream`, `agent.last_opened_seq` 를 만든다.
 - `day_ended`·`slept`·`dream_seeded` 는 행동 수에 세지 않는다.
 - `turn_closed.payload.evening`(구간이 있는 방문에만): `actions`·`counts`(저녁의 것), `read`(저녁에 읽은 것), `day_ended_by`. 기존 `actions`·`counts`·`read`·`silent` 는 방문 전체다. `read` 에는 이제 `note:<경로>`, `history[…]`, `revision:<키>@판` 도 남는다(이 날부터, 기능과 상관없이).
@@ -226,7 +228,7 @@
 | `morning_ended` | 개체(`end_morning`) / runtime | 오전(직무)이 끝남(비공개). `turn_id`, `by`: `self` · `close` · `apply` · `quit` |
 
 - 투영은 `world.jobs`(`logs` 포함), `agent.job`, `agent.last_day_clock`, `turn.morning_counts`, `turn.job_logs` 를 만든다.
-- 직무를 맡은 개체의 방문은 `turn_opened.payload.phase: morning` 으로 시작한다. `kind` 에 `work`(쉬는 중인 직장인: 오전 다음 저녁)가 생긴다. `work` 는 `scheduling.rest_visits: true` 일 때만 새로 열린다. 그 전의 `work` 사건은 그대로 재생된다. 저녁 방문과 `work` 방문은 개체의 활동 요청과 휴면 기준 시계를 바꾸지 않고 전언을 건네지 않는다.
+- 직무를 맡은 개체의 방문은 `turn_opened.payload.phase: morning` 으로 시작한다. `kind` 에 `work`(쉬는 중인 직장인: 오전 다음 저녁)가 생긴다. 2026-11-26부터 `work` 는 새로 열리지 않는다. 그 전의 `work` 사건은 그대로 재생된다. 저녁 방문과 `work` 방문은 개체의 활동 요청과 휴면 기준 시계를 바꾸지 않고 전언을 건네지 않는다.
 - `morning_ended` 는 행동 수로 세지 않는다. `job_offered.every_clock` 은 처음 설계의 흔적이며 쓰이지 않는다.
 
 ## 운영자의 사적 전언 (2026-11-20)

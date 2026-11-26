@@ -25,7 +25,8 @@ function blankAgent(id, e) {
     theme: null,
     turns: 0,
     last_turn: 0, // 세계 회차 번호
-    activity_request: null, // 다음 회차를 언제 받을지 스스로 요청한 조건
+    activity_request: null, // 조건이 차면 기본 순번보다 먼저 오게 하는 요청
+    dormancy_request: null, // 운영자의 통과를 기다리는 휴면 요청 { event_id, seq, clock, note, wake }
     wake: null,
     dormant_since_turn: null,
     dormant_since_clock: null,
@@ -318,7 +319,15 @@ export function project(events) {
       case 'activity_request_cancelled':
         a.activity_request = null;
         break;
+      case 'dormancy_requested':
+        a.dormancy_request = { event_id: e.event_id, seq: e.world_seq, clock: w.clock, note: pl.note || null, wake: pl.wake || { on_message: true } };
+        break;
+      case 'dormancy_request_cancelled':
+      case 'dormancy_declined':
+        a.dormancy_request = null;
+        break;
       case 'agent_dormant':
+        a.dormancy_request = null;
         a.status = 'dormant'; a.activity_request = null; a.wake = pl.wake || { on_message: true }; a.dormant_since_turn = w.turns; a.dormant_since_clock = w.clock;
         break;
       case 'change_proposed':
@@ -369,7 +378,7 @@ export function project(events) {
         a.pending_end = null;
         break;
       case 'agent_ended':
-        a.status = 'ended'; a.activity_request = null; a.pending_end = null; a.ended_seq = e.world_seq; a.ended_at = e.timestamp;
+        a.status = 'ended'; a.activity_request = null; a.dormancy_request = null; a.pending_end = null; a.ended_seq = e.world_seq; a.ended_at = e.timestamp;
         break;
       case 'agent_suspended': // 운영자 개입. 자기 종료와 다른 사건이다.
         a.suspended_from = a.status; a.status = 'suspended';

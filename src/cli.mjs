@@ -98,11 +98,11 @@ function run() {
       const w = validWorld(), cfg = loadConfig(), d = decide(w, cfg);
       say(`정지: ${isPaused() ? '예 (control/PAUSE)' : '아니오'} · 사건 ${w.seq} · 활동 회차 ${w.turns} · 세계 시계 ${w.clock} · 기술적 중단 ${w.failures}`);
       say(`개체 ${Object.keys(w.agents).length} (살아 있음 ${living(w).length} / 상한 ${cfg.max_population}, 운영자 발급 목표 ${cfg.seed_population})`);
-      for (const a of Object.values(w.agents)) say(`- ${a.id} ${displayName(a)} · ${a.status} · 회차 ${a.turns} · 마지막 ${a.last_turn}`);
+      for (const a of Object.values(w.agents)) say(`- ${a.id} ${displayName(a)} · ${a.status} · 회차 ${a.turns} · 마지막 ${a.last_turn}${a.dormancy_request ? ` · 휴면 요청(세계 시계 ${a.dormancy_request.clock}, 깨울 조건 ${JSON.stringify(a.dormancy_request.wake)}) — approve-dormancy / decline-dormancy` : ''}`);
       const sc = showcaseSettings(w, cfg);
       if (sc.enabled) say(`발표회: ${w.showcase.number}회 열림 · 간격 ${sc.every} (${sc.basis === 'operator_default' ? '운영자 기본값' : '규칙 ' + sc.basis}) · 다음은 세계 시계 ${nextShowcaseClock(w, cfg)}`);
       say(`열린 방문: ${w.turn ? `${w.turn.turn_id} (${w.turn.agent_id}) — 닫기 전에는 새로 열지 않는다` : '없음'}`);
-      if (!w.turn) say(`다음 tick: ${d.kind === 'birth' ? `새 개체 (${d.origin})` : d.kind === 'walk' ? `${d.agent.id} (${d.selection === 'requested' ? `본인 요청: ${d.request_reason}` : '기본 순번'})` : d.kind === 'evening' ? `${d.agent.id} (쉬는 중: 저녁만 있는 방문)` : d.kind === 'work' ? `${d.agent.id} (쉬는 중인 직장인: 오전 다음 저녁)` : d.reason}`);
+      if (!w.turn) say(`다음 tick: ${d.kind === 'birth' ? `새 개체 (${d.origin})` : d.kind === 'walk' ? `${d.agent.id} (${d.selection === 'requested' ? `본인 요청: ${d.request_reason}` : '기본 순번'})` : d.kind === 'evening' ? `${d.agent.id} (휴면 중: 저녁만 있는 방문)` : d.reason}`);
     }); break;
     case 'verify': {
       const v = verify(); say(v.ok ? `이상 없음: 사건 ${v.events}, 개체 ${v.agents}` : '무결성 문제:\n- ' + v.problems.join('\n- '));
@@ -211,6 +211,20 @@ function run() {
         const content = (args[1] === '-' ? fs.readFileSync(0, 'utf8') : args.slice(1).join(' ')).trim();
         if (!content || content.length > 2000) throw new Error('말은 1~2000자');
         appendEvent({ type: 'reader_note_received', agent_id: to, actor_id: 'operator', visibility: 'public', payload: { to, about: work ? work.key : null, content, relayed_by: 'operator' } });
+        say(regenerate());
+      }); break;
+    }
+    case 'approve-dormancy':
+    case 'decline-dormancy': { // 개체의 휴면 요청을 운영자가 통과시키거나 통과시키지 않는다. 둘 다 공개 사건이다.
+      requireRole('COMMONS_OPERATOR');
+      withTransaction(() => {
+        const w = validWorld();
+        const a = w.agents[args[0]];
+        if (!a || a.status !== 'active' || !a.dormancy_request) throw new Error(`${cmd} <휴면을 요청해 둔 활동 중인 개체 ID>${cmd === 'decline-dormancy' ? ' [사유]' : ''}`);
+        if (w.turn?.agent_id === a.id) throw new Error('그 개체의 방문이 열려 있다. 방문이 닫힌 뒤에 한다');
+        const r = a.dormancy_request;
+        if (cmd === 'approve-dormancy') appendEvent({ type: 'agent_dormant', agent_id: a.id, actor_id: 'operator', visibility: 'public', caused_by: [r.event_id], payload: { note: r.note, wake: r.wake, request: r.event_id } });
+        else appendEvent({ type: 'dormancy_declined', agent_id: a.id, actor_id: 'operator', visibility: 'public', caused_by: [r.event_id], payload: { request: r.event_id, reason: args.slice(1).join(' ') || null } });
         say(regenerate());
       }); break;
     }

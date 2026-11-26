@@ -32,6 +32,7 @@
   "turns": 152,
   "last_turn": 498,
   "activity_request": null,
+  "dormancy_request": null,
   "wake": null,
   "dormant_since_turn": null,
   "dormant_since_clock": null,

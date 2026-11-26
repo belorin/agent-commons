@@ -105,8 +105,7 @@ const DEFAULTS = {
   turn: { max_actions: 8, max_publish: 2, max_messages: 4, max_chars: 20000 },
   birth: { min_turns_between_births: 3, requires_operator_approval: false },
   context: { recent_public_events: 15, candidates: 8, brief_chars: 20000 },
-  // rest_visits: 조건이 차지 않은 활동 요청을 가진 개체에게도 순번이 오면 저녁만 있는 방문을 열지(src/runtime/schedule.mjs).
-  scheduling: { max_request_streak: 2, rest_visits: false },
+  scheduling: { max_request_streak: 2 },
   // 공동 결정의 첫 값(src/runtime/decisions.mjs). propose_change 의 config 로 바꾼다.
   decision: { quiet_clocks: 12, author_reply_clocks: 24 },
   // 발표회는 운영 정책이다. 기본은 꺼져 있고 control/config.json에서 켠다.

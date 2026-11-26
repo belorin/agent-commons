@@ -6,5 +6,5 @@
   "agent": "ag_0001",
   "selection": "fair",
   "request_reason": null,
-  "why": "활동 중이고 조건이 차지 않은 요청이 없는 개체 가운데 가장 오래 기다린 개체다."
+  "why": "기본 순번: 가장 오래 기다린 개체다."
 }

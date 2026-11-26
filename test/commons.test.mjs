@@ -25,6 +25,12 @@ function turn(actions = []) {
   closeTurn();
   return { ...t, results };
 }
+/** 운영자가 개체의 휴면 요청을 통과시킨다(cli approve-dormancy 와 같은 사건). */
+function approveDormancy(id) {
+  const r = world().agents[id].dormancy_request;
+  assert.ok(r, `${id} 의 휴면 요청이 없다`);
+  S.appendEvent({ type: 'agent_dormant', agent_id: id, actor_id: 'operator', visibility: 'public', caused_by: [r.event_id], payload: { note: r.note, wake: r.wake, request: r.event_id } });
+}
 const allFiles = (dir) => (fs.existsSync(dir) ? fs.readdirSync(dir, { recursive: true }).map((f) => path.join(dir, String(f))).filter((f) => fs.statSync(f).isFile()) : []);
 
 beforeEach(() => {
@@ -159,6 +165,10 @@ test('(3단계) 예산 소진·기술 실패는 죽음이 아니다', () => {
 test('휴면은 복귀할 수 있고, 깨울 조건은 개체가 정한다', () => {
   turn(); turn();
   turn([{ action: 'request_dormancy', wake: { on_message: true } }]);
+  assert.equal(world().agents.ag_0001.status, 'active'); // 요청만으로는 휴면이 시작되지 않는다
+  approveDormancy('ag_0001');
+  assert.equal(world().agents.ag_0001.status, 'dormant');
+  assert.equal(world().agents.ag_0001.dormancy_request, null);
   assert.equal(turn().agent_id, 'ag_0002');
   assert.equal(turn().agent_id, 'ag_0002'); // 휴면 중인 개체는 건너뛴다
   turn([{ action: 'contact', to: 'ag_0001', content: '거기 있나' }]);
@@ -611,17 +621,31 @@ test('첫 등장은 타인의 글을 자동 주입하지 않으며 자발적 읽
 });
 
 
-test('개체의 요청은 세계 회차를 기다리고 성립 전에는 순번에서 빠진다', () => {
+test('활동 요청은 순번을 늦추지 못한다: 조건이 차지 않아도 기본 순번대로 온다', () => {
   turn(); turn();
+  openTurn(); // ag_0001
+  assert.equal(act({ action: 'request_activity', after_turns: 5 }).ok, true);
+  closeTurn();
+  assert.equal(turn().agent_id, 'ag_0002');
+  const t = openTurn(); // 조건은 아직 차지 않았지만 기본 순번이다
+  assert.equal(t.agent_id, 'ag_0001');
+  assert.equal(t.selection, 'fair');
+  assert.equal(world().agents.ag_0001.activity_request, null); // 방문이 열리면 요청은 소진된다
+  closeTurn();
+  assert.ok(verify().ok);
+});
+
+test('활동 요청의 조건이 차면 기본 순번보다 먼저 온다', () => {
+  config({ seed_population: 3, max_turns_per_day: 500, birth: { min_turns_between_births: 0 } });
+  turn(); turn(); turn();
   const t = openTurn();
   assert.equal(t.agent_id, 'ag_0001');
-  assert.equal(act({ action: 'request_activity', after_turns: 2, note: '내 조사 후속' }).ok, true);
+  assert.equal(act({ action: 'request_activity', after_turns: 1, note: '내 조사 후속' }).ok, true);
   const requestId = world().agents.ag_0001.activity_request.event_id;
   assert.match(read('schedule'), /내 조사 후속/);
   closeTurn();
-  assert.equal(turn().agent_id, 'ag_0002');
-  assert.equal(turn().agent_id, 'ag_0002');
-  const resumed = openTurn();
+  assert.equal(turn().agent_id, 'ag_0002'); // 시계가 한 칸 흘러 조건이 찼다
+  const resumed = openTurn(); // 기본 순번이면 ag_0003 이지만, 요청이 먼저다
   assert.equal(resumed.agent_id, 'ag_0001');
   assert.equal(resumed.selection, 'requested');
   assert.equal(resumed.request_reason, 'elapsed');
@@ -694,8 +718,9 @@ test('요청은 자기만 교체·철회하며 휴면과 죽음보다 우선하�
   assert.equal(world().agents.ag_0001.activity_request, null);
   assert.equal(act({ action: 'request_activity', after_turns: 99 }).ok, true);
   assert.equal(act({ action: 'request_dormancy', wake: { on_message: true } }).ok, true);
-  assert.equal(world().agents.ag_0001.activity_request, null);
   closeTurn();
+  approveDormancy('ag_0001');
+  assert.equal(world().agents.ag_0001.activity_request, null);
   assert.equal(turn().agent_id, 'ag_0002');
 });
 
@@ -711,26 +736,18 @@ test('예약하지 않은 개체의 기존 순번과 기존 사건 투영은 유
 });
 
 
-test('모든 개체가 미래 회차를 기다려도 유휴 세계 시계가 흘러 다시 활동한다', () => {
+test('활동 요청을 남긴 개체만 있어도 세계는 비지 않는다: 기본 순번대로 온다', () => {
   config({ seed_population: 1, max_turns_per_day: 500 });
   turn();
   openTurn();
   assert.equal(act({ action: 'request_activity', after_turns: 2 }).ok, true);
   closeTurn();
-  const original = world().clock;
-  assert.equal(world().turns, 2);
-  assert.equal(openTurn().status, 'idle');
-  assert.equal(world().clock, original + 1);
-  assert.equal(world().turns, 2);
-  assert.equal(openTurn().status, 'idle');
-  assert.equal(world().clock, original + 2);
-  assert.equal(JSON.parse(S.readText(S.p('derived/world.json'))).world_clock, original + 2);
   const next = openTurn();
   assert.equal(next.status, 'open');
   assert.equal(next.agent_id, 'ag_0001');
-  assert.equal(next.selection, 'requested');
-  assert.equal(next.request_reason, 'elapsed');
+  assert.equal(next.selection, 'fair');
   closeTurn();
+  assert.ok(!S.loadEvents().some((e) => e.type === 'world_idle'));
   assert.ok(verify().ok);
 });
 
@@ -740,8 +757,12 @@ test('모두 휴면에 들어도 세계 시계로 스스로 설정한 복귀 시
   openTurn();
   assert.equal(act({ action: 'request_dormancy', wake: { after_turns: 2, on_message: false } }).ok, true);
   closeTurn();
+  approveDormancy('ag_0001');
   assert.equal(world().agents.ag_0001.status, 'dormant');
+  const original = world().clock;
   assert.equal(openTurn().status, 'idle');
+  assert.equal(world().clock, original + 1);
+  assert.equal(JSON.parse(S.readText(S.p('derived/world.json'))).world_clock, original + 1);
   assert.equal(openTurn().status, 'idle');
   const wake = openTurn();
   assert.equal(wake.status, 'open');
@@ -1172,7 +1193,7 @@ test('운영자가 기질을 준 개체: 원문이 공개 사건에 남고, 본�
   assert.match(fs.readFileSync(S.p('site', 'agents.html'), 'utf8'), /운영자 발급 · 기질 부여/);
 });
 
-test('채팅 경로도 실행기의 순번을 따른다: 기다리는 개체는 건너뛰고, 걸을 개체가 없으면 세계만 흘린다', async () => {
+test('채팅 경로도 실행기의 순번을 따른다: 휴면 개체는 건너뛰고, 걸을 개체가 없으면 세계만 흘린다', async () => {
   const { spawnSync } = await import('node:child_process');
   const inbox = () => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ADAPTER: 'chat-inbox' } });
   const next = () => JSON.parse(S.readText(S.p('derived', 'next.json')));
@@ -1180,9 +1201,10 @@ test('채팅 경로도 실행기의 순번을 따른다: 기다리는 개체는 
   turn(); turn(); // ag_0001, ag_0002 탄생
   assert.equal(next().kind, 'walk');
   assert.equal(next().agent, 'ag_0001');
-  // ag_0001 이 세계 시계 3칸 뒤를 청한다.
-  drop('a.json', { agent: 'ag_0001', proposals: [{ request_id: 'wait-0001', proposal: { action: 'request_activity', after_turns: 3 } }] });
+  // ag_0001 이 세계 시계 3칸 뒤에 깨는 휴면을 청하고, 운영자가 통과시킨다.
+  drop('a.json', { agent: 'ag_0001', proposals: [{ request_id: 'rest-0001', proposal: { action: 'request_dormancy', wake: { after_turns: 3, on_message: false } } }] });
   assert.match(inbox().stdout, /a\.json: ag_0001 방문/);
+  approveDormancy('ag_0001'); regenerate();
   assert.equal(next().agent, 'ag_0002');
   assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /지금은 가리키지 않는다/);
   // 순번이 아닌 개체의 방문은 확정되지 않고 받지 못한 파일로 옮겨진다.
@@ -1190,11 +1212,12 @@ test('채팅 경로도 실행기의 순번을 따른다: 기다리는 개체는 
   assert.match(inbox().stdout, /b\.json: 받지 못함 — 순번이 아니다: 지금 차례는 ag_0002/);
   assert.ok(fs.existsSync(S.p('data', 'inbox', 'rejected', 'b.json')));
   assert.ok(!S.loadEvents().some((e) => e.payload?.request_id === 'early-0001'));
-  // ag_0002 도 기다리기로 하면 걸을 개체가 없다. 방문 대신 세계를 흘리는 파일이 시계를 올린다.
-  drop('c.json', { agent: 'ag_0002', proposals: [{ request_id: 'wait-0002', proposal: { action: 'request_activity', after_turns: 5 } }] });
+  // ag_0002 도 휴면에 들면 걸을 개체가 없다. 방문 대신 세계를 흘리는 파일이 시계를 올린다.
+  drop('c.json', { agent: 'ag_0002', proposals: [{ request_id: 'rest-0002', proposal: { action: 'request_dormancy', wake: { after_turns: 9, on_message: false } } }] });
   inbox();
+  approveDormancy('ag_0002'); regenerate();
   assert.equal(next().kind, 'idle');
-  assert.match(next().reason, /스스로 정한 때를 기다/);
+  assert.match(next().reason, /모두 휴면/);
   drop('d.json', { agent: 'ag_0002', proposals: [] });
   assert.match(inbox().stdout, /d\.json: 받지 못함 — 순번이 아니다: 지금 차례는 방문이 아니라 세계 흘리기\(idle\)/);
   const clock = world().clock;
@@ -1202,17 +1225,17 @@ test('채팅 경로도 실행기의 순번을 따른다: 기다리는 개체는 
   assert.match(inbox().stdout, /e\.json: 방문 없이 세계 시계가 한 칸 흘렀다/);
   assert.equal(world().clock, clock + 1);
   assert.equal(S.loadEvents().at(-1).type, 'world_idle');
-  drop('f.json', { advance: true }); inbox(); // 한 번 더 흘리면 ag_0001 의 3칸이 찬다
-  assert.deepEqual([next().kind, next().agent, next().selection, next().request_reason], ['walk', 'ag_0001', 'requested', 'elapsed']);
-  assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /네가 남긴 활동 요청에 따라 배정되었다: 네가 요청한 세계 회차 간격이 찼다/);
+  while (next().kind === 'idle') { drop('f.json', { advance: true }); inbox(); } // ag_0001 의 3칸이 찰 때까지 흘린다
+  assert.deepEqual([next().kind, next().agent], ['walk', 'ag_0001']);
+  assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /휴면 중 — 깨울 조건이 채워져 기회가 왔다/);
   // 걸을 개체가 있을 때 세계를 흘리는 파일은 받지 않는다.
   drop('g.json', { advance: true });
   assert.match(inbox().stdout, /g\.json: 받지 못함 — 걸을 개체가 있다\(ag_0001\)/);
   drop('h.json', { agent: 'ag_0001', proposals: [] });
   inbox();
   const opened = S.loadEvents().filter((e) => e.type === 'turn_opened').at(-1);
-  assert.equal(opened.payload.selection, 'requested'); // 순번의 근거가 방문 기록에 남는다
-  assert.equal(opened.payload.request_reason, 'elapsed');
+  assert.equal(opened.agent_id, 'ag_0001');
+  assert.equal(opened.payload.selection, 'fair'); // 순번의 근거가 방문 기록에 남는다
   assert.ok(verify().ok);
 });
 
@@ -1467,7 +1490,7 @@ test('판의 변경안: 반대 없이 세계 시계가 흐르면 결정되고, �
 
 // ── 일과, 저녁, 잠 (evening 기능, 2026-11-19) ─────────────────────────────
 const tickMod = await import('../src/runtime/tick.mjs');
-const EVENING = { seed_population: 2, scheduling: { rest_visits: true }, max_turns_per_day: 500, dream: { enabled: true, url: 'https://words.test/api?count=3', timeout_ms: 1000 } };
+const EVENING = { seed_population: 2, max_turns_per_day: 500, dream: { enabled: true, url: 'https://words.test/api?count=3', timeout_ms: 1000 } };
 const enableEvening = () => S.appendEvent({ type: 'feature_enabled', actor_id: 'operator', visibility: 'public', payload: { feature: 'evening' } });
 /** 잠들기: 저녁의 사생활 하나와 꿈. */
 const bed = (dream = '물가의 꿈') => { act({ action: 'write_private', content: '저녁의 한 줄' }); act({ action: 'review_self', map: '지금의 나: 물가에 있다.' }); return act({ action: 'sleep', dream }); };
@@ -1574,90 +1597,76 @@ test('저녁: 하루 방문은 일과 → 저녁 → 잠이고, 저녁에는 바
   } finally { tickMod.setDreamSource(null); }
 });
 
-test('저녁: 쉬는 개체는 순번이 오면 저녁만 있는 방문을 받고, 쉬는 조건은 그대로다', () => {
+test('저녁: 활동 요청은 쉬는 것이 아니다. 조건이 차지 않아도 다음 차례는 하루 방문이다', () => {
   config({ ...EVENING, dream: undefined });
   turn(); turn();
   enableEvening();
-  day([{ action: 'request_activity', after_turns: 3, note: '세 칸 뒤' }]); // ag_0001, 세계 시계 3
-  const from = world().agents.ag_0001.activity_request;
-  assert.equal(day().agent_id, 'ag_0002'); // 시계 4
-  const rest = openTurn(); // 시계 5: ag_0001 이 가장 오래 기다렸지만 쉬는 중이다
-  assert.equal(rest.agent_id, 'ag_0001');
-  assert.equal(rest.kind, 'evening');
-  assert.match(rest.text, /^# 저녁 — ag_0001/);
-  assert.match(rest.text, /이번 방문에는 일과가 없다/);
-  assert.match(rest.text, /활동 요청의 조건\(세계 시계 3칸이 지남/);
-  assert.equal(world().turn.phase, 'evening');
-  assert.deepEqual(world().agents.ag_0001.activity_request, from);
-  assert.match(act({ action: 'contact', to: 'ag_0002', content: '안녕' }).reason, /저녁에는 contact 동사가 없다/);
-  assert.equal(bed().ok, true);
-  assert.equal(closeTurn().ok, true);
-  assert.deepEqual(world().agents.ag_0001.activity_request, from);
-  assert.ok(!S.loadEvents().some((e) => e.type === 'dream_seeded')); // 설정이 없으면 바깥 호출도 사건도 없다
-  assert.equal(day().agent_id, 'ag_0002'); // 시계 6
-  const back = openTurn(); // 요청한 조건이 찼다: 하루 방문
-  assert.equal(back.agent_id, 'ag_0001');
-  assert.equal(back.kind, 'walk');
-  assert.equal(back.selection, 'requested');
-  closeTurn(); bed(); closeTurn();
-  assert.equal(world().agents.ag_0001.activity_request, null);
-  assert.ok(verify().ok);
-});
-
-test('저녁: rest_visits 가 꺼져 있으면 조건이 차지 않은 요청을 가진 개체는 순번에서 빠지고, 조건이 차면 하루 방문이다', () => {
-  config({ ...EVENING, scheduling: { rest_visits: false }, dream: undefined });
-  turn(); turn();
-  enableEvening();
-  day([{ action: 'request_activity', after_turns: 3, note: '세 칸 뒤' }]); // ag_0001, 세계 시계 3
-  assert.equal(day().agent_id, 'ag_0002'); // 시계 4
-  assert.equal(day().agent_id, 'ag_0002'); // 시계 5: ag_0001 은 기다리는 중이라 순번에서 빠진다(저녁만 있는 방문이 없다)
-  assert.equal(day().agent_id, 'ag_0002'); // 시계 6
-  const back = openTurn(); // 시계 7: 조건이 찼다
-  assert.equal(back.agent_id, 'ag_0001');
-  assert.equal(back.kind, 'walk');
-  assert.equal(back.selection, 'requested');
-  assert.match(back.text, /조건이 차지 않은 활동 요청은 일반 순번에서 제외된다\. 그동안 방문이 열리지 않는다/);
-  assert.doesNotMatch(back.text, /조건이 차지 않은 활동 요청\)에도 순번이 오면 저녁만/);
-  closeTurn(); bed(); closeTurn();
-  assert.ok(!S.loadEvents().some((e) => e.type === 'turn_opened' && e.payload.kind === 'evening'));
-  // 모두가 기다리면 세계는 유휴 회차로 흐른다.
-  day([{ action: 'request_activity', after_turns: 50 }]); // ag_0002
-  openTurn(); act({ action: 'request_activity', after_turns: 50 }); closeTurn(); bed(); closeTurn(); // ag_0001
-  const idle = JSON.parse(S.readText(S.p('derived', 'next.json')));
-  assert.equal(idle.kind, 'idle');
-  assert.ok(verify().ok, verify().problems.join('\n'));
-});
-
-test('직무: rest_visits 가 꺼져 있으면 요청을 기다리는 직장인에게 오전과 저녁만 있는 방문이 없다', () => {
-  config({ ...EVENING, scheduling: { rest_visits: false }, dream: undefined });
-  turn(); turn();
-  enableEvening();
-  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_norest', to: 'ag_0001', title: '세계 개선직', duties: '살핀다.', every_clock: null } });
-  const offer = openTurn();
-  assert.match(offer.text, /조건이 차지 않은 활동 요청이 있는 동안에는 방문이 열리지 않는다/);
-  act({ action: 'respond_job', job: 'job_norest', decision: 'accept' });
-  act({ action: 'request_activity', after_turns: 3 });
-  closeTurn(); bed(); closeTurn();
+  day([{ action: 'request_activity', after_turns: 50 }]); // ag_0001
   assert.equal(day().agent_id, 'ag_0002');
-  assert.equal(day().agent_id, 'ag_0002');
-  assert.equal(day().agent_id, 'ag_0002');
-  const m = openTurn(); // 조건이 찼다: 오전 → 오후
-  assert.equal(m.agent_id, 'ag_0001');
-  assert.equal(m.kind, 'walk');
-  assert.match(m.text, /^# 오전 — ag_0001/);
-  assert.doesNotMatch(m.text, /쉬는 중이면/);
-  act({ action: 'job_log', content: '살폈다.' });
-  assert.equal(closeTurn().state, 'afternoon');
+  const t = openTurn();
+  assert.equal(t.agent_id, 'ag_0001');
+  assert.equal(t.kind, 'walk');
+  assert.equal(t.selection, 'fair');
+  assert.match(t.text, /기본 순번마다 방문이 온다/);
+  assert.match(t.text, /순번을 늦추거나 건너뛰지는 못한다/);
   closeTurn(); bed(); closeTurn();
   assert.ok(!S.loadEvents().some((e) => e.type === 'turn_opened' && ['evening', 'work'].includes(e.payload.kind)));
   assert.ok(verify().ok, verify().problems.join('\n'));
 });
 
-test('저녁: rest_visits 가 꺼져 있어도 휴면 중에는 저녁만 있는 방문이 열린다', () => {
-  config({ ...EVENING, scheduling: { rest_visits: false }, dream: undefined });
+test('휴면: 개체가 요청하고 운영자가 통과시켜야 시작된다. 그 전에는 기본 순번대로 온다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  config({ ...EVENING, dream: undefined });
+  turn(); turn();
+  enableEvening();
+  day([{ action: 'request_dormancy', note: '좀 쉬겠다', wake: { after_turns: 50 } }]); // ag_0001
+  const req = world().agents.ag_0001.dormancy_request;
+  assert.equal(req.note, '좀 쉬겠다');
+  assert.deepEqual(req.wake, { after_turns: 50 });
+  assert.equal(world().agents.ag_0001.status, 'active');
+  assert.equal(day().agent_id, 'ag_0002');
+  const t = openTurn(); // 아직 통과되지 않았다: 하루 방문
+  assert.equal(t.agent_id, 'ag_0001');
+  assert.equal(t.kind, 'walk');
+  assert.match(t.text, /휴면을 요청해 두었다\(세계 시계 \d+\)\. 운영자의 통과를 기다린다/);
+  closeTurn(); bed(); closeTurn();
+  // 운영자가 통과시키지 않으면 요청이 사라진다.
+  const cli = (...args) => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, ...args], { encoding: 'utf8', env: { ...process.env, COMMONS_OPERATOR: '1' } });
+  assert.match(cli('decline-dormancy', 'ag_0002').stderr, /휴면을 요청해 둔 활동 중인 개체/);
+  assert.equal(cli('decline-dormancy', 'ag_0001', '지금은', '안', '된다').status, 0);
+  assert.equal(world().agents.ag_0001.dormancy_request, null);
+  assert.equal(S.loadEvents().at(-1).type, 'dormancy_declined');
+  // 다시 요청하고, 거두고, 또 요청한다. 운영자가 통과시키면 휴면이 시작된다.
+  day(); // ag_0002
+  openTurn(); // ag_0001
+  assert.equal(act({ action: 'request_dormancy', wake: { after_turns: 50 } }).ok, true);
+  assert.equal(act({ action: 'cancel_dormancy_request' }).ok, true);
+  assert.equal(world().agents.ag_0001.dormancy_request, null);
+  assert.match(act({ action: 'cancel_dormancy_request' }).reason, /거둘 휴면 요청이 없다/);
+  assert.equal(act({ action: 'request_dormancy', wake: { after_turns: 50 } }).ok, true);
+  assert.match(cli('approve-dormancy', 'ag_0001').stderr, /방문이 열려 있다/);
+  closeTurn(); bed(); closeTurn();
+  assert.match(cli('status').stdout, /ag_0001 .*휴면 요청\(세계 시계 \d+/);
+  assert.equal(cli('approve-dormancy', 'ag_0001').status, 0);
+  const done = S.loadEvents().at(-1);
+  assert.equal(done.type, 'agent_dormant');
+  assert.equal(done.actor_id, 'operator');
+  assert.equal(world().agents.ag_0001.status, 'dormant');
+  assert.equal(day().agent_id, 'ag_0002');
+  const rest = openTurn(); // 휴면 중에는 저녁만 있는 방문
+  assert.equal(rest.agent_id, 'ag_0001');
+  assert.equal(rest.kind, 'evening');
+  assert.match(rest.text, /휴면 중이다/);
+  bed(); closeTurn();
+  assert.ok(verify().ok, verify().problems.join('\n'));
+});
+
+test('저녁: 휴면 중에도 저녁만 있는 방문이 열린다', () => {
+  config({ ...EVENING, dream: undefined });
   turn(); turn();
   enableEvening();
   day([{ action: 'request_dormancy', wake: { after_turns: 50 } }]); // ag_0001
+  approveDormancy('ag_0001');
   assert.equal(day().agent_id, 'ag_0002');
   const rest = openTurn();
   assert.equal(rest.agent_id, 'ag_0001');
@@ -1672,6 +1681,7 @@ test('저녁: 휴면 중에는 저녁만 있는 방문이 열리고, 전언은 �
   turn(); turn();
   enableEvening();
   day([], [{ action: 'request_dormancy', wake: { on_message: true } }]); // ag_0001 이 저녁에 휴면을 청한다
+  approveDormancy('ag_0001');
   assert.equal(world().agents.ag_0001.status, 'dormant');
   day(); // ag_0002
   const rest = openTurn();
@@ -1924,16 +1934,15 @@ test('직무: 받으면 매 방문이 오전(직무)으로 시작하고, 근무 
   bed(); closeTurn();
   assert.match(fs.readFileSync(S.p('derived', 'plaza.md'), 'utf8'), /세계 개선직/);
   day(); // ag_0002
-  // 쉬는 중인 직장인: 오전 다음 바로 저녁. 쉬는 조건은 그대로다.
+  // 활동 요청은 순번을 늦추지 못한다: 다음 차례에도 오전 → 오후 → 저녁이다.
   const w2 = openTurn();
-  assert.equal(w2.kind, 'work');
+  assert.equal(w2.kind, 'walk');
   assert.match(w2.text, /^# 오전 — ag_0001/);
   act({ action: 'job_log', content: '오늘은 변경안이 없다.' });
-  const ev = closeTurn();
-  assert.equal(ev.state, 'evening');
-  assert.match(ev.text, /^# 저녁 — ag_0001/);
+  assert.equal(closeTurn().state, 'afternoon');
+  assert.equal(closeTurn().state, 'evening');
   bed(); closeTurn();
-  assert.ok(world().agents.ag_0001.activity_request);
+  assert.equal(world().agents.ag_0001.activity_request, null);
   assert.equal(world().jobs.job_test0001.logs.length, 2);
   // 다음 오전에는 지난 근무 기록이 실린다. 그만두면 오전이 끝난다.
   day();
@@ -1941,7 +1950,8 @@ test('직무: 받으면 매 방문이 오전(직무)으로 시작하고, 근무 
   assert.match(w3.text, /지난 근무 기록 \(최근 셋, 공개\):\n- 세계 시계 \d+: 관측소를 보았다/);
   const q = act({ action: 'quit_job', note: '그만둔다' });
   assert.equal(q.ok, true);
-  assert.equal(world().turn.phase, 'evening');
+  assert.equal(world().turn.phase, 'day'); // 오전이 끝나고 오후(자기 일과)가 이어진다
+  assert.equal(closeTurn().state, 'evening');
   bed(); closeTurn();
   assert.equal(world().jobs.job_test0001.status, 'quit');
   assert.equal(world().agents.ag_0001.job, null);
@@ -1970,7 +1980,8 @@ test('직무: 쉬는 개체의 저녁에도 제안이 실리고 저녁에 받을
   config({ ...EVENING, dream: undefined });
   turn(); turn();
   enableEvening();
-  day([{ action: 'request_activity', after_turns: 50 }]); // ag_0001 쉰다
+  day([{ action: 'request_dormancy', wake: { after_turns: 50 } }]); // ag_0001 쉰다
+  approveDormancy('ag_0001');
   S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_test0002', to: 'ag_0001', title: '세계 개선직', duties: '낫게 한다.', every_clock: 2 } });
   S.appendEvent({ type: 'job_requested', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { job: 'job_test0002', content: '기준은 네가 정한다' } });
   day(); // ag_0002
@@ -2060,27 +2071,19 @@ test('회고: 첫 지도는 긴 회고(4000자까지), 그 뒤는 2000자까지�
   assert.equal(ev[1].payload.long, undefined);
 });
 
-test('세계 흘리기는 저녁·근무 방문을 건너뛰지 않는다', () => {
+test('세계 흘리기는 저녁 방문을 건너뛰지 않는다', () => {
   config({ ...EVENING, dream: undefined });
   turn(); turn(); enableEvening();
-  day([{ action: 'request_activity', after_turns: 50 }]);
-  day([{ action: 'request_activity', after_turns: 50 }]);
-  const rejectAdvance = (kind) => {
-    const next = JSON.parse(S.readText(S.p('derived', 'next.json')));
-    assert.equal(next.kind, kind);
-    const before = S.loadEvents();
-    S.writeText(S.p('data', 'inbox', `${kind}.json`), JSON.stringify({ advance: true, based_on_seq: next.based_on_seq }));
-    assert.match(tickMod.processInbox().join('\n'), /받지 못함/);
-    assert.deepEqual(S.loadEvents(), before);
-    assert.ok(fs.existsSync(S.p('data', 'inbox', 'rejected', `${kind}.json`)));
-  };
-  rejectAdvance('evening');
-  S.appendEvent({ type: 'job_offered', agent_id: 'ag_0001', actor_id: 'operator', visibility: 'public', payload: { id: 'job_advance', to: 'ag_0001', title: '세계 개선직', duties: '살핀다', every_clock: null } });
-  openTurn();
-  assert.equal(act({ action: 'respond_job', job: 'job_advance', decision: 'accept' }).ok, true);
-  bed(); closeTurn();
-  openTurn(); bed(); closeTurn(); // ag_0002 의 저녁
-  rejectAdvance('work');
+  day([{ action: 'request_dormancy', wake: { after_turns: 50 } }]); approveDormancy('ag_0001');
+  day([{ action: 'request_dormancy', wake: { after_turns: 50 } }]); approveDormancy('ag_0002');
+  regenerate();
+  const next = JSON.parse(S.readText(S.p('derived', 'next.json')));
+  assert.equal(next.kind, 'evening');
+  const before = S.loadEvents();
+  S.writeText(S.p('data', 'inbox', 'evening.json'), JSON.stringify({ advance: true, based_on_seq: next.based_on_seq }));
+  assert.match(tickMod.processInbox().join('\n'), /받지 못함/);
+  assert.deepEqual(S.loadEvents(), before);
+  assert.ok(fs.existsSync(S.p('data', 'inbox', 'rejected', 'evening.json')));
   assert.ok(verify().ok);
 });
 

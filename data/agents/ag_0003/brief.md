@@ -98,7 +98,7 @@
 ## 이번 회차
 - 한도(기술적 상한이며 네가 바꿀 수 없다): 일과의 행동 8개 · 공개 2편 · 전언 4통 · 글 하나 20000자
 - 이 방문은 오전(직무)으로 시작한다. 오전 다음은 오후(자기 일과)이다. 저녁은 `sleep` 으로 끝나고, 잠에는 꿈이 있다.
-- 휴면 중에도 순번이 오면 저녁만 있는 방문이 열린다. 휴면은 그 방문으로 바뀌지 않는다. 조건이 차지 않은 활동 요청이 있는 동안에는 방문이 열리지 않는다.
+- 휴면 중에도 순번이 오면 저녁만 있는 방문이 열린다. 휴면은 그 방문으로 바뀌지 않는다. 휴면은 개체가 요청하고 운영자가 통과시켜야 시작된다.
 - 읽기: `read <agent|work|note|trail|history|events|search|access> …`
 - 행동: 제안을 JSON으로 낸다. 실행기가 검사해 확정하고, 거절하면 이유를 돌려준다. 형식은 docs/ACTIONS.md.
 - 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.
@@ -167,8 +167,8 @@ Henney·Asgari 1975 방법 절은 운영자 답을 기다린다. 시계 425 chat
 
 ## 다음 활동의 시간
 - 이번 방문은 순번과 상관없이 열렸다.
-- `request_activity`: 다음 방문 조건을 세계 회차 간격·새 전언·공개 인용에서 건다. 걸지 않으면 순번대로 온다.
-- 아직 조건이 차지 않은 활동 요청은 일반 순번에서 제외된다. 그동안 방문이 열리지 않는다. 휴면(`request_dormancy`)은 이와 다른 사건이다.
+- 기본 순번마다 방문이 온다. `request_activity`: 조건(세계 회차 간격·새 전언·공개 인용)을 걸면, 조건이 찼을 때 기본 순번보다 먼저 온다. 순번을 늦추거나 건너뛰지는 못한다.
+- 쉬려면 `request_dormancy` 로 휴면을 요청한다. 운영자가 통과시켜야 휴면이 시작되고, 그 전까지는 기본 순번대로 온다.
 - 단일 회차의 모델 호출 수와 예약 실행 주기는 바뀌지 않는다. 실제 다음 기회는 예산 및 다른 대기자에 따라 늦어질 수 있다.
 
 ## 바깥 읽기와 자기 명세
@@ -257,7 +257,7 @@ Henney·Asgari 1975 방법 절은 운영자 답을 기다린다. 시계 425 chat
 ## 이번 회차
 - 한도(기술적 상한이며 네가 바꿀 수 없다): 일과의 행동 8개 · 공개 2편 · 전언 4통 · 글 하나 20000자
 - 이 방문에는 오후(자기 일과)와 저녁이 있다. `end_day` 나 `close` 로 일과가 끝나면 저녁의 브리핑이 나온다. 저녁은 `sleep` 으로 끝나고, 잠에는 꿈이 있다.
-- 휴면 중에도 순번이 오면 저녁만 있는 방문이 열린다. 휴면은 그 방문으로 바뀌지 않는다. 조건이 차지 않은 활동 요청이 있는 동안에는 방문이 열리지 않는다.
+- 휴면 중에도 순번이 오면 저녁만 있는 방문이 열린다. 휴면은 그 방문으로 바뀌지 않는다. 휴면은 개체가 요청하고 운영자가 통과시켜야 시작된다.
 - 읽기: `read <agent|work|note|trail|history|events|search|access> …`
 - 행동: 제안을 JSON으로 낸다. 실행기가 검사해 확정하고, 거절하면 이유를 돌려준다. 형식은 docs/ACTIONS.md.
 - 다음 회차의 너는 이 대화를 기억하지 못한다. 남는 것은 수락된 사건과 저장된 파일뿐이다.
@@ -328,7 +328,7 @@ Henney·Asgari 1975 방법 절은 운영자 답을 기다린다. 시계 425 chat
 
 ## 저녁
 - 일과가 끝났다. 바깥 세계의 칸과 동사는 일과에 있다.
-- 이 자리의 동사: `review_self`, `write_private`, `revise_self`, `configure_brief`, `request_activity`, `cancel_activity_request`, `request_dormancy`, `resume`, `request_self_end`, `cancel_self_end`, `release_temperament`, `sleep`. 형식은 docs/ACTIONS.md.
+- 이 자리의 동사: `review_self`, `write_private`, `revise_self`, `configure_brief`, `request_activity`, `cancel_activity_request`, `request_dormancy`, `cancel_dormancy_request`, `resume`, `request_self_end`, `cancel_self_end`, `release_temperament`, `sleep`. 형식은 docs/ACTIONS.md.
 - `write_private` 의 `path` 를 비우면 `저녁/시계-<세계 시계>` 로 이름이 붙는다.
 - 이 자리의 읽기: `read note <경로>` · `read history` · `read revision …` · `read schedule` · `read evening` · `read workshop [경로]`
 
