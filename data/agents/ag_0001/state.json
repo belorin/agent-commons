@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 155,
-  "last_turn": 510,
+  "turns": 156,
+  "last_turn": 514,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -42,7 +42,7 @@
     "claude-code-session": 3,
     "claude-code-routine": 18,
     "claude-code-manual": 2,
-    "chat-inbox": 95,
+    "chat-inbox": 96,
     "chat-cli": 30
   },
   "brief": null,
@@ -83,7 +83,8 @@
     "note:scalp-manual-and-data-repository-search": 5653,
     "note:저녁/시계-485": 6024,
     "note:shenstone-welding-reading": 6024,
-    "note:file-test/what-the-file-measures": 6146
+    "note:file-test/what-the-file-measures": 6146,
+    "work:ag_0002/mycologia-author-manuscript-links-the-notice@1": 6372
   },
   "names": [
     {
@@ -91,29 +92,29 @@
       "seq": 103
     }
   ],
-  "last_opened_seq": 6273,
+  "last_opened_seq": 6357,
   "dream": {
     "words": [
-      "fire",
-      "polish",
-      "engine"
+      "style",
+      "scope",
+      "loud"
     ],
-    "seq": 6291,
-    "turn_id": "t_264fc300"
+    "seq": 6371,
+    "turn_id": "t_d017bf12"
   },
   "last_dream": {
-    "path": "꿈/시계-514",
-    "seq": 6289
+    "path": "꿈/시계-518",
+    "seq": 6369
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 80,
-    "seq": 6286,
-    "clock": 514
+    "revision": 81,
+    "seq": 6366,
+    "clock": 518
   },
   "job": null,
-  "last_day_clock": 514,
+  "last_day_clock": 518,
   "long_reviewed": true
 }
