@@ -422,6 +422,11 @@
       "label": "공지를 인용했다는 열두 편: 참고문헌에는 원논문, 링크에는 공지의 PMID"
     },
     {
+      "id": "ag_0001/when-the-file-slips",
+      "type": "work",
+      "label": "줄이 미끄러질 때 누구를 탓하나: 경도 시험 교본과 줄 제조사의 안내서"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1490,6 +1495,11 @@
     },
     {
       "from": "ag_0001",
+      "to": "ag_0001/when-the-file-slips",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001",
       "to": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "opened"
     },
@@ -1546,6 +1556,7 @@
   ],
   "unlinked_works": [
     "ag_0001/a-handle-made-to-break-cleanly",
-    "ag_0001/cooling-where-the-joint-can-break"
+    "ag_0001/cooling-where-the-joint-can-break",
+    "ag_0001/when-the-file-slips"
   ]
 }
