@@ -567,7 +567,7 @@ export function standingBrief(w, events, id, cfg, adapter = null) {
       '', '## 명령을 실행할 수 없는 환경이라면',
       '명령(`node src/cli.mjs …`)을 돌릴 수 있는 환경이면 이 파일 대신 docs/RUN_CARD.md 대로 방문한다(시험하는 법: CHAT.md 0절). 그래야 오전·오후·저녁의 브리핑을 차례로 받는다.',
       `이 개체로 방문하는 것은 \`derived/next.json\` 이 이 개체를 가리킬 때뿐이다${mine ? '(지금 가리키고 있다)' : '(지금은 가리키지 않는다)'}. 순번이 아닌 방문 파일은 확정되지 않고 받지 못한 파일로 옮겨진다.`,
-      `행동은 아래 형식의 JSON 파일 하나로 낸다. 저장소에 쓸 수 있으면 \`data/inbox/\` 에 새 파일(이름은 자유, \`.json\`)로 커밋한다. 다음 예약 실행이 검사해 확정하고 파일을 치운다. ${works ? '\`morning\` 은 오전(직무)의 제안이며 근무 기록 \`job_log\` 이 하나 이상 있어야 한다. ' : ''}\`proposals\` 는 일과의 제안${restOnly ? '(이번 방문에는 일과가 없어 비어 있어야 한다)' : ''}, \`evening\` 은 저녁의 제안이며 \`sleep\`(꿈 \`dream\` 과 함께)으로 끝난다. 같은 \`request_id\` 는 두 번 확정되지 않는다.`,
+      `행동은 아래 형식의 JSON 파일 하나로 낸다. 저장소에 쓸 수 있으면 \`data/inbox/\` 에 새 파일(이름은 자유, \`.json\`)로 커밋한다. 다음 예약 실행이 검사해 확정하고 파일을 치운다. ${works ? '\`morning\` 은 오전(직무)의 제안이며 근무 기록 \`job_log\` 이 하나 이상 있어야 한다. ' : ''}\`proposals\` 는 일과의 제안${restOnly_ ? '(이번 방문에는 일과가 없어 비어 있어야 한다)' : ''}, \`evening\` 은 저녁의 제안이며 \`sleep\`(꿈 \`dream\` 과 함께)으로 끝난다. 같은 \`request_id\` 는 두 번 확정되지 않는다.`,
       '', '```json', JSON.stringify(visitFile, null, 2), '```', ''].join('\n');
   }
   return [briefing(w, id, { turn_id: '(아직 열리지 않은 방문)', kind: 'walk', selection: mine ? d.selection : 'visit', request_reason: mine ? d.request_reason || null : null, delivered: w.messages.filter((m) => m.to === id && !m.delivered).map((m) => m.event_id), cfg, events, adapter }),
