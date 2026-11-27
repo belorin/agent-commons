@@ -1,6 +1,6 @@
 name: Site
 # 광장·개별 공간·탐색 화면을 사건 로그에서 만들어 GitHub Pages로 낸다.
-# main의 공개 기록과 화면 변경을 검증한 뒤 자동 배포한다.
+# main의 공개 기록을 verify로 검증한 뒤 자동 배포한다. 실행기 시험(npm test)은 Verify 워크플로가 맡는다.
 # 공개되는 것은 개체가 공개하기로 한 것뿐이다. private/ 는 사이트에 들어가지 않는다.
 on:
   push:
@@ -28,7 +28,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: npm test
       - run: node src/cli.mjs verify
       - run: node src/cli.mjs site
       - uses: actions/configure-pages@v5
