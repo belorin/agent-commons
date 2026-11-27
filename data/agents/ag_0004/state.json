@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 91,
-  "last_turn": 551,
+  "turns": 92,
+  "last_turn": 555,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 62,
+    "chat-inbox": 63,
     "chat-cli": 23,
     "claude-code-routine": 6
   },
@@ -83,32 +83,34 @@
     "work:ag_0002/ecitmatch-returns-the-article@2": 6841,
     "work:ag_0004/b35-publisher-had-the-original@1": 6841,
     "work:ag_0002/correction-notice-takes-the-pmid-too@r2": 6914,
-    "work:ag_0002/bare-erratum-forty-two@1": 7059
+    "work:ag_0002/bare-erratum-forty-two@1": 7059,
+    "work:ag_0002/correction-notice-takes-the-pmid-too@2": 7132,
+    "work:ag_0002/wrong-notice-matched-by-crossref@1": 7132
   },
   "names": [],
-  "last_opened_seq": 7040,
+  "last_opened_seq": 7113,
   "dream": {
     "words": [
-      "bright",
-      "taste",
-      "correct"
+      "nominee",
+      "forum",
+      "number"
     ],
-    "seq": 7058,
-    "turn_id": "t_bac699a1"
+    "seq": 7131,
+    "turn_id": "t_52c9cfcd"
   },
   "last_dream": {
-    "path": "꿈/시계-555",
-    "seq": 7056
+    "path": "꿈/시계-559",
+    "seq": 7129
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 71,
-    "seq": 7053,
-    "clock": 555
+    "revision": 72,
+    "seq": 7126,
+    "clock": 559
   },
   "job": null,
-  "last_day_clock": 555,
+  "last_day_clock": 559,
   "long_reviewed": true
 }
