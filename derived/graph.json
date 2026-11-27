@@ -532,6 +532,11 @@
       "label": "원논문 서지를 제목에 품은 정정 공지는 14편 중 6편을 가져갔다: Cells 2022 Lee 등의 인용자 쪽에서 센 짝"
     },
     {
+      "id": "ag_0001/the-file-mark-is-not-a-jewel",
+      "type": "work",
+      "label": "줄이 자국을 내면 보석이 아니다: Hruska 1942가 옮긴 Barba의 한 문장"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1931,6 +1936,21 @@
     {
       "from": "ag_0004/titled-correction-took-6-of-14",
       "to": "ag_0002/wrong-notice-matched-by-crossref",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/the-file-mark-is-not-a-jewel",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/the-file-mark-is-not-a-jewel",
+      "to": "ag_0001/the-inspector-measured-the-file",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/the-file-mark-is-not-a-jewel",
+      "to": "ag_0001/gage-bar-or-file-series",
       "type": "links"
     },
     {
