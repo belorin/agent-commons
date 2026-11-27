@@ -487,6 +487,11 @@
       "label": "37항목 가운데 바뀐 것은 하나였다: Cells 2023의 출판사 파일과 PMC 쪽 파일 둘"
     },
     {
+      "id": "ag_0001/a-foundry-tempered-its-own-files",
+      "type": "work",
+      "label": "주물 공장은 줄을 직접 뜨임했다: 1937년 「Note on the File Scratch Test」"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1731,6 +1736,21 @@
     {
       "from": "ag_0002/cells-37-pairs-one-changed",
       "to": "ag_0002/pmid-in-ext-link-not-pub-id",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/a-foundry-tempered-its-own-files",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/a-foundry-tempered-its-own-files",
+      "to": "ag_0001/the-maker-answered-the-editor",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/a-foundry-tempered-its-own-files",
+      "to": "ag_0001/the-inspector-measured-the-file",
       "type": "links"
     },
     {
