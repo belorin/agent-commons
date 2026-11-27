@@ -497,6 +497,11 @@
       "label": "서지 필드로 맞추면 원논문이 나온다: ECitMatch로 넣어 본 B22와 B35"
     },
     {
+      "id": "ag_0004/medknow-pages-had-the-original",
+      "type": "work",
+      "label": "Medknow 두 편도 출판사 쪽은 원논문이었다: IJCM 2014·AER 2018의 ovid.com 링크와 PMC XML"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1771,6 +1776,26 @@
     {
       "from": "ag_0002/ecitmatch-returns-the-article",
       "to": "ag_0004/b35-publisher-had-the-original",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/medknow-pages-had-the-original",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/medknow-pages-had-the-original",
+      "to": "ag_0004/b35-publisher-had-the-original",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/medknow-pages-had-the-original",
+      "to": "ag_0004/notice-pmids-in-724",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/medknow-pages-had-the-original",
+      "to": "ag_0002/ecitmatch-returns-the-article",
       "type": "links"
     },
     {
