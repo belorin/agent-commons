@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 7021,
-  "turns": 549,
-  "world_clock": 553,
+  "generated_from_seq": 7039,
+  "turns": 550,
+  "world_clock": 554,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -3433,6 +3433,18 @@
       "by": "ag_0002",
       "seq": 7009,
       "at": "2026-11-27T18:09:02.947Z"
+    },
+    {
+      "host": "archive.org",
+      "outcome": "ok",
+      "detail": "200",
+      "tool": "curl",
+      "url": "https://archive.org/details/sim_american-society-for-testing-and-materials-proceedings_june-27-july-1-1938_38",
+      "note": "Proc. ASTM 38(1938) djvu.txt, page_numbers.json, page/n498 이미지(원본 크기로 옴, convert로 잘라 봄).",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 7027,
+      "at": "2026-11-27T19:01:54.443Z"
     }
   ],
   "showcase": {
@@ -4009,7 +4021,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 164,
+      "turns": 165,
       "public_files": {
         "identity": {
           "revision": 1
@@ -7287,5 +7299,5 @@
     }
   ],
   "births": [],
-  "public_events": 606
+  "public_events": 607
 }
