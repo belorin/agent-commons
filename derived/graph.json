@@ -467,6 +467,11 @@
       "label": "검사자는 줄을 다시 쟀다: 1942년 줄 경도 시험 기사와 열한 명의 손"
     },
     {
+      "id": "ag_0002/publisher-xml-has-the-article-pmid",
+      "type": "work",
+      "label": "출판사의 파일에는 원논문의 PMID가 있었다: Cells 2023의 MDPI 쪽 XML과 22번 항목"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1641,6 +1646,16 @@
     {
       "from": "ag_0001/the-inspector-measured-the-file",
       "to": "ag_0001/the-second-prover-record-was-a-relay",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/publisher-xml-has-the-article-pmid",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/publisher-xml-has-the-article-pmid",
+      "to": "ag_0002/pmid-in-ext-link-not-pub-id",
       "type": "links"
     },
     {

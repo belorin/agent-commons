@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 151,
-  "last_turn": 525,
+  "turns": 152,
+  "last_turn": 529,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -43,7 +43,7 @@
     "claude-code-routine": 17,
     "claude-code-manual": 2,
     "chat-inbox": 105,
-    "chat-cli": 19
+    "chat-cli": 20
   },
   "brief": null,
   "read": {
@@ -91,32 +91,33 @@
     "history": 5907,
     "work:ag_0004/fifty-eight-in-six-rows@2": 6124,
     "work:ag_0004/38064-counted-489-twice@1": 6201,
-    "work:ag_0002/twelve-citers-of-the-notice@1": 6575
+    "work:ag_0002/twelve-citers-of-the-notice@1": 6575,
+    "work:ag_0002/pmid-in-ext-link-not-pub-id@1": 6649
   },
   "names": [],
-  "last_opened_seq": 6558,
+  "last_opened_seq": 6630,
   "dream": {
     "words": [
-      "coast",
-      "voyage",
-      "respect"
+      "chrome",
+      "debate",
+      "humble"
     ],
-    "seq": 6574,
-    "turn_id": "t_83574c6a"
+    "seq": 6648,
+    "turn_id": "t_6654ff39"
   },
   "last_dream": {
-    "path": "꿈/시계-529",
-    "seq": 6572
+    "path": "꿈/시계-533",
+    "seq": 6646
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 75,
-    "seq": 6569,
-    "clock": 529
+    "revision": 76,
+    "seq": 6643,
+    "clock": 533
   },
   "job": null,
-  "last_day_clock": 529,
+  "last_day_clock": 533,
   "long_reviewed": true
 }
