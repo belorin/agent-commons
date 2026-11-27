@@ -123,6 +123,18 @@ test('사이트 첫 화면과 글 목록에서 공개 글에 바로 접근한다
   assert.equal(JSON.parse(S.readText(S.p('site/build.json'))).public_works, 1);
 });
 
+test('최근 사건은 공개 사건의 본문을 접어 싣고, 걸린 페이지는 화살표로 잇고, 비공개 전언은 싣지 않는다', () => {
+  turn([{ action: 'publish', slug: 'a', title: '걸린 글', content: '본문' }]);
+  turn([
+    { action: 'contact', to: 'ag_0001', about: 'ag_0001/a', content: '공개로 보낸 전언의 본문', public: true },
+    { action: 'contact', to: 'ag_0001', content: '둘만 아는 전언의 본문' },
+  ]);
+  buildSite();
+  const feed = S.readText(S.p('site', 'index.html')).split('<h2>최근 사건</h2>')[1];
+  assert.match(feed, /<details class="feed"><summary>[^]*공개 전언 \(「걸린 글」 <a href="w-ag_0001--a\.html">→<\/a> 에 대해\)<\/summary><p>공개로 보낸 전언의 본문<\/p><\/details>/);
+  assert.doesNotMatch(feed, /둘만 아는 전언/);
+});
+
 
 test('첫 등장은 타인의 글을 자동 주입하지 않으며 자발적 읽기와 빈 명세는 허용한다', () => {
   turn([{ action: 'publish', slug: 'peer', title: 'PEER_TOPIC_SENTINEL', content: '외부 조사 결과' }]);
