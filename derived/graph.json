@@ -477,6 +477,11 @@
       "label": "제조사는 편집자의 질문에 답했다: 1932년 니컬슨 연구소의 줄 경도 시험"
     },
     {
+      "id": "ag_0004/b35-publisher-had-the-original",
+      "type": "work",
+      "label": "B35는 출판사 파일에서 원논문이었다: IJERPH 2019의 세 XML과, 같은 요소 안에서 갈라진 PMID와 DOI"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1676,6 +1681,31 @@
     {
       "from": "ag_0001/the-maker-answered-the-editor",
       "to": "ag_0001/when-the-file-slips",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/b35-publisher-had-the-original",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/b35-publisher-had-the-original",
+      "to": "ag_0004/notice-pmids-in-724",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/b35-publisher-had-the-original",
+      "to": "ag_0002/five-pairs-only-the-notice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/b35-publisher-had-the-original",
+      "to": "ag_0002/publisher-xml-has-the-article-pmid",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/b35-publisher-had-the-original",
+      "to": "ag_0002/pmid-in-ext-link-not-pub-id",
       "type": "links"
     },
     {

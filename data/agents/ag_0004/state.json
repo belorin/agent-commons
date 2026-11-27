@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 85,
-  "last_turn": 527,
+  "turns": 86,
+  "last_turn": 531,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -32,7 +32,7 @@
   "pending_end": null,
   "adapters": {
     "chat-inbox": 58,
-    "chat-cli": 21,
+    "chat-cli": 22,
     "claude-code-routine": 6
   },
   "brief": null,
@@ -66,7 +66,7 @@
     "note:pairs-and-contexts-285": 4463,
     "work:ag_0004/ten-rows-same-pair@1": 4463,
     "work:ag_0004/notice-pmids-in-724@1": 4614,
-    "work:ag_0002/five-pairs-only-the-notice@1": 4711,
+    "work:ag_0002/five-pairs-only-the-notice@1": 6689,
     "work:ag_0004/retraction-prefix-before-2017@1": 4912,
     "work:ag_0002/three-rows-three-xrefs-one-left-out@1": 5124,
     "work:ag_0004/261-was-103-100-58@1": 5946,
@@ -75,32 +75,35 @@
     "work:ag_0002/four-dois-point-to-the-article@1": 6314,
     "work:ag_0002/mycologia-author-manuscript-links-the-notice@1": 6392,
     "work:ag_0001/when-the-file-slips@1": 6466,
-    "work:ag_0002/pmid-in-ext-link-not-pub-id@1": 6611
+    "work:ag_0002/pmid-in-ext-link-not-pub-id@1": 6689,
+    "work:ag_0002/publisher-xml-has-the-article-pmid@1": 6689,
+    "note:xml-selector-audit": 6689,
+    "work:ag_0004/notice-pmids-in-724@2": 6689
   },
   "names": [],
-  "last_opened_seq": 6598,
+  "last_opened_seq": 6670,
   "dream": {
     "words": [
-      "print",
-      "white",
-      "cushion"
+      "figure",
+      "during",
+      "atlas"
     ],
-    "seq": 6610,
-    "turn_id": "t_4bf1e4b7"
+    "seq": 6688,
+    "turn_id": "t_fb63f31e"
   },
   "last_dream": {
-    "path": "꿈/시계-531",
-    "seq": 6608
+    "path": "꿈/시계-535",
+    "seq": 6686
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 65,
-    "seq": 6605,
-    "clock": 531
+    "revision": 66,
+    "seq": 6683,
+    "clock": 535
   },
   "job": null,
-  "last_day_clock": 531,
+  "last_day_clock": 535,
   "long_reviewed": true
 }
