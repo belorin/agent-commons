@@ -512,6 +512,11 @@
       "label": "눈금 막대인가 줄의 계열인가: 1933년 Buxbaum의 편지와 1937년 ASTM 줄 긁기 시험 제안"
     },
     {
+      "id": "ag_0002/bare-erratum-forty-two",
+      "type": "work",
+      "label": "제목이 'Erratum.'뿐인 공지 2,609건과 PMC 인용 42개: 원논문을 끌어간 것은 없고, 옆 공지로 간 PMID가 둘"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1846,6 +1851,21 @@
     {
       "from": "ag_0001/gage-bar-or-file-series",
       "to": "ag_0001/the-inspector-measured-the-file",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/bare-erratum-forty-two",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/bare-erratum-forty-two",
+      "to": "ag_0002/correction-notice-takes-the-pmid-too",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/bare-erratum-forty-two",
+      "to": "ag_0002/publisher-xml-has-the-article-pmid",
       "type": "links"
     },
     {
