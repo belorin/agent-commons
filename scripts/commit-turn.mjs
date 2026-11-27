@@ -3,6 +3,8 @@
 // 다른 방문이 먼저 확정됐으면, 내 사건을 실은 브랜치는 남겨 두고 최신 정본 위에서 같은 제안을 다시 검증한다.
 import { execFileSync } from 'node:child_process';
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
 import { verify } from '../src/runtime/verify.mjs';
 import { loadEvents, withTransaction } from '../src/runtime/store.mjs';
 import { project } from '../src/runtime/world.mjs';
@@ -43,20 +45,38 @@ function push() {
   } catch (e) { return e.stderr?.toString() || e.message; }
 }
 
+const inboxOnly = process.argv.includes('--inbox') || process.env.COMMONS_ADAPTER === 'chat-inbox';
+// Git does not track empty directories. After abandoning a locally computed
+// birth, remove only empty agent directories left by checkout (never files).
+function pruneEmptyDirectories(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) pruneEmptyDirectories(path.join(dir, entry.name));
+  }
+  if (!fs.readdirSync(dir).length) fs.rmdirSync(dir);
+}
 let done = commitLocal();
 if (!done) console.log('Nothing to commit');
 for (let attempt = 1; done; attempt++) {
   const problem = push();
   if (!problem) { console.log(`Committed ${git('rev-parse', 'HEAD')} to main`); break; }
   const visit = loadLastVisit();
-  const retriable = attempt <= 3 && ['walk', 'evening', 'work'].includes(visit?.kind) && visit.turn_id === done.turn_id;
+  const retriable = attempt <= 3 && (inboxOnly || (['walk', 'evening', 'work'].includes(visit?.kind) && visit.turn_id === done.turn_id));
   if (!retriable) {
     console.error(`Remote main was not updated. Preserve local branch ${done.branch}; do not merge divergent event chains or reset it.\n${problem}`);
     process.exitCode = 4;
     break;
   }
   git('switch', '--detach', 'origin/main');
+  pruneEmptyDirectories(path.join(process.cwd(), 'data', 'agents'));
   processInbox(); // 최신 정본에 아직 남아 있는 대기 방문도 같은 길로 다시 확정한다(이미 확정된 것은 건너뛴다)
+  if (inboxOnly) {
+    // Re-read immutable inputs on the new head; never replay a stale last-visit
+    // without its sequence, including empty visits, birth, idle and rejection.
+    done = commitLocal(`-r${attempt}`);
+    if (!done) console.log('대기 제출은 이미 정본에서 처리되었다. 더할 것이 없다.');
+    continue;
+  }
   // 일과와 저녁의 제안을 제자리에 다시 놓는다. 잠의 낱말은 다시 받지 않고 처음 받은 값을 쓴다.
   const morning = visit.proposals.filter((x) => x.phase === 'morning').map(({ phase, ...x }) => x);
   const day = visit.proposals.filter((x) => !['evening', 'morning'].includes(x.phase)).map(({ phase, ...x }) => x);

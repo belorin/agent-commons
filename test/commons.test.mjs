@@ -1107,7 +1107,7 @@ test('저장소에 넣어 둔 방문 파일은 다음 예약 실행이 확정하
   assert.match(S.readText(S.agentDir('ag_0002', 'brief.md')), /지난 방문에서 거절된 제안: publish — slug/);
   // 회차를 열지 않고 대기 방문만 확정하는 길. 파일이 주장하는 어댑터는 받지 않는다.
   const nextAgent = JSON.parse(S.readText(S.p('derived', 'next.json'))).agent;
-  S.writeText(S.p('data', 'inbox', 'c.json'), JSON.stringify({ agent: nextAgent, adapter: 'forged', proposals: [] }));
+  S.writeText(S.p('data', 'inbox', 'c.json'), JSON.stringify({ based_on_seq: world().seq, agent: nextAgent, adapter: 'forged', proposals: [] }));
   const only = spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ADAPTER: 'chat-inbox' } });
   assert.match(only.stdout, new RegExp(`c\\.json: ${nextAgent} 방문`));
   assert.equal(world().turn, null);
@@ -1197,7 +1197,7 @@ test('채팅 경로도 실행기의 순번을 따른다: 휴면 개체는 건너
   const { spawnSync } = await import('node:child_process');
   const inbox = () => spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ADAPTER: 'chat-inbox' } });
   const next = () => JSON.parse(S.readText(S.p('derived', 'next.json')));
-  const drop = (name, body) => S.writeText(S.p('data', 'inbox', name), JSON.stringify(body));
+  const drop = (name, body) => S.writeText(S.p('data', 'inbox', name), JSON.stringify({ based_on_seq: world().seq, ...body }));
   turn(); turn(); // ag_0001, ag_0002 탄생
   assert.equal(next().kind, 'walk');
   assert.equal(next().agent, 'ag_0001');
@@ -1246,7 +1246,7 @@ test('채팅 경로의 탄생: 차례가 오면 세계 흘리기 파일로 개�
   turn(); turn();
   turn([{ action: 'propose_birth', reason: '혼자 낸 제안', seed_note: '건네는 기록' }]); // ag_0001
   assert.equal(next().kind, 'birth');
-  S.writeText(S.p('data', 'inbox', 'z.json'), JSON.stringify({ advance: true }));
+  S.writeText(S.p('data', 'inbox', 'z.json'), JSON.stringify({ advance: true, based_on_seq: world().seq }));
   assert.match(inbox().stdout, /ag_0003 이\(가\) 태어났다\(탄생 제안\)/);
   const w = world();
   assert.equal(w.agents.ag_0003.origin, 'birth_proposal');
@@ -1344,7 +1344,7 @@ test('브리핑 구성: 켜기 전에는 그대로, 켠 뒤에는 개체가 칸 
   const next = JSON.parse(S.readText(S.p('derived', 'next.json'))).agent;
   assert.equal(next, 'ag_0001');
   assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /정한 설정/);
-  S.writeText(S.p('data', 'inbox', 'reset.json'), JSON.stringify({ agent: 'ag_0001', proposals: [{ request_id: 'reset-brief-1', proposal: { action: 'configure_brief' } }] }));
+  S.writeText(S.p('data', 'inbox', 'reset.json'), JSON.stringify({ based_on_seq: world().seq, agent: 'ag_0001', proposals: [{ request_id: 'reset-brief-1', proposal: { action: 'configure_brief' } }] }));
   const r = spawnSync(process.execPath, [new URL('../src/cli.mjs', import.meta.url).pathname, 'inbox'], { encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1' } });
   assert.match(r.stdout, /수락 1\/1/);
   assert.match(S.readText(S.agentDir('ag_0001', 'brief.md')), /> 브리핑 구성: 기본 구성/);
@@ -2098,4 +2098,223 @@ test('같은 기준 순번의 세계 흘리기 파일은 한 번만 확정된다
   }
   assert.equal(Object.keys(world().agents).length, 1);
   assert.ok(verify().ok);
+});
+
+// Connector protocol: the visitor needs only exact file GET and create-without-SHA.
+const currentNext = () => JSON.parse(S.readText(S.p('derived', 'next.json')));
+const submitSlot = (body = {}, next = currentNext()) => {
+  const file = S.p(...next.inbox.path.split('/'));
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, JSON.stringify({ agent: next.agent, based_on_seq: next.based_on_seq, proposals: [], ...body }), { flag: 'wx' });
+  return file;
+};
+const slotReceipt = (next) => JSON.parse(S.readText(S.p(...next.inbox.receipt.split('/'))));
+
+test('고정 슬롯: 중복 생성·응답 유실·처리 지연·빈 방문 재처리는 세계를 한 번만 바꾼다', async () => {
+  const { processInbox } = await import('../src/runtime/tick.mjs');
+  turn(); turn();
+  const next = currentNext(), clock = world().clock;
+  const file = submitSlot();
+  assert.throws(() => submitSlot(), /EEXIST/); // delay or timeout: never choose a new name
+  assert.equal(world().clock, clock);
+  processInbox();
+  assert.equal(slotReceipt(next).status, 'applied');
+  assert.equal(world().clock, clock + 1);
+  assert.ok(fs.existsSync(file)); // permanent collision barrier, even after processing
+  assert.throws(() => submitSlot({}, next), /EEXIST/);
+  const events = S.readText(S.logPath());
+  assert.deepEqual(processInbox(), []);
+  assert.equal(S.readText(S.logPath()), events);
+  assert.ok(verify().ok);
+});
+
+test('오래된 슬롯은 같은 개체의 차례가 다시 와도 재사용하지 않는다', async () => {
+  const { processInbox } = await import('../src/runtime/tick.mjs');
+  turn(); turn();
+  const old = currentNext();
+  turn(); turn();
+  assert.equal(currentNext().agent, old.agent);
+  submitSlot({ proposals: [{ request_id: 'stale-slot-1', proposal: { action: 'write_private', path: 'old', content: 'stale' } }] }, old);
+  const before = S.readText(S.logPath());
+  processInbox();
+  assert.equal(slotReceipt(old).status, 'rejected');
+  assert.match(slotReceipt(old).text, /based_on_seq/);
+  assert.equal(S.readText(S.logPath()), before); // stale rejection does not expire current slot
+});
+
+test('기존 자유 이름 파일을 먼저 처리하며 같은 기준의 슬롯은 추가 방문을 열지 않는다', async () => {
+  const { processInbox } = await import('../src/runtime/tick.mjs');
+  turn(); turn();
+  const next = currentNext(), clock = world().clock;
+  submitSlot();
+  const legacy = { agent: next.agent, based_on_seq: next.based_on_seq, proposals: [] };
+  S.writeText(S.p('data', 'inbox', 'z-legacy.json'), JSON.stringify(legacy));
+  processInbox();
+  assert.equal(world().clock, clock + 1);
+  assert.equal(slotReceipt(next).status, 'rejected');
+  assert.equal(fs.existsSync(S.p('data', 'inbox', 'z-legacy.json')), false);
+  // A crashing old cleaner may leave an input after the receipt committed.
+  S.writeText(S.p('data', 'inbox', 'z-legacy.json'), JSON.stringify(legacy));
+  processInbox();
+  assert.equal(world().clock, clock + 1);
+  S.writeText(S.p('data', 'inbox', 'no-basis.json'), JSON.stringify({ agent: currentNext().agent, proposals: [] }));
+  processInbox();
+  assert.match(S.readText(S.p('data', 'inbox', 'rejected', 'no-basis.json.reason.txt')), /based_on_seq/);
+});
+
+test('잘못된 현재 슬롯은 영수증·기술 사건을 남기고 다음 슬롯을 열되 세계 시간은 쓰지 않는다', async () => {
+  const { processInbox } = await import('../src/runtime/tick.mjs');
+  turn(); turn();
+  for (const raw of ['{broken', JSON.stringify({ agent: currentNext().agent, proposals: [] })]) {
+    const next = currentNext(), clock = world().clock;
+    const file = submitSlot(); fs.writeFileSync(file, raw);
+    processInbox();
+    assert.equal(slotReceipt(next).status, 'rejected');
+    assert.equal(world().clock, clock);
+    assert.equal(currentNext().based_on_seq, next.based_on_seq + 1);
+    assert.equal(currentNext().agent, next.agent);
+    assert.equal(S.loadEvents().at(-1).type, 'inbox_slot_closed');
+  }
+  const next = currentNext(); submitSlot(); processInbox();
+  assert.equal(slotReceipt(next).status, 'applied');
+});
+
+test('정지·열린 방문·무결성 실패는 제출을 거절로 소비하지 않고 보류한다', async () => {
+  const { processInbox } = await import('../src/runtime/tick.mjs');
+  turn(); turn();
+  const next = currentNext(); submitSlot();
+  S.writeText(S.p('control', 'PAUSE'), 'pause');
+  assert.deepEqual(processInbox(), []);
+  assert.equal(S.readText(S.p(...next.inbox.receipt.split('/'))), null);
+  fs.rmSync(S.p('control', 'PAUSE'));
+  const t = openTurn();
+  assert.throws(() => processInbox(), /열린 방문/);
+  assert.equal(S.readText(S.p(...next.inbox.receipt.split('/'))), null);
+  closeTurn();
+  const log = S.readText(S.logPath());
+  fs.writeFileSync(S.logPath(), log.replace('runtime', 'corrupt'));
+  assert.throws(() => processInbox());
+  assert.equal(S.readText(S.p(...next.inbox.receipt.split('/'))), null);
+  fs.writeFileSync(S.logPath(), log);
+  processInbox(); // now stale, never replay the old selection
+  assert.equal(slotReceipt(next).status, 'rejected');
+});
+
+test('탄생·유휴 슬롯도 재시도에 멱등적이며 처리된 원문 변경을 거부한다', async () => {
+  const { processInbox } = await import('../src/runtime/tick.mjs');
+  regenerate();
+  const birth = currentNext();
+  assert.equal(birth.kind, 'birth');
+  const file = submitSlot({ advance: true });
+  processInbox(); processInbox();
+  assert.equal(Object.keys(world().agents).length, 1);
+  config({ seed_population: 0, on_empty_world: 'stop' });
+  S.appendEvent({ type: 'agent_suspended', agent_id: 'ag_0001', actor_id: 'operator', payload: { reason: 'test' } });
+  regenerate();
+  const idle = currentNext(); assert.equal(idle.kind, 'idle');
+  const clock = world().clock;
+  submitSlot({ advance: true }); processInbox(); processInbox();
+  assert.equal(world().clock, clock + 1);
+  fs.writeFileSync(file, '{}');
+  assert.throws(() => processInbox(), /제출 파일이 변경/);
+});
+
+test('중첩 실행 오류를 영수증으로 기록해도 실패한 작업의 사건은 확정되지 않는다', () => {
+  S.withTransaction(() => {
+    S.writeText(S.p('data', 'outer.txt'), 'keep');
+    assert.throws(() => S.withTransaction(() => {
+      S.appendEvent({ type: 'test_partial', payload: {} });
+      S.writeText(S.p('data', 'partial.txt'), 'discard');
+      throw new Error('injected');
+    }), /injected/);
+    S.writeText(S.p('data', 'receipt.txt'), 'rejected');
+  });
+  assert.equal(S.loadEvents().length, 0);
+  assert.equal(S.readText(S.p('data', 'partial.txt')), null);
+  assert.equal(S.readText(S.p('data', 'outer.txt')), 'keep');
+  assert.equal(S.readText(S.p('data', 'receipt.txt')), 'rejected');
+});
+
+for (const scenario of ['visit-stale', 'empty-already-applied', 'birth-unrelated', 'rejection-unrelated']) {
+  test(`Inbox 푸시 경합: ${scenario}에서 최신 큐만 처리하고 last-visit를 재연하지 않는다`, async () => {
+    const { execFileSync, spawnSync } = await import('node:child_process');
+    const { processInbox } = await import('../src/runtime/tick.mjs');
+    const git = (cwd, ...args) => execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+    if (scenario !== 'birth-unrelated') { turn(); turn(); }
+    regenerate();
+    const next = currentNext();
+    const file = submitSlot(scenario === 'birth-unrelated' ? { advance: true } : scenario === 'visit-stale' ? {
+      proposals: [{ request_id: 'race-note-001', proposal: { action: 'write_private', path: 'race', content: 'must not replay' } }],
+    } : {});
+    if (scenario === 'rejection-unrelated') fs.writeFileSync(file, '{broken');
+    S.writeText(S.p('.gitignore'), 'data/runtime/\n');
+    git(root, 'init', '-b', 'main'); git(root, 'config', 'user.email', 'test@example.invalid'); git(root, 'config', 'user.name', 'Test');
+    git(root, 'add', '.'); git(root, 'commit', '-m', 'base with pending slot');
+    const bare = fs.mkdtempSync(path.join(os.tmpdir(), 'commons-remote-'));
+    git(bare, 'init', '--bare'); git(root, 'remote', 'add', 'origin', bare); git(root, 'push', '-u', 'origin', 'main');
+    const other = fs.mkdtempSync(path.join(os.tmpdir(), 'commons-other-'));
+    git(other, 'clone', '-b', 'main', bare, '.'); git(other, 'config', 'user.email', 'test@example.invalid'); git(other, 'config', 'user.name', 'Test');
+    process.env.COMMONS_ROOT = other;
+    try {
+      if (scenario === 'visit-stale') { turn(); turn(); } // same agent comes round again
+      else if (scenario === 'empty-already-applied') processInbox();
+      else fs.writeFileSync(path.join(other, 'unrelated.txt'), 'other change');
+      git(other, 'add', '.'); git(other, 'commit', '-m', 'competing runner'); git(other, 'push');
+    } finally { process.env.COMMONS_ROOT = root; }
+    processInbox(); // old checkout computes a competing result
+    const script = new URL('../scripts/commit-turn.mjs', import.meta.url).pathname;
+    const result = spawnSync(process.execPath, [script, '--inbox'], { cwd: root, encoding: 'utf8', env: { ...process.env, COMMONS_EXECUTOR: '1', COMMONS_ADAPTER: 'chat-inbox' } });
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+    assert.equal(git(bare, 'rev-parse', 'main'), git(root, 'rev-parse', 'HEAD'));
+    assert.equal(slotReceipt(next).status, ['visit-stale', 'rejection-unrelated'].includes(scenario) ? 'rejected' : 'applied');
+    if (scenario === 'visit-stale') {
+      assert.equal(S.readText(S.agentDir(next.agent, 'private/race.md')), null);
+      assert.equal(world().turns, 4); // competitor's two turns only
+    }
+    if (scenario === 'empty-already-applied') assert.equal(world().turns, 3);
+    if (scenario === 'birth-unrelated') assert.equal(Object.keys(world().agents).length, 1);
+    if (scenario === 'rejection-unrelated') assert.equal(S.loadEvents().filter((e) => e.type === 'inbox_slot_closed').length, 1);
+    assert.ok(verify().ok);
+  });
+}
+
+test('Inbox 확정 도중 강제 종료되어도 세계와 영수증을 함께 복구하고 재처리하지 않는다', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const { recoverTransaction } = await import('../src/runtime/transaction.mjs');
+  const { processInbox } = await import('../src/runtime/tick.mjs');
+  turn(); turn();
+  const next = currentNext(), clock = world().clock;
+  submitSlot({ proposals: [{ request_id: 'crash-slot-001', proposal: { action: 'write_private', path: 'slot-crash', content: 'durable' } }] });
+  const moduleURL = new URL('../src/runtime/tick.mjs', import.meta.url).href;
+  const code = `import fs from 'node:fs'; import { processInbox } from ${JSON.stringify(moduleURL)};
+    const original = fs.renameSync;
+    fs.renameSync = (a,b) => { original(a,b); if (b.endsWith('/private/slot-crash.md')) process.kill(process.pid, 'SIGKILL'); };
+    processInbox();`;
+  const child = spawnSync(process.execPath, ['--input-type=module', '-e', code], { env: process.env, encoding: 'utf8' });
+  assert.equal(child.signal, 'SIGKILL', child.stderr);
+  assert.throws(() => processInbox(), /Writer busy|Interrupted/);
+  recoverTransaction(root);
+  assert.equal(slotReceipt(next).status, 'applied');
+  processInbox();
+  assert.equal(world().clock, clock + 1);
+  assert.equal(S.loadEvents().filter((e) => e.type === 'note_written').length, 1);
+  assert.ok(verify().ok);
+});
+
+test('미리 거절된 미래 슬롯에 도달해도 영구 정지하지 않는다', async () => {
+  const { processInbox } = await import('../src/runtime/tick.mjs');
+  turn(); turn();
+  const n = world().seq + 1;
+  const future = { agent: currentNext().agent, based_on_seq: n, inbox: { path: `data/inbox/seq-${n}.json`, receipt: `data/inbox/receipts/seq-${n}.json` } };
+  submitSlot({}, future); processInbox();
+  assert.equal(slotReceipt(future).status, 'rejected');
+  S.appendEvent({ type: 'operator_said', actor_id: 'operator', payload: { content: 'test' } });
+  regenerate();
+  assert.equal(world().seq, n);
+  const clock = world().clock;
+  processInbox();
+  assert.equal(currentNext().based_on_seq, n + 1);
+  assert.equal(world().clock, clock);
+  submitSlot(); processInbox();
+  assert.equal(world().clock, clock + 1);
 });
