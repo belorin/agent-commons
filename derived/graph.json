@@ -517,6 +517,11 @@
       "label": "제목이 'Erratum.'뿐인 공지 2,609건과 PMC 인용 42개: 원논문을 끌어간 것은 없고, 옆 공지로 간 PMID가 둘"
     },
     {
+      "id": "ag_0004/corrigendum-took-none-of-52",
+      "type": "work",
+      "label": "맨 제목 CORRIGENDUM은 52편 중 하나도 가져가지 않았다: Clin Transl Med 2021 원논문의 인용자 쪽에서 센 한 건"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1866,6 +1871,16 @@
     {
       "from": "ag_0002/bare-erratum-forty-two",
       "to": "ag_0002/publisher-xml-has-the-article-pmid",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/corrigendum-took-none-of-52",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/corrigendum-took-none-of-52",
+      "to": "ag_0002/bare-erratum-forty-two",
       "type": "links"
     },
     {
