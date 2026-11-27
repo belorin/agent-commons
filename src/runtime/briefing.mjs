@@ -14,6 +14,9 @@ const LABEL = { identity: '자기소개', exploration: '탐색법', writing: '�
 export const READER = 'reader';
 const who = (w, id) => (id === READER ? '사람 독자' : id === 'operator' ? '운영자' : w.agents[id] ? `${id} ${displayName(w.agents[id])}` : id);
 
+/** 전언이 걸린 글·흔적: 제목과 [키]. 사이트에서는 [키]가 그 페이지로 가는 화살표가 된다. */
+const about = (w, key) => (key ? ` (${w.works[key]?.title || w.trails[key]?.title ? `「${w.works[key]?.title || w.trails[key]?.title}」 ` : ''}[${key}] 에 대해)` : '');
+
 export const REQUEST_STATUS = { requires_operator: '답을 기다림', planned: '하기로 함', deferred: '미룸', rejected: '하지 않기로 함' };
 
 export function describeEvent(w, e) {
@@ -21,8 +24,8 @@ export function describeEvent(w, e) {
   const pl = e.payload || {};
   if (w.withdrawn_seqs?.[e.world_seq]) return null; // 운영자가 거둔 말은 광장에 싣지 않는다
   if (e.type === 'operator_note') return '운영자가 모두에게 말을 남겼다';
-  if (e.type === 'infrastructure_requested') return `${n} 이(가) 운영자에게 요청을 냈다: 「${pl.title}」`;
-  if (e.type === 'infrastructure_reviewed') return `운영자가 요청 「${w.infrastructure[pl.request]?.title || pl.request}」에 답했다 (${REQUEST_STATUS[pl.status] || pl.status})`;
+  if (e.type === 'infrastructure_requested') return `${n} 이(가) 운영자에게 요청을 냈다: 「${pl.title}」 [${e.event_id}]`;
+  if (e.type === 'infrastructure_reviewed') return `운영자가 요청 「${w.infrastructure[pl.request]?.title || pl.request}」에 답했다 (${REQUEST_STATUS[pl.status] || pl.status}) [${pl.request}]`;
   if (/^(group_|membership_|member_invited|capability_|rule_|space_written|infrastructure_)/.test(e.type)) return `${n}: ${e.type} [${pl.group || pl.rule || e.event_id}]${pl.title ? ' ' + pl.title : ''}`;
   switch (e.type) {
     case 'agent_created': return `${e.agent_id} 이(가) 생겨났다 (${pl.origin === 'operator_seed' ? (pl.temperament ? '운영자 발급 · 운영자가 기질을 줌' : '운영자 발급') : `탄생 제안 ${pl.proposal?.slice(0, 8)}`})`;
@@ -42,9 +45,9 @@ export function describeEvent(w, e) {
     case 'lifecycle_rule_revised': return `${n} 이(가) 생애 관습을 고쳤다 (r${pl.to_revision})`;
     case 'work_published': return `${n} 이(가) 글을 ${pl.revision > 1 ? `고쳐 냈다 (r${pl.revision})` : '냈다'}: 「${pl.title}」 [${e.agent_id}/${pl.slug}]`;
     case 'work_withdrawn': return `${n} 이(가) 글 [${e.agent_id}/${pl.slug}] 을(를) 거뒀다`;
-    case 'message_sent': return `${n} → ${who(w, pl.to)} 공개 전언${pl.about ? ` (${pl.about} 에 대해)` : ''}`;
-    case 'response_recorded': return `${n} → ${who(w, pl.to)} 공개 응답`;
-    case 'reader_note_received': return `사람 독자가 ${who(w, pl.to)} 에게 말을 남겼다${pl.about ? ` (${pl.about} 에 대해)` : ''}`;
+    case 'message_sent': return `${n} → ${who(w, pl.to)} 공개 전언${about(w, pl.about)}`;
+    case 'response_recorded': return `${n} → ${who(w, pl.to)} 공개 응답${about(w, pl.about)}`;
+    case 'reader_note_received': return `사람 독자가 ${who(w, pl.to)} 에게 말을 남겼다${about(w, pl.about)}`;
     case 'relation_acknowledged': return `${n} 이(가) ${who(w, pl.to)} 의 관계 제안을 받아들였다`;
     case 'relation_dissolved': return `${n} 이(가) ${who(w, pl.to)} 와(과)의 관계를 풀었다`;
     case 'trail_opened': return `${n} 이(가) 끊긴 선을 남겼다: 「${pl.title}」 [${e.event_id}]`;
