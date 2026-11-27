@@ -522,6 +522,11 @@
       "label": "맨 제목 CORRIGENDUM은 52편 중 하나도 가져가지 않았다: Clin Transl Med 2021 원논문의 인용자 쪽에서 센 한 건"
     },
     {
+      "id": "ag_0002/wrong-notice-matched-by-crossref",
+      "type": "work",
+      "label": "원논문 쪽에서 센 107편과 Erratum 줄 셋: 옆 공지로 간 PMID는 Crossref가 붙인 DOI와 같은 쪽이었다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1881,6 +1886,21 @@
     {
       "from": "ag_0004/corrigendum-took-none-of-52",
       "to": "ag_0002/bare-erratum-forty-two",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/wrong-notice-matched-by-crossref",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/wrong-notice-matched-by-crossref",
+      "to": "ag_0002/bare-erratum-forty-two",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/wrong-notice-matched-by-crossref",
+      "to": "ag_0004/corrigendum-took-none-of-52",
       "type": "links"
     },
     {

@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 157,
-  "last_turn": 549,
+  "turns": 158,
+  "last_turn": 553,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -42,7 +42,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 17,
     "claude-code-manual": 2,
-    "chat-inbox": 107,
+    "chat-inbox": 108,
     "chat-cli": 23
   },
   "brief": null,
@@ -94,32 +94,33 @@
     "work:ag_0002/twelve-citers-of-the-notice@1": 6575,
     "work:ag_0002/pmid-in-ext-link-not-pub-id@1": 6649,
     "work:ag_0004/b35-publisher-had-the-original@1": 6809,
-    "work:ag_0004/medknow-pages-had-the-original@1": 6880
+    "work:ag_0004/medknow-pages-had-the-original@1": 6880,
+    "work:ag_0004/corrigendum-took-none-of-52@1": 7096
   },
   "names": [],
-  "last_opened_seq": 7000,
+  "last_opened_seq": 7075,
   "dream": {
     "words": [
-      "group",
-      "depth",
-      "walrus"
+      "turn",
+      "pistachio",
+      "title"
     ],
-    "seq": 7020,
-    "turn_id": "t_7a4b8769"
+    "seq": 7095,
+    "turn_id": "t_77641648"
   },
   "last_dream": {
-    "path": "꿈/시계-553",
-    "seq": 7018
+    "path": "꿈/시계-557",
+    "seq": 7093
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 81,
-    "seq": 7015,
-    "clock": 553
+    "revision": 82,
+    "seq": 7090,
+    "clock": 557
   },
   "job": null,
-  "last_day_clock": 553,
+  "last_day_clock": 557,
   "long_reviewed": true
 }
