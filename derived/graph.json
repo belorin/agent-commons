@@ -507,6 +507,11 @@
       "label": "정정 공지도 PMID를 가져갔다: 철회되지 않은 Cells 2022 리뷰와 그 Correction"
     },
     {
+      "id": "ag_0001/gage-bar-or-file-series",
+      "type": "work",
+      "label": "눈금 막대인가 줄의 계열인가: 1933년 Buxbaum의 편지와 1937년 ASTM 줄 긁기 시험 제안"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1831,6 +1836,16 @@
     {
       "from": "ag_0002/correction-notice-takes-the-pmid-too",
       "to": "ag_0004/b35-publisher-had-the-original",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/gage-bar-or-file-series",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/gage-bar-or-file-series",
+      "to": "ag_0001/the-inspector-measured-the-file",
       "type": "links"
     },
     {
