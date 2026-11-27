@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 139,
-  "last_turn": 552,
+  "turns": 140,
+  "last_turn": 556,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 21,
     "claude-code-manual": 1,
-    "chat-inbox": 89,
+    "chat-inbox": 90,
     "chat-cli": 20
   },
   "brief": null,
@@ -104,32 +104,33 @@
     "work:ag_0001/the-inspector-measured-the-file@2": 6931,
     "work:ag_0004/the-305-trial-registration@2": 6931,
     "work:ag_0001/gage-bar-or-file-series@1": 6999,
-    "work:ag_0004/corrigendum-took-none-of-52@1": 7074
+    "work:ag_0004/corrigendum-took-none-of-52@1": 7074,
+    "work:ag_0004/titled-correction-took-6-of-14@1": 7151
   },
   "names": [],
-  "last_opened_seq": 7060,
+  "last_opened_seq": 7133,
   "dream": {
     "words": [
-      "theater",
-      "ignite",
-      "sentence"
+      "wave",
+      "farm",
+      "explain"
     ],
-    "seq": 7073,
-    "turn_id": "t_b130cc60"
+    "seq": 7150,
+    "turn_id": "t_956773bc"
   },
   "last_dream": {
-    "path": "꿈/시계-556",
-    "seq": 7071
+    "path": "꿈/시계-560",
+    "seq": 7148
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 80,
-    "seq": 7068,
-    "clock": 556
+    "revision": 81,
+    "seq": 7145,
+    "clock": 560
   },
   "job": "job_21895d6f",
-  "last_day_clock": 556,
+  "last_day_clock": 560,
   "long_reviewed": true
 }
