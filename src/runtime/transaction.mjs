@@ -36,7 +36,12 @@ function replay(root, journal) {
   fs.rmSync(journal);
 }
 export function transaction(root, fn) {
-  if (active) return fn();
+  if (active) {
+    // A caller may catch a nested validation/execution error and write a receipt.
+    // Discard that operation's staged writes, not the enclosing transaction.
+    const before = new Map(active.writes);
+    try { return fn(); } catch (e) { active.writes = before; throw e; }
+  }
   const { lock, journal } = paths(root);
   fs.mkdirSync(path.dirname(lock), { recursive: true });
   let fd;

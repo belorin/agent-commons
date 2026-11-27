@@ -338,41 +338,102 @@ export function applyVisit({ agent, morning = [], proposals = [], evening = [], 
 }
 
 /**
- * 대기 중인 방문: data/inbox/*.json. 저장소에 쓸 수 있는 쪽이 넣어 둔 방문 파일을 이름 순으로 하나씩 apply 하고 치운다.
- * 넣을 자격은 저장소의 쓰기 권한이다. 읽을 수 없는 파일은 지우지 않고 rejected/ 로 옮겨 이유를 곁에 적는다.
+ * Connector submissions use immutable seq-N.json slots. The receipt is committed
+ * in the same transaction as the world changes, so restart never reapplies a slot.
+ * Legacy free-name files are drained first and retain their old archive layout.
  */
 export function processInbox() {
   const dir = p('data', 'inbox');
   const out = [];
   if (isPaused() || !fs.existsSync(dir)) return out;
-  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort()) {
+  // A prematurely submitted future slot may have been rejected earlier. If the
+  // world later reaches exactly that sequence, retire its permanent barrier.
+  withTransaction(() => {
+    const w = project(loadEvents());
+    const name = `seq-${w.seq}.json`;
+    const saved = readText(p('data', 'inbox', 'receipts', name));
+    if (!saved || isPaused()) return;
+    const receipt = JSON.parse(saved);
+    const raw = readText(p('data', 'inbox', name));
+    if (raw === null || sha256(raw) !== receipt.input_hash) throw new Error(`${name}: 처리된 제출 파일이 변경되었다`);
+    const v = verify(); if (!v.ok) throw new Error(v.problems.join('\n'));
+    if (w.turn) throw new Error(`열린 방문 ${w.turn.turn_id}: inbox 처리를 보류한다`);
+    appendEvent({ type: 'inbox_slot_closed', actor_id: 'runtime', visibility: 'system',
+      payload: { path: `data/inbox/${name}`, based_on_seq: w.seq, status: receipt.status, reason: '이미 처리된 슬롯에 도달했다' } });
+    regenerate();
+    out.push(`${name}: 이미 처리된 슬롯을 닫았다`);
+  });
+  const slotPattern = /^seq-(0|[1-9][0-9]*)\.json$/;
+  const names = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort((a, b) =>
+    Number(slotPattern.test(a)) - Number(slotPattern.test(b)) || a.localeCompare(b));
+  for (const name of names) {
     const file = p('data', 'inbox', name);
-    try {
-      // 어댑터와 모델은 파일의 주장을 받지 않는다. 확정하는 실행기의 값이 붙는다.
-      const visit = JSON.parse(fs.readFileSync(file, 'utf8'));
-      if (visit?.advance === true) {
-        out.push(`${name}: ${withTransaction(() => advanceUnlocked(visit.based_on_seq))}`);
-        fs.rmSync(file);
-        continue;
+    // Lock acquisition / integrity / interrupted writers are infrastructure errors:
+    // leave the submission pending, never turn them into a proposal rejection.
+    const outcome = withTransaction(() => {
+      if (isPaused()) return null;
+      const raw = fs.readFileSync(file, 'utf8');
+      const match = slotPattern.exec(name);
+      const slot = match ? Number(match[1]) : null;
+      const receiptPath = p('data', 'inbox', 'receipts', match ? name : `legacy-${sha256(name + '\n' + raw)}.json`);
+      const previous = readText(receiptPath);
+      if (previous) {
+        const receipt = JSON.parse(previous);
+        if (receipt.input_hash !== sha256(raw)) throw new Error(`${name}: 처리된 제출 파일이 변경되었다`);
+        return { ...receipt, existing: true, canonical: !!match };
       }
-      const { agent, morning, proposals, evening, read, based_on_seq } = visit;
-      // 순번은 실행기가 정한다. 이미 확정된 방문(다시 적용)이 아니면, 지금 순번이 고른 개체의 방문만 받는다.
-      const done = new Set(loadEvents().filter((e) => e.type === 'proposal_executed').map((e) => e.payload.request_id));
-      const replay = Array.isArray(proposals) && proposals.length > 0 && proposals.every((x) => done.has(x?.request_id));
-      if (!replay) {
-        const next = nextVisit(project(loadEvents()), loadConfig());
-        if (!['walk', 'evening', 'work'].includes(next.kind) || next.agent !== agent) throw new Error(`순번이 아니다: 지금 차례는 ${['walk', 'evening', 'work'].includes(next.kind) ? next.agent : `방문이 아니라 세계 흘리기(${next.kind})`}다. derived/next.json 을 따른다`);
+      const v = verify(); if (!v.ok) throw new Error(v.problems.join('\n'));
+      const w = project(loadEvents());
+      if (w.turn) throw new Error(`열린 방문 ${w.turn.turn_id}: inbox 처리를 보류한다`);
+      let status, text, turn_id = null;
+      try {
+        const visit = JSON.parse(raw);
+        if (!visit || typeof visit !== 'object' || Array.isArray(visit)) throw new Error('방문 JSON 객체가 필요하다');
+        if (match && (!Number.isSafeInteger(slot) || visit.based_on_seq !== slot)) throw new Error('based_on_seq: 고정 파일명의 순번과 일치해야 한다');
+        // A missing basis cannot prove freshness. Preserve such legacy files in
+        // rejected/ for review; never guess a sequence for an old proposal.
+        if (!Number.isSafeInteger(visit.based_on_seq) || visit.based_on_seq < 0 || visit.based_on_seq !== w.seq) {
+          throw new Error(`based_on_seq: 현재 순번 ${w.seq}과 다르다. 오래된 제출은 재사용하지 않는다`);
+        }
+        if (visit.advance === true) {
+          text = withTransaction(() => advanceUnlocked(visit.based_on_seq));
+          status = 'applied';
+        } else {
+          const { agent, morning, proposals, evening, read, based_on_seq } = visit;
+          const next = nextVisit(w, loadConfig());
+          if (!['walk', 'evening', 'work'].includes(next.kind) || next.agent !== agent) throw new Error(`순번이 아니다: 지금 차례는 ${['walk', 'evening', 'work'].includes(next.kind) ? next.agent : `방문이 아니라 세계 흘리기(${next.kind})`}다. derived/next.json 을 따른다`);
+          const r = applyVisit({ agent, morning, proposals, evening, read, based_on_seq });
+          if (!['applied', 'duplicate'].includes(r.status)) throw new Error(r.text);
+          status = r.status; turn_id = r.turn_id || null;
+          text = status === 'duplicate' ? '이미 확정됨' : `${r.agent_id} 방문 ${r.turn_id}, 수락 ${r.results.filter((x) => x.ok).length}/${r.results.length}`;
+        }
+      } catch (e) {
+        status = 'rejected'; text = e.message;
       }
-      const r = applyVisit({ agent, morning, proposals, evening, read, based_on_seq });
-      if (!['applied', 'duplicate'].includes(r.status)) throw new Error(r.text);
-      out.push(`${name}: ${r.status === 'duplicate' ? '이미 확정됨' : `${r.agent_id} 방문 ${r.turn_id}, 수락 ${r.results.filter((x) => x.ok).length}/${r.results.length}`}`);
-      fs.rmSync(file);
-    } catch (e) {
-      fs.mkdirSync(p('data', 'inbox', 'rejected'), { recursive: true });
-      fs.renameSync(file, p('data', 'inbox', 'rejected', name));
-      fs.writeFileSync(p('data', 'inbox', 'rejected', name + '.reason.txt'), e.message + '\n');
-      out.push(`${name}: 받지 못함 — ${e.message}`);
+      // A bad current slot must not lock an unchanged sequence forever. This is a
+      // transport event, not an agent failure or a world-clock tick. Old slots do
+      // not invalidate a newer pending submission.
+      if (match && slot === w.seq && project(loadEvents()).seq === w.seq) {
+        appendEvent({ type: 'inbox_slot_closed', actor_id: 'runtime', visibility: 'system',
+          payload: { path: `data/inbox/${name}`, based_on_seq: slot, status, reason: status === 'rejected' ? text : undefined } });
+        regenerate();
+      }
+      const receipt = { path: `data/inbox/${name}`, input_hash: sha256(raw), status, turn_id,
+        based_on_seq: slot, resulting_seq: project(loadEvents()).seq, text };
+      writeText(receiptPath, JSON.stringify(receipt, null, 2) + '\n');
+      return { ...receipt, canonical: !!match };
+    });
+    if (!outcome) break;
+    if (!outcome.canonical) {
+      if (outcome.status === 'rejected') {
+        fs.mkdirSync(p('data', 'inbox', 'rejected'), { recursive: true });
+        // Preserve earlier rejected bodies even when an old producer reuses a name.
+        const target = fs.existsSync(p('data', 'inbox', 'rejected', name)) ? `${name}.${outcome.input_hash}` : name;
+        fs.renameSync(file, p('data', 'inbox', 'rejected', target));
+        fs.writeFileSync(p('data', 'inbox', 'rejected', target + '.reason.txt'), outcome.text + '\n');
+      } else fs.rmSync(file);
     }
+    if (!outcome.existing) out.push(`${name}: ${outcome.status === 'rejected' ? '받지 못함 — ' : ''}${outcome.text}`);
   }
   return out;
 }

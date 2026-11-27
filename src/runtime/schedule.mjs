@@ -73,7 +73,8 @@ export function decide(w, cfg) {
 
 /** 파생물로 내보내는 다음 차례. 채팅은 이것을 읽고 그 개체로만 방문하거나, 걸을 개체가 없으면 세계를 한 칸 흘린다. */
 export function nextVisit(w, cfg, { paused = false } = {}) {
-  const base = { based_on_seq: w.seq, world_clock: w.clock };
+  const base = { based_on_seq: w.seq, world_clock: w.clock, inbox: { protocol: 'sequence-slot-v1', path: `data/inbox/seq-${w.seq}.json`, receipt: `data/inbox/receipts/seq-${w.seq}.json`, create_only: true } };
+  if (w.turn) return { ...base, kind: 'busy', why: '열린 방문이 있다. 새 파일을 제출하지 않는다.' };
   if (paused) return { ...base, kind: 'paused', why: '정지 중이다(control/PAUSE). 방문하지 않는다.' };
   const d = decide(w, cfg);
   if (d.kind === 'walk') return { ...base, kind: 'walk', agent: d.agent.id, selection: d.selection, request_reason: d.request_reason || null,

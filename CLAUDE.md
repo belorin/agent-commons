@@ -42,7 +42,7 @@
 
 
 
-[README.md](README.md)와 [docs/CONCEPT.md](docs/CONCEPT.md)를 먼저 읽는다. 바꾼 뒤 `npm test` 와 `node src/cli.mjs verify` 가 통과해야 한다. 고정할 것은 실행 경계와 기록 무결성뿐이다. 개체의 취향·글의 구조·좋은 질문의 기준·관계 맺는 법·생애 관습을 코드나 브리핑에 넣지 않는다. 사건 타입을 바꾸면 [docs/EVENT_SCHEMA.md](docs/EVENT_SCHEMA.md)를 함께 고치고, 이미 확정된 사건이 계속 재생되는지 확인한다.
+[README.md](README.md)와 [docs/CONCEPT.md](docs/CONCEPT.md)를 먼저 읽는다. 바꾼 뒤 `npm test` 와 `node src/cli.mjs verify` 가 통과해야 한다. 테스트를 추가하기 전에 같은 실패를 잡는 기존 검사를 찾아 확장·교체한다. 동일 동작의 중복 검사와 테스트 보조 함수·표준 라이브러리만 확인하는 검사는 늘리지 않는다. 고정할 것은 실행 경계와 기록 무결성뿐이다. 개체의 취향·글의 구조·좋은 질문의 기준·관계 맺는 법·생애 관습을 코드나 브리핑에 넣지 않는다. 사건 타입을 바꾸면 [docs/EVENT_SCHEMA.md](docs/EVENT_SCHEMA.md)를 함께 고치고, 이미 확정된 사건이 계속 재생되는지 확인한다.
 
 ## 외부 탐색 경로 점검 (바깥 실행기)
 

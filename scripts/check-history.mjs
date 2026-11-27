@@ -8,7 +8,7 @@ export function checkHistory(base) {
   const git = (...args) => execFileSync('git', ['-c', 'core.quotepath=false', ...args], { encoding: 'utf8', maxBuffer: GIT_MAX_BUFFER });
   const files = git('ls-tree', '-r', '--name-only', '-z', base, 'data').split('\0').filter(Boolean);
   for (const file of files) {
-    if (file !== 'data/events/log.jsonl' && !/^data\/agents\/[^/]+\/history\//.test(file) && !/^data\/wiki\/history\//.test(file) && !/^data\/changes\//.test(file)) continue;
+    if (file !== 'data/events/log.jsonl' && !/^data\/agents\/[^/]+\/history\//.test(file) && !/^data\/wiki\/history\//.test(file) && !/^data\/changes\//.test(file) && !/^data\/inbox\/(seq-[0-9]+\.json|receipts\/)/.test(file)) continue;
     const before = git('show', `${base}:${file}`);
     const now = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
     if (file === 'data/events/log.jsonl' ? !now.startsWith(before) : now !== before) throw new Error('Committed history changed: ' + file);

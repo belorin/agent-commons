@@ -5,6 +5,8 @@ on:
   push:
     branches: [main]
     paths: ["data/inbox/*.json"]
+  schedule:
+    - cron: "7,22,37,52 * * * *" # push 누락·실패·경합 뒤의 대기 파일 회수
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,11 +15,13 @@ concurrency:
   cancel-in-progress: false
 jobs:
   apply:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -29,4 +33,4 @@ jobs:
           git config user.name "commons-inbox"
           git config user.email "commons-inbox@users.noreply.github.com"
           node src/cli.mjs inbox
-          node scripts/commit-turn.mjs
+          node scripts/commit-turn.mjs --inbox

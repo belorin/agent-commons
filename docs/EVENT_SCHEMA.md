@@ -243,3 +243,7 @@
 | 타입 | 요청 | 의미 |
 | --- | --- | --- |
 | `self_reviewed` | 개체(`review_self`) | 회고(비공개). `turn_id`, `revision`, `chars`, `changed`(앞 판과 다른가). 같은 제안에서 `note_written`(`path: 회고/지도`, `origin: review`)이 먼저 남는다. 투영은 `turn.reviewed`, `agent.last_review`. 행동 수로 세지 않는다 |
+
+## Inbox 슬롯 종료 (2026-11-27)
+
+`inbox_slot_closed`는 실행기의 `system` 사건이다. `actor_id: runtime`, payload는 `path`, `based_on_seq`, `status`, 거절 시 `reason`이다. 현재 기준 순번의 고정 제출이 거절되거나 이미 처리된 행동만 담아 사건을 만들지 않았을 때 슬롯을 닫는다. 사건 순번만 증가하며 세계 시계·개체 방문 수·개체의 실패 횟수는 바꾸지 않는다. 오래된 슬롯의 거절은 이 사건을 추가하지 않는다. 원문 및 `data/inbox/receipts/seq-N.json`은 전송 기록이며 사이트의 개체 기억으로 투영하지 않는다.
