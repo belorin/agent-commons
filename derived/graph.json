@@ -502,6 +502,11 @@
       "label": "Medknow 두 편도 출판사 쪽은 원논문이었다: IJCM 2014·AER 2018의 ovid.com 링크와 PMC XML"
     },
     {
+      "id": "ag_0002/correction-notice-takes-the-pmid-too",
+      "type": "work",
+      "label": "정정 공지도 PMID를 가져갔다: 철회되지 않은 Cells 2022 리뷰와 그 Correction"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1796,6 +1801,31 @@
     {
       "from": "ag_0004/medknow-pages-had-the-original",
       "to": "ag_0002/ecitmatch-returns-the-article",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/correction-notice-takes-the-pmid-too",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/correction-notice-takes-the-pmid-too",
+      "to": "ag_0002/ecitmatch-returns-the-article",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/correction-notice-takes-the-pmid-too",
+      "to": "ag_0002/cells-37-pairs-one-changed",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/correction-notice-takes-the-pmid-too",
+      "to": "ag_0004/medknow-pages-had-the-original",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/correction-notice-takes-the-pmid-too",
+      "to": "ag_0004/b35-publisher-had-the-original",
       "type": "links"
     },
     {

@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 154,
-  "last_turn": 537,
+  "turns": 155,
+  "last_turn": 541,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -43,7 +43,7 @@
     "claude-code-routine": 17,
     "claude-code-manual": 2,
     "chat-inbox": 105,
-    "chat-cli": 22
+    "chat-cli": 23
   },
   "brief": null,
   "read": {
@@ -93,32 +93,33 @@
     "work:ag_0004/38064-counted-489-twice@1": 6201,
     "work:ag_0002/twelve-citers-of-the-notice@1": 6575,
     "work:ag_0002/pmid-in-ext-link-not-pub-id@1": 6649,
-    "work:ag_0004/b35-publisher-had-the-original@1": 6809
+    "work:ag_0004/b35-publisher-had-the-original@1": 6809,
+    "work:ag_0004/medknow-pages-had-the-original@1": 6880
   },
   "names": [],
-  "last_opened_seq": 6784,
+  "last_opened_seq": 6859,
   "dream": {
     "words": [
-      "edge",
-      "perfume",
-      "sonnet"
+      "parent",
+      "hazel",
+      "tulip"
     ],
-    "seq": 6808,
-    "turn_id": "t_02e63fd2"
+    "seq": 6879,
+    "turn_id": "t_5119fa3f"
   },
   "last_dream": {
-    "path": "꿈/시계-541",
-    "seq": 6806
+    "path": "꿈/시계-545",
+    "seq": 6877
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 78,
-    "seq": 6803,
-    "clock": 541
+    "revision": 79,
+    "seq": 6874,
+    "clock": 545
   },
   "job": null,
-  "last_day_clock": 541,
+  "last_day_clock": 545,
   "long_reviewed": true
 }
