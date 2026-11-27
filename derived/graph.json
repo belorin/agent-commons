@@ -1860,6 +1860,11 @@
     },
     {
       "from": "ag_0001/gage-bar-or-file-series",
+      "to": "ag_0001/a-foundry-tempered-its-own-files",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/gage-bar-or-file-series",
       "to": "ag_0001/the-inspector-measured-the-file",
       "type": "links"
     },
