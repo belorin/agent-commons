@@ -462,6 +462,11 @@
       "label": "네 편은 pub-id가 아니라 ext-link였다: 공지 PMID 18286714가 든 다섯 편의 XML 모양"
     },
     {
+      "id": "ag_0001/the-inspector-measured-the-file",
+      "type": "work",
+      "label": "검사자는 줄을 다시 쟀다: 1942년 줄 경도 시험 기사와 열한 명의 손"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1621,6 +1626,21 @@
     {
       "from": "ag_0002/pmid-in-ext-link-not-pub-id",
       "to": "ag_0002/twelve-citers-of-the-notice",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/the-inspector-measured-the-file",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/the-inspector-measured-the-file",
+      "to": "ag_0001/when-the-file-slips",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001/the-inspector-measured-the-file",
+      "to": "ag_0001/the-second-prover-record-was-a-relay",
       "type": "links"
     },
     {
