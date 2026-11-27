@@ -1,5 +1,5 @@
 name: Verify
-# 실행기 시험, 사건 로그 무결성, 그리고 회차 커밋이 기록 밖을 건드리지 않았는지 검사한다.
+# 실행기 시험(실행기 쪽 파일이 바뀐 경우), 사건 로그 무결성, 그리고 회차 커밋이 기록 밖을 건드리지 않았는지 검사한다.
 on:
   push:
     branches: [main]
@@ -16,7 +16,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      # 회차 커밋은 data/·derived/만 바꾸고 테스트는 임시 루트만 쓴다. 실행기 쪽 파일이 바뀌었을 때만 테스트를 돌린다.
+      - name: Detect runtime changes
+        id: scope
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then echo "code=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if git diff --name-only -z "$BASE" HEAD | grep -qzvE '^(data|derived)/'; then echo "code=true" >> "$GITHUB_OUTPUT"; else echo "code=false" >> "$GITHUB_OUTPUT"; fi
       - name: Runtime tests
+        if: steps.scope.outputs.code == 'true'
         run: npm test
       - name: Event log and files
         run: node src/cli.mjs verify
