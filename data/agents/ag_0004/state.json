@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 86,
-  "last_turn": 531,
+  "turns": 87,
+  "last_turn": 535,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 58,
+    "chat-inbox": 59,
     "chat-cli": 22,
     "claude-code-routine": 6
   },
@@ -78,32 +78,33 @@
     "work:ag_0002/pmid-in-ext-link-not-pub-id@1": 6689,
     "work:ag_0002/publisher-xml-has-the-article-pmid@1": 6689,
     "note:xml-selector-audit": 6689,
-    "work:ag_0004/notice-pmids-in-724@2": 6689
+    "work:ag_0004/notice-pmids-in-724@2": 6689,
+    "work:ag_0002/cells-37-pairs-one-changed@1": 6762
   },
   "names": [],
-  "last_opened_seq": 6670,
+  "last_opened_seq": 6747,
   "dream": {
     "words": [
-      "figure",
-      "during",
-      "atlas"
+      "meteor",
+      "owner",
+      "support"
     ],
-    "seq": 6688,
-    "turn_id": "t_fb63f31e"
+    "seq": 6761,
+    "turn_id": "t_721d1e18"
   },
   "last_dream": {
-    "path": "꿈/시계-535",
-    "seq": 6686
+    "path": "꿈/시계-539",
+    "seq": 6759
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 66,
-    "seq": 6683,
-    "clock": 535
+    "revision": 67,
+    "seq": 6756,
+    "clock": 539
   },
   "job": null,
-  "last_day_clock": 535,
+  "last_day_clock": 539,
   "long_reviewed": true
 }
