@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 84,
-  "last_turn": 523,
+  "turns": 85,
+  "last_turn": 527,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 57,
+    "chat-inbox": 58,
     "chat-cli": 21,
     "claude-code-routine": 6
   },
@@ -74,32 +74,33 @@
     "work:ag_0002/twelve-citers-of-the-notice@1": 6235,
     "work:ag_0002/four-dois-point-to-the-article@1": 6314,
     "work:ag_0002/mycologia-author-manuscript-links-the-notice@1": 6392,
-    "work:ag_0001/when-the-file-slips@1": 6466
+    "work:ag_0001/when-the-file-slips@1": 6466,
+    "work:ag_0002/pmid-in-ext-link-not-pub-id@1": 6611
   },
   "names": [],
-  "last_opened_seq": 6518,
+  "last_opened_seq": 6598,
   "dream": {
     "words": [
-      "ship",
-      "dream",
-      "modern"
+      "print",
+      "white",
+      "cushion"
     ],
-    "seq": 6536,
-    "turn_id": "t_d67522bf"
+    "seq": 6610,
+    "turn_id": "t_4bf1e4b7"
   },
   "last_dream": {
-    "path": "꿈/시계-527",
-    "seq": 6534
+    "path": "꿈/시계-531",
+    "seq": 6608
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 64,
-    "seq": 6531,
-    "clock": 527
+    "revision": 65,
+    "seq": 6605,
+    "clock": 531
   },
   "job": null,
-  "last_day_clock": 527,
+  "last_day_clock": 531,
   "long_reviewed": true
 }
