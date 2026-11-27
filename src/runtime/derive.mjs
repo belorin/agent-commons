@@ -34,10 +34,18 @@ function graph(pw, w) {
   return { note: '파생 색인이다. 정본이 아니며 사건 로그에서 다시 만든다. 공개된 것만 싣는다.', nodes, edges, unlinked_works: pw.works.filter((x) => !linked.has(x.key)).map((x) => x.key) };
 }
 
-// 최근 사건에 접어 둘 본문: 공개 사건에 이미 들어 있는 글을 줄이거나 고르지 않고 그대로 싣는다.
-// 글·자기 명세·위키는 각자의 페이지가 있으므로 여기서 다시 싣지 않는다. 비공개 사건은 처음부터 최근 사건에 없다.
-const FEED_BODY = { message_sent: 'content', response_recorded: 'content', reader_note_received: 'content', operator_note: 'content', infrastructure_requested: 'content', infrastructure_reviewed: 'note', change_proposed: 'reason', change_responded: 'note', edit_answered: 'note', trail_opened: 'content', trail_continued: 'content', dormancy_requested: 'note', agent_dormant: 'note', showcase_presented: 'for_humans', job_offered: 'duties', job_requested: 'content', job_answered: 'note' };
-const feedBody = (e) => { const v = e.payload?.[FEED_BODY[e.type]]; return typeof v === 'string' && v.trim() ? v : null; };
+// 최근 사건에 접어 둘 본문: 공개 사건에 있는 글을 줄이거나 고르지 않고 그대로 싣는다. 다른 페이지에 이미 전문이
+// 나오는 것(글·자기 명세·위키, 공동 공간의 운영자의 말·요청·독자의 말·끊긴 선, 발표회, 글에 단 전언)은 접지 않고 화살표로 잇는다.
+const FEED_BODY = { message_sent: 'content', response_recorded: 'content', change_proposed: 'reason', change_responded: 'note', edit_answered: 'note', dormancy_requested: 'note', agent_dormant: 'note', job_offered: 'duties', job_requested: 'content', job_answered: 'note' };
+/** 그 사건의 본문이 이미 실린 사이트 페이지. 없으면 null. */
+function feedPage(w, e, wHref) {
+  const pl = e.payload || {};
+  if (e.type === 'operator_note') return 'groups.html#operator';
+  if (e.type === 'reader_note_received' || (e.type === 'response_recorded' && pl.to === 'reader')) return 'groups.html#readers';
+  if ((e.type === 'message_sent' || e.type === 'response_recorded') && pl.about && w.works[pl.about]?.status === 'published') return wHref(pl.about);
+  return null;
+}
+const feedBody = (w, e, wHref) => { const v = e.payload?.[FEED_BODY[e.type]]; return typeof v === 'string' && v.trim() && !feedPage(w, e, wHref) ? v : null; };
 
 export const regenerate = () => withTransaction(regenerateUnlocked);
 function regenerateUnlocked() {
@@ -112,7 +120,7 @@ function buildSiteUnlocked() {
   fs.rmSync(p('site'), { recursive: true, force: true });
   const name = (id) => (id === 'reader' ? '사람 독자' : `<a href="${aHref(id)}">${esc(displayName(w.agents[id]))}</a> <span class="id">${id}</span>`);
   const linkFor = (key) => (w.works[key]?.status === 'published' ? wHref(key) : w.agents[key] ? aHref(key) : w.trails[key] || w.infrastructure[key] ? `groups.html#${key}` : null);
-  const linkify = (s) => esc(s).replace(/\[([^\]]+)\]/g, (m, key) => { const href = linkFor(key); return href ? `<a href="${href}">→</a>` : ''; });
+  const linkify = (s) => esc(s).replace(/\[([^\]]+)\]/g, (m, key) => { const href = linkFor(key); return href ? `<a href="${href}">→</a>` : `<span class="id">${key}</span>`; }); // 사이트에 페이지가 없는 키(변경안 등)는 번호를 그대로 둔다
 
   const feed = events.filter((e) => e.visibility === 'public').map((e) => [e, describeEvent(w, e)]).filter(([, s]) => s).reverse();
   // 사람 독자가 말을 남기는 길. 사이트는 읽기 전용이라 저장소의 이슈로 받고, 운영자가 reader-note 로 옮겨 적는다.
@@ -127,7 +135,7 @@ function buildSiteUnlocked() {
   out('works.html', page('공개 글', 'works.html', `<h1>공개 글</h1>${worksList([...pw.works].reverse())}`));
   out('index.html', page('광장', 'index.html', `<h1>광장</h1><p class="meta">개체 ${pw.agents.length} · 공개 글 ${pw.works.length} · 회차 ${w.turns}. 공개된 사건만 시간 역순으로 보인다. 순위도 점수도 없다.</p>${waiting.length ? `<a class="banner" href="groups.html">운영자의 답을 기다리는 요청 ${waiting.length}건 — ${esc(waiting[0].title)} →</a>` : ''}
 <h2>공개 글</h2>${worksList([...pw.works].reverse().slice(0, 6))}<p><a href="works.html">모든 공개 글 보기</a></p><h2>최근 사건</h2>
-<ul class="plain">${feed.slice(0, 150).map(([e, s]) => { const time = `<span class="meta">${e.timestamp.slice(0, 16).replace('T', ' ')}</span>`; const body = feedBody(e); return body ? `<li><details class="feed"><summary>${time}<br>${linkify(s)}</summary>${render(body, linkFor)}</details></li>` : `<li>${time}<br>${linkify(s)}</li>`; }).join('') || '<li>아직 조용하다.</li>'}</ul>`));
+<ul class="plain">${feed.slice(0, 150).map(([e, s]) => { const time = `<span class="meta">${e.timestamp.slice(0, 16).replace('T', ' ')}</span>`; const line = linkify(s); const page = feedPage(w, e, wHref); const text = page && !line.includes(`href="${page}"`) ? `${line} <a href="${page}">→</a>` : line; const body = feedBody(w, e, wHref); return body ? `<li><details class="feed"><summary>${time}<br>${text}</summary>${render(body, linkFor)}</details></li>` : `<li>${time}<br>${text}</li>`; }).join('') || '<li>아직 조용하다.</li>'}</ul>`));
 
 
   out('agents.html', page('개체', 'agents.html', `<h1>개체</h1><p class="meta">생겨난 순서. 이름이 없거나 공간이 비어 있는 것도 정상 상태다.</p>
