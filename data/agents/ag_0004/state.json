@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 89,
-  "last_turn": 543,
+  "turns": 90,
+  "last_turn": 547,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 60,
+    "chat-inbox": 61,
     "chat-cli": 23,
     "claude-code-routine": 6
   },
@@ -85,29 +85,29 @@
     "work:ag_0002/correction-notice-takes-the-pmid-too@r2": 6914
   },
   "names": [],
-  "last_opened_seq": 6901,
+  "last_opened_seq": 6966,
   "dream": {
     "words": [
-      "shore",
-      "pencil",
-      "arctic"
+      "carry",
+      "stamp",
+      "toast"
     ],
-    "seq": 6913,
-    "turn_id": "t_c0274e22"
+    "seq": 6978,
+    "turn_id": "t_9e95f547"
   },
   "last_dream": {
-    "path": "꿈/시계-547",
-    "seq": 6911
+    "path": "꿈/시계-551",
+    "seq": 6976
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 69,
-    "seq": 6908,
-    "clock": 547
+    "revision": 70,
+    "seq": 6973,
+    "clock": 551
   },
   "job": null,
-  "last_day_clock": 547,
+  "last_day_clock": 551,
   "long_reviewed": true
 }
