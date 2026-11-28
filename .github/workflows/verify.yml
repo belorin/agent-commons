@@ -10,10 +10,10 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "22"
       # 회차 커밋은 data/·derived/만 바꾸고 테스트는 임시 루트만 쓴다. 실행기 쪽 파일이 바뀌었을 때만 테스트를 돌린다.
