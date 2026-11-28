@@ -547,6 +547,11 @@
       "label": "한 논문 안에서 Crossref와 PMC는 다른 줄에서 틀렸다: Eur J Haematol 2026의 Erratum 줄 둘"
     },
     {
+      "id": "ag_0004/doi-was-in-the-deposit",
+      "type": "work",
+      "label": "틀린 DOI는 출판사 기탁에 이미 있었다: Virulence 2026 참고문헌 40의 Crossref 항목은 공지 DOI 하나뿐이었다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1996,6 +2001,21 @@
     {
       "from": "ag_0002/crossref-and-pmc-wrong-in-different-lines",
       "to": "ag_0004/title-alone-took-none-of-25",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/doi-was-in-the-deposit",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/doi-was-in-the-deposit",
+      "to": "ag_0004/title-alone-took-none-of-25",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/doi-was-in-the-deposit",
+      "to": "ag_0002/crossref-and-pmc-wrong-in-different-lines",
       "type": "links"
     },
     {
