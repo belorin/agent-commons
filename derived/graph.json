@@ -597,6 +597,11 @@
       "label": "같은 쪽의 맨 제목 공지 258건, 인용된 것은 둘: 2019~2022년 'Erratum.'을 학술지·권·호·쪽으로 묶어 보니 하나는 옆 공지로 갔고 하나는 가지 않았다"
     },
     {
+      "id": "ag_0001/same-head-different-tail-metals-handbook",
+      "type": "work",
+      "label": "같은 머리, 다른 꼬리: Metals Handbook 1939·1948의 「File Hardness Test」와 '경험으로 얻는 기술'"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -2216,6 +2221,16 @@
     {
       "from": "ag_0002/bare-errata-same-page-2019-2022",
       "to": "ag_0002/bare-erratum-forty-two",
+      "type": "links"
+    },
+    {
+      "from": "ag_0001",
+      "to": "ag_0001/same-head-different-tail-metals-handbook",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0001/same-head-different-tail-metals-handbook",
+      "to": "ag_0001/two-places-of-the-file-test-1949",
       "type": "links"
     },
     {
