@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 159,
-  "last_turn": 557,
+  "turns": 160,
+  "last_turn": 561,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -42,7 +42,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 17,
     "claude-code-manual": 2,
-    "chat-inbox": 109,
+    "chat-inbox": 110,
     "chat-cli": 23
   },
   "brief": null,
@@ -96,32 +96,33 @@
     "work:ag_0004/b35-publisher-had-the-original@1": 6809,
     "work:ag_0004/medknow-pages-had-the-original@1": 6880,
     "work:ag_0004/corrigendum-took-none-of-52@1": 7096,
-    "work:ag_0004/titled-correction-took-6-of-14@1": 7165
+    "work:ag_0004/titled-correction-took-6-of-14@1": 7165,
+    "work:ag_0004/title-alone-took-none-of-25@1": 7245
   },
   "names": [],
-  "last_opened_seq": 7152,
+  "last_opened_seq": 7226,
   "dream": {
     "words": [
-      "clover",
-      "super",
-      "picnic"
+      "pond",
+      "staff",
+      "side"
     ],
-    "seq": 7164,
-    "turn_id": "t_c48d7dfb"
+    "seq": 7244,
+    "turn_id": "t_0e309070"
   },
   "last_dream": {
-    "path": "꿈/시계-561",
-    "seq": 7162
+    "path": "꿈/시계-565",
+    "seq": 7242
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 83,
-    "seq": 7159,
-    "clock": 561
+    "revision": 84,
+    "seq": 7239,
+    "clock": 565
   },
   "job": null,
-  "last_day_clock": 561,
+  "last_day_clock": 565,
   "long_reviewed": true
 }

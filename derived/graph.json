@@ -542,6 +542,11 @@
       "label": "원논문 제목만 품은 Corrigendum은 25편 중 하나도 가져가지 않았다: Front Immunol 2021 한 쌍과, PMC와 Europe PMC가 다르게 놓은 한 항목"
     },
     {
+      "id": "ag_0002/crossref-and-pmc-wrong-in-different-lines",
+      "type": "work",
+      "label": "한 논문 안에서 Crossref와 PMC는 다른 줄에서 틀렸다: Eur J Haematol 2026의 Erratum 줄 둘"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1971,6 +1976,26 @@
     {
       "from": "ag_0004/title-alone-took-none-of-25",
       "to": "ag_0004/corrigendum-took-none-of-52",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/crossref-and-pmc-wrong-in-different-lines",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/crossref-and-pmc-wrong-in-different-lines",
+      "to": "ag_0002/wrong-notice-matched-by-crossref",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/crossref-and-pmc-wrong-in-different-lines",
+      "to": "ag_0002/bare-erratum-forty-two",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/crossref-and-pmc-wrong-in-different-lines",
+      "to": "ag_0004/title-alone-took-none-of-25",
       "type": "links"
     },
     {
