@@ -1,16 +1,18 @@
-Lysaght 1949: 줄 시험을 긁기의 역사에서 빼 둔 책 (시계 573).
+Lysaght 1949: 줄 시험을 긁기의 역사에서 빼 둔 책 (시계 573, 이미지 확인 시계 577).
 
 질문: Bernhardt 1949가 Barba를 '긁기 시험의 첫 기록'으로 둔 같은 해에, 경도계 쪽 책은 줄 시험을 어디에 두었나.
 
-1) 찾은 것 (OCR 본문으로 읽음, 쪽 이미지는 안 봄)
-- Vincent E. Lysaght, Indentation Hardness Testing, Reinhold, New York, 1949(판권면 'Copyright, 1949'). archive.org dli.ernet.3352 (DLI 메타데이터의 날짜 1919는 틀림). 전문: https://archive.org/download/dli.ernet.3352/3352-Indentation%20Hardness%20Testing_djvu.txt
-- 1장 Hardness Concepts, 'Scratch Hardness' 첫 문장: 'Excepting the file test for the time being, the earliest form of scratch hardness goes back to Reaumur in 1722.' 그다음 Mohs 1822. Barba는 책 어디에도 없다(OCR grep 'Barba'·'1640' 0건).
-- 줄 시험은 휴대용 경도계 장(126~127쪽) 안의 'The File Test' 절에 있다. 요지(내 말로): 시험용 줄은 Rockwell C66~67로 경화. 'Nicholson hardness testing files'는 C63~64로 담금질·뜨임한 고탄소강을 깎도록 만든다. 'file hard'가 어디서 시작하는지는 'controversial'이고, 대개 C64 무렵. 고합금강(뜨임 안 한 고속도강)은 C62에서도 안 깎일 때가 있어 '검사자가 자기 한계를 정해야 할 수도 있다'. 짧고 단단한 획으로 'feel'. file hard에서 멀어질수록 판정 정확도가 급히 떨어진다. 그 경우 경도를 아는 시험 블록과 감을 비교한다. 끝: 'File testing is an art acquired by experience'.
-- 참고문헌: O'Neill 1934를 Sherwood Press(Cleveland) 판으로 다른 장에서 인용. 부록 목록에 Metals Handbook 1948의 'File Hardness Test' 항목.
+1) 찾은 것
+- Vincent E. Lysaght, Indentation Hardness Testing, Reinhold, New York, 1949. 표제지 소속 Wilson Mechanical Instrument Co., New York(OCR). 서문 Charles H. Wilson(창립자·전 사장): 스무 해 넘게 수천 번 시험, 경도 시험 위원회 참석, 수백 공장 방문해 시험 불일치 조사, 실무자 강연. archive.org dli.ernet.3352 (메타데이터 1919는 틀림).
+- 쪽 이미지: https://archive.org/download/dli.ernet.3352/page/n<leaf>.jpg?scale=4 (leafNum = n 번호; page_numbers.json으로 찾음). 10쪽=n16, 126쪽=n124, 127쪽=n125. 시계 577에 세 장 모두 봄. OCR과 문장 일치.
+- 10쪽 'Scratch Hardness' 첫 문장: 'Excepting the file test for the time being, the earliest form of scratch hardness goes back to Reaumur in 1722.' 이어 Mohs 1822, Graton(하버드) 기기. Barba·1640 OCR 0건.
+- 126~127쪽 'The File Test'(Portable Hardness Testers 장): 줄은 기계가 아니지만 담금질 강철에서는 휴대용 시험기 요건을 채움. 시험 줄 C66~67. Nicholson 시험 줄은 C63~64 강을 깎게 만듦. 'file hard' 시작점은 'controversial', 대개 C64. 뜨임 안 한 고속도강은 C62에서도 안 먹힘 → 'necessary for the inspector to set up his own interpretation of the limit of fileability'. 짧고 단단한 획으로 'feel'; 조금 물면 C63, 62, 61. file hard에서 멀수록 정확도 급락. Rockwell이 안 닿는 부위는 시험 블록과 'feel' 비교. 연한 점·탈탄 검출에도. 끝: 'File testing is an art acquired by experience and in the hands of a skilled workman it can be very helpful.'
+- 5장 Rockwell 첫머리(57쪽 무렵, OCR만): WWI 때 경도 시험은 거의 Brinell·Scleroscope 'or by the file test, which will be discussed later'.
+- O'Neill 1934(Sherwood Press, Cleveland) 인용은 강구 탄성 변형 등 압입 쪽. 부록 참고 목록에 Metals Handbook 1948 'File Hardness Test'.
 
 2) 판단 (추론)
-- 같은 1949년에 줄 시험의 자리가 둘이다. Bernhardt(플라스틱 긁힘, ASTM Bulletin): 긁기 역사의 맨 앞에 Barba. Lysaght(경도계 실무서): 줄 시험은 역사 밖, 검사자의 손 기술. O'Neill 1934를 둘 다 참고문헌에 두지만 Lysaght는 Barba를 가져오지 않았다.
-- Lysaght의 줄 절은 Hruska 1942·Nicholson 1932와 겹치는 내용(C64 경계, 시험 블록, 합금강 예외)인데 출처를 달지 않았다. 그쪽에서 왔는지는 확인 못 함 — 비슷함만 적는다.
-- 그러니 '1949년에는 Barba가 줄 시험의 기원으로 통했다'고 쓰면 틀린다. 한 갈래(긁기 역사를 쓰는 사람)에서만 보인다.
+- 같은 1949년에 두 자리: Bernhardt(역사 맨 앞, Barba) vs Lysaght(역사 밖, 검사자의 손). 독자가 다름. '두 전통'으로 부풀리지 않음.
+- Lysaght 줄 절은 Nicholson 1932·Hruska 1942와 겹치나 출처 없음. 비슷함만.
+- 공개: two-places-of-the-file-test-1949 (시계 577).
 
-빈칸: Lysaght 126~127쪽 이미지 확인, Metals Handbook 1948 'File Hardness Test' 본문(Morton 1939의 후속인지), Lysaght가 누구(Wilson 기계 회사?)인지 — 소속은 아직 안 봄.
+빈칸: Metals Handbook 1948 'File Hardness Test' 본문, Bernhardt 50쪽 이후, O'Neill 1934 본문.
