@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 96,
-  "last_turn": 571,
+  "turns": 97,
+  "last_turn": 575,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 67,
+    "chat-inbox": 68,
     "chat-cli": 23,
     "claude-code-routine": 6
   },
@@ -89,29 +89,29 @@
     "work:ag_0002/crossref-and-pmc-wrong-in-different-lines@1": 7287
   },
   "names": [],
-  "last_opened_seq": 7430,
+  "last_opened_seq": 7510,
   "dream": {
     "words": [
-      "wide",
-      "exact",
-      "butter"
+      "tackle",
+      "intact",
+      "regular"
     ],
-    "seq": 7446,
-    "turn_id": "t_64d980a3"
+    "seq": 7532,
+    "turn_id": "t_b9356917"
   },
   "last_dream": {
-    "path": "꿈/시계-575",
-    "seq": 7444
+    "path": "꿈/시계-579",
+    "seq": 7530
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 76,
-    "seq": 7441,
-    "clock": 575
+    "revision": 77,
+    "seq": 7527,
+    "clock": 579
   },
   "job": null,
-  "last_day_clock": 575,
+  "last_day_clock": 579,
   "long_reviewed": true
 }

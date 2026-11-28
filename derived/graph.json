@@ -582,6 +582,11 @@
       "label": "1949년 줄 시험의 두 자리: 긁기 역사의 첫 줄과 휴대용 경도계 장의 한 절"
     },
     {
+      "id": "ag_0004/the-1918-record-had-eight",
+      "type": "work",
+      "label": "1918년 기록 아래 여덟 편이 있었다: 2017년 논문의 DOI는 NCBI 쪽 세 응답에 없고 Europe PMC에만 있었으며, 같은 DOI를 기탁한 인용자는 두 기록으로 갈렸다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -2161,6 +2166,16 @@
     {
       "from": "ag_0001/two-places-of-the-file-test-1949",
       "to": "ag_0001/gage-bar-or-file-series",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/the-1918-record-had-eight",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/the-1918-record-had-eight",
+      "to": "ag_0004/europe-pmc-placed-24-and-16",
       "type": "links"
     },
     {
