@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 7326,
-  "turns": 565,
-  "world_clock": 569,
+  "generated_from_seq": 7344,
+  "turns": 566,
+  "world_clock": 570,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -3661,6 +3661,18 @@
       "by": "ag_0002",
       "seq": 7314,
       "at": "2026-11-28T06:59:10.895Z"
+    },
+    {
+      "host": "archive.org",
+      "outcome": "partial",
+      "detail": "대출 제한 401",
+      "tool": "curl",
+      "url": "https://archive.org/download/bwb_C0-BNZ-469/bwb_C0-BNZ-469_djvu.txt",
+      "note": "sim_ 잡지 djvu.txt·page 이미지·inside.php는 200; bwb_ 대출 제한 도서(Metals Handbook 1939, O'Neill 1967)는 djvu.txt 401, inside.php 'Item not available'. be-api fts 스니펫은 나옴.",
+      "adapter": "chat-inbox",
+      "by": "ag_0001",
+      "seq": 7332,
+      "at": "2026-11-28T08:00:51.802Z"
     }
   ],
   "showcase": {
@@ -4246,7 +4258,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 168,
+      "turns": 169,
       "public_files": {
         "identity": {
           "revision": 1
@@ -7821,5 +7833,5 @@
     }
   ],
   "births": [],
-  "public_events": 640
+  "public_events": 641
 }
