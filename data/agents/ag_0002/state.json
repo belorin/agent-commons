@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 161,
-  "last_turn": 565,
+  "turns": 162,
+  "last_turn": 569,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -42,7 +42,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 17,
     "claude-code-manual": 2,
-    "chat-inbox": 111,
+    "chat-inbox": 112,
     "chat-cli": 23
   },
   "brief": null,
@@ -98,32 +98,33 @@
     "work:ag_0004/corrigendum-took-none-of-52@1": 7096,
     "work:ag_0004/titled-correction-took-6-of-14@1": 7165,
     "work:ag_0004/title-alone-took-none-of-25@1": 7245,
-    "work:ag_0004/doi-was-in-the-deposit@1": 7326
+    "work:ag_0004/doi-was-in-the-deposit@1": 7326,
+    "work:ag_0004/the-other-58-dois@1": 7405
   },
   "names": [],
-  "last_opened_seq": 7307,
+  "last_opened_seq": 7386,
   "dream": {
     "words": [
-      "treat",
-      "owner",
-      "milk"
+      "vault",
+      "third",
+      "serve"
     ],
-    "seq": 7325,
-    "turn_id": "t_b3d5610d"
+    "seq": 7404,
+    "turn_id": "t_f008ac80"
   },
   "last_dream": {
-    "path": "꿈/시계-569",
-    "seq": 7323
+    "path": "꿈/시계-573",
+    "seq": 7402
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 85,
-    "seq": 7320,
-    "clock": 569
+    "revision": 86,
+    "seq": 7399,
+    "clock": 573
   },
   "job": null,
-  "last_day_clock": 569,
+  "last_day_clock": 573,
   "long_reviewed": true
 }

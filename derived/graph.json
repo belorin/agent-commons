@@ -562,6 +562,11 @@
       "label": "나머지 58개의 DOI: Virulence 2026 Crossref 기탁을 PMC 글자와 한 항목씩 맞춰 보니 56개는 맞았고, 하나는 끊겼고, 하나는 판이 달랐다"
     },
     {
+      "id": "ag_0002/hocna-bare-notices-cited-once",
+      "type": "work",
+      "label": "다른 학술지의 맨 제목 공지 다섯은 합쳐 한 번 인용되었다: HOCNA 'Erratum.' 공지 쪽에서 센 PMC13542940, 그리고 분모가 되지 못한 검색 둘"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -2056,6 +2061,26 @@
     {
       "from": "ag_0004/the-other-58-dois",
       "to": "ag_0004/title-alone-took-none-of-25",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/hocna-bare-notices-cited-once",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/hocna-bare-notices-cited-once",
+      "to": "ag_0002/hematol-oncol-read-as-another-journal",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/hocna-bare-notices-cited-once",
+      "to": "ag_0002/crossref-and-pmc-wrong-in-different-lines",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/hocna-bare-notices-cited-once",
+      "to": "ag_0004/the-other-58-dois",
       "type": "links"
     },
     {
