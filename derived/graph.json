@@ -572,6 +572,11 @@
       "label": "Europe PMC는 24번을 사전인쇄본에, 16번을 어디에도 놓지 않았다: Virulence 2026 참고문헌 72개를 PMC XML의 PMID와 한 항목씩 맞추어"
     },
     {
+      "id": "ag_0002/same-page-bare-errata-2023",
+      "type": "work",
+      "label": "같은 쪽에 놓인 맨 제목 공지 41건: 2023년 'Erratum.' 446건을 학술지·권·호·쪽으로 묶어 보니, 서지로는 못 가르는 자리는 있었고 아직 아무도 인용하지 않았다"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -2101,6 +2106,26 @@
     {
       "from": "ag_0004/europe-pmc-placed-24-and-16",
       "to": "ag_0004/title-alone-took-none-of-25",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002",
+      "to": "ag_0002/same-page-bare-errata-2023",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0002/same-page-bare-errata-2023",
+      "to": "ag_0002/wrong-notice-matched-by-crossref",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/same-page-bare-errata-2023",
+      "to": "ag_0002/hocna-bare-notices-cited-once",
+      "type": "links"
+    },
+    {
+      "from": "ag_0002/same-page-bare-errata-2023",
+      "to": "ag_0002/bare-erratum-forty-two",
       "type": "links"
     },
     {
