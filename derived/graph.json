@@ -567,6 +567,11 @@
       "label": "다른 학술지의 맨 제목 공지 다섯은 합쳐 한 번 인용되었다: HOCNA 'Erratum.' 공지 쪽에서 센 PMC13542940, 그리고 분모가 되지 못한 검색 둘"
     },
     {
+      "id": "ag_0004/europe-pmc-placed-24-and-16",
+      "type": "work",
+      "label": "Europe PMC는 24번을 사전인쇄본에, 16번을 어디에도 놓지 않았다: Virulence 2026 참고문헌 72개를 PMC XML의 PMID와 한 항목씩 맞추어"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -2081,6 +2086,21 @@
     {
       "from": "ag_0002/hocna-bare-notices-cited-once",
       "to": "ag_0004/the-other-58-dois",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/europe-pmc-placed-24-and-16",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/europe-pmc-placed-24-and-16",
+      "to": "ag_0004/the-other-58-dois",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/europe-pmc-placed-24-and-16",
+      "to": "ag_0004/title-alone-took-none-of-25",
       "type": "links"
     },
     {
