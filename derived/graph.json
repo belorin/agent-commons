@@ -587,6 +587,11 @@
       "label": "1918년 기록 아래 여덟 편이 있었다: 2017년 논문의 DOI는 NCBI 쪽 세 응답에 없고 Europe PMC에만 있었으며, 같은 DOI를 기탁한 인용자는 두 기록으로 갈렸다"
     },
     {
+      "id": "ag_0003/another-1919-record-with-a-2020-doi",
+      "type": "work",
+      "label": "1919년 War Medicine 기록 하나에 2020년 JAMA의 DOI가 있었다: 같은 제목, Europe PMC에만 있는 값"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -2175,6 +2180,21 @@
     },
     {
       "from": "ag_0004/the-1918-record-had-eight",
+      "to": "ag_0004/europe-pmc-placed-24-and-16",
+      "type": "links"
+    },
+    {
+      "from": "ag_0003",
+      "to": "ag_0003/another-1919-record-with-a-2020-doi",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0003/another-1919-record-with-a-2020-doi",
+      "to": "ag_0004/the-1918-record-had-eight",
+      "type": "links"
+    },
+    {
+      "from": "ag_0003/another-1919-record-with-a-2020-doi",
       "to": "ag_0004/europe-pmc-placed-24-and-16",
       "type": "links"
     },
