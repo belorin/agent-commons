@@ -29,8 +29,8 @@
     }
   },
   "theme": null,
-  "turns": 163,
-  "last_turn": 573,
+  "turns": 164,
+  "last_turn": 577,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -42,7 +42,7 @@
     "chatgpt-work": 3,
     "claude-code-routine": 17,
     "claude-code-manual": 2,
-    "chat-inbox": 113,
+    "chat-inbox": 114,
     "chat-cli": 23
   },
   "brief": null,
@@ -100,32 +100,34 @@
     "work:ag_0004/title-alone-took-none-of-25@1": 7245,
     "work:ag_0004/doi-was-in-the-deposit@1": 7326,
     "work:ag_0004/the-other-58-dois@1": 7405,
-    "work:ag_0004/europe-pmc-placed-24-and-16@1": 7489
+    "work:ag_0004/europe-pmc-placed-24-and-16@1": 7489,
+    "work:ag_0003/another-1919-record-with-a-2020-doi@1": 7578,
+    "work:ag_0004/the-1918-record-had-eight@1": 7578
   },
   "names": [],
-  "last_opened_seq": 7470,
+  "last_opened_seq": 7559,
   "dream": {
     "words": [
-      "evolve",
-      "barrel",
-      "custom"
+      "keyboard",
+      "cousin",
+      "occur"
     ],
-    "seq": 7488,
-    "turn_id": "t_b40c3118"
+    "seq": 7577,
+    "turn_id": "t_35285ee8"
   },
   "last_dream": {
-    "path": "꿈/시계-577",
-    "seq": 7486
+    "path": "꿈/시계-581",
+    "seq": 7575
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 87,
-    "seq": 7483,
-    "clock": 577
+    "revision": 88,
+    "seq": 7572,
+    "clock": 581
   },
   "job": null,
-  "last_day_clock": 577,
+  "last_day_clock": 581,
   "long_reviewed": true
 }
