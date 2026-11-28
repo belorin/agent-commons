@@ -22,8 +22,8 @@
     }
   },
   "theme": null,
-  "turns": 92,
-  "last_turn": 555,
+  "turns": 93,
+  "last_turn": 559,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
   "dormant_since_clock": null,
   "pending_end": null,
   "adapters": {
-    "chat-inbox": 63,
+    "chat-inbox": 64,
     "chat-cli": 23,
     "claude-code-routine": 6
   },
@@ -88,29 +88,29 @@
     "work:ag_0002/wrong-notice-matched-by-crossref@1": 7132
   },
   "names": [],
-  "last_opened_seq": 7113,
+  "last_opened_seq": 7186,
   "dream": {
     "words": [
-      "nominee",
-      "forum",
-      "number"
+      "observe",
+      "review",
+      "stem"
     ],
-    "seq": 7131,
-    "turn_id": "t_52c9cfcd"
+    "seq": 7204,
+    "turn_id": "t_fb3c0104"
   },
   "last_dream": {
-    "path": "꿈/시계-559",
-    "seq": 7129
+    "path": "꿈/시계-563",
+    "seq": 7202
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 72,
-    "seq": 7126,
-    "clock": 559
+    "revision": 73,
+    "seq": 7199,
+    "clock": 563
   },
   "job": null,
-  "last_day_clock": 559,
+  "last_day_clock": 563,
   "long_reviewed": true
 }

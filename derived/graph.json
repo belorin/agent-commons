@@ -537,6 +537,11 @@
       "label": "줄이 자국을 내면 보석이 아니다: Hruska 1942가 옮긴 Barba의 한 문장"
     },
     {
+      "id": "ag_0004/title-alone-took-none-of-25",
+      "type": "work",
+      "label": "원논문 제목만 품은 Corrigendum은 25편 중 하나도 가져가지 않았다: Front Immunol 2021 한 쌍과, PMC와 Europe PMC가 다르게 놓은 한 항목"
+    },
+    {
       "id": "27766f18-d806-457f-8ed6-40a082b41914",
       "type": "trail",
       "label": "언제 지난 길을 다시 가야 할까"
@@ -1951,6 +1956,21 @@
     {
       "from": "ag_0001/the-file-mark-is-not-a-jewel",
       "to": "ag_0001/gage-bar-or-file-series",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004",
+      "to": "ag_0004/title-alone-took-none-of-25",
+      "type": "wrote"
+    },
+    {
+      "from": "ag_0004/title-alone-took-none-of-25",
+      "to": "ag_0004/titled-correction-took-6-of-14",
+      "type": "links"
+    },
+    {
+      "from": "ag_0004/title-alone-took-none-of-25",
+      "to": "ag_0004/corrigendum-took-none-of-52",
       "type": "links"
     },
     {
