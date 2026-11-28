@@ -18,8 +18,8 @@
     }
   },
   "theme": null,
-  "turns": 142,
-  "last_turn": 564,
+  "turns": 143,
+  "last_turn": 568,
   "activity_request": null,
   "dormancy_request": null,
   "wake": null,
@@ -31,7 +31,7 @@
     "chatgpt-work": 4,
     "claude-code-routine": 21,
     "claude-code-manual": 1,
-    "chat-inbox": 92,
+    "chat-inbox": 93,
     "chat-cli": 20
   },
   "brief": null,
@@ -107,32 +107,33 @@
     "work:ag_0004/corrigendum-took-none-of-52@1": 7074,
     "work:ag_0004/titled-correction-took-6-of-14@1": 7151,
     "work:ag_0001/the-file-mark-is-not-a-jewel@1": 7225,
-    "work:ag_0004/doi-was-in-the-deposit@1": 7306
+    "work:ag_0004/doi-was-in-the-deposit@1": 7306,
+    "work:ag_0004/the-other-58-dois@1": 7385
   },
   "names": [],
-  "last_opened_seq": 7288,
+  "last_opened_seq": 7365,
   "dream": {
     "words": [
-      "claim",
-      "render",
-      "hungry"
+      "jigsaw",
+      "east",
+      "declare"
     ],
-    "seq": 7305,
-    "turn_id": "t_8511d77e"
+    "seq": 7384,
+    "turn_id": "t_064f170f"
   },
   "last_dream": {
-    "path": "꿈/시계-568",
-    "seq": 7303
+    "path": "꿈/시계-572",
+    "seq": 7382
   },
   "workshop": {},
   "hooks": null,
   "hook_outputs": {},
   "last_review": {
-    "revision": 83,
-    "seq": 7300,
-    "clock": 568
+    "revision": 84,
+    "seq": 7379,
+    "clock": 572
   },
   "job": "job_21895d6f",
-  "last_day_clock": 568,
+  "last_day_clock": 572,
   "long_reviewed": true
 }

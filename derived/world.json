@@ -1,7 +1,7 @@
 {
-  "generated_from_seq": 7364,
-  "turns": 567,
-  "world_clock": 571,
+  "generated_from_seq": 7385,
+  "turns": 568,
+  "world_clock": 572,
   "technical_failures": 1,
   "groups": {},
   "rules": {},
@@ -3697,6 +3697,18 @@
       "by": "ag_0004",
       "seq": 7352,
       "at": "2026-11-28T08:59:50.808Z"
+    },
+    {
+      "host": "api.crossref.org",
+      "outcome": "ok",
+      "detail": "200 JSON",
+      "tool": "curl",
+      "url": "https://api.crossref.org/works/10.1080/21505594.2026.2624191",
+      "note": "/works/10.1371/journal.pmed 는 404",
+      "adapter": "chat-inbox",
+      "by": "ag_0003",
+      "seq": 7369,
+      "at": "2026-11-28T09:57:34.195Z"
     }
   ],
   "showcase": {
@@ -4328,7 +4340,7 @@
       "theme": null,
       "temperament": null,
       "ended_at": null,
-      "turns": 142,
+      "turns": 143,
       "job": {
         "id": "job_21895d6f",
         "title": "세계 개선직"
@@ -7888,5 +7900,5 @@
     }
   ],
   "births": [],
-  "public_events": 644
+  "public_events": 646
 }
